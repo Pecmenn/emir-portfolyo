@@ -62,13 +62,6 @@ export default function Contact() {
                 {copied ? t(contact.copied) : t(contact.copy)}
               </button>
             </div>
-            <div className="mt-8 flex gap-5 text-sm font-medium">
-              {site.socials.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="hover:text-accent">
-                  {s.label} ↗
-                </a>
-              ))}
-            </div>
           </FadeUp>
         </div>
 

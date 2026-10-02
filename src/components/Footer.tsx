@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { site, ui } from '../content';
+import SocialIcon from './SocialIcon';
 import { useLang } from '../lib/i18n';
 import { scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
@@ -75,11 +76,21 @@ export default function Footer() {
           </div>
           <div>
             <p className="mb-4 text-base font-medium">{t(ui.follow)}</p>
-            {site.socials.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="block py-0.5 hover:text-accent">
-                {s.label}
-              </a>
-            ))}
+            <div className="flex flex-wrap gap-2">
+              {site.socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  title={s.label}
+                  className="grid h-11 w-11 place-items-center rounded-full border border-white/15 text-paper/80 transition-colors hover:border-accent hover:bg-accent hover:text-ink"
+                >
+                  <SocialIcon href={s.href} label={s.label} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
