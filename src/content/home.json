@@ -24,18 +24,40 @@
     }
   },
   "work": {
-    "slogan": {
-      "tr": [
-        "Her proje,",
-        "bir hikâyenin",
-        "ilk karesi."
-      ],
-      "en": [
-        "Every project",
-        "is the first frame",
-        "of a story."
-      ]
-    }
+    "slogans": [
+      {
+        "tr": [
+          "Her proje,",
+          "bir hikâyenin",
+          "ilk karesi."
+        ],
+        "en": [
+          "Every project",
+          "is the first frame",
+          "of a story."
+        ]
+      },
+      {
+        "tr": [
+          "Fikir sade,",
+          "etkisi büyük."
+        ],
+        "en": [
+          "Simple idea,",
+          "big impact."
+        ]
+      },
+      {
+        "tr": [
+          "Detayda saklı",
+          "bir bütün."
+        ],
+        "en": [
+          "A whole hidden",
+          "in the details."
+        ]
+      }
+    ]
   },
   "expertise": {
     "marquee": {

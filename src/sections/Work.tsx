@@ -6,15 +6,6 @@ import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
-// İlk iki projeden sonraki kartlar için asimetrik ızgara: her satır farklı genişlik ve dikey kaymayla tekrar eder
-const layout = [
-  'sm:col-span-5 sm:col-start-2',
-  'sm:col-span-5 sm:col-start-8 sm:mt-[12vh]',
-  'sm:col-span-6 sm:col-start-1',
-  'sm:col-span-5 sm:col-start-8 sm:mt-[18vh]',
-];
-const ratios = ['aspect-[4/3]', 'aspect-square', 'aspect-[5/4]', 'aspect-[3/4]'];
-
 // fill: geniş ekranda görsel sabit oran yerine bulunduğu sütunda kalan yüksekliği doldurur
 function Card({
   project,
@@ -67,7 +58,9 @@ function Card({
 export default function Work() {
   const { t, lang } = useLang();
   const starRef = useRef<HTMLDivElement>(null);
-  const [first, second, ...rest] = projects;
+  // Projeler ikişer ikişer satırlara bölünür
+  const rows: Project[][] = [];
+  for (let i = 0; i < projects.length; i += 2) rows.push(projects.slice(i, i + 2));
 
   useLayoutEffect(() => {
     if (reducedMotion) return;
@@ -87,29 +80,38 @@ export default function Work() {
         <span>{t(ui.allWork)}</span>
         <span className="text-mute">{String(projects.length).padStart(2, '0')}</span>
       </div>
-      <div className="grid gap-x-4 gap-y-16 sm:grid-cols-12 sm:gap-y-[10vh]">
-        {/* İlk satır: solda büyük kart; sağda üstte slogan, altta ikinci kart. İki görselin alt kenarı aynı hizada biter. */}
-        {first && <Card project={first} index={0} ratio="aspect-[10/7]" className="sm:col-span-7" />}
-        {second && (
-          <div className="flex flex-col gap-10 sm:col-span-5 sm:col-start-8 sm:gap-12">
-            <Lines
-              key={lang}
-              as="p"
-              lines={work.slogan[lang]}
-              className="display pt-6 text-[clamp(1.6rem,2.4vw,3rem)] leading-[1.05] sm:ml-[20%]"
-            />
-            <Card project={second} index={1} ratio="aspect-[5/4]" fill />
-          </div>
-        )}
-        {rest.map((project, i) => (
-          <Card
-            key={project.slug}
-            project={project}
-            index={i + 2}
-            className={layout[i % layout.length]}
-            ratio={ratios[i % ratios.length]}
-          />
-        ))}
+      <div className="flex flex-col gap-16 sm:gap-[12vh]">
+        {rows.map(([big, small], r) => {
+          // Satırlar dönüşümlü: çift satırda büyük kart solda, tek satırda sağda. Küçük kartın görseli kalan yüksekliği doldurur,
+          // böylece iki görselin alt kenarı aynı hizada biter.
+          const mirrored = r % 2 === 1;
+          const slogan = work.slogans[r];
+          return (
+            <div key={big.slug} className="grid gap-x-4 gap-y-16 sm:grid-cols-12">
+              <Card
+                project={big}
+                index={r * 2}
+                ratio="aspect-[10/7]"
+                className={mirrored ? 'sm:col-span-7 sm:col-start-6 sm:row-start-1' : 'sm:col-span-7'}
+              />
+              {small && (
+                <div
+                  className={`flex flex-col gap-10 sm:col-span-5 sm:row-start-1 sm:gap-12 ${mirrored ? 'sm:col-start-1' : 'sm:col-start-8'}`}
+                >
+                  {slogan && (
+                    <Lines
+                      key={lang}
+                      as="p"
+                      lines={slogan[lang]}
+                      className={`display pt-6 text-[clamp(1.6rem,2.4vw,3rem)] leading-[1.05] ${mirrored ? 'sm:mr-[20%]' : 'sm:ml-[20%]'}`}
+                    />
+                  )}
+                  <Card project={small} index={r * 2 + 1} ratio="aspect-[5/4]" fill />
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
       <div ref={starRef} className="mx-auto mt-20 w-fit sm:mt-[10vh]">
         <Star className="h-8 w-8" />

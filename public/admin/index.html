@@ -254,7 +254,17 @@
                       name: 'work',
                       label: 'İşler',
                       widget: 'object',
-                      fields: [lines('slogan', 'Slogan', 'İlk iki projenin yanında, satır satır kayarak belirir. Kısa tutun (2-3 satır).')],
+                      fields: [
+                        {
+                          name: 'slogans',
+                          label: 'Sloganlar',
+                          label_singular: 'Slogan',
+                          widget: 'list',
+                          summary: '{{fields.tr}}',
+                          hint: 'Projeler ikişer ikişer satırlara dizilir; 1. slogan 1. satırın, 2. slogan 2. satırın yanında görünür. Her satır ayrı kayarak belirir, kısa tutun (2-3 satır).',
+                          fields: lines('slogan', 'Slogan').fields,
+                        },
+                      ],
                     },
                     {
                       name: 'expertise',

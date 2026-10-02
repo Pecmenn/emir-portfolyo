@@ -57,7 +57,7 @@ type Site = {
 export const site = siteData as Site;
 export const ui = uiData;
 export const manifesto = homeData.manifesto;
-export const work = homeData.work;
+export const work = homeData.work as { slogans: { tr: string[]; en: string[] }[] };
 export const expertise = homeData.expertise;
 export const contact = homeData.contact;
 
