@@ -34,22 +34,37 @@ export default function Hero({ ready }: { ready: boolean }) {
 
   const go = useCallback((dir: number) => setIndex((i) => (i + dir + featured.length) % featured.length), []);
 
-  // Slayt değişimi: yeni görsel alttan perde gibi açılır, başlık maskenin altından gelir
+  // Slayt değişimi: yeni görsel eski görselin üstünde alttan perde gibi açılır; eski başlık yukarı kayarak çıkar,
+  // yenisi aşağıdan gelir. Animasyonlar her geçişte sıfırlanmaz (yoksa önceki slayt zıplar), yalnızca üzerine yazılır.
+  const prevIndex = useRef<number | null>(null);
+  const lines = (i: number) => rootRef.current?.querySelectorAll(`[data-slide="${i}"] [data-hero-line]`) ?? [];
+
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      slidesRef.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.set(el, { zIndex: i === index ? 2 : 1 });
-      });
-      const active = slidesRef.current[index];
-      if (active && !reducedMotion) {
-        gsap.fromTo(active, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.inOut' });
-        gsap.fromTo(active.querySelectorAll('img, video'), { scale: 1.25 }, { scale: 1.05, duration: 2.4, ease: 'expo.out' });
-      }
-      if (!reducedMotion) gsap.fromTo('[data-hero-line]', { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.06, delay: 0.25 });
-    }, rootRef);
-    return () => ctx.revert();
+    const prev = prevIndex.current;
+    prevIndex.current = index;
+    const slides = slidesRef.current;
+
+    slides.forEach((el, i) => el && gsap.set(el, { zIndex: i === index ? 3 : i === prev ? 2 : 1 }));
+    featured.forEach((_, i) => {
+      if (i !== index && i !== prev) gsap.set(lines(i), { yPercent: 110 });
+    });
+    if (reducedMotion) {
+      gsap.set(lines(index), { yPercent: 0 });
+      if (prev !== null) gsap.set(lines(prev), { yPercent: 110 });
+      return;
+    }
+
+    const active = slides[index];
+    if (active && prev !== null) {
+      gsap.fromTo(active, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.inOut', overwrite: true });
+    }
+    if (active) gsap.fromTo(active.querySelectorAll('img, video'), { scale: 1.25 }, { scale: 1.05, duration: 2.4, ease: 'expo.out', overwrite: true });
+    if (prev !== null) gsap.to(lines(prev), { yPercent: -110, duration: 0.55, ease: 'power3.in', stagger: 0.04, overwrite: true });
+    gsap.fromTo(lines(index), { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.06, delay: prev === null ? 0.25 : 0.45, overwrite: true });
   }, [index]);
+
+  // Bileşen kaldırılınca çalışan geçişleri durdur
+  useEffect(() => () => gsap.killTweensOf(rootRef.current?.querySelectorAll('[data-hero-line], [data-slide-media], img, video') ?? []), []);
 
   // İlerleme çizgisi dolunca sonraki slayta geç
   useEffect(() => {
@@ -113,24 +128,31 @@ export default function Hero({ ready }: { ready: boolean }) {
       </div>
 
       <div ref={titleRef} className="gutter pointer-events-none absolute inset-x-0 top-1/2 z-10 flex -translate-y-1/2 items-end justify-between gap-6">
-        <h1 className="display text-[clamp(4rem,13vw,12rem)]">
-          <span className="line-mask">
-            <span data-hero-line className="block">
-              {current.title}
+        {/* Her slaytın başlığı aynı yerde üst üste durur; böylece eskisi çıkarken yenisi girebilir */}
+        <h1 className="display grid text-[clamp(4rem,13vw,12rem)]">
+          {featured.map((p, i) => (
+            <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="line-mask [grid-area:1/1]">
+              <span data-hero-line className="block">
+                {p.title}
+              </span>
             </span>
-          </span>
+          ))}
         </h1>
-        <div className="pb-4 text-right text-sm font-medium">
-          <span className="line-mask">
-            <span data-hero-line className="block">
-              {current.year}
+        <div className="grid pb-4 text-right text-sm font-medium">
+          {featured.map((p, i) => (
+            <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="[grid-area:1/1]">
+              <span className="line-mask">
+                <span data-hero-line className="block">
+                  {p.year}
+                </span>
+              </span>
+              <span className="line-mask">
+                <span data-hero-line className="block">
+                  {t(p.discipline)}
+                </span>
+              </span>
             </span>
-          </span>
-          <span className="line-mask">
-            <span data-hero-line className="block">
-              {t(current.discipline)}
-            </span>
-          </span>
+          ))}
         </div>
       </div>
 
