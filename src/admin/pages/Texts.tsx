@@ -20,6 +20,8 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ['drag', '“Sürükle” yazısı'],
       ['navigate', '“Gezin” yazısı'],
       ['featured', 'Sağ alt etiket'],
+      ['soundOn', 'Video: “Sesi aç” düğmesi'],
+      ['soundOff', 'Video: “Sesi kapat” düğmesi'],
     ],
   },
   {

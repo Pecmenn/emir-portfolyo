@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Check, ImagePlus, Loader2, Plus, Trash2, Upload, X } from 'lucide-react';
+import { ArrowDown, ArrowUp, Check, Film, ImagePlus, Loader2, Plus, Trash2, Upload, X } from 'lucide-react';
 import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { clone, useAdmin, type Bi, type Lines } from './store';
 
@@ -264,6 +264,86 @@ export function ImageField({ label, hint, value, onChange, aspect = 'aspect-[16/
       </div>
       <input ref={input} type="file" accept="image/*" hidden onChange={(e) => pick(e.target.files?.[0])} />
       {hint && <p className="mt-1.5 text-[13px] leading-snug text-ink/50">{hint}</p>}
+    </div>
+  );
+}
+
+const MAX_VIDEO_MB = 40;
+const WARN_VIDEO_MB = 15;
+
+// Video: ya dosya yüklenir (kısa döngüler) ya da başka bir servisteki doğrudan video bağlantısı yapıştırılır
+export function VideoField({ label, hint, value, onChange, poster }: { label: string; hint?: string; value: string | undefined; onChange: (v: string) => void; poster?: string }) {
+  const { src, addPendingFile, notify } = useAdmin();
+  const input = useRef<HTMLInputElement>(null);
+  const [mode, setMode] = useState<'upload' | 'link'>(value && /^https?:/.test(value) ? 'link' : 'upload');
+  const [busy, setBusy] = useState(false);
+
+  const pick = async (file: File | undefined) => {
+    if (!file) return;
+    if (!/^video\/(mp4|webm)$/.test(file.type)) return notify('Lütfen MP4 veya WebM formatında bir video seçin.', 'error');
+    const mb = file.size / 1024 / 1024;
+    if (mb > MAX_VIDEO_MB)
+      return notify(`Bu video ${mb.toFixed(0)} MB. Panelden en fazla ${MAX_VIDEO_MB} MB yüklenebilir; uzun videolar için "Bağlantı" seçeneğini kullanın.`, 'error');
+    if (mb > WARN_VIDEO_MB) notify(`Video ${mb.toFixed(0)} MB; sayfanın yavaş açılmaması için ${WARN_VIDEO_MB} MB altı önerilir.`, 'error');
+    setBusy(true);
+    try {
+      onChange(await addPendingFile(file, 'videos'));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div>
+      <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm font-medium">{label}</p>
+        <div className="inline-flex rounded-lg bg-black/[0.05] p-0.5 text-xs font-semibold">
+          {(['upload', 'link'] as const).map((m) => (
+            <button key={m} type="button" onClick={() => setMode(m)} className={`rounded-md px-2.5 py-1 ${mode === m ? 'bg-white shadow-sm' : 'text-ink/55'}`}>
+              {m === 'upload' ? 'Dosya yükle' : 'Bağlantı'}
+            </button>
+          ))}
+        </div>
+      </div>
+      {value ? (
+        <div className="relative aspect-video overflow-hidden rounded-xl bg-ink">
+          <video src={src(value)} poster={poster ? src(poster) : undefined} muted loop playsInline autoPlay className="h-full w-full object-cover" />
+          <div className="absolute inset-x-0 bottom-0 flex justify-end gap-2 bg-gradient-to-t from-black/60 p-3">
+            {mode === 'upload' && (
+              <button type="button" onClick={() => input.current?.click()} className="inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-sm font-semibold shadow">
+                <Upload size={15} /> Değiştir
+              </button>
+            )}
+            <button type="button" onClick={() => onChange('')} className="inline-flex items-center gap-1.5 rounded-lg bg-white px-3 py-1.5 text-sm font-semibold text-red-600 shadow">
+              <Trash2 size={15} /> Kaldır
+            </button>
+          </div>
+        </div>
+      ) : mode === 'upload' ? (
+        <button
+          type="button"
+          onClick={() => input.current?.click()}
+          className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-black/15 bg-paper/60 text-ink/50 transition hover:border-accent/60"
+        >
+          {busy ? <Loader2 className="animate-spin" /> : <Film size={28} />}
+          <span className="text-sm font-medium">MP4 veya WebM video seç</span>
+          <span className="text-xs">En fazla {MAX_VIDEO_MB} MB · {WARN_VIDEO_MB} MB altı önerilir</span>
+        </button>
+      ) : (
+        <input
+          type="url"
+          placeholder="https://… .mp4"
+          onBlur={(e) => e.target.value && onChange(e.target.value.trim())}
+          onKeyDown={(e) => e.key === 'Enter' && (e.target as HTMLInputElement).blur()}
+          className={inputClass}
+        />
+      )}
+      <input ref={input} type="file" accept="video/mp4,video/webm" hidden onChange={(e) => pick(e.target.files?.[0])} />
+      <p className="mt-1.5 text-[13px] leading-snug text-ink/50">
+        {mode === 'link'
+          ? 'Doğrudan video dosyasının bağlantısını yapıştırın (sonu .mp4 veya .webm ile biten). Cloudinary veya Bunny gibi servisler bu bağlantıyı verir; YouTube sayfa bağlantıları çalışmaz.'
+          : hint ?? 'Kısa döngüler için uygundur. Sitede sessiz ve döngüde oynar.'}
+      </p>
     </div>
   );
 }

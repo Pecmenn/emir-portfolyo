@@ -1,11 +1,21 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { projects, ui } from '../content';
+import AutoVideo from '../components/AutoVideo';
 import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
 const featured = projects.filter((p) => p.featured);
 const AUTOPLAY = 7;
+
+function SoundIcon({ on }: { on: boolean }) {
+  return (
+    <svg viewBox='0 0 24 24' className='h-4 w-4' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' aria-hidden>
+      <path d='M11 5 6 9H3v6h3l5 4V5z' />
+      {on ? <path d='M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13' /> : <path d='m16 9 5 6m0-6-5 6' />}
+    </svg>
+  );
+}
 
 // Tam ekran öne çıkan işler: otomatik ilerler, sürüklenebilir, ok tuşlarıyla gezilir
 export default function Hero({ ready }: { ready: boolean }) {
@@ -18,6 +28,9 @@ export default function Hero({ ready }: { ready: boolean }) {
   const progressRef = useRef<(HTMLSpanElement | null)[]>([]);
   const drag = useRef<{ x: number; moved: boolean } | null>(null);
   const current = featured[index];
+  // Showreel sesi: tarayıcılar sesli oynatmayı ancak kullanıcı düğmeye bastıktan sonra izin verir
+  const [soundOn, setSoundOn] = useState(false);
+  const hasVideo = !!current.coverVideo;
 
   const go = useCallback((dir: number) => setIndex((i) => (i + dir + featured.length) % featured.length), []);
 
@@ -31,7 +44,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       const active = slidesRef.current[index];
       if (active && !reducedMotion) {
         gsap.fromTo(active, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.inOut' });
-        gsap.fromTo(active.querySelector('img'), { scale: 1.25 }, { scale: 1.05, duration: 2.4, ease: 'expo.out' });
+        gsap.fromTo(active.querySelectorAll('img, video'), { scale: 1.25 }, { scale: 1.05, duration: 2.4, ease: 'expo.out' });
       }
       if (!reducedMotion) gsap.fromTo('[data-hero-line]', { yPercent: 110 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.06, delay: 0.25 });
     }, rootRef);
@@ -40,7 +53,8 @@ export default function Hero({ ready }: { ready: boolean }) {
 
   // İlerleme çizgisi dolunca sonraki slayta geç
   useEffect(() => {
-    if (!ready) return;
+    // Ses açıkken izleyen kişiyi bölmemek için slayt kendiliğinden ilerlemez
+    if (!ready || (soundOn && hasVideo)) return;
     const bar = progressRef.current[index];
     if (!bar) return;
     const tween = gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: AUTOPLAY, ease: 'none', onComplete: () => go(1) });
@@ -48,7 +62,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       tween.kill();
       gsap.set(bar, { scaleX: 0 });
     };
-  }, [index, ready, go]);
+  }, [index, ready, go, soundOn, hasVideo]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -84,6 +98,15 @@ export default function Hero({ ready }: { ready: boolean }) {
         {featured.map((p, i) => (
           <div key={p.slug} ref={(el) => (slidesRef.current[i] = el)} className="absolute inset-0">
             <img src={p.cover} alt={p.title} draggable={false} className="h-full w-full scale-105 object-cover" />
+            {p.coverVideo && (
+              <AutoVideo
+                src={p.coverVideo}
+                poster={p.cover}
+                active={ready && i === index}
+                muted={!(soundOn && i === index)}
+                className="absolute inset-0 h-full w-full scale-105 object-cover"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/60" />
           </div>
         ))}
@@ -135,7 +158,19 @@ export default function Hero({ ready }: { ready: boolean }) {
               →
             </button>
           </div>
-          <span>{t(ui.featured)}</span>
+          <div className="flex items-center gap-4">
+            {hasVideo && (
+              <button
+                onClick={() => setSoundOn((on) => !on)}
+                aria-pressed={soundOn}
+                className="pill border-white/40 px-3 py-1 text-xs hover:bg-paper hover:text-ink sm:text-sm"
+              >
+                <SoundIcon on={soundOn} />
+                {t(soundOn ? ui.soundOff : ui.soundOn)}
+              </button>
+            )}
+            <span className="hidden sm:inline">{t(ui.featured)}</span>
+          </div>
         </div>
       </div>
     </section>

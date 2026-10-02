@@ -116,5 +116,13 @@
   "home": {
     "tr": "Ana sayfa",
     "en": "Home"
+  },
+  "soundOn": {
+    "tr": "Sesi aç",
+    "en": "Sound on"
+  },
+  "soundOff": {
+    "tr": "Sesi kapat",
+    "en": "Sound off"
   }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { projects, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
+import AutoVideo from '../components/AutoVideo';
 import { FadeUp, Lines, RevealImage } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion, refreshSoon, scrollToTarget } from '../lib/scroll';
@@ -36,6 +37,12 @@ function Cover({ project }: { project: ProjectType }) {
         onError={coverReady}
         className="absolute inset-0 h-full w-full object-cover"
       />
+      {/* Kapak videosu görselin üstünde oynar; geçiş animasyonu görsel üzerinden yapıldığı için görsel altta kalır */}
+      {project.coverVideo && (
+        <div data-cover-img className="absolute inset-0">
+          <AutoVideo src={project.coverVideo} poster={project.cover} className="h-full w-full object-cover" />
+        </div>
+      )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
       <div className="gutter absolute inset-x-0 bottom-[22vh] grid items-end gap-6 sm:grid-cols-2">
         <h1 className="display text-[clamp(4rem,12vw,11rem)]">
@@ -128,6 +135,20 @@ function Block({ block, title }: { block: GalleryBlock; title: string }) {
       <div className="gutter grid gap-4 sm:grid-cols-12" data-cursor="+">
         <RevealImage src={block.image1} alt={title} className="aspect-[4/5] sm:col-span-6" />
         <RevealImage src={block.image2} alt={title} className="aspect-[4/5] sm:col-span-4 sm:col-start-9 sm:mt-[20vh]" />
+      </div>
+    );
+  }
+  if (block.type === 'video') {
+    if (!block.video) return null;
+    return block.full ? (
+      <div className="relative h-[100svh] overflow-hidden bg-ink">
+        <AutoVideo src={block.video} className="absolute inset-0 h-full w-full object-cover" />
+      </div>
+    ) : (
+      <div className="gutter">
+        <FadeUp className="aspect-video overflow-hidden bg-black/5">
+          <AutoVideo src={block.video} className="h-full w-full object-cover" />
+        </FadeUp>
       </div>
     );
   }

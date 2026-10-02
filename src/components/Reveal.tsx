@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import AutoVideo from './AutoVideo';
 import { gsap, reducedMotion, refreshSoon } from '../lib/scroll';
 
 // Satırlar maskenin altından sırayla yukarı kayar
@@ -41,12 +42,15 @@ export function RevealImage({
   className = '',
   imgClassName = '',
   onLoad,
+  video,
 }: {
   src: string;
   alt: string;
   className?: string;
   imgClassName?: string;
   onLoad?: () => void;
+  // Varsa görselin üstünde sessiz döngü olarak oynar; görsel, video yüklenene kadar görünür
+  video?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -54,7 +58,7 @@ export function RevealImage({
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ scrollTrigger: { trigger: ref.current, start: 'top 88%' } });
       tl.fromTo(ref.current, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'expo.inOut' });
-      tl.fromTo('img', { scale: 1.35 }, { scale: 1, duration: 1.6, ease: 'expo.out' }, 0);
+      tl.fromTo('img, video', { scale: 1.35 }, { scale: 1, duration: 1.6, ease: 'expo.out' }, 0);
     }, ref);
     return () => ctx.revert();
   }, []);
@@ -71,6 +75,7 @@ export function RevealImage({
         }}
         className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
       />
+      {video && <AutoVideo src={video} poster={src} className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`} />}
     </div>
   );
 }

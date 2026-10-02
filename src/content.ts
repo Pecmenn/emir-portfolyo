@@ -18,7 +18,9 @@ export type GalleryBlock =
   // Bir metin ve bir görsel yan yana; side görselin hangi tarafta olduğunu belirler
   | { type: 'text-image'; text: Text; image: string; side: 'left' | 'right' }
   // Tam genişlikte görsel, üzerinde isteğe bağlı büyük bir alıntı
-  | { type: 'full'; image: string; quote?: Text };
+  | { type: 'full'; image: string; quote?: Text }
+  // Sessiz, döngüde, ekranda görününce oynayan video. full: tam ekran; değilse kenar boşluklu 16:9
+  | { type: 'video'; video: string; full: boolean };
 
 export type CaseStudy = {
   challenge: Text;
@@ -34,6 +36,9 @@ export type Project = {
   discipline: Text;
   year: string;
   cover: string;
+  // İsteğe bağlı kapak videosu (yüklenen dosya /videos/... ya da doğrudan .mp4/.webm bağlantısı).
+  // Varsa kapak görselinin yerine oynar; görsel, video yüklenene kadar ve geçiş animasyonunda kullanılır.
+  coverVideo?: string;
   summary: Text;
   client: string;
   role: Text;

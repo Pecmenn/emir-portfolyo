@@ -1,10 +1,10 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Image as ImageIcon, Images, Plus, Quote, Trash2, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Image as ImageIcon, Images, Plus, Quote, Trash2, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { GalleryBlock, Project } from '../../content';
 import { SITE_URL } from '../github';
 import { go, href } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin, type Bi } from '../store';
-import { BiField, Button, Card, ConfirmDialog, EditLangProvider, Field, ImageField, LangSwitch, move, SaveBar, TextInput, Toggle, useDraft, useEditLang } from '../ui';
+import { BiField, Button, Card, ConfirmDialog, EditLangProvider, Field, ImageField, LangSwitch, move, SaveBar, TextInput, Toggle, useDraft, useEditLang, VideoField } from '../ui';
 
 const empty: Bi = { tr: '', en: '' };
 
@@ -48,11 +48,13 @@ const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; 
   { type: 'pair', label: 'İki görsel', description: 'Büyük görsel solda, küçük görsel sağda', icon: Images },
   { type: 'text-image', label: 'Metin + görsel', description: 'Kısa bir açıklama ve yanında görsel', icon: Quote },
   { type: 'full', label: 'Tam ekran görsel', description: 'Ekranı kaplayan görsel, isteğe bağlı alıntı', icon: ImageIcon },
+  { type: 'video', label: 'Video', description: 'Sessiz, döngüde oynayan video', icon: Film },
 ];
 
 function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'pair') return { type, image1: '', image2: '' };
   if (type === 'text-image') return { type, text: { ...empty }, image: '', side: 'right' };
+  if (type === 'video') return { type, video: '', full: true };
   return { type, image: '', quote: { ...empty } };
 }
 
@@ -64,7 +66,10 @@ function Preview({ p }: { p: Project }) {
     <div className="flex flex-col gap-5">
       <div>
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-ink/40">Ana sayfadaki kart</p>
-        <div className="aspect-[10/7] overflow-hidden rounded-lg bg-paper">{p.cover && <img src={src(p.cover)} alt="" className="h-full w-full object-cover" />}</div>
+        <div className="relative aspect-[10/7] overflow-hidden rounded-lg bg-paper">
+          {p.cover && <img src={src(p.cover)} alt="" className="h-full w-full object-cover" />}
+          {p.coverVideo && <video src={src(p.coverVideo)} muted loop playsInline autoPlay className="absolute inset-0 h-full w-full object-cover" />}
+        </div>
         <div className="mt-2 flex justify-between text-[13px] font-medium">
           <span>{p.title || 'Proje adı'}</span>
           <span className="text-ink/45">{p.discipline?.[lang] || 'Disiplin'}</span>
@@ -157,6 +162,12 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 </Field>
               </div>
             )}
+            {block.type === 'video' && (
+              <div className="flex flex-col gap-4">
+                <VideoField label="Video" value={block.video} onChange={(v) => update(i, { ...block, video: v })} />
+                <Toggle label="Tam ekran" hint="Kapalıysa video kenar boşluklu, 16:9 oranında gösterilir." checked={block.full} onChange={(v) => update(i, { ...block, full: v })} />
+              </div>
+            )}
             {block.type === 'full' && (
               <div className="flex flex-col gap-4">
                 <ImageField label="Görsel" value={block.image} onChange={(v) => update(i, { ...block, image: v })} />
@@ -167,7 +178,7 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
         );
       })}
       {adding ? (
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-2">
           {BLOCKS.map((b) => (
             <button
               key={b.type}
@@ -183,7 +194,7 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
               <span className="block text-xs text-ink/55">{b.description}</span>
             </button>
           ))}
-          <button type="button" onClick={() => setAdding(false)} className="text-sm font-semibold text-ink/50 sm:col-span-3">
+          <button type="button" onClick={() => setAdding(false)} className="text-sm font-semibold text-ink/50 sm:col-span-2">
             Vazgeç
           </button>
         </div>
@@ -276,6 +287,13 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
 
           <Card title="Kapak ve özet" description="Kapak hem ana sayfadaki kartta hem proje sayfasının tam ekran girişinde kullanılır.">
             <ImageField label="Kapak görseli" hint="Yatay bir görsel seçin. Büyük fotoğraflar yüklenirken otomatik küçültülür." value={draft.cover} onChange={(v) => set('cover', v)} />
+            <VideoField
+              label="Kapak videosu (isteğe bağlı)"
+              hint="Varsa kapak görselinin yerine sessiz ve döngüde oynar: giriş slider’ında, ana sayfadaki kartta ve proje sayfasının kapağında. Girişte öne çıkan projelerde ziyaretçi sesi açabilir. Kapak görseli yine gerekli; video yüklenene kadar o görünür."
+              value={draft.coverVideo}
+              poster={draft.cover}
+              onChange={(v) => set('coverVideo', v || undefined)}
+            />
             <BiField label="Kısa özet" long hint="Proje sayfasının kapağında, başlığın yanında görünür. 1-2 cümle." value={draft.summary} onChange={(v) => set('summary', v)} />
           </Card>
 

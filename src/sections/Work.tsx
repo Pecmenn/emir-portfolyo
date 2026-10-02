@@ -38,6 +38,7 @@ function Card({
       <div ref={mediaRef} className={fill ? 'sm:min-h-0 sm:flex-1' : ''}>
         <RevealImage
           src={project.cover}
+          video={project.coverVideo}
           alt={project.title}
           className={fill ? `${ratio} sm:aspect-auto sm:h-full` : ratio}
           imgClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"

@@ -63,7 +63,7 @@ type Ctx = {
   save: (changes: FileChange[], message: string, next: Partial<Content>) => Promise<boolean>;
   saving: boolean;
   // Yeni seçilen görseller kaydedilene kadar bellekte bekler
-  addPendingFile: (file: File, folder: 'images' | 'cv') => Promise<string>;
+  addPendingFile: (file: File, folder: 'images' | 'cv' | 'videos') => Promise<string>;
   pendingFor: (values: unknown) => FileChange[];
   src: (path: string | undefined) => string;
   notify: (text: string, tone?: Toast['tone']) => void;
@@ -136,7 +136,7 @@ export function AdminProvider({
     window.setTimeout(() => setToasts((list) => list.filter((t) => t.id !== id)), tone === 'ok' ? 4200 : 7000);
   }, []);
 
-  const addPendingFile = useCallback(async (file: File, folder: 'images' | 'cv') => {
+  const addPendingFile = useCallback(async (file: File, folder: 'images' | 'cv' | 'videos') => {
     const base = slugifyFile(file.name.replace(/\.[^.]+$/, '')) || 'dosya';
     const { blob, ext } = folder === 'images' ? await prepareImage(file) : { blob: file as Blob, ext: (file.name.split('.').pop() || 'pdf').toLowerCase() };
     const path = `/${folder}/${base}-${Date.now().toString(36)}.${ext}`;
