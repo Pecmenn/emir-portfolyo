@@ -8,6 +8,7 @@ export default {
         ink: '#0A0A0A',
         mute: '#8C8C88',
         accent: '#B98CFF',
+        'accent-strong': '#7C4DDB',
       },
       fontFamily: {
         display: ['"Clash Display"', 'system-ui', 'sans-serif'],

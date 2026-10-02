@@ -3,9 +3,9 @@
 Kişisel portfolyo sitesi (Creative Generalist). React 18 + TypeScript + Vite 5 + Tailwind CSS 3 + GSAP (ScrollTrigger) + Lenis + React Router. Arka uç yok.
 
 - Komutlar: `npm run dev` (http://localhost:5173), `npm run build` (tip kontrolü + `dist/`), `npm run preview`.
-- İçerik `src/content/` altındaki JSON dosyalarında (`site.json`, `about.json`, `work.json`, `expertise.json`, `contact.json`, `ui.json`, `projects/*.json`) ve `/admin` panelinden (Decap CMS, `public/admin/index.html`) düzenlenir. `src/content.ts` yalnızca türleri tanımlar ve içeriği dağıtır. Her metin `{ tr, en }` çifti; bileşenlerde `useLang().t()` ile okunur. Bileşenlere metin gömme.
-- İçeriğe yeni alan eklenirse hem JSON dosyasına, hem `src/content.ts` türüne, hem de `public/admin/index.html` içindeki panel alanlarına eklenmeli.
-- Paneli yerelde kullanmak için `npm run dev` ile birlikte `npm run cms` (decap-server) çalıştırılır, panel http://localhost:5173/admin/index.html adresindedir.
+- İçerik `src/content/` altındaki JSON dosyalarında (`site.json`, `about.json`, `work.json`, `expertise.json`, `contact.json`, `ui.json`, `projects/*.json`) ve `/admin` panelinden düzenlenir. Panel ayrı bir React girişidir (`admin.html` → `src/admin/`): GitHub ile giriş Netlify OAuth üzerinden yapılır, kaydetme GitHub API ile tek commit atar. `src/content.ts` yalnızca türleri tanımlar ve içeriği dağıtır. Her metin `{ tr, en }` çifti; bileşenlerde `useLang().t()` ile okunur. Bileşenlere metin gömme.
+- İçeriğe yeni alan eklenirse hem JSON dosyasına, hem `src/content.ts` türüne, hem `src/admin/store.tsx` türlerine, hem de ilgili panel sayfasına (`src/admin/pages/`) eklenmeli.
+- Panel yerelde http://localhost:5173/admin adresinde açılır (gerçek GitHub verisiyle çalışır). Giriş yapmadan arayüzü denemek için http://localhost:5173/admin?demo (yalnızca geliştirmede; yerel içerik, kaydetme kapalı).
 - Sayfalar: `/` (`src/pages/Home.tsx`) ve `/proje/:slug` (`src/pages/Project.tsx`). Ana sayfa bölümleri `src/sections/`, ortak parçalar `src/components/`.
 - Animasyon altyapısı `src/lib/`: `scroll.ts` (tek Lenis örneği + GSAP), `transition.tsx` (proje açılış geçişi `openProject`, diğer sayfa geçişleri `goTo`), `i18n.tsx` (TR/EN).
 - Kaydırma Lenis ile yapılır; sayfa içi kaydırma için `scrollToTarget`, `window.scrollTo` kullanma. Animasyonlar `gsap.context` içinde kurulur ve temizlenir.
