@@ -31,8 +31,10 @@ body {
     @apply font-display font-semibold leading-[0.95] tracking-tightest;
   }
   /* Satır satır kayarak beliren metinler için maske */
+  /* Sıkı harf aralığında son harf kutunun biraz dışına taşar; maske sağa genişletilir,
+     negatif kenar boşluğuyla yerleşim değişmez, böylece harfin kenarı kırpılmaz */
   .line-mask {
-    @apply block overflow-hidden pb-[0.08em];
+    @apply -mr-[0.12em] block overflow-hidden pb-[0.08em] pr-[0.12em];
   }
   .pill {
     @apply inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors;
