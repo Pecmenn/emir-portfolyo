@@ -139,7 +139,7 @@ function Block({ block, title }: { block: GalleryBlock; title: string }) {
   const { t, lang } = useLang();
   if (block.type === 'pair') {
     return (
-      <div className="gutter grid gap-4 sm:grid-cols-12" data-cursor="+">
+      <div className="gutter grid gap-4 sm:grid-cols-12">
         <RevealImage src={block.image1} alt={title} className="aspect-[4/5] sm:col-span-6" />
         <RevealImage src={block.image2} alt={title} className="aspect-[4/5] sm:col-span-4 sm:col-start-9 sm:mt-[20vh]" />
       </div>
@@ -229,7 +229,6 @@ function NextProject({ project }: { project: ProjectType }) {
         </div>
         <button
           onClick={() => openProject(project.slug, project.cover, mediaRef.current)}
-          data-cursor={t(ui.open)}
           className="absolute inset-0 flex flex-col items-center justify-center text-center"
         >
           <span className="mb-4 text-sm font-medium">{t(ui.next)}</span>

@@ -82,7 +82,6 @@ function Card({
         e.preventDefault();
         openProject(project.slug, project.cover, mediaRef.current);
       }}
-      data-cursor={t(ui.view)}
       className={`group ${fill ? 'flex flex-col sm:min-h-0 sm:flex-1' : 'block'} ${className}`}
     >
       <p className="mb-2 text-right text-xs font-medium text-mute">{String(index + 1).padStart(2, '0')}</p>

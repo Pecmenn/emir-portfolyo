@@ -28,7 +28,6 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
     title: 'İşler ve proje sayfası',
     items: [
       ['allWork', 'İşler başlığı'],
-      ['view', 'Kart üzerindeki imleç yazısı'],
       ['client', '“Müşteri” etiketi'],
       ['role', '“Rol” etiketi'],
       ['services', '“Kapsam” etiketi'],
@@ -37,7 +36,6 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ['process', '“Süreç” başlığı'],
       ['result', '“Sonuç” başlığı'],
       ['next', '“Sıradaki proje” etiketi'],
-      ['open', 'Sıradaki proje imleç yazısı'],
       ['keepScrolling', '“Kaydırmaya devam et”'],
     ],
   },

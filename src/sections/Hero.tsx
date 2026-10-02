@@ -106,7 +106,6 @@ export default function Hero({ ready }: { ready: boolean }) {
     <section ref={rootRef} data-theme="dark" className="relative h-[100svh] overflow-hidden bg-ink text-paper">
       <div
         className="absolute inset-0 cursor-grab touch-pan-y select-none active:cursor-grabbing"
-        data-cursor={t(ui.view)}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
       >
