@@ -22,7 +22,7 @@ export default function StairDivider({ from, to, short = false }: { from: 'paper
   }, []);
 
   return (
-    <div ref={ref} aria-hidden className={`flex ${short ? 'h-[10vh]' : 'h-[18vh]'} items-end ${from === 'paper' ? 'bg-paper' : 'bg-ink'}`}>
+    <div ref={ref} aria-hidden className={`flex ${short ? 'h-[7vh]' : 'h-[18vh]'} items-end ${from === 'paper' ? 'bg-paper' : 'bg-ink'}`}>
       {steps.map((_, i) => (
         <div
           key={i}
