@@ -83,14 +83,14 @@ export default function Header() {
         {site.monogram}
       </button>
 
-      <nav className={`absolute left-1/2 hidden -translate-x-1/2 rounded-md p-1 backdrop-blur-md transition-colors duration-500 md:flex ${pillBg}`}>
+      <nav className={`absolute left-1/2 hidden -translate-x-1/2 gap-0.5 rounded-lg p-1.5 backdrop-blur-md transition-colors duration-500 md:flex ${pillBg}`}>
         {links.map((link) => {
           const isActive = onHome && active === link.id;
           return (
             <button
               key={link.id}
               onClick={() => go(link.id)}
-              className={`rounded px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`rounded-md px-4 py-2 text-[15px] font-medium transition-colors ${
                 isActive ? (dark ? 'bg-paper text-ink' : 'bg-ink text-paper') : 'hover:opacity-60'
               }`}
             >
