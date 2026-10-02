@@ -45,7 +45,7 @@ export function ServiceList() {
 
   return (
     <section className="gutter grid bg-paper pb-10 pt-20 sm:grid-cols-2 sm:pb-[4vh] sm:pt-[2vh]">
-      <Lines key={`label-${lang}`} lines={[t(expertise.listLabel)]} className="display mb-10 h-fit text-[clamp(3.2rem,min(6.5vw,11vh),8.5rem)] sm:mb-0 sm:pr-8" />
+      <Lines key={`label-${lang}`} lines={[t(expertise.listLabel)]} className="display mb-10 h-fit text-[clamp(3.2rem,min(6.5vw,11vh),8.5rem)] sm:sticky sm:top-24 sm:mb-0 sm:pr-8" />
       <ul ref={listRef}>
         {expertise.list[lang].map((item, i) => {
           const dist = Math.abs(i - active);

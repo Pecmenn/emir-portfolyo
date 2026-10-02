@@ -16,7 +16,10 @@ export function Lines({ lines, className = '', as: Tag = 'h2' }: { lines: string
       });
     }, ref);
     return () => ctx.revert();
-  }, [lines]);
+    // Dizi her çizimde yeniden oluşabilir; animasyon yalnızca metin gerçekten değişince yeniden kurulur,
+    // yoksa üst bileşen her güncellendiğinde (ör. kaydırma) animasyon baştan başlar
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lines.join('\n')]);
 
   return (
     <Tag ref={ref} className={className}>
