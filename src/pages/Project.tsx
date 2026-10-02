@@ -13,6 +13,11 @@ function Cover({ project }: { project: ProjectType }) {
   const { coverReady } = useTransition();
   const ref = useRef<HTMLElement>(null);
 
+  // Yalnızca videolu projede beklenecek bir kapak görseli yok; geçiş animasyonu hemen devam etsin
+  useEffect(() => {
+    if (!project.cover) coverReady();
+  }, [project.cover, coverReady]);
+
   useLayoutEffect(() => {
     if (reducedMotion) return;
     const ctx = gsap.context(() => {
@@ -29,18 +34,20 @@ function Cover({ project }: { project: ProjectType }) {
 
   return (
     <section ref={ref} data-theme="dark" className="relative h-[100svh] overflow-hidden bg-ink text-paper">
-      <img
-        data-cover-img
-        src={project.cover}
-        alt={project.title}
-        onLoad={coverReady}
-        onError={coverReady}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+      {project.cover && (
+        <img
+          data-cover-img
+          src={project.cover}
+          alt={project.title}
+          onLoad={coverReady}
+          onError={coverReady}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
       {/* Kapak videosu görselin üstünde oynar; geçiş animasyonu görsel üzerinden yapıldığı için görsel altta kalır */}
       {project.coverVideo && (
         <div data-cover-img className="absolute inset-0">
-          <AutoVideo src={project.coverVideo} poster={project.cover} className="h-full w-full object-cover" />
+          <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
         </div>
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />

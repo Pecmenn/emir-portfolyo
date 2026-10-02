@@ -52,17 +52,23 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       const centerW = Math.min(vw * 0.26, 420);
       const centerH = centerW / ratio;
 
-      clone.src = cover;
-      gsap.set(clone, { display: 'block', left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+      // Kapak görseli olmayan (yalnızca videolu) projelerde görsel uçuşu atlanır, sadece renk perdesi kullanılır
+      const hasCover = !!cover;
+      if (hasCover) {
+        clone.src = cover;
+        gsap.set(clone, { display: 'block', left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+      }
       gsap.set(overlay, { display: 'block', clipPath: 'inset(100% 0% 0% 0%)' });
 
       const out = gsap.timeline();
       out.to(overlay, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.6, ease: 'power3.inOut' }, 0);
-      out.to(
-        clone,
-        { left: (vw - centerW) / 2, top: (vh - centerH) / 2, width: centerW, height: centerH, duration: 0.8, ease: 'power3.inOut' },
-        0,
-      );
+      if (hasCover) {
+        out.to(
+          clone,
+          { left: (vw - centerW) / 2, top: (vh - centerH) / 2, width: centerW, height: centerH, duration: 0.8, ease: 'power3.inOut' },
+          0,
+        );
+      }
       await out;
 
       const ready = new Promise<void>((resolve) => {
@@ -76,8 +82,8 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       await nextFrame();
 
       const reveal = gsap.timeline();
-      reveal.to(clone, { left: 0, top: 0, width: vw, height: vh, duration: 0.9, ease: 'expo.inOut' }, 0);
-      reveal.to(overlay, { opacity: 0, duration: 0.3 }, 0.75);
+      if (hasCover) reveal.to(clone, { left: 0, top: 0, width: vw, height: vh, duration: 0.9, ease: 'expo.inOut' }, 0);
+      reveal.to(overlay, { opacity: 0, duration: hasCover ? 0.3 : 0.6 }, hasCover ? 0.75 : 0);
       await reveal;
 
       gsap.set(clone, { display: 'none' });

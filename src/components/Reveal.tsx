@@ -75,17 +75,19 @@ export function RevealImage({
 
   return (
     <div ref={ref} className={`relative overflow-hidden bg-black/5 ${className}`}>
-      <img
-        src={src}
-        alt={alt}
-        loading="lazy"
-        onLoad={() => {
-          refreshSoon();
-          onLoad?.();
-        }}
-        className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
-      />
-      {video && <AutoVideo src={video} poster={src} className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`} />}
+      {src && (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          onLoad={() => {
+            refreshSoon();
+            onLoad?.();
+          }}
+          className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
+        />
+      )}
+      {video && <AutoVideo src={video} poster={src || undefined} className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`} />}
     </div>
   );
 }

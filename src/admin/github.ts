@@ -172,5 +172,29 @@ export function createClient(token: string) {
   };
 }
 
+// Yerel mod: panel localhost'ta açıkken (geliştirme sunucusu) içerik doğrudan proje dosyalarından okunur
+// ve dosyalara yazılır; giriş gerekmez. ?github ile yerelde de GitHub'a bağlanılabilir.
+export const LOCAL_MODE =
+  import.meta.env.DEV && ['localhost', '127.0.0.1'].includes(window.location.hostname) && !new URLSearchParams(window.location.search).has('github');
+
+export function createLocalClient(): GitHubClient {
+  async function call<T>(path: string, init?: RequestInit): Promise<T> {
+    const res = await fetch(path, { cache: 'no-store', ...init });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw new GitHubError(body.message || `Yerel istek başarısız (${res.status})`, res.status);
+    return body as T;
+  }
+  return {
+    user: async () => ({ login: 'yerel', avatar_url: '/admin-logo.svg', name: 'Yerel' }),
+    canWrite: async () => true,
+    readJSON: <T,>(path: string) => call<T>(`/__local-admin/file?path=${encodeURIComponent(path)}`),
+    listDir: (path: string) => call(`/__local-admin/dir?path=${encodeURIComponent(path)}`),
+    commit: async (changes: FileChange[], message: string) => {
+      await call('/__local-admin/commit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ changes, message }) });
+      return 'yerel';
+    },
+  };
+}
+
 export type FileChange = { path: string; text?: string; base64?: string; delete?: boolean };
 export type GitHubClient = ReturnType<typeof createClient>;

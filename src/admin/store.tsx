@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { Project } from '../content';
-import { SITE_URL, type FileChange, type GitHubClient } from './github';
+import { LOCAL_MODE, SITE_URL, type FileChange, type GitHubClient } from './github';
 
 export type Bi = { tr: string; en: string };
 export type Lines = { tr: string[]; en: string[] };
@@ -168,7 +168,7 @@ export function AdminProvider({
         );
         await client.commit(resolved, message);
         setContent((prev) => ({ ...prev, ...next }));
-        notify('Kaydedildi. Site yaklaşık 1 dakika içinde güncellenecek.');
+        notify(LOCAL_MODE ? 'Kaydedildi. Değişiklik bilgisayarındaki dosyalara yazıldı, yerel site anında güncellendi.' : 'Kaydedildi. Site yaklaşık 1 dakika içinde güncellenecek.');
         return true;
       } catch (err) {
         notify(err instanceof Error ? `Kaydedilemedi: ${err.message}` : 'Kaydedilemedi.', 'error');

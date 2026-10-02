@@ -224,6 +224,8 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
     if (!draft.title.trim()) return notify('Lütfen proje adını yazın.', 'error');
     if (!slug) return notify('Proje adından sayfa adresi oluşturulamadı; harf veya rakam içeren bir ad yazın.', 'error');
     if (isNew && content.projects.some((p) => p.slug === slug)) return notify('Bu adla bir proje zaten var. Farklı bir ad deneyin.', 'error');
+    if (draft.coverVideo && !draft.cover)
+      notify('İpucu: kapak görseli de ekleyin. Video yüklenene kadar ve proje açılış animasyonunda o görünür.', 'error');
     const project: Project = { ...draft, slug };
     const changes = [{ path: PATHS.project(slug), text: toJSON(project) }, ...pendingFor(project)];
     const projects = isNew ? sortProjects([...content.projects, project]) : content.projects.map((p) => (p.slug === slug ? project : p));

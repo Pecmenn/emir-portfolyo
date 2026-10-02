@@ -24,7 +24,13 @@ function SortableCard({ project, index }: { project: Project; index: number }) {
     >
       <a href={href('projeler', project.slug)} className="block">
         <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-paper">
-          {project.cover && <img src={src(project.cover)} alt="" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />}
+          {project.cover ? (
+            <img src={src(project.cover)} alt="" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
+          ) : project.coverVideo ? (
+            <video src={src(project.coverVideo)} muted loop playsInline autoPlay className="h-full w-full object-cover" />
+          ) : (
+            <span className="grid h-full place-items-center text-sm font-medium text-ink/40">Kapak görseli yok</span>
+          )}
           {project.featured && (
             <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[11px] font-bold backdrop-blur">
               <Star size={12} className="fill-accent-strong text-accent-strong" /> Girişte

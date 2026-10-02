@@ -1,6 +1,6 @@
 import { ExternalLink, FolderKanban, House, Loader2, LogOut, Settings as SettingsIcon, Type } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createClient, forgetToken, GitHubError, login, savedToken, SITE_URL } from './github';
+import { createClient, createLocalClient, forgetToken, GitHubError, LOCAL_MODE, login, savedToken, SITE_URL } from './github';
 import { HomeSectionEditor, HomeSectionsList } from './pages/HomeSections';
 import Login from './pages/Login';
 import ProjectEditor from './pages/ProjectEditor';
@@ -54,10 +54,23 @@ function Shell() {
             <a href={SITE_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-ink/60 hover:bg-black/[0.05] hover:text-ink">
               <ExternalLink size={16} /> <span className="hidden sm:inline">Siteyi aç</span>
             </a>
-            <img src={user.avatar_url} alt={user.login} title={user.login} className="ml-1 h-8 w-8 rounded-full" />
-            <button type="button" onClick={logout} aria-label="Çıkış yap" title="Çıkış yap" className="grid h-9 w-9 place-items-center rounded-xl text-ink/50 hover:bg-black/[0.05] hover:text-ink">
-              <LogOut size={17} />
-            </button>
+            {user.login === 'yerel' || user.login === 'deneme' ? (
+              // Yerel modda giriş yok; kayıtlar bilgisayardaki dosyalara gider
+              <span
+                title={user.login === 'yerel' ? 'Kayıtlar bilgisayardaki dosyalara yazılır ve yerel commit olarak birikir; canlıya alınana kadar yayına çıkmaz.' : 'Deneme modu: kaydetme kapalı.'}
+                className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1.5 text-xs font-bold text-accent-strong"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-accent-strong" />
+                {user.login === 'yerel' ? 'Yerel mod' : 'Deneme'}
+              </span>
+            ) : (
+              <>
+                <img src={user.avatar_url} alt={user.login} title={user.login} className="ml-1 h-8 w-8 rounded-full" />
+                <button type="button" onClick={logout} aria-label="Çıkış yap" title="Çıkış yap" className="grid h-9 w-9 place-items-center rounded-xl text-ink/50 hover:bg-black/[0.05] hover:text-ink">
+                  <LogOut size={17} />
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -83,45 +96,43 @@ type State =
   | { status: 'ready'; content: Content; user: { login: string; avatar_url: string }; token: string }
   | { status: 'error'; message: string };
 
-// Yalnızca geliştirme sunucusunda: /admin?demo ile giriş yapmadan, yerel içerikle arayüzü dener. Kaydetme kapalıdır.
+// Yalnızca geliştirme sunucusunda: /admin?demo arayüzü yerel içerikle dener, kaydetme kapalıdır
 const DEMO = import.meta.env.DEV && new URLSearchParams(window.location.search).has('demo');
 
-async function demoContent(): Promise<Content> {
-  const files = import.meta.glob<unknown>('../content/**/*.json', { eager: true, import: 'default' });
-  const get = <T,>(name: string) => files[`../content/${name}.json`] as T;
-  const projects = Object.entries(files)
-    .filter(([path]) => path.includes('/projects/'))
-    .map(([, value]) => value) as Content['projects'];
-  return {
-    site: get('site'),
-    about: get('about'),
-    work: get('work'),
-    expertise: get('expertise'),
-    contact: get('contact'),
-    ui: get('ui'),
-    projects: [...projects].sort((a, b) => (a.order ?? 99) - (b.order ?? 99)),
-  };
+// Yerel mod (localhost) ve deneme modu: giriş yok, içerik proje dosyalarından okunur
+function LocalApp({ readOnly }: { readOnly: boolean }) {
+  const client = useMemo(() => {
+    const local = createLocalClient();
+    if (!readOnly) return local;
+    return {
+      ...local,
+      commit: async () => {
+        throw new Error('Deneme modunda kaydetme kapalı.');
+      },
+    };
+  }, [readOnly]);
+  const [content, setContent] = useState<Content | null>(null);
+  const [error, setError] = useState('');
+  useEffect(() => {
+    loadContent(client).then(setContent, (err) => setError(err instanceof Error ? err.message : 'İçerik okunamadı.'));
+  }, [client]);
+
+  if (error)
+    return (
+      <div className="grid min-h-[100svh] place-items-center bg-paper p-6 text-center text-ink/60">
+        <p>Yerel içerik okunamadı: {error}. Geliştirme sunucusunu (npm run dev) yeniden başlatmayı deneyin.</p>
+      </div>
+    );
+  if (!content) return null;
+  return (
+    <AdminProvider client={client} initial={content} user={{ login: readOnly ? 'deneme' : 'yerel', avatar_url: '/admin-logo.svg' }} onLogout={() => {}}>
+      <Shell />
+    </AdminProvider>
+  );
 }
 
-const demoClient = {
-  commit: async () => {
-    throw new Error('Deneme modunda kaydetme kapalı.');
-  },
-} as unknown as ReturnType<typeof createClient>;
-
 export default function App() {
-  const [demo, setDemo] = useState<Content | null>(null);
-  useEffect(() => {
-    if (DEMO) demoContent().then(setDemo);
-  }, []);
-  if (DEMO) {
-    if (!demo) return null;
-    return (
-      <AdminProvider client={demoClient} initial={demo} user={{ login: 'deneme', avatar_url: '/admin-logo.svg' }} onLogout={() => {}}>
-        <Shell />
-      </AdminProvider>
-    );
-  }
+  if (DEMO || LOCAL_MODE) return <LocalApp readOnly={DEMO} />;
   return <LiveApp />;
 }
 

@@ -97,11 +97,11 @@ export default function Hero({ ready }: { ready: boolean }) {
       >
         {featured.map((p, i) => (
           <div key={p.slug} ref={(el) => (slidesRef.current[i] = el)} className="absolute inset-0">
-            <img src={p.cover} alt={p.title} draggable={false} className="h-full w-full scale-105 object-cover" />
+            {p.cover && <img src={p.cover} alt={p.title} draggable={false} className="h-full w-full scale-105 object-cover" />}
             {p.coverVideo && (
               <AutoVideo
                 src={p.coverVideo}
-                poster={p.cover}
+                poster={p.cover || undefined}
                 active={ready && i === index}
                 muted={!(soundOn && i === index)}
                 className="absolute inset-0 h-full w-full scale-105 object-cover"
