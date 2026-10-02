@@ -32,7 +32,7 @@ export default function Marquee({ items }: { items: string[] }) {
       {items.map((item) => (
         <span key={item} className="flex items-center">
           <Star className="mx-[3vw] h-[5vw] w-[5vw] min-h-8 min-w-8 text-accent" />
-          <span className="display whitespace-nowrap text-[clamp(3rem,min(8vw,9vh),8rem)]">{item}</span>
+          <span className="display whitespace-nowrap text-[clamp(3rem,min(8vw,8vh),8rem)]">{item}</span>
         </span>
       ))}
     </div>
