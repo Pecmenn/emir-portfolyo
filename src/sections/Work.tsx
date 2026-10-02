@@ -1,10 +1,61 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { projects, ui, work, type Project } from '../content';
 import { Star } from '../components/Marquee';
 import { Lines, RevealImage } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
+
+// Sloganın puntosu bulunduğu alana göre kendiliğinden ayarlanır: en uzun satır sütunun genişliğini doldurur;
+// satır sayısı artarsa geniş ekranda sütun yüksekliğinin %40'ını geçmeyecek kadar küçülür (altındaki kart sığsın diye)
+function FitSlogan({ lines }: { lines: string[] }) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState<number>();
+  const text = lines.join('\n');
+
+  useLayoutEffect(() => {
+    const box = boxRef.current;
+    const column = box?.parentElement;
+    if (!box || !column) return;
+    // Satır genişliklerini 100px puntoda ölçmek için görünmez bir kopya
+    const probe = document.createElement('span');
+    probe.className = 'display';
+    Object.assign(probe.style, { position: 'absolute', left: '-9999px', top: '0', visibility: 'hidden', whiteSpace: 'nowrap', fontSize: '100px' });
+    document.body.appendChild(probe);
+
+    const fit = () => {
+      const widest = Math.max(
+        1,
+        ...lines.map((line) => {
+          probe.textContent = line || ' ';
+          return probe.offsetWidth;
+        }),
+      );
+      let next = (box.clientWidth / widest) * 100 * 0.98;
+      if (window.matchMedia('(min-width: 640px)').matches) {
+        next = Math.min(next, (column.clientHeight * 0.4) / (Math.max(lines.length, 1) * 1.15));
+      }
+      setSize(Math.round(Math.max(24, Math.min(next, 180))));
+    };
+
+    fit();
+    document.fonts?.ready.then(fit);
+    const observer = new ResizeObserver(fit);
+    observer.observe(box);
+    observer.observe(column);
+    return () => {
+      observer.disconnect();
+      probe.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
+
+  return (
+    <div ref={boxRef} className="pt-6">
+      <Lines as="p" lines={lines} className="display leading-[1.05]" style={size ? { fontSize: size } : undefined} />
+    </div>
+  );
+}
 
 // fill: geniş ekranda görsel sabit oran yerine bulunduğu sütunda kalan yüksekliği doldurur
 function Card({
@@ -100,12 +151,7 @@ export default function Work() {
                   className={`flex flex-col gap-10 sm:col-span-5 sm:row-start-1 sm:gap-12 ${mirrored ? 'sm:col-start-1' : 'sm:col-start-8'}`}
                 >
                   {slogan && (
-                    <Lines
-                      key={lang}
-                      as="p"
-                      lines={slogan[lang]}
-                      className={`display pt-6 text-[clamp(1.6rem,2.4vw,3rem)] leading-[1.05] ${mirrored ? 'sm:mr-[20%]' : 'sm:ml-[20%]'}`}
-                    />
+                    <FitSlogan key={lang} lines={slogan[lang]} />
                   )}
                   <Card project={small} index={r * 2 + 1} ratio="aspect-[5/4]" fill />
                 </div>

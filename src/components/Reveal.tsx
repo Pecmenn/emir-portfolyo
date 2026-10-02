@@ -1,9 +1,19 @@
-import { useLayoutEffect, useRef, type ReactNode } from 'react';
+import { useLayoutEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import AutoVideo from './AutoVideo';
 import { gsap, reducedMotion, refreshSoon } from '../lib/scroll';
 
 // Satırlar maskenin altından sırayla yukarı kayar
-export function Lines({ lines, className = '', as: Tag = 'h2' }: { lines: string[]; className?: string; as?: 'h1' | 'h2' | 'p' }) {
+export function Lines({
+  lines,
+  className = '',
+  as: Tag = 'h2',
+  style,
+}: {
+  lines: string[];
+  className?: string;
+  as?: 'h1' | 'h2' | 'p';
+  style?: CSSProperties;
+}) {
   const ref = useRef<HTMLHeadingElement>(null);
   useLayoutEffect(() => {
     if (reducedMotion) return;
@@ -23,7 +33,7 @@ export function Lines({ lines, className = '', as: Tag = 'h2' }: { lines: string
   }, [lines.join('\n')]);
 
   return (
-    <Tag ref={ref} className={className}>
+    <Tag ref={ref} className={className} style={style}>
       {lines.map((line, i) => (
         <span key={`${line}-${i}`} className="line-mask">
           <span data-line className="block">
