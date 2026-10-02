@@ -44,7 +44,7 @@ export default function Contact() {
     'w-full border-b border-ink/20 bg-transparent py-3 text-lg outline-none transition-colors placeholder:text-mute focus:border-ink';
 
   return (
-    <section id="iletisim" className="gutter bg-paper py-20 sm:py-[14vh]">
+    <section id="iletisim" className="gutter bg-paper pb-20 pt-10 sm:pb-[14vh] sm:pt-[6vh]">
       <p className="mb-8 text-sm font-medium text-mute">{t(contact.label)}</p>
       <div className="grid gap-16 lg:grid-cols-2">
         <div>
