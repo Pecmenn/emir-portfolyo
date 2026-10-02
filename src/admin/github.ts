@@ -2,9 +2,12 @@
 
 export const REPO = 'Pecmenn/emir-portfolyo';
 export const BRANCH = 'main';
-// Netlify'da GitHub OAuth sağlayıcısının tanımlı olduğu site; giriş penceresi bu site adına açılır
+// GitHub girişi Netlify'nın OAuth hizmeti üzerinden yapılır (site Cloudflare'da yayında olsa da); giriş bu Netlify sitesi adına açılır
 export const SITE_ID = 'emir-portfolyo.netlify.app';
-export const SITE_URL = 'https://emir-portfolyo.netlify.app';
+// Panel, yayındaki sitenin hangi adreste açıldığını kendisi bilir (Cloudflare Pages veya ileride kendi alan adı).
+// Yerelde çalışırken görseller canlı siteden gösterilir.
+const LIVE_URL = 'https://emir-portfolyo.pages.dev';
+export const SITE_URL = ['localhost', '127.0.0.1'].includes(window.location.hostname) ? LIVE_URL : window.location.origin;
 
 const API = 'https://api.github.com';
 const TOKEN_KEY = 'admin-token';

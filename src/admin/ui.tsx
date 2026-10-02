@@ -268,8 +268,9 @@ export function ImageField({ label, hint, value, onChange, aspect = 'aspect-[16/
   );
 }
 
-const MAX_VIDEO_MB = 40;
-const WARN_VIDEO_MB = 15;
+// Cloudflare Pages dosya başına en fazla 25 MB kabul eder
+const MAX_VIDEO_MB = 25;
+const WARN_VIDEO_MB = 12;
 
 // Video: ya dosya yüklenir (kısa döngüler) ya da başka bir servisteki doğrudan video bağlantısı yapıştırılır
 export function VideoField({ label, hint, value, onChange, poster }: { label: string; hint?: string; value: string | undefined; onChange: (v: string) => void; poster?: string }) {
