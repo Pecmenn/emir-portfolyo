@@ -138,16 +138,16 @@ export default function Hero({ ready }: { ready: boolean }) {
             </span>
           ))}
         </h1>
-        <div className="grid pb-4 text-right text-sm font-medium">
+        <div className="grid pb-[1.2vw] text-right font-medium">
           {featured.map((p, i) => (
             <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="[grid-area:1/1]">
               <span className="line-mask">
-                <span data-hero-line className="block">
+                <span data-hero-line className="display block text-[clamp(1.75rem,2.6vw,3.25rem)]">
                   {p.year}
                 </span>
               </span>
               <span className="line-mask">
-                <span data-hero-line className="block">
+                <span data-hero-line className="mt-1 block text-[clamp(1rem,1.3vw,1.6rem)] leading-tight text-paper/85">
                   {t(p.discipline)}
                 </span>
               </span>
