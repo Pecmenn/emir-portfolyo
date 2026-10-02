@@ -1,0 +1,90 @@
+{
+  "order": 2,
+  "slug": "pulse-uygulama",
+  "title": "Pulse",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "https://picsum.photos/seed/pulse-cover/2000/1300",
+  "summary": {
+    "tr": "Spor kulüpleri için üyelik ve rezervasyon uygulamasının uçtan uca yeniden tasarımı.",
+    "en": "An end-to-end redesign of a membership and booking app for sports clubs."
+  },
+  "client": "Pulse Club",
+  "role": {
+    "tr": "Ürün tasarımcısı",
+    "en": "Product designer"
+  },
+  "services": {
+    "tr": "UX araştırması, arayüz, tasarım sistemi",
+    "en": "UX research, UI, design system"
+  },
+  "intro": {
+    "tr": "Kullanıcılar bir dersi ayırtmak için ortalama altı ekran geziyordu. Akışı yeniden kurgulayıp rezervasyonu iki dokunuşa indirdik.",
+    "en": "Users went through six screens on average to book a class. We rebuilt the flow and cut booking down to two taps."
+  },
+  "caseStudy": {
+    "challenge": {
+      "tr": "Dağınık menüler ve tutarsız bileşenler nedeniyle rezervasyonların yarısı yarıda kalıyordu.",
+      "en": "Scattered menus and inconsistent components meant half of all bookings were abandoned."
+    },
+    "process": {
+      "tr": "12 kullanıcı görüşmesi, kart sıralama testleri ve üç tur prototip testiyle yeni bilgi mimarisini doğruladık.",
+      "en": "We validated the new information architecture with 12 user interviews, card sorting and three rounds of prototype testing."
+    },
+    "result": {
+      "tr": "Yeni akış ve 80 bileşenlik tasarım sistemiyle ürün ekibi de daha hızlı geliştirme yapmaya başladı.",
+      "en": "With the new flow and an 80-component design system, the product team also started shipping faster."
+    },
+    "metrics": [
+      {
+        "value": "%42",
+        "label": {
+          "tr": "daha fazla tamamlanan rezervasyon",
+          "en": "more completed bookings"
+        }
+      },
+      {
+        "value": "2",
+        "label": {
+          "tr": "dokunuşta rezervasyon",
+          "en": "taps to book"
+        }
+      },
+      {
+        "value": "4,8",
+        "label": {
+          "tr": "mağaza puanı",
+          "en": "store rating"
+        }
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "type": "pair",
+      "image1": "https://picsum.photos/seed/pulse-1/1400/1700",
+      "image2": "https://picsum.photos/seed/pulse-2/1000/1200"
+    },
+    {
+      "type": "full",
+      "image": "https://picsum.photos/seed/pulse-3/2200/1300",
+      "quote": {
+        "tr": "İki dokunuş, sıfır sürtünme.",
+        "en": "Two taps, zero friction."
+      }
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Tasarım sistemi açık ve koyu temada aynı bileşenlerle çalışıyor.",
+        "en": "The design system runs the same components in light and dark mode."
+      },
+      "image": "https://picsum.photos/seed/pulse-4/1600/1800",
+      "side": "left"
+    }
+  ],
+  "featured": true
+}

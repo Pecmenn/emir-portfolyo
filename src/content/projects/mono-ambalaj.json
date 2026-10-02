@@ -1,0 +1,44 @@
+{
+  "order": 5,
+  "slug": "mono-ambalaj",
+  "title": "Mono",
+  "discipline": {
+    "tr": "Marka Kimliği",
+    "en": "Brand Identity"
+  },
+  "year": "2024",
+  "cover": "https://picsum.photos/seed/mono-cover/2000/1300",
+  "summary": {
+    "tr": "Butik bir kahve kavurucusu için tek renkli ambalaj ve mağaza kimliği.",
+    "en": "Single-colour packaging and retail identity for a boutique coffee roaster."
+  },
+  "client": "Mono Kahve",
+  "role": {
+    "tr": "Marka ve ambalaj tasarımcısı",
+    "en": "Brand & packaging designer"
+  },
+  "services": {
+    "tr": "Kimlik, ambalaj, mağaza grafikleri",
+    "en": "Identity, packaging, retail graphics"
+  },
+  "intro": {
+    "tr": "Raflarda bağıran ambalajların arasında sessiz kalarak öne çıkmayı hedefledik. Tek renk, tek yazı karakteri ve güçlü bir ızgara kullandık.",
+    "en": "We aimed to stand out by staying quiet among loud shelves, using one colour, one typeface and a strong grid."
+  },
+  "gallery": [
+    {
+      "type": "pair",
+      "image1": "https://picsum.photos/seed/mono-1/1400/1700",
+      "image2": "https://picsum.photos/seed/mono-2/1000/1200"
+    },
+    {
+      "type": "full",
+      "image": "https://picsum.photos/seed/mono-3/2200/1300",
+      "quote": {
+        "tr": "Sessizlik de bir ses.",
+        "en": "Silence is a voice too."
+      }
+    }
+  ],
+  "featured": false
+}

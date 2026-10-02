@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>İçerik Yönetimi</title>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </head>
+  <body>
+    <script>
+      // Panel yapılandırması. Alanlar src/content/ altındaki JSON dosyalarıyla birebir eşleşir.
+
+      // Yayındaki panel GitHub reposuna yazar. Repo oluşturulunca aşağıdaki değeri "kullanici/repo" olarak güncelleyin.
+      const REPO = 'KULLANICI_ADI/REPO_ADI';
+
+      // Her metin Türkçe ve İngilizce iki alandan oluşur
+      const t = (name, label, opts = {}) => ({
+        name,
+        label,
+        widget: 'object',
+        collapsed: false,
+        required: opts.required ?? true,
+        hint: opts.hint,
+        fields: [
+          { name: 'tr', label: 'Türkçe', widget: opts.long ? 'text' : 'string', required: opts.required ?? true },
+          { name: 'en', label: 'English', widget: opts.long ? 'text' : 'string', required: opts.required ?? true },
+        ],
+      });
+
+      // Satır satır gösterilen metinler (her satır ayrı öğe)
+      const lines = (name, label, hint) => ({
+        name,
+        label,
+        widget: 'object',
+        collapsed: false,
+        hint,
+        fields: [
+          { name: 'tr', label: 'Türkçe', widget: 'list', field: { name: 'line', label: 'Satır', widget: 'string' } },
+          { name: 'en', label: 'English', widget: 'list', field: { name: 'line', label: 'Line', widget: 'string' } },
+        ],
+      });
+
+      const image = (name, label, hint) => ({ name, label, widget: 'image', hint, choose_url: true });
+
+      const projectFields = [
+        { name: 'order', label: 'Sıra', widget: 'number', value_type: 'int', default: 99, hint: 'Küçük sayı önce gösterilir.' },
+        { name: 'title', label: 'Proje adı', widget: 'string' },
+        {
+          name: 'slug',
+          label: 'Adres (slug)',
+          widget: 'string',
+          hint: 'Sayfa adresi: /proje/adres. Yalnızca küçük harf, rakam ve tire.',
+          pattern: ['^[a-z0-9-]+$', 'Yalnızca küçük harf, rakam ve tire kullanın.'],
+        },
+        { name: 'featured', label: 'Girişte öne çıkar', widget: 'boolean', default: false, hint: 'Açıksa ana sayfanın giriş slider’ında görünür.' },
+        t('discipline', 'Disiplin', { hint: 'Ör. Marka Kimliği / UI/UX / Motion / Dijital Pazarlama' }),
+        { name: 'year', label: 'Yıl', widget: 'string' },
+        image('cover', 'Kapak görseli', 'Yatay, en az 2000px genişlik önerilir.'),
+        t('summary', 'Kısa özet', { long: true, hint: 'Proje kapağında başlığın yanında görünür.' }),
+        { name: 'client', label: 'Müşteri', widget: 'string' },
+        t('role', 'Rolüm'),
+        t('services', 'Kapsam'),
+        t('intro', 'Giriş paragrafı', { long: true }),
+        {
+          name: 'caseStudy',
+          label: 'Vaka çalışması',
+          widget: 'object',
+          required: false,
+          collapsed: true,
+          hint: 'UI/UX ve pazarlama projeleri için. Boş bırakılırsa bu bölüm sayfada görünmez.',
+          fields: [
+            t('challenge', 'Problem', { long: true, required: false }),
+            t('process', 'Süreç', { long: true, required: false }),
+            t('result', 'Sonuç', { long: true, required: false }),
+            {
+              name: 'metrics',
+              label: 'Metrikler',
+              widget: 'list',
+              required: false,
+              summary: '{{fields.value}}',
+              fields: [{ name: 'value', label: 'Değer', widget: 'string', hint: 'Ör. %42, 3,6x' }, t('label', 'Açıklama')],
+            },
+          ],
+        },
+        {
+          name: 'gallery',
+          label: 'Galeri',
+          widget: 'list',
+          required: false,
+          typeKey: 'type',
+          types: [
+            {
+              name: 'pair',
+              label: 'İki görsel',
+              widget: 'object',
+              summary: 'İki görsel',
+              fields: [image('image1', 'Büyük görsel (solda)'), image('image2', 'Küçük görsel (sağda)')],
+            },
+            {
+              name: 'text-image',
+              label: 'Metin + görsel',
+              widget: 'object',
+              summary: 'Metin + görsel',
+              fields: [
+                t('text', 'Metin', { long: true }),
+                image('image', 'Görsel'),
+                {
+                  name: 'side',
+                  label: 'Görselin konumu',
+                  widget: 'select',
+                  default: 'right',
+                  options: [
+                    { label: 'Sağda', value: 'right' },
+                    { label: 'Solda', value: 'left' },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'full',
+              label: 'Tam ekran görsel',
+              widget: 'object',
+              summary: 'Tam ekran görsel',
+              fields: [image('image', 'Görsel'), t('quote', 'Üzerindeki alıntı', { required: false })],
+            },
+          ],
+        },
+      ];
+
+      const uiFields = [
+        {
+          name: 'nav',
+          label: 'Menü',
+          widget: 'object',
+          fields: [t('work', 'İşler'), t('about', 'Hakkımda'), t('expertise', 'Uzmanlık'), t('contact', 'İletişim')],
+        },
+        t('cv', 'CV butonu'),
+        t('loading', 'Yükleme ekranı'),
+        t('drag', 'Giriş: sürükle yazısı'),
+        t('navigate', 'Giriş: gezin yazısı'),
+        t('featured', 'Giriş: sağ alt etiket'),
+        t('view', 'İmleç etiketi (proje)'),
+        t('open', 'İmleç etiketi (sıradaki proje)'),
+        t('allWork', 'İşler başlığı'),
+        t('client', 'Proje: müşteri etiketi'),
+        t('role', 'Proje: rol etiketi'),
+        t('services', 'Proje: kapsam etiketi'),
+        t('credits', 'Proje: künye butonu'),
+        t('challenge', 'Vaka: problem başlığı'),
+        t('process', 'Vaka: süreç başlığı'),
+        t('result', 'Vaka: sonuç başlığı'),
+        t('next', 'Sıradaki proje etiketi'),
+        t('keepScrolling', 'Kaydırmaya devam et yazısı'),
+        t('backToTop', 'Başa dön'),
+        t('localTime', 'Yerel saat etiketi'),
+        t('sitemap', 'Site haritası başlığı'),
+        t('getInTouch', 'Alt bilgi: iletişim başlığı'),
+        t('follow', 'Alt bilgi: takip et başlığı'),
+        t('rights', 'Telif yazısı'),
+        t('notFound', '404 metni'),
+        t('home', '404: ana sayfa butonu'),
+      ];
+
+      CMS.init({
+        config: {
+          backend: { name: 'github', repo: REPO, branch: 'main', commit_messages: { update: 'İçerik: {{collection}} “{{slug}}” güncellendi' } },
+          // Bilgisayarınızda "npm run cms" açıkken panel doğrudan yerel dosyalara yazar
+          local_backend: true,
+          locale: 'tr',
+          site_url: '/',
+          display_url: '/',
+          media_folder: 'public/images',
+          public_folder: '/images',
+          collections: [
+            {
+              name: 'projects',
+              label: 'Projeler',
+              label_singular: 'Proje',
+              folder: 'src/content/projects',
+              format: 'json',
+              extension: 'json',
+              create: true,
+              delete: true,
+              slug: '{{fields.slug}}',
+              identifier_field: 'title',
+              summary: '{{order}}. {{title}} · {{year}}',
+              sortable_fields: ['order', 'title', 'year'],
+              preview_path: 'proje/{{slug}}',
+              fields: projectFields,
+            },
+            {
+              name: 'pages',
+              label: 'Site içeriği',
+              format: 'json',
+              files: [
+                {
+                  name: 'site',
+                  label: 'Genel bilgiler',
+                  file: 'src/content/site.json',
+                  fields: [
+                    { name: 'name', label: 'Ad Soyad', widget: 'string' },
+                    { name: 'monogram', label: 'Logo kısaltması', widget: 'string', hint: 'Sol üstte görünür. Ör. AS' },
+                    t('role', 'Unvan'),
+                    { name: 'email', label: 'E-posta', widget: 'string' },
+                    { name: 'location', label: 'Şehir', widget: 'string' },
+                    { name: 'timeZone', label: 'Saat dilimi', widget: 'string', hint: 'Alt bilgideki saat için. Ör. Europe/Istanbul' },
+                    {
+                      name: 'cv',
+                      label: 'CV (PDF)',
+                      widget: 'file',
+                      media_folder: '/public/cv',
+                      public_folder: '/cv',
+                      hint: 'Menüdeki ve Hakkımda bölümündeki "CV İndir" butonları bu dosyayı indirir.',
+                    },
+                    {
+                      name: 'formEndpoint',
+                      label: 'Form adresi',
+                      widget: 'string',
+                      required: false,
+                      hint: 'Ör. https://formspree.io/f/xxxx. Boşsa "Gönder" e-posta uygulamasını açar.',
+                    },
+                    {
+                      name: 'socials',
+                      label: 'Sosyal medya',
+                      widget: 'list',
+                      summary: '{{fields.label}}',
+                      fields: [
+                        { name: 'label', label: 'Ad', widget: 'string' },
+                        { name: 'href', label: 'Bağlantı', widget: 'string' },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'home',
+                  label: 'Ana sayfa bölümleri',
+                  file: 'src/content/home.json',
+                  fields: [
+                    {
+                      name: 'manifesto',
+                      label: 'Hakkımda',
+                      widget: 'object',
+                      fields: [
+                        t('label', 'Küçük başlık'),
+                        lines('lines', 'Büyük cümle', 'Her satır ayrı ayrı kayarak belirir.'),
+                        t('text', 'Paragraf', { long: true }),
+                      ],
+                    },
+                    {
+                      name: 'expertise',
+                      label: 'Uzmanlık',
+                      widget: 'object',
+                      fields: [
+                        lines('marquee', 'Kayan yazı', 'Koyu bölümde sonsuz kayan disiplin adları.'),
+                        t('listLabel', 'Hizmet listesi başlığı'),
+                        lines('list', 'Hizmetler', 'Kaydırdıkça ortadaki satır koyulaşır.'),
+                      ],
+                    },
+                    {
+                      name: 'contact',
+                      label: 'İletişim',
+                      widget: 'object',
+                      fields: [
+                        t('label', 'Küçük başlık'),
+                        lines('title', 'Büyük başlık', 'Her satır ayrı ayrı kayarak belirir.'),
+                        t('text', 'Paragraf', { long: true }),
+                        t('copy', 'Kopyala butonu'),
+                        t('copied', 'Kopyalandı mesajı'),
+                        {
+                          name: 'form',
+                          label: 'Form metinleri',
+                          widget: 'object',
+                          collapsed: true,
+                          fields: [
+                            t('name', 'Ad alanı'),
+                            t('email', 'E-posta alanı'),
+                            t('message', 'Mesaj alanı'),
+                            t('send', 'Gönder butonu'),
+                            t('sending', 'Gönderiliyor'),
+                            t('sent', 'Başarılı mesajı'),
+                            t('error', 'Hata mesajı'),
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                { name: 'ui', label: 'Arayüz metinleri', file: 'src/content/ui.json', fields: uiFields },
+              ],
+            },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

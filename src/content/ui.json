@@ -1,0 +1,120 @@
+{
+  "nav": {
+    "work": {
+      "tr": "İşler",
+      "en": "Work"
+    },
+    "about": {
+      "tr": "Hakkımda",
+      "en": "About"
+    },
+    "expertise": {
+      "tr": "Uzmanlık",
+      "en": "Expertise"
+    },
+    "contact": {
+      "tr": "İletişim",
+      "en": "Contact"
+    }
+  },
+  "cv": {
+    "tr": "CV İndir",
+    "en": "Download CV"
+  },
+  "loading": {
+    "tr": "Yükleniyor",
+    "en": "Loading"
+  },
+  "drag": {
+    "tr": "Keşfetmek için sürükle",
+    "en": "Drag to explore"
+  },
+  "navigate": {
+    "tr": "Gezin",
+    "en": "Navigate"
+  },
+  "featured": {
+    "tr": "Öne çıkan işler",
+    "en": "Featured work"
+  },
+  "view": {
+    "tr": "İncele",
+    "en": "View"
+  },
+  "open": {
+    "tr": "Aç",
+    "en": "Open"
+  },
+  "allWork": {
+    "tr": "Seçili işler",
+    "en": "Selected work"
+  },
+  "client": {
+    "tr": "Müşteri",
+    "en": "Client"
+  },
+  "role": {
+    "tr": "Rol",
+    "en": "Role"
+  },
+  "services": {
+    "tr": "Kapsam",
+    "en": "Scope"
+  },
+  "credits": {
+    "tr": "Proje künyesi",
+    "en": "Project credits"
+  },
+  "challenge": {
+    "tr": "Problem",
+    "en": "Challenge"
+  },
+  "process": {
+    "tr": "Süreç",
+    "en": "Process"
+  },
+  "result": {
+    "tr": "Sonuç",
+    "en": "Result"
+  },
+  "next": {
+    "tr": "Sıradaki proje",
+    "en": "Next project"
+  },
+  "keepScrolling": {
+    "tr": "Kaydırmaya devam et",
+    "en": "Keep scrolling"
+  },
+  "backToTop": {
+    "tr": "Başa dön",
+    "en": "Back to top"
+  },
+  "localTime": {
+    "tr": "Yerel saat",
+    "en": "Local time"
+  },
+  "sitemap": {
+    "tr": "Site haritası",
+    "en": "Sitemap"
+  },
+  "getInTouch": {
+    "tr": "Bana ulaşın",
+    "en": "Get in touch"
+  },
+  "follow": {
+    "tr": "Takip et",
+    "en": "Follow"
+  },
+  "rights": {
+    "tr": "Tüm hakları saklıdır.",
+    "en": "All rights reserved."
+  },
+  "notFound": {
+    "tr": "Sayfa bulunamadı.",
+    "en": "Page not found."
+  },
+  "home": {
+    "tr": "Ana sayfa",
+    "en": "Home"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "manifesto": {
+    "label": {
+      "tr": "Hakkımda",
+      "en": "About"
+    },
+    "lines": {
+      "tr": [
+        "Fikirleri marka,",
+        "arayüz ve hareketle",
+        "bir araya getiren",
+        "bir tasarımcıyım."
+      ],
+      "en": [
+        "A designer who",
+        "brings ideas together",
+        "through brand,",
+        "interface and motion."
+      ]
+    },
+    "text": {
+      "tr": "Marka kimliğinden ürün arayüzüne, hareketli tasarımdan performans kampanyalarına kadar uçtan uca çalışıyorum. Ekiplere hem stratejik bakış hem de üretim gücü katıyorum.",
+      "en": "I work end to end, from brand identity and product interfaces to motion design and performance campaigns, bringing both strategic thinking and hands-on craft to a team."
+    }
+  },
+  "expertise": {
+    "marquee": {
+      "tr": [
+        "Marka Kimliği",
+        "UI/UX",
+        "Motion",
+        "Dijital Pazarlama"
+      ],
+      "en": [
+        "Brand Identity",
+        "UI/UX",
+        "Motion",
+        "Digital Marketing"
+      ]
+    },
+    "listLabel": {
+      "tr": "Hizmetler, beceriler ve uzmanlık",
+      "en": "Services, skills and expertise"
+    },
+    "list": {
+      "tr": [
+        "Marka Stratejisi",
+        "Logo ve Kimlik",
+        "Tipografi Sistemleri",
+        "Ambalaj Tasarımı",
+        "UX Araştırması",
+        "Arayüz Tasarımı",
+        "Tasarım Sistemleri",
+        "Prototipleme",
+        "Web Tasarımı",
+        "Motion Grafik",
+        "3D ve CGI",
+        "Video Kurgu",
+        "Kampanya Kurgusu",
+        "Performans Reklamları",
+        "Sosyal Medya İçeriği",
+        "Ölçümleme ve Raporlama"
+      ],
+      "en": [
+        "Brand Strategy",
+        "Logo & Identity",
+        "Type Systems",
+        "Packaging Design",
+        "UX Research",
+        "Interface Design",
+        "Design Systems",
+        "Prototyping",
+        "Web Design",
+        "Motion Graphics",
+        "3D & CGI",
+        "Video Editing",
+        "Campaign Concepts",
+        "Performance Ads",
+        "Social Content",
+        "Analytics & Reporting"
+      ]
+    }
+  },
+  "contact": {
+    "label": {
+      "tr": "İletişim",
+      "en": "Contact"
+    },
+    "title": {
+      "tr": [
+        "Birlikte",
+        "çalışalım."
+      ],
+      "en": [
+        "Let's work",
+        "together."
+      ]
+    },
+    "text": {
+      "tr": "Tam zamanlı, uzaktan ya da hibrit pozisyonlara açığım. Bir mesaj bırakın, en geç iki iş günü içinde dönerim.",
+      "en": "I'm open to full-time, remote or hybrid roles. Leave a message and I'll get back to you within two working days."
+    },
+    "copy": {
+      "tr": "Kopyala",
+      "en": "Copy"
+    },
+    "copied": {
+      "tr": "Kopyalandı",
+      "en": "Copied"
+    },
+    "form": {
+      "name": {
+        "tr": "Adınız",
+        "en": "Your name"
+      },
+      "email": {
+        "tr": "E-posta",
+        "en": "Email"
+      },
+      "message": {
+        "tr": "Mesajınız",
+        "en": "Your message"
+      },
+      "send": {
+        "tr": "Gönder",
+        "en": "Send"
+      },
+      "sending": {
+        "tr": "Gönderiliyor…",
+        "en": "Sending…"
+      },
+      "sent": {
+        "tr": "Teşekkürler, mesajınız iletildi.",
+        "en": "Thanks, your message has been sent."
+      },
+      "error": {
+        "tr": "Gönderilemedi, lütfen e-postayla yazın.",
+        "en": "Couldn't send, please email me instead."
+      }
+    }
+  }
+}

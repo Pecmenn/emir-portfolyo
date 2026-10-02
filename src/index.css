@@ -1,0 +1,46 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600&f[]=satoshi@400,500,700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+}
+
+::selection {
+  @apply bg-accent text-ink;
+}
+
+@layer components {
+  .gutter {
+    @apply px-4 sm:px-8;
+  }
+  .display {
+    @apply font-display font-semibold leading-[0.95] tracking-tightest;
+  }
+  /* Satır satır kayarak beliren metinler için maske */
+  .line-mask {
+    @apply block overflow-hidden pb-[0.08em];
+  }
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors;
+  }
+}
+
+@media (hover: none) {
+  .cursor-follower {
+    display: none;
+  }
+}

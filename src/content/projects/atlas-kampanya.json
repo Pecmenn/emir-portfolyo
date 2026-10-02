@@ -1,0 +1,86 @@
+{
+  "order": 4,
+  "slug": "atlas-kampanya",
+  "title": "Atlas",
+  "discipline": {
+    "tr": "Dijital Pazarlama",
+    "en": "Digital Marketing"
+  },
+  "year": "2025",
+  "cover": "https://picsum.photos/seed/atlas-cover/2000/1300",
+  "summary": {
+    "tr": "Bir outdoor markasının yeni koleksiyonu için kreatiften ölçümlemeye entegre kampanya.",
+    "en": "An integrated campaign, from creative to measurement, for an outdoor brand’s new collection."
+  },
+  "client": "Atlas Outdoor",
+  "role": {
+    "tr": "Kreatif ve performans",
+    "en": "Creative & performance"
+  },
+  "services": {
+    "tr": "Kampanya fikri, reklam kreatifleri, medya planı",
+    "en": "Campaign idea, ad creatives, media plan"
+  },
+  "intro": {
+    "tr": "Lansman bütçesinin her kuruşunun ölçülebilir olması isteniyordu. Kreatifleri test edilebilir modüller halinde kurup haftalık optimizasyonla yönettik.",
+    "en": "Every lira of the launch budget had to be measurable. We built the creatives as testable modules and managed them with weekly optimisation."
+  },
+  "caseStudy": {
+    "challenge": {
+      "tr": "Marka bilinirliği yüksek ama online satış payı düşüktü; reklam kreatifleri hızla yoruluyordu.",
+      "en": "Brand awareness was high but the online share of sales was low, and ad creatives were burning out quickly."
+    },
+    "process": {
+      "tr": "Altı farklı mesaj ekseniyle 40 kreatif varyasyonu ürettik, A/B testleriyle kazananları ölçekledik.",
+      "en": "We produced 40 creative variations across six message angles and scaled the winners through A/B tests."
+    },
+    "result": {
+      "tr": "Kampanya süresince online satışlar ve reklam getirisi hedeflerin üzerinde kapandı.",
+      "en": "Online sales and return on ad spend closed above target for the whole campaign."
+    },
+    "metrics": [
+      {
+        "value": "3,6x",
+        "label": {
+          "tr": "reklam getirisi (ROAS)",
+          "en": "return on ad spend"
+        }
+      },
+      {
+        "value": "%58",
+        "label": {
+          "tr": "online satış artışı",
+          "en": "online sales growth"
+        }
+      },
+      {
+        "value": "40",
+        "label": {
+          "tr": "test edilen kreatif",
+          "en": "creatives tested"
+        }
+      }
+    ]
+  },
+  "gallery": [
+    {
+      "type": "pair",
+      "image1": "https://picsum.photos/seed/atlas-1/1400/1700",
+      "image2": "https://picsum.photos/seed/atlas-2/1000/1200"
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Her kreatif aynı kampanya diliyle ama farklı bir mesajla üretildi.",
+        "en": "Every creative shared the campaign language but carried a different message."
+      },
+      "image": "https://picsum.photos/seed/atlas-3/1600/1800",
+      "side": "left"
+    },
+    {
+      "type": "full",
+      "image": "https://picsum.photos/seed/atlas-4/2200/1300"
+    }
+  ],
+  "featured": false
+}

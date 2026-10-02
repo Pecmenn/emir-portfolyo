@@ -1,0 +1,53 @@
+{
+  "order": 1,
+  "slug": "nova-kimlik",
+  "title": "Nova",
+  "discipline": {
+    "tr": "Marka Kimliği",
+    "en": "Brand Identity"
+  },
+  "year": "2026",
+  "cover": "https://picsum.photos/seed/nova-cover/2000/1300",
+  "summary": {
+    "tr": "Bir fintech girişimi için sade, güven veren ve hareket halinde de tanınabilen bir kimlik sistemi.",
+    "en": "A calm, trustworthy identity system for a fintech startup that stays recognisable in motion."
+  },
+  "client": "Nova Finans",
+  "role": {
+    "tr": "Marka tasarımcısı",
+    "en": "Brand designer"
+  },
+  "services": {
+    "tr": "Strateji, logo, tipografi, hareket kuralları",
+    "en": "Strategy, logo, typography, motion rules"
+  },
+  "intro": {
+    "tr": "Karmaşık bir ürünü sade bir dille anlatmak gerekiyordu. Kimliği tek bir geometrik forma indirgeyip bu formu ürünün her yüzeyinde tekrar eden bir sisteme dönüştürdük.",
+    "en": "The task was to explain a complex product in simple terms. We reduced the identity to a single geometric form and turned it into a system that repeats across every product surface."
+  },
+  "gallery": [
+    {
+      "type": "pair",
+      "image1": "https://picsum.photos/seed/nova-1/1400/1700",
+      "image2": "https://picsum.photos/seed/nova-2/1000/1200"
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Logo, uygulama ikonundan billboard ölçeğine kadar aynı oranları koruyor.",
+        "en": "The logo keeps the same proportions from app icon to billboard scale."
+      },
+      "image": "https://picsum.photos/seed/nova-3/1600/1800",
+      "side": "right"
+    },
+    {
+      "type": "full",
+      "image": "https://picsum.photos/seed/nova-4/2200/1300",
+      "quote": {
+        "tr": "Az biçim, çok anlam.",
+        "en": "Less form, more meaning."
+      }
+    }
+  ],
+  "featured": true
+}

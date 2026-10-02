@@ -1,0 +1,27 @@
+{
+  "name": "Ad Soyad",
+  "monogram": "AS",
+  "role": {
+    "tr": "Creative Generalist",
+    "en": "Creative Generalist"
+  },
+  "email": "merhaba@adsoyad.com",
+  "location": "İstanbul",
+  "timeZone": "Europe/Istanbul",
+  "cv": "/cv/ad-soyad-cv.pdf",
+  "formEndpoint": "",
+  "socials": [
+    {
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/"
+    },
+    {
+      "label": "Behance",
+      "href": "https://behance.net/"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://instagram.com/"
+    }
+  ]
+}

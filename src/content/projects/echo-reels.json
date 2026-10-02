@@ -1,0 +1,53 @@
+{
+  "order": 3,
+  "slug": "echo-reels",
+  "title": "Echo",
+  "discipline": {
+    "tr": "Motion",
+    "en": "Motion"
+  },
+  "year": "2025",
+  "cover": "https://picsum.photos/seed/echo-cover/2000/1300",
+  "summary": {
+    "tr": "Bir müzik festivali için ses reaktif 3D jenerik ve sosyal medya video serisi.",
+    "en": "Audio-reactive 3D titles and a social video series for a music festival."
+  },
+  "client": "Echo Festival",
+  "role": {
+    "tr": "Motion tasarımcısı",
+    "en": "Motion designer"
+  },
+  "services": {
+    "tr": "3D, motion grafik, kurgu",
+    "en": "3D, motion graphics, editing"
+  },
+  "intro": {
+    "tr": "Festivalin her sahnesi için müziğe tepki veren tek bir 3D form tasarladık. Aynı form açılış jeneriğinden 9:16 sosyal videolara kadar her formata uyarlandı.",
+    "en": "We designed a single 3D form that reacts to the music of each stage. The same form was adapted from the opening titles to 9:16 social videos."
+  },
+  "gallery": [
+    {
+      "type": "full",
+      "image": "https://picsum.photos/seed/echo-1/2200/1300",
+      "quote": {
+        "tr": "Ses görünür olduğunda.",
+        "en": "When sound becomes visible."
+      }
+    },
+    {
+      "type": "pair",
+      "image1": "https://picsum.photos/seed/echo-2/1400/1700",
+      "image2": "https://picsum.photos/seed/echo-3/1000/1200"
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Toplam 24 video, tek bir hareket diliyle üretildi.",
+        "en": "24 videos in total, produced with a single motion language."
+      },
+      "image": "https://picsum.photos/seed/echo-4/1600/1800",
+      "side": "right"
+    }
+  ],
+  "featured": true
+}
