@@ -17,10 +17,15 @@ export default function Home({ ready }: { ready: boolean }) {
       <Hero ready={ready} />
       <Manifesto />
       <Work />
-      <StairDivider from="paper" to="ink" />
-      <Toolkit />
-      <StairDivider from="ink" to="paper" />
-      <ServiceList />
+      <div id="uzmanlik">
+        {/* Kayan disiplin yazısı ve çevresindeki koyu geçiş yalnızca geniş ekranda gösterilir */}
+        <div className="hidden sm:block">
+          <StairDivider from="paper" to="ink" />
+          <Toolkit />
+          <StairDivider from="ink" to="paper" />
+        </div>
+        <ServiceList />
+      </div>
       <Contact />
     </main>
   );
