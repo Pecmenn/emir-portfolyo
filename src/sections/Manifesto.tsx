@@ -7,17 +7,16 @@ export default function Manifesto() {
   return (
     <section id="hakkimda" className="gutter bg-paper py-20 sm:py-[14vh]">
       <p className="mb-8 text-sm font-medium text-mute">{t(manifesto.label)}</p>
-      <Lines key={lang} lines={manifesto.lines[lang]} className="display max-w-[14ch] text-[clamp(2.8rem,7vw,6.5rem)]" />
-      <FadeUp className="mt-[10vh] grid sm:grid-cols-2">
-        <div className="sm:col-start-2 sm:max-w-md">
+      {/* Büyük cümle solda, paragraf sağda cümlenin son satırıyla aynı hizada biter */}
+      <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-8">
+        <Lines key={lang} lines={manifesto.lines[lang]} className="display text-[clamp(2.6rem,6vw,6rem)] lg:col-span-8" />
+        <FadeUp className="max-w-md lg:col-span-4 lg:pb-[0.6vw]">
           <p className="text-lg leading-relaxed">{t(manifesto.text)}</p>
-          <div className="mt-8 flex gap-2">
-            <a href={site.cv} download className="pill border-ink bg-ink text-paper hover:bg-transparent hover:text-ink">
-              {t(ui.cv)} <span aria-hidden>↓</span>
-            </a>
-          </div>
-        </div>
-      </FadeUp>
+          <a href={site.cv} download className="pill mt-6 border-ink bg-ink text-paper hover:bg-transparent hover:text-ink">
+            {t(ui.cv)} <span aria-hidden>↓</span>
+          </a>
+        </FadeUp>
+      </div>
     </section>
   );
 }
