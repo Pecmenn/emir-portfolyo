@@ -1,29 +1,19 @@
 {
-  "order": 1,
-  "slug": "nova-kimlik",
-  "title": "Nova",
-  "discipline": {
-    "tr": "Marka Kimliği",
-    "en": "Brand Identity"
-  },
-  "year": "2026",
-  "cover": "https://picsum.photos/seed/nova-cover/2000/1300",
   "summary": {
     "tr": "Bir fintech girişimi için sade, güven veren ve hareket halinde de tanınabilen bir kimlik sistemi.",
     "en": "A calm, trustworthy identity system for a fintech startup that stays recognisable in motion."
   },
+  "slug": "nova-kimlik",
   "client": "Nova Finans",
-  "role": {
-    "tr": "Marka tasarımcısı",
-    "en": "Brand designer"
-  },
-  "services": {
-    "tr": "Strateji, logo, tipografi, hareket kuralları",
-    "en": "Strategy, logo, typography, motion rules"
-  },
   "intro": {
     "tr": "Karmaşık bir ürünü sade bir dille anlatmak gerekiyordu. Kimliği tek bir geometrik forma indirgeyip bu formu ürünün her yüzeyinde tekrar eden bir sisteme dönüştürdük.",
     "en": "The task was to explain a complex product in simple terms. We reduced the identity to a single geometric form and turned it into a system that repeats across every product surface."
+  },
+  "featured": true,
+  "order": 1,
+  "discipline": {
+    "tr": "Marka Kimliği",
+    "en": "Brand Identity"
   },
   "gallery": [
     {
@@ -49,5 +39,15 @@
       }
     }
   ],
-  "featured": true
+  "role": {
+    "tr": "Marka tasarımcısı",
+    "en": "Brand designer"
+  },
+  "cover": "/images/whatsapp-image-2026-09-30-at-15.06.49.jpeg",
+  "title": "Nova",
+  "year": "2026",
+  "services": {
+    "tr": "Strateji, logo, tipografi, hareket kuralları",
+    "en": "Strategy, logo, typography, motion rules"
+  }
 }
