@@ -36,7 +36,7 @@ export default function Footer() {
     <footer data-theme="dark" className="gutter bg-ink pt-[18vh] text-paper">
       <div className="flex flex-wrap items-end justify-between gap-8 border-b border-white/10 pb-10">
         <p className="display text-[clamp(4rem,14vw,13rem)]">{site.name}</p>
-        <div className="text-right">
+        <div className="sm:text-right">
           <p className="text-sm text-mute">
             {t(ui.localTime)} · {site.location}
           </p>
