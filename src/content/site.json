@@ -1,15 +1,4 @@
 {
-  "name": "Ad Soyad",
-  "monogram": "AS",
-  "role": {
-    "tr": "Creative Generalist",
-    "en": "Creative Generalist"
-  },
-  "email": "merhaba@adsoyad.com",
-  "location": "İstanbul",
-  "timeZone": "Europe/Istanbul",
-  "cv": "/cv/ad-soyad-cv.pdf",
-  "formEndpoint": "",
   "socials": [
     {
       "label": "LinkedIn",
@@ -23,5 +12,16 @@
       "label": "Instagram",
       "href": "https://instagram.com/"
     }
-  ]
+  ],
+  "name": "Ali Emir Okutan",
+  "cv": "/cv/ad-soyad-cv.pdf",
+  "location": "İstanbul",
+  "role": {
+    "tr": "Creative Generalist",
+    "en": "Creative Generalist"
+  },
+  "timeZone": "Europe/Istanbul",
+  "formEndpoint": "",
+  "monogram": "Emir Design",
+  "email": "Emir_okutan@hotmail.com"
 }
