@@ -8,7 +8,7 @@ import { lenis } from '../lib/scroll';
 export function Toolkit() {
   const { lang } = useLang();
   return (
-    <section data-theme="dark" className="bg-ink py-[8vh] text-paper">
+    <section data-theme="dark" className="bg-ink pb-[6vh] pt-[1vh] text-paper">
       <Marquee items={expertise.marquee[lang]} />
     </section>
   );
