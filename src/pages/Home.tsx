@@ -22,7 +22,7 @@ export default function Home({ ready }: { ready: boolean }) {
         <div className="hidden sm:block">
           <StairDivider from="paper" to="ink" />
           <Toolkit />
-          <StairDivider from="ink" to="paper" />
+          <StairDivider from="ink" to="paper" short />
         </div>
         <ServiceList />
       </div>

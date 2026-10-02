@@ -3,7 +3,7 @@ import { gsap, reducedMotion } from '../lib/scroll';
 
 // İki bölüm arasında basamak basamak yükselen bloklar; kaydırmaya bağlı ilerler.
 // to: bir sonraki bölümün rengi. from: bu şeridin zemini.
-export default function StairDivider({ from, to }: { from: 'paper' | 'ink'; to: 'paper' | 'ink' }) {
+export default function StairDivider({ from, to, short = false }: { from: 'paper' | 'ink'; to: 'paper' | 'ink'; short?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const steps = [0.15, 0.55, 0.3, 0.8];
 
@@ -22,7 +22,7 @@ export default function StairDivider({ from, to }: { from: 'paper' | 'ink'; to: 
   }, []);
 
   return (
-    <div ref={ref} aria-hidden className={`flex h-[18vh] items-end ${from === 'paper' ? 'bg-paper' : 'bg-ink'}`}>
+    <div ref={ref} aria-hidden className={`flex ${short ? 'h-[10vh]' : 'h-[18vh]'} items-end ${from === 'paper' ? 'bg-paper' : 'bg-ink'}`}>
       {steps.map((_, i) => (
         <div
           key={i}
