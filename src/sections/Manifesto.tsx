@@ -5,7 +5,7 @@ import { useLang } from '../lib/i18n';
 export default function Manifesto() {
   const { t, lang } = useLang();
   return (
-    <section id="hakkimda" className="gutter bg-paper pb-[16vh] pt-[14vh]">
+    <section id="hakkimda" className="gutter bg-paper py-20 sm:py-[14vh]">
       <p className="mb-8 text-sm font-medium text-mute">{t(manifesto.label)}</p>
       <Lines key={lang} lines={manifesto.lines[lang]} className="display max-w-[14ch] text-[clamp(2.8rem,7vw,6.5rem)]" />
       <FadeUp className="mt-[10vh] grid sm:grid-cols-2">

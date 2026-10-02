@@ -17,9 +17,11 @@ function useHeaderTheme() {
   const { pathname } = useLocation();
   const [dark, setDark] = useState(true);
   const [active, setActive] = useState('');
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const check = () => {
+      setScrolled(window.scrollY > 40);
       const probe = 36;
       const themed = document.querySelectorAll<HTMLElement>('[data-theme]');
       let isDark = false;
@@ -47,14 +49,14 @@ function useHeaderTheme() {
     };
   }, [pathname]);
 
-  return { dark, active };
+  return { dark, active, scrolled };
 }
 
 export default function Header() {
   const { t, lang, setLang } = useLang();
   const { goTo } = useTransition();
   const { pathname } = useLocation();
-  const { dark, active } = useHeaderTheme();
+  const { dark, active, scrolled } = useHeaderTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const onHome = pathname === '/';
 
@@ -66,9 +68,13 @@ export default function Header() {
 
   const fg = dark || menuOpen ? 'text-paper' : 'text-ink';
   const pillBg = dark ? 'bg-white/10' : 'bg-black/[0.06]';
+  // Sayfa kaydırılınca menü altındaki içerikle çakışmasın diye buzlu bir zemin alır
+  const surface = scrolled && !menuOpen ? (dark ? 'bg-ink/60 backdrop-blur-md' : 'bg-paper/80 backdrop-blur-md') : 'bg-transparent';
 
   return (
-    <header className={`gutter fixed inset-x-0 top-0 z-50 flex h-[72px] items-center justify-between transition-colors duration-500 ${fg}`}>
+    <header
+      className={`gutter fixed inset-x-0 top-0 z-50 flex h-[64px] items-center justify-between transition-colors duration-500 sm:h-[72px] ${fg} ${surface}`}
+    >
       <button
         onClick={() => (onHome ? scrollToTarget(0) : goTo('/'))}
         className="display text-2xl"

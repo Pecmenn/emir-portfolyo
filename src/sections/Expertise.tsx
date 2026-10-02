@@ -43,7 +43,7 @@ export function ServiceList() {
   }, [lang]);
 
   return (
-    <section className="gutter grid bg-paper py-[20vh] sm:grid-cols-2">
+    <section className="gutter grid bg-paper py-20 sm:grid-cols-2 sm:py-[14vh]">
       <p className="mb-8 h-fit text-sm font-medium sm:sticky sm:top-1/2">{t(expertise.listLabel)}</p>
       <ul ref={listRef}>
         {expertise.list[lang].map((item, i) => {

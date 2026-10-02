@@ -9,11 +9,11 @@ import { useTransition } from '../lib/transition';
 // Asimetrik ızgara düzeni: her satır farklı genişlik ve dikey kaymayla tekrar eder
 const layout = [
   'sm:col-span-7 sm:col-start-1',
-  'sm:col-span-4 sm:col-start-9 sm:mt-[28vh]',
-  'sm:col-span-4 sm:col-start-3',
-  'sm:col-span-5 sm:col-start-8 sm:mt-[16vh]',
-  'sm:col-span-6 sm:col-start-1 sm:mt-[6vh]',
-  'sm:col-span-5 sm:col-start-8 sm:mt-[30vh]',
+  'sm:col-span-4 sm:col-start-9 sm:mt-[18vh]',
+  'sm:col-span-5 sm:col-start-2',
+  'sm:col-span-5 sm:col-start-8 sm:mt-[12vh]',
+  'sm:col-span-6 sm:col-start-1',
+  'sm:col-span-5 sm:col-start-8 sm:mt-[18vh]',
 ];
 const ratios = ['aspect-[4/5]', 'aspect-[3/4]', 'aspect-[4/3]', 'aspect-square', 'aspect-[5/4]', 'aspect-[3/4]'];
 
@@ -42,8 +42,9 @@ function Card({ project, index }: { project: Project; index: number }) {
         />
       </div>
       <div className="mt-3 flex items-baseline justify-between text-sm font-medium">
-        <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 scale-0 rounded-full bg-accent transition-transform group-hover:scale-100" />
+        {/* Nokta başlığın soluna taşar; böylece başlık görselin kenarıyla aynı hizada kalır */}
+        <span className="relative">
+          <span className="absolute -left-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 scale-0 rounded-full bg-accent transition-transform group-hover:scale-100" />
           {project.title}
         </span>
         <span className="text-mute">{t(project.discipline)}</span>
@@ -69,17 +70,17 @@ export default function Work() {
   }, []);
 
   return (
-    <section id="isler" className="gutter bg-paper pb-[10vh]">
+    <section id="isler" className="gutter bg-paper pb-16 sm:pb-[8vh]">
       <div className="mb-10 flex items-baseline justify-between border-t border-ink/10 pt-6 text-sm font-medium">
         <span>{t(ui.allWork)}</span>
         <span className="text-mute">{String(projects.length).padStart(2, '0')}</span>
       </div>
-      <div className="grid gap-x-4 gap-y-16 sm:grid-cols-12 sm:gap-y-[12vh]">
+      <div className="grid gap-x-4 gap-y-16 sm:grid-cols-12 sm:gap-y-[10vh]">
         {projects.map((project, i) => (
           <Card key={project.slug} project={project} index={i} />
         ))}
       </div>
-      <div ref={starRef} className="mx-auto mt-[14vh] w-fit">
+      <div ref={starRef} className="mx-auto mt-20 w-fit sm:mt-[10vh]">
         <Star className="h-8 w-8" />
       </div>
     </section>
