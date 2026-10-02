@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { expertise } from '../content';
 import Marquee from '../components/Marquee';
+import { Lines } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
 import { lenis } from '../lib/scroll';
 
@@ -44,7 +45,7 @@ export function ServiceList() {
 
   return (
     <section className="gutter grid bg-paper pb-10 pt-20 sm:grid-cols-2 sm:pb-[4vh] sm:pt-[2vh]">
-      <p className="mb-8 h-fit text-sm font-medium sm:sticky sm:top-1/2">{t(expertise.listLabel)}</p>
+      <Lines key={`label-${lang}`} lines={[t(expertise.listLabel)]} className="display mb-10 h-fit text-[clamp(3.2rem,min(6.5vw,11vh),8.5rem)] sm:mb-0 sm:pr-8" />
       <ul ref={listRef}>
         {expertise.list[lang].map((item, i) => {
           const dist = Math.abs(i - active);
