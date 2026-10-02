@@ -2,9 +2,12 @@
 // Bu dosya yalnızca türleri tanımlar ve içeriği bileşenlere dağıtır.
 // Her metin { tr, en } çiftidir; dil seçicisi ikisi arasında geçiş yapar.
 
-import homeData from './content/home.json';
+import aboutData from './content/about.json';
+import contactData from './content/contact.json';
+import expertiseData from './content/expertise.json';
 import siteData from './content/site.json';
 import uiData from './content/ui.json';
+import workData from './content/work.json';
 
 export type Lang = 'tr' | 'en';
 export type Text = { tr: string; en: string };
@@ -56,10 +59,10 @@ type Site = {
 
 export const site = siteData as Site;
 export const ui = uiData;
-export const manifesto = homeData.manifesto;
-export const work = homeData.work as { slogans: { tr: string[]; en: string[] }[] };
-export const expertise = homeData.expertise;
-export const contact = homeData.contact;
+export const manifesto = aboutData;
+export const work = workData as { slogans: { tr: string[]; en: string[] }[] };
+export const expertise = expertiseData;
+export const contact = contactData;
 
 // Panelde boş bırakılan vaka çalışması alanları sayfada bölüm olarak görünmesin
 function hasCaseStudy(cs: CaseStudy | undefined): cs is CaseStudy {

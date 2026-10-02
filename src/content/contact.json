@@ -1,0 +1,58 @@
+{
+  "label": {
+    "tr": "İletişim",
+    "en": "Contact"
+  },
+  "title": {
+    "tr": [
+      "Birlikte",
+      "çalışalım."
+    ],
+    "en": [
+      "Let's work",
+      "together."
+    ]
+  },
+  "text": {
+    "tr": "Tam zamanlı, uzaktan ya da hibrit pozisyonlara açığım. Bir mesaj bırakın.",
+    "en": "I'm open to full-time, remote or hybrid roles. Leave a message and I'll get back to you within two working days."
+  },
+  "copy": {
+    "tr": "Kopyala",
+    "en": "Copy"
+  },
+  "copied": {
+    "tr": "Kopyalandı",
+    "en": "Copied"
+  },
+  "form": {
+    "name": {
+      "tr": "Adınız",
+      "en": "Your name"
+    },
+    "email": {
+      "tr": "E-posta",
+      "en": "Email"
+    },
+    "message": {
+      "tr": "Mesajınız",
+      "en": "Your message"
+    },
+    "send": {
+      "tr": "Gönder",
+      "en": "Send"
+    },
+    "sending": {
+      "tr": "Gönderiliyor…",
+      "en": "Sending…"
+    },
+    "sent": {
+      "tr": "Teşekkürler, mesajınız iletildi.",
+      "en": "Thanks, your message has been sent."
+    },
+    "error": {
+      "tr": "Gönderilemedi, lütfen e-postayla yazın.",
+      "en": "Couldn't send, please email me instead."
+    }
+  }
+}

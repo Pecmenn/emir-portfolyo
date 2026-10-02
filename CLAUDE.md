@@ -3,7 +3,7 @@
 Kişisel portfolyo sitesi (Creative Generalist). React 18 + TypeScript + Vite 5 + Tailwind CSS 3 + GSAP (ScrollTrigger) + Lenis + React Router. Arka uç yok.
 
 - Komutlar: `npm run dev` (http://localhost:5173), `npm run build` (tip kontrolü + `dist/`), `npm run preview`.
-- İçerik `src/content/` altındaki JSON dosyalarında (`site.json`, `home.json`, `ui.json`, `projects/*.json`) ve `/admin` panelinden (Decap CMS, `public/admin/index.html`) düzenlenir. `src/content.ts` yalnızca türleri tanımlar ve içeriği dağıtır. Her metin `{ tr, en }` çifti; bileşenlerde `useLang().t()` ile okunur. Bileşenlere metin gömme.
+- İçerik `src/content/` altındaki JSON dosyalarında (`site.json`, `about.json`, `work.json`, `expertise.json`, `contact.json`, `ui.json`, `projects/*.json`) ve `/admin` panelinden (Decap CMS, `public/admin/index.html`) düzenlenir. `src/content.ts` yalnızca türleri tanımlar ve içeriği dağıtır. Her metin `{ tr, en }` çifti; bileşenlerde `useLang().t()` ile okunur. Bileşenlere metin gömme.
 - İçeriğe yeni alan eklenirse hem JSON dosyasına, hem `src/content.ts` türüne, hem de `public/admin/index.html` içindeki panel alanlarına eklenmeli.
 - Paneli yerelde kullanmak için `npm run dev` ile birlikte `npm run cms` (decap-server) çalıştırılır, panel http://localhost:5173/admin/index.html adresindedir.
 - Sayfalar: `/` (`src/pages/Home.tsx`) ve `/proje/:slug` (`src/pages/Project.tsx`). Ana sayfa bölümleri `src/sections/`, ortak parçalar `src/components/`.

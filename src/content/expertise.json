@@ -1,0 +1,58 @@
+{
+  "marquee": {
+    "tr": [
+      "Marka Kimliği",
+      "UI/UX",
+      "Motion",
+      "Dijital Pazarlama"
+    ],
+    "en": [
+      "Brand Identity",
+      "UI/UX",
+      "Motion",
+      "Digital Marketing"
+    ]
+  },
+  "listLabel": {
+    "tr": "Beceriler",
+    "en": "Skills"
+  },
+  "list": {
+    "tr": [
+      "Marka Stratejisi",
+      "Logo ve Kimlik",
+      "Tipografi Sistemleri",
+      "Ambalaj Tasarımı",
+      "UX Araştırması",
+      "Arayüz Tasarımı",
+      "Tasarım Sistemleri",
+      "Prototipleme",
+      "Web Tasarımı",
+      "Motion Grafik",
+      "3D ve CGI",
+      "Video Kurgu",
+      "Kampanya Kurgusu",
+      "Performans Reklamları",
+      "Sosyal Medya İçeriği",
+      "Ölçümleme ve Raporlama"
+    ],
+    "en": [
+      "Brand Strategy",
+      "Logo & Identity",
+      "Type Systems",
+      "Packaging Design",
+      "UX Research",
+      "Interface Design",
+      "Design Systems",
+      "Prototyping",
+      "Web Design",
+      "Motion Graphics",
+      "3D & CGI",
+      "Video Editing",
+      "Campaign Concepts",
+      "Performance Ads",
+      "Social Content",
+      "Analytics & Reporting"
+    ]
+  }
+}
