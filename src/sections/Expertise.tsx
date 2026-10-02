@@ -52,7 +52,7 @@ export function ServiceList() {
           return (
             <li
               key={item}
-              className="display text-[clamp(1.8rem,3.4vw,3.2rem)] leading-[1.1] transition-opacity duration-300"
+              className="display text-[clamp(1.4rem,min(3.4vw,3.6vh),3.2rem)] leading-[1.1] transition-opacity duration-300"
               style={{ opacity }}
             >
               {item}
