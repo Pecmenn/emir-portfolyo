@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { site, ui } from '../content';
 import { useLang } from '../lib/i18n';
@@ -23,6 +23,18 @@ export default function Footer() {
   const { goTo } = useTransition();
   const { pathname } = useLocation();
   const time = useLocalTime(site.timeZone, lang);
+  const ref = useRef<HTMLElement>(null);
+
+  // Alt bilginin yüksekliğini CSS değişkeni olarak yayınla; iletişim bölümü bununla birlikte tam bir ekranı doldurur
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const publish = () => document.documentElement.style.setProperty('--footer-h', `${el.offsetHeight}px`);
+    publish();
+    const observer = new ResizeObserver(publish);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const go = (id: string) => (pathname === '/' ? scrollToTarget(`#${id}`) : goTo('/', id));
   const sitemap = [
@@ -33,9 +45,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer data-theme="dark" className="gutter bg-ink pt-[18vh] text-paper">
-      <div className="flex flex-wrap items-end justify-between gap-8 border-b border-white/10 pb-10">
-        <p className="display text-[clamp(4rem,14vw,13rem)]">{site.name}</p>
+    <footer ref={ref} data-theme="dark" className="gutter bg-ink pt-24 text-paper sm:pt-[7vh]">
+      <div className="flex flex-wrap items-end justify-between gap-8 border-b border-white/10 pb-8">
+        <p className="display text-[clamp(4rem,min(11vw,13vh),10rem)]">{site.name}</p>
         <div className="sm:text-right">
           <p className="text-sm text-mute">
             {t(ui.localTime)} · {site.location}
@@ -44,7 +56,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="grid gap-10 py-12 text-sm sm:grid-cols-2">
+      <div className="grid gap-10 py-10 text-sm sm:grid-cols-2">
         <div>
           <p className="mb-4 text-base font-medium">{t(ui.getInTouch)}</p>
           <a href={`mailto:${site.email}`} className="block hover:text-accent">

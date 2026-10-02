@@ -44,11 +44,14 @@ export default function Contact() {
     'w-full border-b border-ink/20 bg-transparent py-3 text-lg outline-none transition-colors placeholder:text-mute focus:border-ink';
 
   return (
-    <section id="iletisim" className="gutter bg-paper pb-20 pt-10 sm:pb-[14vh] sm:pt-[6vh]">
+    <section
+      id="iletisim"
+      className="gutter bg-paper pb-20 pt-10 sm:flex sm:min-h-[calc(100svh-var(--footer-h,0px))] sm:flex-col sm:justify-center sm:pb-[3vh] sm:pt-20"
+    >
       <p className="mb-8 text-sm font-medium text-mute">{t(contact.label)}</p>
       <div className="grid gap-16 lg:grid-cols-2">
         <div>
-          <Lines key={lang} lines={contact.title[lang]} className="display text-[clamp(3.2rem,9vw,8.5rem)]" />
+          <Lines key={lang} lines={contact.title[lang]} className="display text-[clamp(3.2rem,min(9vw,11vh),8.5rem)]" />
           <FadeUp className="mt-10 max-w-md">
             <p className="text-lg leading-relaxed">{t(contact.text)}</p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
