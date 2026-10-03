@@ -78,14 +78,13 @@ export default function Contact() {
     >
       <div className="grid gap-16 lg:grid-cols-2">
         <div ref={headRef}>
-          <p className="mb-8 text-sm font-medium text-mute">{t(contact.label)}</p>
           <Lines key={lang} lines={contact.title[lang]} className="display text-[clamp(3.2rem,min(9vw,11vh),8.5rem)]" />
           <FadeUp className="mt-10 max-w-md">
             <p className="text-lg leading-relaxed">{t(contact.text)}</p>
           </FadeUp>
         </div>
 
-        <FadeUp className="lg:pt-14">
+        <FadeUp className="lg:pt-6">
           <form onSubmit={submit} className="flex flex-col gap-6">
             <label className="sr-only" htmlFor="name">
               {t(contact.form.name)}

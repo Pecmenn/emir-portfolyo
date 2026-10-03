@@ -79,7 +79,7 @@ function SettingsForm() {
         </Card>
 
         <Card title="İletişim">
-          <Field label="E-posta" hint="İletişim bölümünde ve alt bilgide görünür.">
+          <Field label="E-posta" hint="Alt bilgide görünür.">
             <TextInput type="email" value={draft.email} onChange={(v) => set('email', v)} />
           </Field>
           <div className="grid gap-5 sm:grid-cols-2">

@@ -163,7 +163,6 @@ function ContactPreview({ d }: { d: ContactData }) {
   const { lang } = useEditLang();
   return (
     <div>
-      <p className="mb-2 text-xs text-ink/45">{d.label?.[lang]}</p>
       <BigLines lines={d.title?.[lang]} size="text-4xl" />
       <p className="mt-4 text-sm leading-relaxed">{d.text?.[lang]}</p>
       <span className="mt-4 inline-block rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper">{d.form?.send?.[lang]} →</span>
@@ -244,8 +243,7 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
     <SectionShell section={section} original={content.contact} file={PATHS.contact} contentKey="contact" preview={(d) => <ContactPreview d={d} />}>
       {(d, set) => (
         <>
-          <Card description="E-posta adresi ve sosyal medya bağlantıları Ayarlar sayfasından gelir.">
-            <BiField label="Küçük başlık" value={d.label} onChange={(v) => set((x) => ({ ...x, label: v }))} />
+          <Card>
             <LinesField label="Büyük başlık" hint="Her satır ayrı ayrı kayarak belirir." value={d.title} onChange={(v) => set((x) => ({ ...x, title: v }))} />
             <BiField label="Paragraf" long value={d.text} onChange={(v) => set((x) => ({ ...x, text: v }))} />
           </Card>
