@@ -42,6 +42,8 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: 'Alt bilgi ve diğer',
     items: [
+      ['available', 'Alt bilgi: durum cümlesi'],
+      ['availableNote', 'Alt bilgi: durum açıklaması'],
       ['getInTouch', 'İletişim başlığı'],
       ['sitemap', 'Site haritası başlığı'],
       ['follow', 'Takip et başlığı'],

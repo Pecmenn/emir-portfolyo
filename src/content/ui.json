@@ -124,5 +124,13 @@
   "soundOff": {
     "tr": "Sesi kapat",
     "en": "Sound off"
+  },
+  "available": {
+    "tr": "Yeni fırsatlara açığım.",
+    "en": "Open to new opportunities."
+  },
+  "availableNote": {
+    "tr": "Tam zamanlı, uzaktan veya hibrit roller için konuşalım.",
+    "en": "Let’s talk about full-time, remote or hybrid roles."
   }
 }
