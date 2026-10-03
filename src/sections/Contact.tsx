@@ -1,24 +1,41 @@
-import { useState, type FormEvent } from 'react';
+import { useLayoutEffect, useRef, useState, type FormEvent } from 'react';
 import { contact, site } from '../content';
 import { FadeUp, Lines } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
+import { gsap, reducedMotion } from '../lib/scroll';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 export default function Contact() {
   const { t, lang } = useLang();
-  const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
+  const sectionRef = useRef<HTMLElement>(null);
+  const headRef = useRef<HTMLDivElement>(null);
 
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(site.email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      window.location.href = `mailto:${site.email}`;
-    }
-  };
+  // Başlık, bölüm ekrana girerken biraz yukarıda başlar ve kaydırdıkça yavaşça yerine iner (geniş ekranlarda)
+  useLayoutEffect(() => {
+    if (reducedMotion) return;
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 640px)', () => {
+      gsap.fromTo(
+        headRef.current,
+        { y: () => -window.innerHeight * 0.2 },
+        {
+          y: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            endTrigger: 'footer',
+            end: 'bottom bottom',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+    });
+    return () => mm.revert();
+  }, []);
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,27 +62,20 @@ export default function Contact() {
 
   return (
     <section
+      ref={sectionRef}
       id="iletisim"
       className="gutter bg-paper pb-20 pt-10 sm:flex sm:min-h-[calc(100svh-var(--footer-h,0px))] sm:flex-col sm:justify-center sm:pb-[3vh] sm:pt-20"
     >
-      <p className="mb-8 text-sm font-medium text-mute">{t(contact.label)}</p>
       <div className="grid gap-16 lg:grid-cols-2">
-        <div>
+        <div ref={headRef}>
+          <p className="mb-8 text-sm font-medium text-mute">{t(contact.label)}</p>
           <Lines key={lang} lines={contact.title[lang]} className="display text-[clamp(3.2rem,min(9vw,11vh),8.5rem)]" />
           <FadeUp className="mt-10 max-w-md">
             <p className="text-lg leading-relaxed">{t(contact.text)}</p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href={`mailto:${site.email}`} className="display text-2xl underline decoration-1 underline-offset-8 hover:text-accent">
-                {site.email}
-              </a>
-              <button onClick={copy} className="pill border-ink/70 hover:bg-ink hover:text-paper" aria-live="polite">
-                {copied ? t(contact.copied) : t(contact.copy)}
-              </button>
-            </div>
           </FadeUp>
         </div>
 
-        <FadeUp className="lg:pt-6">
+        <FadeUp className="lg:pt-14">
           <form onSubmit={submit} className="flex flex-col gap-6">
             <label className="sr-only" htmlFor="name">
               {t(contact.form.name)}

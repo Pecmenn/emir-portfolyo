@@ -249,10 +249,8 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
             <LinesField label="Büyük başlık" hint="Her satır ayrı ayrı kayarak belirir." value={d.title} onChange={(v) => set((x) => ({ ...x, title: v }))} />
             <BiField label="Paragraf" long value={d.text} onChange={(v) => set((x) => ({ ...x, text: v }))} />
           </Card>
-          <Card title="Buton ve form yazıları">
+          <Card title="Form yazıları">
             <div className="grid gap-5 sm:grid-cols-2">
-              <BiField label="“Kopyala” butonu" value={d.copy} onChange={(v) => set((x) => ({ ...x, copy: v }))} />
-              <BiField label="“Kopyalandı” mesajı" value={d.copied} onChange={(v) => set((x) => ({ ...x, copied: v }))} />
               <BiField label="Ad alanı" value={d.form.name} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, name: v } }))} />
               <BiField label="E-posta alanı" value={d.form.email} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, email: v } }))} />
               <BiField label="Mesaj alanı" value={d.form.message} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, message: v } }))} />
