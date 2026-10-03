@@ -19,7 +19,7 @@ export default function Contact() {
     mm.add('(min-width: 640px)', () => {
       gsap.fromTo(
         headRef.current,
-        { y: () => -window.innerHeight * 0.2 },
+        { y: () => -window.innerHeight * 0.4 },
         {
           y: 0,
           ease: 'none',
