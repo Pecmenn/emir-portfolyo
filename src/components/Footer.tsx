@@ -1,7 +1,7 @@
 import { ArrowUp, ArrowUpRight, Download } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { site, ui } from '../content';
+import { contact, site, ui } from '../content';
 import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
@@ -60,6 +60,17 @@ export default function Footer() {
   const time = useLocalTime(site.timeZone, lang);
   const ref = useRef<HTMLElement>(null);
   const name = useFitWidth(site.name);
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(site.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      window.location.href = `mailto:${site.email}`;
+    }
+  };
 
   // Alt bilginin yüksekliğini CSS değişkeni olarak yayınla; iletişim bölümü bununla birlikte tam bir ekranı doldurur
   useEffect(() => {
@@ -97,24 +108,32 @@ export default function Footer() {
   return (
     <footer ref={ref} data-theme="dark" className="gutter overflow-hidden bg-ink pt-20 text-paper sm:pt-[4vh]">
       <div className="grid gap-12 border-b border-white/10 pb-10 lg:grid-cols-12 lg:gap-8">
-        {/* Durum ve CV */}
+        {/* Durum, e-posta ve CV */}
         <div className="lg:col-span-5">
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-70" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-            </span>
-            {site.location} · {time}
-          </p>
-          <p className="display max-w-md text-[clamp(2rem,3vw,3.25rem)] leading-[1.02]">{t(ui.available)}</p>
+          <p className="display max-w-2xl text-[clamp(2rem,3vw,3.25rem)] leading-[1.02]">{t(ui.available)}</p>
           <p className="mt-3 max-w-sm text-sm leading-relaxed text-paper/60">{t(ui.availableNote)}</p>
-          <a
-            href={site.cv}
-            download
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-ink transition hover:brightness-110"
-          >
-            <Download size={16} /> {t(ui.cv)}
-          </a>
+          <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-4">
+            <a
+              href={`mailto:${site.email}`}
+              className="display break-all text-[clamp(1.25rem,1.9vw,2rem)] underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors hover:text-accent hover:decoration-accent"
+            >
+              {site.email}
+            </a>
+            <button
+              onClick={copy}
+              aria-live="polite"
+              className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-paper/80 transition-colors hover:border-paper hover:bg-paper hover:text-ink"
+            >
+              {copied ? t(contact.copied) : t(contact.copy)}
+            </button>
+            <a
+              href={site.cv}
+              download
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-ink transition hover:brightness-110"
+            >
+              <Download size={16} /> {t(ui.cv)}
+            </a>
+          </div>
         </div>
 
         {/* Menü, sosyal ve iletişim */}
@@ -151,13 +170,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <Label>{t(ui.getInTouch)}</Label>
-            <a href={`mailto:${site.email}`} className="group inline-flex items-center gap-1.5 break-all text-[15px] transition-colors hover:text-accent">
-              {site.email}
-              <ArrowUpRight size={14} className="shrink-0 opacity-50 transition group-hover:opacity-100" />
-            </a>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-mute">{t(ui.localTime)}</p>
-            <p className="display mt-1 text-3xl tabular-nums">{time}</p>
+            <Label>{t(ui.localTime)}</Label>
+            <p className="display text-3xl tabular-nums">{time}</p>
             <p className="text-sm text-paper/60">{site.location}</p>
           </div>
         </div>

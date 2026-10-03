@@ -113,13 +113,6 @@ export default function Header() {
             </button>
           ))}
         </div>
-        <a
-          href={site.cv}
-          download
-          className={`pill hidden sm:inline-flex ${dark ? 'border-paper/60 hover:bg-paper hover:text-ink' : 'border-ink/70 hover:bg-ink hover:text-paper'}`}
-        >
-          {t(ui.cv)}
-        </a>
         <button
           onClick={() => setMenuOpen((o) => !o)}
           className="relative z-10 flex h-9 w-9 flex-col items-center justify-center gap-1.5 md:hidden"
