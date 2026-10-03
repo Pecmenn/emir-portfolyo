@@ -119,7 +119,6 @@ function AboutPreview({ d }: { d: AboutData }) {
   const { lang } = useEditLang();
   return (
     <div>
-      <p className="mb-2 text-xs text-ink/45">{d.label?.[lang]}</p>
       <BigLines lines={d.lines?.[lang]} />
       <p className="mt-4 text-sm leading-relaxed">{d.text?.[lang]}</p>
     </div>
@@ -207,7 +206,6 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
       <SectionShell section={section} original={content.about} file={PATHS.about} contentKey="about" preview={(d) => <AboutPreview d={d} />}>
         {(d, set) => (
           <Card>
-            <BiField label="Küçük başlık" hint="Bölümün üstündeki küçük etiket." value={d.label} onChange={(v) => set((x) => ({ ...x, label: v }))} />
             <LinesField label="Büyük cümle" hint="Her satır ayrı ayrı kayarak belirir. 3-4 kısa satır en iyi sonucu verir." value={d.lines} onChange={(v) => set((x) => ({ ...x, lines: v }))} />
             <BiField label="Paragraf" long hint="Büyük cümlenin sağında, büyük puntoyla görünür." value={d.text} onChange={(v) => set((x) => ({ ...x, text: v }))} />
           </Card>

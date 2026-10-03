@@ -6,7 +6,6 @@ export default function Manifesto() {
   const { t, lang } = useLang();
   return (
     <section id="hakkimda" className="gutter bg-paper py-20 sm:py-[14vh]">
-      <p className="mb-8 text-sm font-medium text-mute">{t(manifesto.label)}</p>
       {/* İki eşit sütun: solda büyük cümle sütunu doldurur, sağda paragraf dikeyde ortalanır, buton altında ortada */}
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <Lines key={lang} lines={manifesto.lines[lang]} className="display text-[clamp(2.6rem,4.4vw,7.5rem)] leading-[1]" />

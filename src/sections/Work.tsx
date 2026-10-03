@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { projects, ui, work, type Project } from '../content';
+import { projects, work, type Project } from '../content';
 import { Star } from '../components/Marquee';
 import { Lines, RevealImage } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
@@ -107,7 +107,7 @@ function Card({
 }
 
 export default function Work() {
-  const { t, lang } = useLang();
+  const { lang } = useLang();
   const starRef = useRef<HTMLDivElement>(null);
   // Projeler ikişer ikişer satırlara bölünür
   const rows: Project[][] = [];
@@ -127,10 +127,6 @@ export default function Work() {
 
   return (
     <section id="isler" className="gutter bg-paper pb-16 sm:pb-[8vh]">
-      <div className="mb-10 flex items-baseline justify-between border-t border-ink/10 pt-6 text-sm font-medium">
-        <span>{t(ui.allWork)}</span>
-        <span className="text-mute">{String(projects.length).padStart(2, '0')}</span>
-      </div>
       <div className="flex flex-col gap-16 sm:gap-[12vh]">
         {rows.map(([big, small], r) => {
           // Satırlar dönüşümlü: çift satırda büyük kart solda, tek satırda sağda. Küçük kartın görseli kalan yüksekliği doldurur,

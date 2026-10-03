@@ -27,7 +27,6 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: 'İşler ve proje sayfası',
     items: [
-      ['allWork', 'İşler başlığı'],
       ['client', '“Müşteri” etiketi'],
       ['role', '“Rol” etiketi'],
       ['services', '“Kapsam” etiketi'],
