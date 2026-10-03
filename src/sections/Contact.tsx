@@ -12,16 +12,26 @@ export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const headRef = useRef<HTMLDivElement>(null);
 
-  // Başlık, bölüm ekrana girerken biraz yukarıda başlar ve kaydırdıkça yavaşça yerine iner (geniş ekranlarda)
+  // Başlık, bölüm ekrana girerken biraz yukarıda başlar ve kaydırdıkça aşağı iner; sayfa sonunda alt kenarı
+  // formun alt kenarıyla hizalanır (geniş ekranlarda)
   useLayoutEffect(() => {
     if (reducedMotion) return;
     const mm = gsap.matchMedia();
     mm.add('(min-width: 640px)', () => {
+      const head = headRef.current!;
+      // Başlığın o anki kaydırma payı çıkarılarak, yerindeyken formun altına ne kadar uzak olduğu ölçülür
+      const endY = () => {
+        const title = head.querySelector('.display');
+        const form = head.nextElementSibling;
+        if (!title || !form) return 0;
+        const offset = Number(gsap.getProperty(head, 'y')) || 0;
+        return Math.max(0, form.getBoundingClientRect().bottom - (title.getBoundingClientRect().bottom - offset));
+      };
       gsap.fromTo(
         headRef.current,
-        { y: () => -window.innerHeight * 0.4 },
+        { y: () => -window.innerHeight * 0.2 },
         {
-          y: 0,
+          y: endY,
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
