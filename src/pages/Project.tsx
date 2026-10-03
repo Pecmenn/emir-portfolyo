@@ -107,7 +107,7 @@ function Credits({ project }: { project: ProjectType }) {
   return (
     <section id="kunye" className="gutter grid gap-12 bg-paper pb-[12vh] pt-[14vh] lg:grid-cols-12 lg:gap-8">
       <FadeUp className="lg:col-span-4">
-        <dl className="grid gap-6 text-[15px] sm:grid-cols-3 lg:grid-cols-1">
+        <dl className="grid gap-8 text-[clamp(1.05rem,1.05vw,1.5rem)] leading-snug sm:grid-cols-3 lg:grid-cols-1">
           {rows.map((row) => (
             <div key={row.label.en}>
               <dt className="text-mute">{t(row.label)}</dt>
