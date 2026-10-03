@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, type CSSProperties, type ReactNode } from 'react';
+import { Fragment, useLayoutEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import AutoVideo from './AutoVideo';
 import { gsap, reducedMotion, refreshSoon } from '../lib/scroll';
 
@@ -113,5 +113,53 @@ export function FadeUp({ children, className = '', delay = 0 }: { children: Reac
     <div ref={ref} className={className}>
       {children}
     </div>
+  );
+}
+
+// Kelimeler maskenin altından sırayla yukarı kayar. immediate: kaydırmayı beklemeden (ör. sayfa açılışında) oynar
+export function Words({
+  text,
+  className = '',
+  as: Tag = 'p',
+  delay = 0,
+  immediate = false,
+}: {
+  text: string;
+  className?: string;
+  as?: 'h2' | 'h3' | 'p';
+  delay?: number;
+  immediate?: boolean;
+}) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const words = text.split(/\s+/).filter(Boolean);
+  useLayoutEffect(() => {
+    if (reducedMotion) return;
+    const ctx = gsap.context(() => {
+      gsap.from('[data-word]', {
+        yPercent: 110,
+        duration: 1,
+        ease: 'expo.out',
+        stagger: Math.min(0.03, 0.9 / Math.max(words.length, 1)),
+        delay,
+        scrollTrigger: immediate ? undefined : { trigger: ref.current, start: 'top 88%' },
+      });
+    }, ref);
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
+
+  return (
+    <Tag ref={ref} className={className}>
+      {words.map((word, i) => (
+        <Fragment key={i}>
+          <span className="-mb-[0.12em] -mr-[0.08em] inline-block overflow-hidden pb-[0.12em] pr-[0.08em] align-top">
+            <span data-word className="inline-block">
+              {word}
+            </span>
+          </span>
+          {i < words.length - 1 && ' '}
+        </Fragment>
+      ))}
+    </Tag>
   );
 }

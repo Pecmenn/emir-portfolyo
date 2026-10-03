@@ -47,7 +47,7 @@ const DISCIPLINES: Bi[] = [
 const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; icon: typeof ImageIcon }[] = [
   { type: 'pair', label: 'İki görsel', description: 'Büyük görsel solda, küçük görsel sağda', icon: Images },
   { type: 'text-image', label: 'Metin + görsel', description: 'Kısa bir açıklama ve yanında görsel', icon: Quote },
-  { type: 'full', label: 'Tam ekran görsel', description: 'Ekranı kaplayan görsel, isteğe bağlı alıntı', icon: ImageIcon },
+  { type: 'full', label: 'Geniş görsel', description: 'Sayfa genişliğinde görsel, altında isteğe bağlı büyük cümle', icon: ImageIcon },
   { type: 'video', label: 'Video', description: 'Sessiz, döngüde oynayan video', icon: Film },
 ];
 
@@ -165,13 +165,13 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
             {block.type === 'video' && (
               <div className="flex flex-col gap-4">
                 <VideoField label="Video" value={block.video} onChange={(v) => update(i, { ...block, video: v })} />
-                <Toggle label="Tam ekran" hint="Kapalıysa video kenar boşluklu, 16:9 oranında gösterilir." checked={block.full} onChange={(v) => update(i, { ...block, full: v })} />
+                <Toggle label="Tam genişlik" hint="Kapalıysa video ortada, daha dar gösterilir." checked={block.full} onChange={(v) => update(i, { ...block, full: v })} />
               </div>
             )}
             {block.type === 'full' && (
               <div className="flex flex-col gap-4">
                 <ImageField label="Görsel" value={block.image} onChange={(v) => update(i, { ...block, image: v })} />
-                <BiField label="Üzerindeki alıntı (isteğe bağlı)" value={block.quote} onChange={(v) => update(i, { ...block, quote: v })} placeholder="Ör. Az biçim, çok anlam." />
+                <BiField label="Altındaki büyük cümle (isteğe bağlı)" hint="Görselin altında ortalanmış büyük yazıyla görünür." value={block.quote} onChange={(v) => update(i, { ...block, quote: v })} placeholder="Ör. Az biçim, çok anlam." />
               </div>
             )}
           </div>

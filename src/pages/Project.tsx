@@ -2,14 +2,14 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { projects, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
-import { FadeUp, Lines, RevealImage } from '../components/Reveal';
+import { FadeUp, RevealImage, Words } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion, refreshSoon, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 import NotFound from './NotFound';
 
 function Cover({ project }: { project: ProjectType }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { coverReady } = useTransition();
   const ref = useRef<HTMLElement>(null);
 
@@ -18,11 +18,14 @@ function Cover({ project }: { project: ProjectType }) {
     if (!project.cover) coverReady();
   }, [project.cover, coverReady]);
 
+  // Açılışta başlık ve yıl maskeden kayar, alt çizgi soldan çizilir, alt bilgiler belirir.
+  // Kaydırırken kapak görseli yavaşça aşağı kayar (parallax)
   useLayoutEffect(() => {
     if (reducedMotion) return;
     const ctx = gsap.context(() => {
-      gsap.from('[data-cover-line]', { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.07, delay: 0.7 });
-      // Kaydırırken kapak görseli yavaşça yukarı kayar
+      gsap.from('[data-cover-line]', { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.08, delay: 0.7 });
+      gsap.from('[data-cover-rule]', { scaleX: 0, duration: 1.4, ease: 'expo.inOut', delay: 0.8 });
+      gsap.from('[data-cover-fade]', { y: 16, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.06, delay: 1.1 });
       gsap.to('[data-cover-img]', {
         yPercent: 18,
         ease: 'none',
@@ -50,28 +53,41 @@ function Cover({ project }: { project: ProjectType }) {
           <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
-      <div className="gutter absolute inset-x-0 bottom-[22vh] grid items-end gap-6 sm:grid-cols-2">
-        <h1 className="display text-[clamp(4rem,12vw,11rem)]">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/65" />
+
+      {/* Başlık solda, özet sağdaki üçte birlik sütunda; ikisi aynı alt çizgiye oturur */}
+      <div className="gutter absolute inset-x-0 bottom-[calc(clamp(6.5rem,15vh,11rem)+2rem)] grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-8">
+        <h1 className="display text-[clamp(3.5rem,7vw,9rem)] lg:col-span-8">
           <span className="line-mask">
             <span data-cover-line className="block">
               {project.title}
             </span>
           </span>
         </h1>
-        <p className="max-w-md text-lg leading-snug sm:justify-self-end">
-          <span className="line-mask">
-            <span data-cover-line className="block">
-              {t(project.summary)}
-            </span>
+        <Words
+          key={lang}
+          immediate
+          delay={0.9}
+          text={t(project.summary)}
+          className="max-w-xl text-[clamp(1.05rem,1vw,1.5rem)] font-medium leading-snug text-paper/90 lg:col-span-4 lg:pb-[0.35em]"
+        />
+      </div>
+
+      <div className="gutter absolute inset-x-0 bottom-0">
+        <p className="line-mask display mb-[3vh] text-[clamp(1.75rem,2.2vw,3rem)]">
+          <span data-cover-line className="block">
+            {project.year}
           </span>
         </p>
-      </div>
-      <div className="gutter absolute inset-x-0 bottom-0">
-        <p className="display mb-6 text-3xl">{project.year}</p>
-        <div className="flex items-center justify-between border-t border-white/20 py-5 text-sm font-medium">
-          <span>{t(project.discipline)}</span>
-          <button onClick={() => scrollToTarget('#kunye')} className="hover:text-accent">
+        <div data-cover-rule className="h-px origin-left bg-white/25" />
+        <div className="grid grid-cols-2 items-center gap-8 py-5 text-sm font-medium lg:grid-cols-12">
+          <span data-cover-fade className="lg:col-span-4">
+            {t(project.discipline)}
+          </span>
+          <span data-cover-fade className="hidden text-paper/70 lg:col-span-4 lg:block">
+            {project.client}
+          </span>
+          <button data-cover-fade onClick={() => scrollToTarget('#kunye')} className="justify-self-end hover:text-accent lg:col-span-4">
             {t(ui.credits)} ↓
           </button>
         </div>
@@ -81,25 +97,30 @@ function Cover({ project }: { project: ProjectType }) {
 }
 
 function Credits({ project }: { project: ProjectType }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const rows = [
     { label: ui.client, value: project.client },
     { label: ui.role, value: t(project.role) },
     { label: ui.services, value: t(project.services) },
   ];
+  // Künye solda dört sütunda, giriş paragrafı kapaktaki istemci yazısıyla aynı (üçte bir) çizgiden başlar
   return (
-    <section id="kunye" className="gutter grid gap-12 bg-paper py-[14vh] lg:grid-cols-12">
-      <dl className="space-y-5 text-sm lg:col-span-3">
-        {rows.map((row) => (
-          <div key={row.label.en}>
-            <dt className="font-medium">{t(row.label)}</dt>
-            <dd className="text-mute">{row.value}</dd>
-          </div>
-        ))}
-      </dl>
-      <FadeUp className="lg:col-span-8 lg:col-start-5">
-        <p className="display text-[clamp(1.6rem,2.8vw,2.6rem)] font-medium leading-[1.15] tracking-tight">{t(project.intro)}</p>
+    <section id="kunye" className="gutter grid gap-12 bg-paper pb-[12vh] pt-[14vh] lg:grid-cols-12 lg:gap-8">
+      <FadeUp className="lg:col-span-4">
+        <dl className="grid gap-6 text-[15px] sm:grid-cols-3 lg:grid-cols-1">
+          {rows.map((row) => (
+            <div key={row.label.en}>
+              <dt className="text-mute">{t(row.label)}</dt>
+              <dd className="mt-1 font-medium">{row.value}</dd>
+            </div>
+          ))}
+        </dl>
       </FadeUp>
+      <Words
+        key={lang}
+        text={t(project.intro)}
+        className="display text-[clamp(1.6rem,2vw,3rem)] leading-[1.12] lg:col-span-8"
+      />
     </section>
   );
 }
@@ -112,22 +133,22 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
     { label: ui.result, text: data.result },
   ];
   return (
-    <section data-theme="dark" className="gutter bg-ink py-[14vh] text-paper">
-      <div className="grid gap-10 border-b border-white/10 pb-16 md:grid-cols-3">
+    <section data-theme="dark" className="gutter bg-ink py-[12vh] text-paper">
+      <div className="grid gap-10 border-b border-white/10 pb-[8vh] md:grid-cols-3 md:gap-8">
         {steps.map((step, i) => (
           <FadeUp key={step.label.en} delay={i * 0.08}>
             <p className="mb-4 text-sm font-medium text-accent">
               0{i + 1} — {t(step.label)}
             </p>
-            <p className="text-lg leading-relaxed text-paper/85">{t(step.text)}</p>
+            <p className="max-w-xl text-[clamp(1.05rem,1vw,1.4rem)] leading-relaxed text-paper/85">{t(step.text)}</p>
           </FadeUp>
         ))}
       </div>
-      <div className="grid gap-10 pt-16 sm:grid-cols-3">
+      <div className="grid gap-10 pt-[8vh] sm:grid-cols-3 sm:gap-8">
         {data.metrics.map((m, i) => (
           <FadeUp key={m.value} delay={i * 0.08}>
-            <p className="display text-[clamp(3.5rem,8vw,7rem)]">{m.value}</p>
-            <p className="mt-2 text-sm text-mute">{t(m.label)}</p>
+            <p className="display text-[clamp(3.5rem,6vw,8rem)]">{m.value}</p>
+            <p className="mt-3 text-sm text-mute">{t(m.label)}</p>
           </FadeUp>
         ))}
       </div>
@@ -135,25 +156,23 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
   );
 }
 
+// Galeri blokları sayfa kenar boşluklarının içinde aynı ızgaraya oturur; görseller arasında dar, metinlerin
+// çevresinde geniş boşluk bırakılır
 function Block({ block, title }: { block: GalleryBlock; title: string }) {
   const { t, lang } = useLang();
   if (block.type === 'pair') {
     return (
-      <div className="gutter grid gap-4 sm:grid-cols-12">
-        <RevealImage src={block.image1} alt={title} className="aspect-[4/5] sm:col-span-6" />
-        <RevealImage src={block.image2} alt={title} className="aspect-[4/5] sm:col-span-4 sm:col-start-9 sm:mt-[20vh]" />
+      <div className="gutter grid gap-[var(--gap)] sm:grid-cols-2">
+        <RevealImage src={block.image1} alt={title} className="aspect-[4/5] sm:aspect-[4/3]" />
+        <RevealImage src={block.image2} alt={title} className="aspect-[4/5] sm:aspect-[4/3]" />
       </div>
     );
   }
   if (block.type === 'video') {
     if (!block.video) return null;
-    return block.full ? (
-      <div className="relative h-[100svh] overflow-hidden bg-ink">
-        <AutoVideo src={block.video} className="absolute inset-0 h-full w-full object-cover" />
-      </div>
-    ) : (
-      <div className="gutter">
-        <FadeUp className="aspect-video overflow-hidden bg-black/5">
+    return (
+      <div className="gutter grid lg:grid-cols-12 lg:gap-8">
+        <FadeUp className={`aspect-video overflow-hidden bg-black/5 ${block.full ? 'lg:col-span-12' : 'lg:col-span-8 lg:col-start-3'}`}>
           <AutoVideo src={block.video} className="h-full w-full object-cover" />
         </FadeUp>
       </div>
@@ -162,25 +181,28 @@ function Block({ block, title }: { block: GalleryBlock; title: string }) {
   if (block.type === 'text-image') {
     const imageRight = block.side === 'right';
     return (
-      <div className="gutter grid items-center gap-10 sm:grid-cols-2">
-        <FadeUp className={imageRight ? '' : 'sm:order-2 sm:pl-[10%]'}>
-          <p className="display max-w-md text-[clamp(1.4rem,2vw,1.9rem)] font-medium leading-tight tracking-tight">{t(block.text)}</p>
-        </FadeUp>
-        <RevealImage src={block.image} alt={title} className={`aspect-[4/5] ${imageRight ? '' : 'sm:order-1'}`} />
+      <div className="gutter grid gap-8 py-[5vh] lg:grid-cols-12 lg:items-end">
+        <Words
+          key={lang}
+          text={t(block.text)}
+          className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] lg:col-span-4 lg:pb-[0.2em] ${imageRight ? '' : 'lg:order-2'}`}
+        />
+        <RevealImage src={block.image} alt={title} className={`aspect-[4/3] lg:col-span-8 ${imageRight ? '' : 'lg:order-1'}`} />
       </div>
     );
   }
   return (
-    <div className="relative h-[100svh] overflow-hidden">
-      <div className="absolute inset-0">
-        <RevealImage src={block.image} alt={title} className="h-full" />
+    <>
+      <div className="gutter">
+        <RevealImage src={block.image} alt={title} className="aspect-[4/5] sm:aspect-video" />
       </div>
-      {block.quote && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/25 px-4 text-center text-paper">
-          <Lines key={lang} lines={[t(block.quote)]} className="display text-[clamp(2.4rem,6vw,5.5rem)]" />
+      {/* Alıntı, görselin altında ortalanmış büyük bir cümle olarak durur */}
+      {block.quote && (t(block.quote) || '').trim() && (
+        <div className="gutter py-[7vh] text-center">
+          <Words key={lang} as="h2" text={t(block.quote)} className="display mx-auto max-w-[22ch] text-[clamp(2.2rem,3.6vw,5.5rem)] leading-[1.05]" />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -231,9 +253,9 @@ function NextProject({ project }: { project: ProjectType }) {
           onClick={() => openProject(project.slug, project.cover, mediaRef.current)}
           className="absolute inset-0 flex flex-col items-center justify-center text-center"
         >
-          <span className="mb-4 text-sm font-medium">{t(ui.next)}</span>
-          <span className="display text-[clamp(4rem,12vw,11rem)]">{project.title}</span>
-          <span className="mt-4 text-sm text-paper/70">{t(project.discipline)}</span>
+          <span className="display text-[clamp(3.5rem,7vw,9rem)]">{project.title}</span>
+          <span className="mt-5 text-[clamp(1rem,1vw,1.4rem)] font-medium">{t(ui.next)}</span>
+          <span className="mt-1 text-sm text-paper/60">{t(project.discipline)}</span>
         </button>
         <div className="gutter absolute inset-x-0 bottom-8 flex items-center gap-4 text-xs font-medium">
           <span>{t(ui.keepScrolling)}</span>
@@ -263,7 +285,9 @@ export default function Project() {
       <Cover project={project} />
       <Credits project={project} />
       {project.caseStudy && <CaseStudySection data={project.caseStudy} />}
-      <div className="flex flex-col gap-[16vh] bg-paper py-[14vh]">
+      <div
+        className={`flex flex-col gap-[var(--gap)] bg-paper pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.caseStudy ? 'pt-[12vh]' : ''}`}
+      >
         {project.gallery.map((block, i) => (
           <Block key={i} block={block} title={project.title} />
         ))}
