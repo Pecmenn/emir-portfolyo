@@ -1,7 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
 import { gsap, reducedMotion } from '../lib/scroll';
 
-// İki bölüm arasında basamak basamak yükselen bloklar; kaydırmaya bağlı ilerler.
+// İki bölüm arasında basamak basamak yükselen bloklar; kaydırmaya bağlı ilerler. Şerit ekrana girdikten
+// sonra başlar ve ekranın ortasını geçene kadar sürer, böylece hareket izlenebilir.
 // to: bir sonraki bölümün rengi. from: bu şeridin zemini.
 export default function StairDivider({ from, to, short = false }: { from: 'paper' | 'ink'; to: 'paper' | 'ink'; short?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -11,7 +12,7 @@ export default function StairDivider({ from, to, short = false }: { from: 'paper
     if (reducedMotion) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: ref.current, start: 'top bottom', end: 'bottom bottom', scrub: 0.6 },
+        scrollTrigger: { trigger: ref.current, start: 'top 90%', end: 'bottom 35%', scrub: 0.6 },
       });
       gsap.utils.toArray<HTMLElement>('[data-step]').forEach((el, i) => {
         tl.fromTo(el, { scaleY: 0 }, { scaleY: 1, ease: 'none', duration: 1 }, steps[i] * 0.6);
