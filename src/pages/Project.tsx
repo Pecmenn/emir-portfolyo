@@ -181,11 +181,11 @@ function Block({ block, title }: { block: GalleryBlock; title: string }) {
   if (block.type === 'text-image') {
     const imageRight = block.side === 'right';
     return (
-      <div className="gutter grid gap-8 py-[5vh] lg:grid-cols-12 lg:items-end">
+      <div className="gutter grid gap-8 py-[5vh] lg:grid-cols-12 lg:items-start">
         <Words
           key={lang}
           text={t(block.text)}
-          className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] lg:col-span-4 lg:pb-[0.2em] ${imageRight ? '' : 'lg:order-2'}`}
+          className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] lg:sticky lg:top-28 lg:col-span-4 ${imageRight ? '' : 'lg:order-2'}`}
         />
         <RevealImage src={block.image} alt={title} className={`aspect-[4/3] lg:col-span-8 ${imageRight ? '' : 'lg:order-1'}`} />
       </div>
