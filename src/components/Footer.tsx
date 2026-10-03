@@ -1,7 +1,7 @@
 import { ArrowUp, ArrowUpRight, Download } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { contact, site, ui } from '../content';
+import { site, ui } from '../content';
 import { useLang } from '../lib/i18n';
 import { gsap, reducedMotion, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
@@ -60,17 +60,6 @@ export default function Footer() {
   const time = useLocalTime(site.timeZone, lang);
   const ref = useRef<HTMLElement>(null);
   const name = useFitWidth(site.name);
-  const [copied, setCopied] = useState(false);
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(site.email);
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
-    } catch {
-      window.location.href = `mailto:${site.email}`;
-    }
-  };
 
   // Alt bilginin yüksekliğini CSS değişkeni olarak yayınla; iletişim bölümü bununla birlikte tam bir ekranı doldurur
   useEffect(() => {
@@ -119,13 +108,6 @@ export default function Footer() {
             >
               {site.email}
             </a>
-            <button
-              onClick={copy}
-              aria-live="polite"
-              className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-paper/80 transition-colors hover:border-paper hover:bg-paper hover:text-ink"
-            >
-              {copied ? t(contact.copied) : t(contact.copy)}
-            </button>
             <a
               href={site.cv}
               download
