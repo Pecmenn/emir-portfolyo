@@ -1,13 +1,13 @@
 {
   "order": 2,
   "slug": "pulse-uygulama",
-  "title": "Pulse",
+  "title": "Aura",
   "discipline": {
     "tr": "UI/UX",
     "en": "UI/UX"
   },
   "year": "2026",
-  "cover": "https://picsum.photos/seed/pulse-cover/2000/1300",
+  "cover": "/images/cueform-01-mutqjfe5.jpg",
   "summary": {
     "tr": "Spor kulüpleri için üyelik ve rezervasyon uygulamasının uçtan uca yeniden tasarımı.",
     "en": "An end-to-end redesign of a membership and booking app for sports clubs."
@@ -65,25 +65,28 @@
   "gallery": [
     {
       "type": "pair",
-      "image1": "https://picsum.photos/seed/pulse-1/1400/1700",
-      "image2": "https://picsum.photos/seed/pulse-2/1000/1200"
+      "image1": "/images/cueform-01-mutqhmmx.jpg",
+      "image2": "/images/cueform-02-mutqhrsj.jpg"
     },
     {
-      "type": "full",
-      "image": "https://picsum.photos/seed/pulse-3/2200/1300",
-      "quote": {
-        "tr": "İki dokunuş, sıfır sürtünme.",
-        "en": "Two taps, zero friction."
-      }
+      "type": "pair",
+      "image1": "/images/cueform-03-mutqic61.jpg",
+      "image2": "/images/cueform-04-mutqidoz.jpg"
     },
     {
-      "type": "text-image",
-      "text": {
-        "tr": "Tasarım sistemi açık ve koyu temada aynı bileşenlerle çalışıyor.",
-        "en": "The design system runs the same components in light and dark mode."
-      },
-      "image": "https://picsum.photos/seed/pulse-4/1600/1800",
-      "side": "left"
+      "type": "pair",
+      "image1": "/images/cueform-05-mutqih3n.jpg",
+      "image2": "/images/cueform-06-mutqij7t.jpg"
+    },
+    {
+      "type": "pair",
+      "image1": "/images/cueform-07-mutqivu9.jpg",
+      "image2": "/images/cueform-08-mutqix65.jpg"
+    },
+    {
+      "type": "pair",
+      "image1": "/images/cueform-10-mutqj4mw.jpg",
+      "image2": "/images/cueform-13-mutqj672.jpg"
     }
   ],
   "featured": true
