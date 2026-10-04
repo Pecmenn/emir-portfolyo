@@ -119,9 +119,8 @@
       "image": "/images/cueform/brand-board.webp"
     },
     {
-      "type": "pair",
-      "image1": "/images/cueform/icons-card.webp",
-      "image2": "/images/cueform/grid-card.webp"
+      "type": "full",
+      "image": "/images/cueform/system-board.webp"
     },
     {
       "type": "full",
