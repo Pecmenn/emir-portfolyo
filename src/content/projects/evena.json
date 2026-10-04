@@ -1,13 +1,13 @@
 {
   "order": 1,
-  "slug": "denge",
-  "title": "Denge",
+  "slug": "evena",
+  "title": "Evena",
   "discipline": {
     "tr": "UI/UX",
     "en": "UI/UX"
   },
   "year": "2026",
-  "cover": "/images/denge/cover.webp",
+  "cover": "/images/evena/cover.webp",
   "summary": {
     "tr": "Gelir, gider ve birikimi tek bakışta gösteren, sakin ve güven veren bir kişisel finans uygulaması.",
     "en": "A calm, reassuring personal finance app that shows income, spending and savings at a glance."
@@ -22,8 +22,8 @@
     "en": "UI/UX, product design, brand identity, card design"
   },
   "intro": {
-    "tr": "Finans uygulamaları çoğu zaman kaygı veren bir dille konuşuyor: kırmızı uyarılar, kalabalık grafikler, sıkıştırılmış rakamlar. Denge’de amaç tersini yapmaktı. Bakiye, harcama ve birikimi tek bir sakin yüzeyde toplayan, kullanıcıya her ekranda ne durumda olduğunu söyleyen bir deneyim tasarladım.",
-    "en": "Finance apps often speak in an anxious voice: red alerts, crowded charts, cramped numbers. Denge set out to do the opposite. I designed an experience that gathers balance, spending and savings on one calm surface and tells users where they stand on every screen."
+    "tr": "Finans uygulamaları çoğu zaman kaygı veren bir dille konuşuyor: kırmızı uyarılar, kalabalık grafikler, sıkıştırılmış rakamlar. Evena’da amaç tersini yapmaktı. Bakiye, harcama ve birikimi tek bir sakin yüzeyde toplayan, kullanıcıya her ekranda ne durumda olduğunu söyleyen bir deneyim tasarladım.",
+    "en": "Finance apps often speak in an anxious voice: red alerts, crowded charts, cramped numbers. Evena set out to do the opposite. I designed an experience that gathers balance, spending and savings on one calm surface and tells users where they stand on every screen."
   },
   "gallery": [
     {
@@ -39,7 +39,7 @@
     },
     {
       "type": "full",
-      "image": "/images/denge/urun.webp"
+      "image": "/images/evena/urun.webp"
     },
     {
       "type": "text",
@@ -54,11 +54,11 @@
     },
     {
       "type": "full",
-      "image": "/images/denge/ekranlar.webp"
+      "image": "/images/evena/ekranlar.webp"
     },
     {
       "type": "full",
-      "image": "/images/denge/kafe.webp",
+      "image": "/images/evena/kafe.webp",
       "quote": {
         "tr": "Para göndermek bir kahve molası kadar kısa.",
         "en": "Sending money takes as long as a coffee break."
@@ -77,7 +77,7 @@
     },
     {
       "type": "full",
-      "image": "/images/denge/omuz.webp"
+      "image": "/images/evena/omuz.webp"
     },
     {
       "type": "chapter",
@@ -92,7 +92,7 @@
     },
     {
       "type": "full",
-      "image": "/images/denge/marka.webp"
+      "image": "/images/evena/marka.webp"
     }
   ],
   "featured": true,
