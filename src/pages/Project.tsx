@@ -100,7 +100,7 @@ function Cover({ project }: { project: ProjectType }) {
   );
 }
 
-function Credits({ project, dark }: { project: ProjectType; dark?: boolean }) {
+function Credits({ project, dark, canvas }: { project: ProjectType; dark?: boolean; canvas?: string }) {
   const { t, lang } = useLang();
   const rows = [
     { label: ui.client, value: project.client },
@@ -112,6 +112,7 @@ function Credits({ project, dark }: { project: ProjectType; dark?: boolean }) {
     <section
       id="kunye"
       data-theme={dark ? 'dark' : undefined}
+      style={canvas ? { backgroundColor: canvas } : undefined}
       className={`gutter grid gap-12 pb-[12vh] pt-[14vh] lg:grid-cols-12 lg:gap-8 ${dark ? 'bg-ink text-paper' : 'bg-paper'}`}
     >
       <FadeUp className="lg:col-span-4">
@@ -166,8 +167,18 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
 
 // Galeri blokları sayfa kenar boşluklarının içinde aynı ızgaraya oturur; görseller arasında dar, metinlerin
 // çevresinde geniş boşluk bırakılır
-function Block({ block, title, dark }: { block: GalleryBlock; title: string; dark?: boolean }) {
+function Block({ block, title, dark, canvas, chapter }: { block: GalleryBlock; title: string; dark?: boolean; canvas?: boolean; chapter: number }) {
   const { t, lang } = useLang();
+  if (block.type === 'chapter') return <Chapter index={chapter} title={t(block.title)} text={t(block.text)} />;
+  if (block.type === 'pair' && canvas) {
+    // Kesintisiz zeminde görseller kırpılmadan, kendi oranlarıyla yan yana durur
+    return (
+      <div className="gutter mx-auto grid w-full max-w-[1760px] items-start gap-[var(--gap)] sm:grid-cols-2">
+        <RevealImage hoverZoom natural fade capHeight={false} src={block.image1} alt={title} />
+        <RevealImage hoverZoom natural fade capHeight={false} src={block.image2} alt={title} />
+      </div>
+    );
+  }
   if (block.type === 'pair') {
     return (
       <div className="gutter grid gap-[var(--gap)] sm:grid-cols-2">
@@ -223,9 +234,16 @@ function Block({ block, title, dark }: { block: GalleryBlock; title: string; dar
   }
   return (
     <>
-      <div className="gutter">
-        <RevealImage hoverZoom natural fade={dark} src={block.image} alt={title} />
-      </div>
+      {canvas ? (
+        // Görselin kenarları zeminle aynı renkte; ortada, ekranı taşırmayan bir genişlikte kesintisiz durur
+        <div className="mx-auto w-full max-w-[1760px]">
+          <RevealImage hoverZoom natural fade capHeight={false} src={block.image} alt={title} />
+        </div>
+      ) : (
+        <div className="gutter">
+          <RevealImage hoverZoom natural fade={dark} src={block.image} alt={title} />
+        </div>
+      )}
       {/* Alıntı, görselin altında ortalanmış büyük bir cümle olarak durur */}
       {block.quote && (t(block.quote) || '').trim() && (
         <div className="gutter py-[7vh] text-center">
@@ -233,6 +251,43 @@ function Block({ block, title, dark }: { block: GalleryBlock; title: string; dar
         </div>
       )}
     </>
+  );
+}
+
+// Numaralı bölüm açılışı: ince çizgi soldan çizilir, büyük numara ve başlık maskeden kayar, açıklama kelime kelime gelir
+function Chapter({ index, title, text }: { index: number; title: string; text: string }) {
+  const { lang } = useLang();
+  const ref = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (reducedMotion) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ scrollTrigger: { trigger: ref.current, start: 'top 80%' } });
+      tl.from('[data-chapter-rule]', { scaleX: 0, duration: 1.4, ease: 'expo.inOut' });
+      tl.from('[data-chapter-num]', { yPercent: 110, duration: 1.2, ease: 'expo.out' }, 0.3);
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+  return (
+    <div ref={ref} className="gutter pb-[8vh] pt-[18vh]">
+      <div data-chapter-rule className="h-px origin-left bg-current opacity-20" />
+      <div className="mt-[4vh] grid gap-6 lg:grid-cols-12 lg:gap-8">
+        <p className="line-mask display text-[clamp(4.5rem,11vw,15rem)] leading-[0.85] opacity-25 lg:col-span-4">
+          <span data-chapter-num className="block">
+            {String(index).padStart(2, '0')}
+          </span>
+        </p>
+        <div className="lg:col-span-8">
+          <Words key={`c-${lang}`} as="h2" text={title} className="display text-[clamp(2.6rem,4.8vw,7.5rem)] leading-[0.98]" />
+          {text.trim() && (
+            <Words
+              key={`ct-${lang}`}
+              text={text}
+              className="mt-[4vh] max-w-2xl text-[clamp(1.05rem,1.15vw,1.6rem)] font-medium leading-snug opacity-75"
+            />
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -425,14 +480,22 @@ export default function Project() {
   return (
     <main key={project.slug}>
       <Cover project={project} />
-      <Credits project={project} dark={project.dark} />
+      <Credits project={project} dark={project.dark} canvas={project.canvas} />
       {project.caseStudy && <CaseStudySection data={project.caseStudy} />}
       <div
         data-theme={project.dark ? 'dark' : undefined}
+        style={project.canvas ? { backgroundColor: project.canvas } : undefined}
         className={`flex flex-col gap-[var(--gap)] pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.dark ? 'bg-ink text-paper' : 'bg-paper'} ${project.caseStudy ? 'pt-[12vh]' : ''}`}
       >
         {project.gallery.map((block, i) => (
-          <Block key={i} block={block} title={project.title} dark={project.dark} />
+          <Block
+            key={i}
+            block={block}
+            title={project.title}
+            dark={project.dark}
+            canvas={!!project.canvas}
+            chapter={project.gallery.slice(0, i + 1).filter((b) => b.type === 'chapter').length}
+          />
         ))}
       </div>
       <NextProject project={next} />

@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, GalleryHorizontal, Image as ImageIcon, Images, Plus, Quote, Rotate3d, Trash2, Type, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, GalleryHorizontal, Hash, Image as ImageIcon, Images, Plus, Quote, Rotate3d, Trash2, Type, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { GalleryBlock, Project } from '../../content';
 import { SITE_URL } from '../github';
@@ -45,6 +45,7 @@ const DISCIPLINES: Bi[] = [
 ];
 
 const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; icon: typeof ImageIcon }[] = [
+  { type: 'chapter', label: 'Bölüm açılışı', description: 'Numaralı büyük bölüm başlığı (01, 02 ...); numara sıradan otomatik gelir', icon: Hash },
   { type: 'text', label: 'Başlık + açıklama', description: 'Bölüm başlığı solda, kısa açıklama sağda', icon: Type },
   { type: 'pair', label: 'İki görsel', description: 'Yan yana iki eşit görsel', icon: Images },
   { type: 'text-image', label: 'Metin + görsel', description: 'Kısa bir açıklama ve yanında görsel', icon: Quote },
@@ -58,7 +59,7 @@ function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'pair') return { type, image1: '', image2: '' };
   if (type === 'text-image') return { type, text: { ...empty }, image: '', side: 'right' };
   if (type === 'video') return { type, video: '', full: true };
-  if (type === 'text') return { type, title: { ...empty }, text: { ...empty } };
+  if (type === 'text' || type === 'chapter') return { type, title: { ...empty }, text: { ...empty } };
   if (type === 'showcase') return { type, image: '' };
   if (type === 'strip') return { type, images: ['', ''] };
   return { type: 'full', image: '', quote: { ...empty } };
@@ -174,7 +175,7 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 <Toggle label="Tam genişlik" hint="Kapalıysa video ortada, daha dar gösterilir." checked={block.full} onChange={(v) => update(i, { ...block, full: v })} />
               </div>
             )}
-            {block.type === 'text' && (
+            {(block.type === 'text' || block.type === 'chapter') && (
               <div className="flex flex-col gap-4">
                 <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Görsel kimlik" />
                 <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
@@ -364,6 +365,21 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
               checked={!!draft.dark}
               onChange={(v) => set('dark', v || undefined)}
             />
+            <Field
+              label="Zemin rengi (isteğe bağlı)"
+              hint="Sunum görsellerinin zemin rengini yazarsanız (ör. #131814) görseller sayfayla kesintisiz birleşir ve geniş görseller kenar boşluğu olmadan dizilir."
+            >
+              <div className="flex items-center gap-3">
+                <input
+                  type="color"
+                  aria-label="Zemin rengi seç"
+                  value={draft.canvas || '#0a0a0a'}
+                  onChange={(e) => set('canvas', e.target.value)}
+                  className="h-10 w-12 shrink-0 cursor-pointer rounded-lg border border-black/10 bg-transparent"
+                />
+                <TextInput value={draft.canvas ?? ''} placeholder="#131814" onChange={(v) => set('canvas', v.trim() || undefined)} />
+              </div>
+            </Field>
           </Card>
 
           <Card title="Künye" description="Proje sayfasında kapaktan hemen sonra gelen bilgiler.">

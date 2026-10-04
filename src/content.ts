@@ -23,6 +23,8 @@ export type GalleryBlock =
   | { type: 'video'; video: string; full: boolean }
   // Bölüm başlığı ve açıklaması
   | { type: 'text'; title: Text; text: Text }
+  // Numaralı bölüm açılışı (01, 02 ...); numara bloğun sırasından otomatik gelir
+  | { type: 'chapter'; title: Text; text: Text }
   // Fare hareketine göre 3 boyutlu eğilen tek görsel (ör. saydam zeminli cihaz görseli)
   | { type: 'showcase'; image: string }
   // Fareyle ya da parmakla yatayda sürüklenen görsel şeridi
@@ -56,6 +58,9 @@ export type Project = {
   featured?: boolean;
   // Künye ve galeri koyu zeminde gösterilir (koyu tonlu sunumlar için)
   dark?: boolean;
+  // İsteğe bağlı zemin rengi (ör. #131814). Sunum görsellerinin zeminiyle aynı renk verilirse görseller
+  // sayfayla kesintisiz bir yüzey oluşturur
+  canvas?: string;
 };
 
 type Site = {

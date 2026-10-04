@@ -66,6 +66,7 @@ export function RevealImage({
   natural = false,
   hoverZoom = false,
   fade = false,
+  capHeight = true,
 }: {
   src: string;
   alt: string;
@@ -80,6 +81,8 @@ export function RevealImage({
   hoverZoom?: boolean;
   // Kenarlar zemine yumuşakça karışır (EDGE_FADE)
   fade?: boolean;
+  // Kendi oranındaki görsel ekran yüksekliğiyle sınırlanır; kapalıysa genişliği doldurur
+  capHeight?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const zoomRef = useRef<HTMLDivElement>(null);
@@ -107,7 +110,11 @@ export function RevealImage({
   };
 
   // Kendi oranındaki görsel ekran yüksekliğini aşmaz, dar kalırsa ortalanır
-  const fill = natural ? 'mx-auto block h-auto max-h-[92vh] w-auto max-w-full' : 'absolute inset-0 h-full w-full object-cover';
+  const fill = natural
+    ? capHeight
+      ? 'mx-auto block h-auto max-h-[92vh] w-auto max-w-full'
+      : 'block h-auto w-full'
+    : 'absolute inset-0 h-full w-full object-cover';
   return (
     <div
       ref={ref}
