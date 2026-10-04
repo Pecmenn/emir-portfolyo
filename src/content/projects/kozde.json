@@ -1,0 +1,75 @@
+{
+  "order": 2,
+  "slug": "kozde",
+  "title": "Közde",
+  "discipline": {
+    "tr": "Marka Kimliği",
+    "en": "Brand Identity"
+  },
+  "year": "2026",
+  "cover": "/images/kozde/cover.webp",
+  "summary": {
+    "tr": "Kadıköy’de küçük partilerle kavuran bir kahve evi için sıcak ve zanaatkâr bir marka kimliği.",
+    "en": "A warm, crafted identity for a small-batch coffee roastery in Kadıköy."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "Marka tasarımcısı",
+    "en": "Brand designer"
+  },
+  "services": {
+    "tr": "Logo, kimlik sistemi, ambalaj, basılı uygulamalar, tabela",
+    "en": "Logo, identity system, packaging, print, signage"
+  },
+  "intro": {
+    "tr": "Közde, çekirdeği köz ateşinde ve küçük partilerle kavuran kurgusal bir mahalle kahvecisi. Kimlikte amaç, bu yavaşlığı ve el emeğini her temas noktasında hissettirmekti. İşaret, eğik bir kahve çekirdeği ile altında sıralanan üç közden oluşuyor; tipografi editoryal ve sıcak, renkler kavrum derecelerinden geliyor. Sistem paket etiketinden tabelaya kadar aynı oranlarla çalışıyor.",
+    "en": "Közde is a fictional neighbourhood roastery that roasts small batches over embers. The goal was to make that slowness and handcraft felt at every touchpoint. The mark pairs a tilted coffee bean with three embers below it; the type is editorial and warm, and the palette comes from roast levels. The system holds the same proportions from bag label to shop sign."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Ambalaj",
+        "en": "Packaging"
+      },
+      "text": {
+        "tr": "Her parti kendi etiketiyle: köken, kavrum derecesi, rakım ve parti numarası tek bakışta okunuyor.",
+        "en": "Every batch gets its own label: origin, roast level, altitude and batch number read at a glance."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/kozde/paket.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/kozde/ambalaj.webp",
+      "quote": {
+        "tr": "Yavaş kavrulur, sıcak sunulur.",
+        "en": "Slowly roasted, warmly served."
+      }
+    },
+    {
+      "type": "pair",
+      "image1": "/images/kozde/kartvizit.webp",
+      "image2": "/images/kozde/bardak.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Marka sistemi",
+        "en": "Brand system"
+      },
+      "text": {
+        "tr": "Eğik çekirdek ve üç köz; kavruk, kor ve kraft tonları; DM Serif Display ile editoryal bir ses.",
+        "en": "A tilted bean and three embers; roast, ember and kraft tones; an editorial voice set in DM Serif Display."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/kozde/marka.webp"
+    }
+  ],
+  "featured": true,
+  "canvas": "#EEE1C7"
+}

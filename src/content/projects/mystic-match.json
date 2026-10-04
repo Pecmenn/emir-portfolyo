@@ -1,5 +1,5 @@
 {
-  "order": 5,
+  "order": 6,
   "slug": "mystic-match",
   "title": "Mystic Match",
   "discipline": {
@@ -80,6 +80,5 @@
       "image": "/images/mystic-match/07.webp"
     }
   ],
-  "featured": true,
   "canvas": "#ECECEC"
 }

@@ -1,0 +1,100 @@
+{
+  "order": 3,
+  "slug": "uctu",
+  "title": "Uçtu",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "/images/uctu/cover.webp",
+  "summary": {
+    "tr": "Uçuş ve otel fiyatlarını kıyaslayan, fiyat düşünce haber veren hızlı bir seyahat uygulaması.",
+    "en": "A fast travel app that compares flight and hotel prices and tells you when they drop."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "Ürün ve marka tasarımcısı",
+    "en": "Product & brand designer"
+  },
+  "services": {
+    "tr": "UI/UX, ürün tasarımı, marka kimliği",
+    "en": "UI/UX, product design, brand identity"
+  },
+  "intro": {
+    "tr": "Seyahat planlamak çoğu zaman sekmeler arasında fiyat kovalamak demek. Uçtu bu işi tersine çeviriyor: kullanıcı rotasını ve hedef fiyatını bir kez belirliyor, uygulama fiyat düştüğü anda haber veriyor ve uçuşla oteli tek dokunuşla aynı sepette topluyor. Arayüzü bu hızı hissettirecek şekilde tasarladım: kobalt zemin güven veriyor, limon vurgu yalnızca bir sonraki adımı gösteriyor.",
+    "en": "Planning a trip usually means chasing prices across tabs. Uçtu flips that: users set a route and a target price once, the app tells them the moment it drops, and flight and hotel land in one basket with a single tap. I designed the interface to feel that fast: cobalt builds trust, and lime only ever marks the next step."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Ürün deneyimi",
+        "en": "Product experience"
+      },
+      "text": {
+        "tr": "Aramadan biniş kartına kadar tek bir akış: rota seç, fiyatları kıyasla, en iyi seçeneği gör ve rezervasyonu tamamla.",
+        "en": "One flow from search to boarding pass: pick a route, compare prices, see the best option and book."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/uctu/urun.webp"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Yedi ekran, tek hız",
+        "en": "Seven screens, one pace"
+      },
+      "text": {
+        "tr": "Her ekranda tek bir ana eylem var; fiyatlar en büyük ve en net öğe, düşüş rozetleri ise yalnızca gerçekten fırsat olduğunda görünüyor.",
+        "en": "Each screen has one primary action; prices are the largest, clearest element and drop badges appear only when there is a real deal."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/uctu/ekranlar.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/uctu/ucak.webp",
+      "quote": {
+        "tr": "Fiyat düştüğünde haberin olsun.",
+        "en": "Know when the price drops."
+      }
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Kapıda her şey hazır",
+        "en": "Ready at the gate"
+      },
+      "text": {
+        "tr": "Biniş kartı ve otel girişi aynı ekranda; kapı, koltuk ve biniş saati uzaktan bile okunuyor.",
+        "en": "Boarding pass and hotel check-in share one screen; gate, seat and boarding time read at a glance."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/uctu/kapi.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Marka sistemi",
+        "en": "Brand system"
+      },
+      "text": {
+        "tr": "Yukarı bakan ok hem kalkışı hem fırsatı anlatıyor; tek aile Sora ile fiyatlar uzaktan okunuyor.",
+        "en": "An upward arrow speaks of both take-off and a good deal; a single Sora family keeps prices readable from afar."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/uctu/marka.webp"
+    }
+  ],
+  "featured": true,
+  "canvas": "#E9ECFB"
+}
