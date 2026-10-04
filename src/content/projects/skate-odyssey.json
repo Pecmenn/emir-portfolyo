@@ -8,6 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/skate-odyssey/cover.webp",
+  "coverFocus": 28,
   "summary": {
     "tr": "Bir gencin yatak odasından açılan portallarla farklı dünyalara uzanan, kaykaylı bir sonsuz koşu oyunu.",
     "en": "An endless skate runner where portals in a teenager’s bedroom open onto themed worlds."

@@ -47,6 +47,8 @@ export type Project = {
   // İsteğe bağlı kapak videosu (yüklenen dosya /videos/... ya da doğrudan .mp4/.webm bağlantısı).
   // Varsa kapak görselinin yerine oynar; görsel, video yüklenene kadar ve geçiş animasyonunda kullanılır.
   coverVideo?: string;
+  // Dar ekranda (telefon) kapağın yatayda hangi bölümü görünür: 0 sol kenar, 50 orta (varsayılan), 100 sağ kenar
+  coverFocus?: number;
   summary: Text;
   client: string;
   role: Text;

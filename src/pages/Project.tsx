@@ -48,8 +48,9 @@ function Cover({ project }: { project: ProjectType }) {
           alt={project.title}
           onLoad={coverReady}
           onError={coverReady}
-          // Telefonda kapağın sol tarafı görünür: oyun kapaklarında ortadaki logo kartı başlığın altında kalmaz
-          className="absolute inset-0 h-full w-full object-cover object-[28%_50%] md:object-center"
+          // Telefonda kapağın görünen bölümü projeye göre ayarlanır (coverFocus); geniş ekranda ortalanır
+          style={{ ['--fx' as string]: `${project.coverFocus ?? 50}%` }}
+          className="absolute inset-0 h-full w-full object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]"
         />
       )}
       {/* Kapak videosu görselin üstünde oynar; geçiş animasyonu görsel üzerinden yapıldığı için görsel altta kalır */}

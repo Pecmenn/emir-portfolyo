@@ -8,6 +8,7 @@
   },
   "year": "2026",
   "cover": "/images/aloft/cover.webp",
+  "coverFocus": 76,
   "summary": {
     "tr": "Uçuş ve otel fiyatlarını kıyaslayan, fiyat düşünce haber veren hızlı bir seyahat uygulaması.",
     "en": "A fast travel app that compares flight and hotel prices and tells you when they drop."

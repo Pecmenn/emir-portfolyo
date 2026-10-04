@@ -8,6 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/sticky-blocks/cover.webp",
+  "coverFocus": 28,
   "summary": {
     "tr": "Sınırlı hamlede tahtadaki tüm blokları tek bir şekilde birleştirmeye dayanan mekanik bir bulmaca.",
     "en": "A mechanical puzzle about joining every block on the board into one shape within limited moves."

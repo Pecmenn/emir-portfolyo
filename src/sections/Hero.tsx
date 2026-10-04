@@ -111,7 +111,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       >
         {featured.map((p, i) => (
           <div key={p.slug} ref={(el) => (slidesRef.current[i] = el)} className="absolute inset-0">
-            {p.cover && <img src={p.cover} alt={p.title} draggable={false} className="h-full w-full scale-105 object-cover object-[28%_50%] md:object-center" />}
+            {p.cover && <img src={p.cover} alt={p.title} draggable={false} style={{ ['--fx' as string]: `${p.coverFocus ?? 50}%` }} className="h-full w-full scale-105 object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]" />}
             {p.coverVideo && (
               <AutoVideo
                 src={p.coverVideo}

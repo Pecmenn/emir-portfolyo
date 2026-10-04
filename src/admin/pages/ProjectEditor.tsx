@@ -261,7 +261,7 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
 }
 
 function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
-  const { content, save, saving, pendingFor, notify } = useAdmin();
+  const { content, save, saving, pendingFor, notify, src } = useAdmin();
   const { draft, setDraft, dirty, reset } = useDraft(original);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -345,6 +345,33 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
               poster={draft.cover}
               onChange={(v) => set('coverVideo', v || undefined)}
             />
+            <Field
+              label="Telefonda kapağın odağı"
+              hint="Telefonda kapağın yalnızca dikey bir dilimi görünür. Kaydırıcıyla görselin hangi bölümünün görüneceğini seçin: solda sol kenar, ortada merkez, sağda sağ kenar."
+            >
+              <div className="flex items-center gap-4">
+                {draft.cover && (
+                  <div className="relative h-16 w-28 shrink-0 overflow-hidden rounded-lg bg-black/5">
+                    <img src={src(draft.cover)} alt="" className="h-full w-full object-cover" />
+                    <span
+                      className="absolute inset-y-0 w-[24%] -translate-x-1/2 rounded-sm ring-2 ring-white shadow-[0_0_0_999px_rgba(0,0,0,.45)]"
+                      style={{ left: `${12 + (draft.coverFocus ?? 50) * 0.76}%` }}
+                    />
+                  </div>
+                )}
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={1}
+                  aria-label="Telefonda kapağın odağı"
+                  value={draft.coverFocus ?? 50}
+                  onChange={(e) => set('coverFocus', Number(e.target.value) === 50 ? undefined : Number(e.target.value))}
+                  className="w-full accent-ink"
+                />
+                <span className="w-10 shrink-0 text-right text-[13px] tabular-nums text-ink/60">%{draft.coverFocus ?? 50}</span>
+              </div>
+            </Field>
             <BiField label="Kısa özet" long hint="Proje sayfasının kapağında, başlığın yanında görünür. 1-2 cümle." value={draft.summary} onChange={(v) => set('summary', v)} />
           </Card>
 

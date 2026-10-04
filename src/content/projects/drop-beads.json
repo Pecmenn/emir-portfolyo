@@ -8,6 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/drop-beads/cover.webp",
+  "coverFocus": 28,
   "summary": {
     "tr": "Renkli bilyelerin pinlerden sekerek doğru tüplere dolduğu fizik tabanlı bir bulmaca.",
     "en": "A physics puzzle where colored beads bounce off pins into the right tubes."

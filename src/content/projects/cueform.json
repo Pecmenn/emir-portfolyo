@@ -8,6 +8,7 @@
   },
   "year": "2026",
   "cover": "/images/cueform/cover.webp",
+  "coverFocus": 68,
   "summary": {
     "tr": "Video üreticilerinin bir sahnenin süresini, temposunu ve duygusunu belirleyebildiği bir yapay zekâ müzik stüdyosu.",
     "en": "An AI music studio that lets video creators set the length, tempo and mood of a scene."

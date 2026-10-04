@@ -8,6 +8,7 @@
   },
   "year": "2026",
   "cover": "/images/evena/cover.webp",
+  "coverFocus": 72,
   "summary": {
     "tr": "Gelir, gider ve birikimi tek bakışta gösteren, sakin ve güven veren bir kişisel finans uygulaması.",
     "en": "A calm, reassuring personal finance app that shows income, spending and savings at a glance."

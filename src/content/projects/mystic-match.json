@@ -8,6 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/mystic-match/cover.webp",
+  "coverFocus": 28,
   "summary": {
     "tr": "Silahları eşleştirerek güçlenilen, bulmaca ile RPG’yi birleştiren bir savaşçı macerası.",
     "en": "A warrior adventure that blends puzzle and RPG: match weapons to grow stronger."
