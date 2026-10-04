@@ -43,25 +43,22 @@
     },
     {
       "type": "full",
-      "image": "/images/cueform/process.webp"
+      "image": "/images/cueform/ui-editor.webp"
     },
     {
-      "type": "text-image",
-      "text": {
-        "tr": "Akıllı zaman çizelgeleriyle sahneleri, sürümleri ve dışa aktarımları dilediğin gibi düzenle.",
-        "en": "Build scenes, organized your way with smart timelines for every version and export."
+      "type": "text",
+      "title": {
+        "tr": "Cepteki stüdyo",
+        "en": "A studio in your pocket"
       },
-      "image": "/images/cueform/phone-scenes.webp",
-      "side": "right"
+      "text": {
+        "tr": "Sahneler, sürümler ve dışa aktarımlar akıllı zaman çizelgeleriyle telefonda da elinin altında; her tempo ve duygu ayarı parçayı kurguna kilitli tutar.",
+        "en": "Scenes, versions and exports stay at hand on mobile with smart timelines; every tempo and mood tweak keeps the track locked to your cut."
+      }
     },
     {
-      "type": "text-image",
-      "text": {
-        "tr": "Dikkat dağıtmayan oynatıcıda tempo ve duyguya yapılan her ayar, parçayı kurguna kilitli tutuyor.",
-        "en": "In a distraction-free player, every tempo and mood adjustment keeps the track locked to your cut."
-      },
-      "image": "/images/cueform/phone-preview.webp",
-      "side": "left"
+      "type": "full",
+      "image": "/images/cueform/ui-mobile-1.webp"
     },
     {
       "type": "full",
@@ -70,10 +67,6 @@
         "tr": "Video için yapay zekâ müzik stüdyosu.",
         "en": "An AI music studio for video."
       }
-    },
-    {
-      "type": "full",
-      "image": "/images/cueform/scores.webp"
     },
     {
       "type": "text",
@@ -87,8 +80,20 @@
       }
     },
     {
-      "type": "showcase",
-      "image": "/images/cueform/phones-trio.webp"
+      "type": "full",
+      "image": "/images/cueform/ui-mobile-2.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/scores.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/ui-mobile-3.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/ui-dashboard.webp"
     },
     {
       "type": "full",
@@ -111,12 +116,12 @@
     },
     {
       "type": "full",
-      "image": "/images/cueform/branding.webp"
+      "image": "/images/cueform/brand-board.webp"
     },
     {
       "type": "pair",
-      "image1": "/images/cueform/type-color.webp",
-      "image2": "/images/cueform/iconography.webp"
+      "image1": "/images/cueform/icons-card.webp",
+      "image2": "/images/cueform/grid-card.webp"
     },
     {
       "type": "full",

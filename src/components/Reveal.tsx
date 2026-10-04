@@ -48,10 +48,10 @@ export function Lines({
 // Görselin kenarları zemine yumuşakça karışır; koyu sayfalarda görsel çerçevesi ve saydam olmayan gölgeler seçilmez
 export const EDGE_FADE: CSSProperties = {
   maskImage:
-    'linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 7%, #000 90%, transparent)',
+    'linear-gradient(to right, transparent, #000 5%, #000 95%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 94%, transparent)',
   maskComposite: 'intersect',
   WebkitMaskImage:
-    'linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 7%, #000 90%, transparent)',
+    'linear-gradient(to right, transparent, #000 5%, #000 95%, transparent), linear-gradient(to bottom, transparent, #000 5%, #000 94%, transparent)',
   WebkitMaskComposite: 'source-in',
 };
 
@@ -67,6 +67,7 @@ export function RevealImage({
   hoverZoom = false,
   fade = false,
   capHeight = true,
+  density,
 }: {
   src: string;
   alt: string;
@@ -83,6 +84,9 @@ export function RevealImage({
   fade?: boolean;
   // Kendi oranındaki görsel ekran yüksekliğiyle sınırlanır; kapalıysa genişliği doldurur
   capHeight?: boolean;
+  // Görselin piksel yoğunluğu (ör. 2: 2880px kaynak 1440px tasarım boyutunda). Verilirse görsel tasarım boyutundan
+  // büyük gösterilmez; büyütülüp yumuşamaz
+  density?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const zoomRef = useRef<HTMLDivElement>(null);
@@ -113,7 +117,7 @@ export function RevealImage({
   const fill = natural
     ? capHeight
       ? 'mx-auto block h-auto max-h-[92vh] w-auto max-w-full'
-      : 'block h-auto w-full'
+      : 'mx-auto block h-auto w-full'
     : 'absolute inset-0 h-full w-full object-cover';
   return (
     <div
@@ -129,7 +133,8 @@ export function RevealImage({
             alt={alt}
             // Kendi oranındaki görsel yüklenene kadar yüksekliği sıfırdır; tembel yükleme onu hiç tetiklemeyebilir
             loading={natural ? 'eager' : 'lazy'}
-            onLoad={() => {
+            onLoad={(e) => {
+              if (density) e.currentTarget.style.maxWidth = `${e.currentTarget.naturalWidth / density}px`;
               refreshSoon();
               onLoad?.();
             }}

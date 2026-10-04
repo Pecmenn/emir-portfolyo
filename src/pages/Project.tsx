@@ -174,8 +174,8 @@ function Block({ block, title, dark, canvas, chapter }: { block: GalleryBlock; t
     // Kesintisiz zeminde görseller kırpılmadan, kendi oranlarıyla yan yana durur
     return (
       <div className="gutter mx-auto grid w-full max-w-[1760px] items-start gap-[var(--gap)] sm:grid-cols-2">
-        <RevealImage hoverZoom natural fade capHeight={false} src={block.image1} alt={title} />
-        <RevealImage hoverZoom natural fade capHeight={false} src={block.image2} alt={title} />
+        <RevealImage hoverZoom natural fade capHeight={false} density={1.6} src={block.image1} alt={title} />
+        <RevealImage hoverZoom natural fade capHeight={false} density={1.6} src={block.image2} alt={title} />
       </div>
     );
   }
@@ -206,7 +206,15 @@ function Block({ block, title, dark, canvas, chapter }: { block: GalleryBlock; t
           text={t(block.text)}
           className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] lg:sticky lg:top-28 lg:col-span-4 ${imageRight ? '' : 'lg:order-2'}`}
         />
-        <RevealImage hoverZoom natural fade={dark} src={block.image} alt={title} className={`lg:col-span-8 ${imageRight ? '' : 'lg:order-1'}`} />
+        <RevealImage
+          hoverZoom
+          natural
+          fade={dark}
+          density={canvas ? 2 : undefined}
+          src={block.image}
+          alt={title}
+          className={`lg:col-span-8 ${imageRight ? '' : 'lg:order-1'}`}
+        />
       </div>
     );
   }
@@ -225,7 +233,7 @@ function Block({ block, title, dark, canvas, chapter }: { block: GalleryBlock; t
   }
   if (block.type === 'showcase') {
     if (!block.image) return null;
-    return <Showcase image={block.image} alt={title} />;
+    return <Showcase image={block.image} alt={title} density={canvas ? 2 : undefined} />;
   }
   if (block.type === 'strip') {
     const images = block.images.filter(Boolean);
@@ -237,7 +245,7 @@ function Block({ block, title, dark, canvas, chapter }: { block: GalleryBlock; t
       {canvas ? (
         // Görselin kenarları zeminle aynı renkte; ortada, ekranı taşırmayan bir genişlikte kesintisiz durur
         <div className="mx-auto w-full max-w-[1760px]">
-          <RevealImage hoverZoom natural fade capHeight={false} src={block.image} alt={title} />
+          <RevealImage hoverZoom natural fade capHeight={false} density={1.6} src={block.image} alt={title} />
         </div>
       ) : (
         <div className="gutter">
@@ -292,7 +300,7 @@ function Chapter({ index, title, text }: { index: number; title: string; text: s
 }
 
 // Görsel kaydırınca aşağıdan yükselerek belirir; fare hareketine göre 3 boyutlu eğilir
-function Showcase({ image, alt }: { image: string; alt: string }) {
+function Showcase({ image, alt, density }: { image: string; alt: string; density?: number }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const riseRef = useRef<HTMLDivElement>(null);
   const tiltRef = useRef<HTMLDivElement>(null);
@@ -333,7 +341,10 @@ function Showcase({ image, alt }: { image: string; alt: string }) {
             src={image}
             alt={alt}
             draggable={false}
-            onLoad={refreshSoon}
+            onLoad={(e) => {
+              if (density) e.currentTarget.style.maxWidth = `${e.currentTarget.naturalWidth / density}px`;
+              refreshSoon();
+            }}
             style={EDGE_FADE}
             className="mx-auto block h-auto max-h-[92vh] w-auto max-w-full select-none"
           />
@@ -394,7 +405,7 @@ function Strip({ images, alt }: { images: string[]; alt: string }) {
                 refreshSoon();
                 dragRef.current?.applyBounds(wrapRef.current!);
               }}
-              className="h-[clamp(20rem,80vh,60rem)] w-auto max-w-none"
+              className="h-[clamp(20rem,62vh,42rem)] w-auto max-w-none"
             />
           ))}
         </div>
