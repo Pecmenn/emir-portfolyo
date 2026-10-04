@@ -48,7 +48,8 @@ function Cover({ project }: { project: ProjectType }) {
           alt={project.title}
           onLoad={coverReady}
           onError={coverReady}
-          className="absolute inset-0 h-full w-full object-cover"
+          // Telefonda kapağın sol tarafı görünür: oyun kapaklarında ortadaki logo kartı başlığın altında kalmaz
+          className="absolute inset-0 h-full w-full object-cover object-[28%_50%] md:object-center"
         />
       )}
       {/* Kapak videosu görselin üstünde oynar; geçiş animasyonu görsel üzerinden yapıldığı için görsel altta kalır */}
@@ -342,7 +343,7 @@ function Showcase({ image, alt, density }: { image: string; alt: string; density
             alt={alt}
             draggable={false}
             onLoad={(e) => {
-              if (density) e.currentTarget.style.maxWidth = `${e.currentTarget.naturalWidth / density}px`;
+              if (density) e.currentTarget.style.maxWidth = `min(100%, ${e.currentTarget.naturalWidth / density}px)`;
               refreshSoon();
             }}
             style={EDGE_FADE}
@@ -461,7 +462,7 @@ function NextProject({ project }: { project: ProjectType }) {
           onClick={() => openProject(project.slug, project.cover, mediaRef.current)}
           className="absolute inset-0 flex flex-col items-center justify-center text-center"
         >
-          <span className="display text-[clamp(3.5rem,7vw,9rem)]">{project.title}</span>
+          <span className="display max-w-full text-balance px-4 text-[clamp(2.6rem,7vw,9rem)]">{project.title}</span>
           <span className="mt-5 text-[clamp(1rem,1vw,1.4rem)] font-medium">{t(ui.next)}</span>
           <span className="mt-1 text-sm text-paper/60">{t(project.discipline)}</span>
         </button>

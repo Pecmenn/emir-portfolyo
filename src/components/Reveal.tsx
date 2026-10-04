@@ -134,7 +134,7 @@ export function RevealImage({
             // Kendi oranındaki görsel yüklenene kadar yüksekliği sıfırdır; tembel yükleme onu hiç tetiklemeyebilir
             loading={natural ? 'eager' : 'lazy'}
             onLoad={(e) => {
-              if (density) e.currentTarget.style.maxWidth = `${e.currentTarget.naturalWidth / density}px`;
+              if (density) e.currentTarget.style.maxWidth = `min(100%, ${e.currentTarget.naturalWidth / density}px)`;
               refreshSoon();
               onLoad?.();
             }}

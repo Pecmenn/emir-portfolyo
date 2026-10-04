@@ -43,6 +43,8 @@ function FitSlogan({ lines }: { lines: string[] }) {
     const observer = new ResizeObserver(fit);
     observer.observe(box);
     observer.observe(column);
+    // Yazı tipi geç yüklenirse ölçüm metni genişler; o anda boyut yeniden hesaplanır
+    observer.observe(probe);
     return () => {
       observer.disconnect();
       probe.remove();

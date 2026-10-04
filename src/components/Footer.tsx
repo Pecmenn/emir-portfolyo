@@ -35,12 +35,14 @@ function useFitWidth(text: string) {
     document.body.appendChild(probe);
     const fit = () => {
       const byWidth = (box.clientWidth / Math.max(probe.offsetWidth, 1)) * 100 * 0.97;
-      setSize(Math.round(Math.max(48, Math.min(byWidth, window.innerHeight * 0.15))));
+      setSize(Math.round(Math.max(24, Math.min(byWidth, window.innerHeight * 0.15))));
     };
     fit();
     document.fonts?.ready.then(fit);
     const observer = new ResizeObserver(fit);
     observer.observe(box);
+    // Yazı tipi geç yüklenirse ölçüm metni genişler; o anda boyut yeniden hesaplanır
+    observer.observe(probe);
     return () => {
       observer.disconnect();
       probe.remove();
