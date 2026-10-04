@@ -99,8 +99,10 @@ async function prepareImage(file: File): Promise<{ blob: Blob; ext: string }> {
   canvas.width = 2400;
   canvas.height = Math.round(bitmap.height * scale);
   canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-  const blob = await new Promise<Blob>((r) => canvas.toBlob((b) => r(b ?? file), 'image/jpeg', 0.86));
-  return { blob, ext: 'jpg' };
+  // WebP kendi biçiminde kalır; saydam zeminli görsellerin saydamlığı korunur
+  const webp = ext === 'webp';
+  const blob = await new Promise<Blob>((r) => canvas.toBlob((b) => r(b ?? file), webp ? 'image/webp' : 'image/jpeg', 0.86));
+  return { blob, ext: webp ? 'webp' : 'jpg' };
 }
 
 function blobToBase64(blob: Blob): Promise<string> {

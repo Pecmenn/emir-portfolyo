@@ -45,6 +45,16 @@ export function Lines({
   );
 }
 
+// Görselin kenarları zemine yumuşakça karışır; koyu sayfalarda görsel çerçevesi ve saydam olmayan gölgeler seçilmez
+export const EDGE_FADE: CSSProperties = {
+  maskImage:
+    'linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 7%, #000 90%, transparent)',
+  maskComposite: 'intersect',
+  WebkitMaskImage:
+    'linear-gradient(to right, transparent, #000 9%, #000 91%, transparent), linear-gradient(to bottom, transparent, #000 7%, #000 90%, transparent)',
+  WebkitMaskComposite: 'source-in',
+};
+
 // Görsel alttan yukarı perde gibi açılır, içindeki fotoğraf hafifçe küçülerek yerine oturur
 export function RevealImage({
   src,
@@ -53,6 +63,9 @@ export function RevealImage({
   imgClassName = '',
   onLoad,
   video,
+  natural = false,
+  hoverZoom = false,
+  fade = false,
 }: {
   src: string;
   alt: string;
@@ -61,8 +74,15 @@ export function RevealImage({
   onLoad?: () => void;
   // Varsa görselin üstünde sessiz döngü olarak oynar; görsel, video yüklenene kadar görünür
   video?: string;
+  // Görsel kırpılmadan kendi oranında gösterilir (saydam zeminli görseller için zemin rengi de kaldırılır)
+  natural?: boolean;
+  // Fare üzerine gelince görsel hafifçe yakınlaşır ve fareyi takip ederek kayar
+  hoverZoom?: boolean;
+  // Kenarlar zemine yumuşakça karışır (EDGE_FADE)
+  fade?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const zoomRef = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
     if (reducedMotion) return;
     const ctx = gsap.context(() => {
@@ -73,21 +93,45 @@ export function RevealImage({
     return () => ctx.revert();
   }, []);
 
+  // Yakınlaşma ayrı bir sarmalayıcıda yapılır; açılış animasyonunun görsel üzerindeki ölçeğiyle çakışmaz
+  const onMove = (e: React.PointerEvent) => {
+    if (!hoverZoom || reducedMotion || e.pointerType !== 'mouse') return;
+    const r = ref.current!.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    gsap.to(zoomRef.current, { scale: 1.08, xPercent: -px * 6, yPercent: -py * 6, duration: 0.8, ease: 'power3.out' });
+  };
+  const onLeave = () => {
+    if (!hoverZoom) return;
+    gsap.to(zoomRef.current, { scale: 1, xPercent: 0, yPercent: 0, duration: 0.9, ease: 'power3.out' });
+  };
+
+  // Kendi oranındaki görsel ekran yüksekliğini aşmaz, dar kalırsa ortalanır
+  const fill = natural ? 'mx-auto block h-auto max-h-[92vh] w-auto max-w-full' : 'absolute inset-0 h-full w-full object-cover';
   return (
-    <div ref={ref} className={`relative overflow-hidden bg-black/5 ${className}`}>
-      {src && (
-        <img
-          src={src}
-          alt={alt}
-          loading="lazy"
-          onLoad={() => {
-            refreshSoon();
-            onLoad?.();
-          }}
-          className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`}
-        />
-      )}
-      {video && <AutoVideo src={video} poster={src || undefined} className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`} />}
+    <div
+      ref={ref}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      className={`relative overflow-hidden ${natural ? '' : 'bg-black/5'} ${className}`}
+    >
+      <div ref={zoomRef} className={natural ? '' : 'absolute inset-0'}>
+        {src && (
+          <img
+            src={src}
+            alt={alt}
+            // Kendi oranındaki görsel yüklenene kadar yüksekliği sıfırdır; tembel yükleme onu hiç tetiklemeyebilir
+            loading={natural ? 'eager' : 'lazy'}
+            onLoad={() => {
+              refreshSoon();
+              onLoad?.();
+            }}
+            style={fade ? EDGE_FADE : undefined}
+            className={`${fill} ${imgClassName}`}
+          />
+        )}
+        {video && <AutoVideo src={video} poster={src || undefined} className={`absolute inset-0 h-full w-full object-cover ${imgClassName}`} />}
+      </div>
     </div>
   );
 }

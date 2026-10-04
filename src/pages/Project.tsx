@@ -2,11 +2,15 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { projects, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
-import { FadeUp, RevealImage, Words } from '../components/Reveal';
+import { EDGE_FADE, FadeUp, RevealImage, Words } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
+import { Draggable } from 'gsap/Draggable';
+import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { gsap, reducedMotion, refreshSoon, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 import NotFound from './NotFound';
+
+gsap.registerPlugin(Draggable, InertiaPlugin);
 
 function Cover({ project }: { project: ProjectType }) {
   const { t, lang } = useLang();
@@ -96,7 +100,7 @@ function Cover({ project }: { project: ProjectType }) {
   );
 }
 
-function Credits({ project }: { project: ProjectType }) {
+function Credits({ project, dark }: { project: ProjectType; dark?: boolean }) {
   const { t, lang } = useLang();
   const rows = [
     { label: ui.client, value: project.client },
@@ -105,7 +109,11 @@ function Credits({ project }: { project: ProjectType }) {
   ];
   // Künye solda dört sütunda, giriş paragrafı kapaktaki istemci yazısıyla aynı (üçte bir) çizgiden başlar
   return (
-    <section id="kunye" className="gutter grid gap-12 bg-paper pb-[12vh] pt-[14vh] lg:grid-cols-12 lg:gap-8">
+    <section
+      id="kunye"
+      data-theme={dark ? 'dark' : undefined}
+      className={`gutter grid gap-12 pb-[12vh] pt-[14vh] lg:grid-cols-12 lg:gap-8 ${dark ? 'bg-ink text-paper' : 'bg-paper'}`}
+    >
       <FadeUp className="lg:col-span-4">
         <dl className="grid gap-8 text-[clamp(1.05rem,1.05vw,1.5rem)] leading-snug sm:grid-cols-3 lg:grid-cols-1">
           {rows.map((row) => (
@@ -158,13 +166,13 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
 
 // Galeri blokları sayfa kenar boşluklarının içinde aynı ızgaraya oturur; görseller arasında dar, metinlerin
 // çevresinde geniş boşluk bırakılır
-function Block({ block, title }: { block: GalleryBlock; title: string }) {
+function Block({ block, title, dark }: { block: GalleryBlock; title: string; dark?: boolean }) {
   const { t, lang } = useLang();
   if (block.type === 'pair') {
     return (
       <div className="gutter grid gap-[var(--gap)] sm:grid-cols-2">
-        <RevealImage src={block.image1} alt={title} className="aspect-[4/5] sm:aspect-[4/3]" />
-        <RevealImage src={block.image2} alt={title} className="aspect-[4/5] sm:aspect-[4/3]" />
+        <RevealImage hoverZoom src={block.image1} alt={title} className="aspect-[4/5] sm:aspect-[4/3]" />
+        <RevealImage hoverZoom src={block.image2} alt={title} className="aspect-[4/5] sm:aspect-[4/3]" />
       </div>
     );
   }
@@ -187,14 +195,36 @@ function Block({ block, title }: { block: GalleryBlock; title: string }) {
           text={t(block.text)}
           className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] lg:sticky lg:top-28 lg:col-span-4 ${imageRight ? '' : 'lg:order-2'}`}
         />
-        <RevealImage src={block.image} alt={title} className={`aspect-[4/3] lg:col-span-8 ${imageRight ? '' : 'lg:order-1'}`} />
+        <RevealImage hoverZoom natural fade={dark} src={block.image} alt={title} className={`lg:col-span-8 ${imageRight ? '' : 'lg:order-1'}`} />
       </div>
     );
+  }
+  if (block.type === 'text') {
+    // Bölüm başlığı solda, açıklama sağda; ikisi aynı alt çizgiye oturur
+    return (
+      <div className="gutter grid gap-6 pb-[4vh] pt-[10vh] lg:grid-cols-12 lg:items-end lg:gap-8">
+        <Words key={`t-${lang}`} as="h2" text={t(block.title)} className="display text-[clamp(2.2rem,3.6vw,5.5rem)] leading-[1.02] lg:col-span-6" />
+        <Words
+          key={`p-${lang}`}
+          text={t(block.text)}
+          className="max-w-xl text-[clamp(1.05rem,1.1vw,1.55rem)] font-medium leading-snug opacity-75 lg:col-span-5 lg:col-start-8 lg:pb-[0.4em]"
+        />
+      </div>
+    );
+  }
+  if (block.type === 'showcase') {
+    if (!block.image) return null;
+    return <Showcase image={block.image} alt={title} />;
+  }
+  if (block.type === 'strip') {
+    const images = block.images.filter(Boolean);
+    if (!images.length) return null;
+    return <Strip images={images} alt={title} />;
   }
   return (
     <>
       <div className="gutter">
-        <RevealImage src={block.image} alt={title} className="aspect-[4/5] sm:aspect-video" />
+        <RevealImage hoverZoom natural fade={dark} src={block.image} alt={title} />
       </div>
       {/* Alıntı, görselin altında ortalanmış büyük bir cümle olarak durur */}
       {block.quote && (t(block.quote) || '').trim() && (
@@ -203,6 +233,118 @@ function Block({ block, title }: { block: GalleryBlock; title: string }) {
         </div>
       )}
     </>
+  );
+}
+
+// Görsel kaydırınca aşağıdan yükselerek belirir; fare hareketine göre 3 boyutlu eğilir
+function Showcase({ image, alt }: { image: string; alt: string }) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const riseRef = useRef<HTMLDivElement>(null);
+  const tiltRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (reducedMotion) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        riseRef.current,
+        { y: 140, scale: 0.9, rotateX: 14, opacity: 0 },
+        {
+          y: 0,
+          scale: 1,
+          rotateX: 0,
+          opacity: 1,
+          ease: 'none',
+          scrollTrigger: { trigger: stageRef.current, start: 'top 95%', end: 'top 25%', scrub: 0.8 },
+        },
+      );
+    }, stageRef);
+    return () => ctx.revert();
+  }, []);
+
+  const onMove = (e: React.PointerEvent) => {
+    if (reducedMotion || e.pointerType !== 'mouse') return;
+    const r = stageRef.current!.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    gsap.to(tiltRef.current, { rotateY: px * 16, rotateX: -py * 12, duration: 0.9, ease: 'power3.out' });
+  };
+  const onLeave = () => gsap.to(tiltRef.current, { rotateY: 0, rotateX: 0, duration: 1.2, ease: 'power3.out' });
+
+  return (
+    <div ref={stageRef} onPointerMove={onMove} onPointerLeave={onLeave} className="gutter py-[4vh] [perspective:1800px]">
+      <div ref={riseRef} className="[transform-style:preserve-3d]">
+        <div ref={tiltRef} className="will-change-transform [transform-style:preserve-3d]">
+          <img
+            src={image}
+            alt={alt}
+            draggable={false}
+            onLoad={refreshSoon}
+            style={EDGE_FADE}
+            className="mx-auto block h-auto max-h-[92vh] w-auto max-w-full select-none"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Yatayda sürüklenen görsel şeridi: bırakınca ataletle kayar, kenarlarda yumuşakça durur
+function Strip({ images, alt }: { images: string[]; alt: string }) {
+  const { t } = useLang();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<Draggable | null>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      [dragRef.current] = Draggable.create(trackRef.current, {
+        type: 'x',
+        bounds: wrapRef.current,
+        inertia: true,
+        edgeResistance: 0.85,
+        allowNativeTouchScrolling: true,
+        cursor: 'grab',
+        activeCursor: 'grabbing',
+      });
+      if (!reducedMotion) {
+        gsap.from('[data-strip-item]', {
+          x: 160,
+          opacity: 0,
+          duration: 1.3,
+          ease: 'expo.out',
+          stagger: 0.08,
+          scrollTrigger: { trigger: wrapRef.current, start: 'top 80%' },
+        });
+      }
+    }, wrapRef);
+    return () => ctx.revert();
+  }, [images.join('|')]);
+
+  return (
+    <div className="py-[4vh]">
+      <p className="gutter mb-5 flex items-center gap-2 text-sm font-medium opacity-60">
+        <span aria-hidden>←</span> {t(ui.drag)} <span aria-hidden>→</span>
+      </p>
+      <div ref={wrapRef} className="overflow-hidden">
+        <div ref={trackRef} className="gutter flex w-max select-none gap-[var(--gap)]">
+          {images.map((src, i) => (
+            <img
+              key={`${src}-${i}`}
+              data-strip-item
+              src={src}
+              alt={alt}
+              draggable={false}
+              // Görseller yüklendikçe şerit genişler; sürükleme sınırları yeniden hesaplanır
+              onLoad={() => {
+                refreshSoon();
+                dragRef.current?.applyBounds(wrapRef.current!);
+              }}
+              className="h-[clamp(20rem,80vh,60rem)] w-auto max-w-none"
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -283,13 +425,14 @@ export default function Project() {
   return (
     <main key={project.slug}>
       <Cover project={project} />
-      <Credits project={project} />
+      <Credits project={project} dark={project.dark} />
       {project.caseStudy && <CaseStudySection data={project.caseStudy} />}
       <div
-        className={`flex flex-col gap-[var(--gap)] bg-paper pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.caseStudy ? 'pt-[12vh]' : ''}`}
+        data-theme={project.dark ? 'dark' : undefined}
+        className={`flex flex-col gap-[var(--gap)] pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.dark ? 'bg-ink text-paper' : 'bg-paper'} ${project.caseStudy ? 'pt-[12vh]' : ''}`}
       >
         {project.gallery.map((block, i) => (
-          <Block key={i} block={block} title={project.title} />
+          <Block key={i} block={block} title={project.title} dark={project.dark} />
         ))}
       </div>
       <NextProject project={next} />

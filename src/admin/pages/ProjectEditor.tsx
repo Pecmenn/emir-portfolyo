@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Image as ImageIcon, Images, Plus, Quote, Trash2, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, GalleryHorizontal, Image as ImageIcon, Images, Plus, Quote, Rotate3d, Trash2, Type, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { GalleryBlock, Project } from '../../content';
 import { SITE_URL } from '../github';
@@ -45,17 +45,23 @@ const DISCIPLINES: Bi[] = [
 ];
 
 const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; icon: typeof ImageIcon }[] = [
-  { type: 'pair', label: 'İki görsel', description: 'Büyük görsel solda, küçük görsel sağda', icon: Images },
+  { type: 'text', label: 'Başlık + açıklama', description: 'Bölüm başlığı solda, kısa açıklama sağda', icon: Type },
+  { type: 'pair', label: 'İki görsel', description: 'Yan yana iki eşit görsel', icon: Images },
   { type: 'text-image', label: 'Metin + görsel', description: 'Kısa bir açıklama ve yanında görsel', icon: Quote },
   { type: 'full', label: 'Geniş görsel', description: 'Sayfa genişliğinde görsel, altında isteğe bağlı büyük cümle', icon: ImageIcon },
   { type: 'video', label: 'Video', description: 'Sessiz, döngüde oynayan video', icon: Film },
+  { type: 'showcase', label: '3B vitrin', description: 'Fareyle 3 boyutlu eğilen tek görsel; saydam zeminli cihaz görselleri için ideal', icon: Rotate3d },
+  { type: 'strip', label: 'Sürüklenen şerit', description: 'Yatayda fareyle sürüklenerek gezilen görsel dizisi', icon: GalleryHorizontal },
 ];
 
 function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'pair') return { type, image1: '', image2: '' };
   if (type === 'text-image') return { type, text: { ...empty }, image: '', side: 'right' };
   if (type === 'video') return { type, video: '', full: true };
-  return { type, image: '', quote: { ...empty } };
+  if (type === 'text') return { type, title: { ...empty }, text: { ...empty } };
+  if (type === 'showcase') return { type, image: '' };
+  if (type === 'strip') return { type, images: ['', ''] };
+  return { type: 'full', image: '', quote: { ...empty } };
 }
 
 // Sağdaki canlı önizleme: kartın ana sayfada ve proje sayfasının kapağında nasıl görüneceği
@@ -138,8 +144,8 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
             </div>
             {block.type === 'pair' && (
               <div className="grid gap-4 sm:grid-cols-2">
-                <ImageField label="Büyük görsel (solda)" aspect="aspect-[4/5]" value={block.image1} onChange={(v) => update(i, { ...block, image1: v })} />
-                <ImageField label="Küçük görsel (sağda)" aspect="aspect-[4/5]" value={block.image2} onChange={(v) => update(i, { ...block, image2: v })} />
+                <ImageField label="Sol görsel" aspect="aspect-[4/3]" value={block.image1} onChange={(v) => update(i, { ...block, image1: v })} />
+                <ImageField label="Sağ görsel" aspect="aspect-[4/3]" value={block.image2} onChange={(v) => update(i, { ...block, image2: v })} />
               </div>
             )}
             {block.type === 'text-image' && (
@@ -166,6 +172,48 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
               <div className="flex flex-col gap-4">
                 <VideoField label="Video" value={block.video} onChange={(v) => update(i, { ...block, video: v })} />
                 <Toggle label="Tam genişlik" hint="Kapalıysa video ortada, daha dar gösterilir." checked={block.full} onChange={(v) => update(i, { ...block, full: v })} />
+              </div>
+            )}
+            {block.type === 'text' && (
+              <div className="flex flex-col gap-4">
+                <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Görsel kimlik" />
+                <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
+              </div>
+            )}
+            {block.type === 'showcase' && (
+              <ImageField
+                label="Görsel"
+                hint="Kırpılmadan kendi oranında gösterilir. Saydam zeminli PNG/WebP cihaz görselleri en iyi sonucu verir."
+                value={block.image}
+                onChange={(v) => update(i, { ...block, image: v })}
+              />
+            )}
+            {block.type === 'strip' && (
+              <div className="flex flex-col gap-4">
+                <p className="text-[13px] text-ink/55">Görseller aynı yükseklikte, kendi oranlarıyla yan yana dizilir.</p>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {block.images.map((img, j) => (
+                    <div key={j} className="relative">
+                      <ImageField
+                        label={`Görsel ${j + 1}`}
+                        aspect="aspect-[4/5]"
+                        value={img}
+                        onChange={(v) => update(i, { ...block, images: block.images.map((x, k) => (k === j ? v : x)) })}
+                      />
+                      <button
+                        type="button"
+                        aria-label="Görseli çıkar"
+                        onClick={() => update(i, { ...block, images: block.images.filter((_, k) => k !== j) })}
+                        className="absolute right-0 top-0 grid h-7 w-7 place-items-center rounded-lg text-ink/45 hover:bg-red-50 hover:text-red-600"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <Button type="button" variant="soft" onClick={() => update(i, { ...block, images: [...block.images, ''] })}>
+                  <Plus size={16} /> Görsel ekle
+                </Button>
               </div>
             )}
             {block.type === 'full' && (
@@ -307,6 +355,15 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
               onChange={(v) => set('featured', v)}
             />
             <p className="rounded-xl bg-paper p-3 text-[13px] text-ink/60">Projenin işler bölümündeki sırasını Projeler sayfasında kartları sürükleyerek değiştirebilirsiniz.</p>
+          </Card>
+
+          <Card title="Sayfa zemini">
+            <Toggle
+              label="Koyu proje sayfası"
+              hint="Açıksa künye ve galeri koyu zeminde gösterilir. Koyu tonlu sunumlar ve saydam zeminli cihaz görselleri için uygundur."
+              checked={!!draft.dark}
+              onChange={(v) => set('dark', v || undefined)}
+            />
           </Card>
 
           <Card title="Künye" description="Proje sayfasında kapaktan hemen sonra gelen bilgiler.">

@@ -156,7 +156,8 @@ export default function Hero({ ready }: { ready: boolean }) {
       </div>
 
       <div className="gutter absolute inset-x-0 bottom-0 z-10 pb-6">
-        <div className="grid grid-cols-3 gap-4">
+        {/* Öne çıkan proje sayısı kadar sütun */}
+        <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${featured.length}, minmax(0, 1fr))` }}>
           {featured.map((p, i) => (
             <button key={p.slug} onClick={() => setIndex(i)} className="text-left" aria-label={p.title}>
               <span className={`display block text-3xl transition-opacity sm:text-4xl ${i === index ? 'opacity-100' : 'opacity-30'}`}>

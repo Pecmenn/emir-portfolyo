@@ -1,0 +1,189 @@
+{
+  "order": 7,
+  "slug": "cueform",
+  "title": "Cueform",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "/images/cueform/cover.jpg",
+  "summary": {
+    "tr": "Video üreticilerinin bir sahnenin süresini, temposunu ve duygusunu belirleyebildiği bir yapay zekâ müzik stüdyosu.",
+    "en": "An AI music studio that lets video creators set the length, tempo and mood of a scene."
+  },
+  "client": "CUEFORM",
+  "role": {
+    "tr": "Ürün ve marka tasarımcısı",
+    "en": "Product & brand designer"
+  },
+  "services": {
+    "tr": "UI/UX, ürün tasarımı, marka kimliği, sosyal medya",
+    "en": "UI/UX, product design, brand identity, social media"
+  },
+  "intro": {
+    "tr": "Sinematik sahneler ve hassas teslim için yapay zekâyla müzik üreten bir çalışma alanı. Zaman çizelgesi odaklı arayüz her parçayı kurguya uyarlıyor ve her platforma hazır şekilde dışa aktarıyor.",
+    "en": "An AI-made soundtrack workspace for cinematic sequences and precise delivery. Its timeline-first interface adapts each track to the edit and exports it ready for any platform."
+  },
+  "gallery": [
+    {
+      "type": "showcase",
+      "image": "/images/cueform/monitor.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/studio.jpg",
+      "quote": {
+        "tr": "Video için yapay zekâ müzik stüdyosu.",
+        "en": "An AI music studio for video."
+      }
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Marka kimliği",
+        "en": "Visual branding"
+      },
+      "text": {
+        "tr": "Üç sinyal çubuğu, asit yeşili vurgular ve sade grafit yüzeyler üzerine kurulu bütünlüklü bir kimlik; CUEFORM'a her temas noktasında net bir ses veriyor.",
+        "en": "A cohesive identity built on three signal bars, acid-green accents and clean graphite surfaces, giving CUEFORM a clear voice at every touchpoint."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/branding.jpg"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Tasarım süreci",
+        "en": "Design process"
+      },
+      "text": {
+        "tr": "İlk komuttan son dışa aktarıma net bir akış: sahneyi kur, sesi biçimlendir, kurguya oturt ve güvenle teslim et.",
+        "en": "A clear workflow from first prompt to final export: set the scene, shape the sound, fit the cut and deliver with confidence."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/process.jpg"
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Akıllı zaman çizelgeleriyle sahneleri, sürümleri ve dışa aktarımları dilediğin gibi düzenle.",
+        "en": "Build scenes, organized your way with smart timelines for every version and export."
+      },
+      "image": "/images/cueform/phone-scenes.webp",
+      "side": "right"
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Dikkat dağıtmayan oynatıcıda tempo ve duyguya yapılan her ayar, parçayı kurguna kilitli tutuyor.",
+        "en": "In a distraction-free player, every tempo and mood adjustment keeps the track locked to your cut."
+      },
+      "image": "/images/cueform/phone-preview.webp",
+      "side": "left"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Tipografi ve renk",
+        "en": "Typography & color"
+      },
+      "text": {
+        "tr": "Rafine bir tipografi ve renk sistemi okunurluğu artırıyor, markayı güçlendiriyor ve zaman çizelgesinden dışa aktarıma her ekranı tutarlı kılıyor.",
+        "en": "A refined typography and color system sharpens readability, strengthens the brand and keeps every screen consistent from timeline to export."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/type-color.jpg"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "İkonlar ve ızgara",
+        "en": "Iconography & grid"
+      },
+      "text": {
+        "tr": "Tutarlı bir ikon seti ve düzenli bir ızgara; zaman çizelgesini, kontrolleri ve dışa aktarımları her ekranda net ve öngörülebilir kılıyor.",
+        "en": "A consistent icon set and a structured grid keep the timeline, controls and exports clear and predictable on every screen and device."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/iconography.jpg"
+    },
+    {
+      "type": "text-image",
+      "text": {
+        "tr": "Kısa bir komut, sahne süresi ve tempoyla özgün müzik üret; sürümleri dinle, duyguyu iyileştir ve tek akışta dışa aktar.",
+        "en": "Turn a short prompt, a scene length and a tempo into original music; preview versions, refine the mood and export in one focused flow."
+      },
+      "image": "/images/cueform/scores.jpg",
+      "side": "right"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Üret, iyileştir, dışa aktar",
+        "en": "Generate, refine, export"
+      },
+      "text": {
+        "tr": "Sürümler, tempo seçenekleri ve duygu ön ayarları arasında gez. Her parçayı kurguna göre ince ayarla, değişikliği sade bir önizlemede anında duy.",
+        "en": "Browse versions, tempo options and mood presets. Fine-tune each track to your cut and hear the change instantly in a clean preview."
+      }
+    },
+    {
+      "type": "showcase",
+      "image": "/images/cueform/phones-trio.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/team.jpg",
+      "quote": {
+        "tr": "Odaklı bir yaratıcı akış için akıllı bir müzik stüdyosu.",
+        "en": "An intelligent music studio for a focused creative flow."
+      }
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Görsel kimlik ve arayüz sistemi",
+        "en": "Visual identity & UI system"
+      },
+      "text": {
+        "tr": "Bütünlüklü bir görsel kimlik ve ortak bir arayüz sistemi, her ekranda tutarlı, sezgisel ve odaklı bir çalışma alanı sunuyor.",
+        "en": "A cohesive visual identity and a unified UI system create a consistent, intuitive and focused creative workspace across every screen."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/cueform/identity.jpg"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Sosyal medya",
+        "en": "Social media"
+      },
+      "text": {
+        "tr": "Yapay zekâ müzik stüdyosunu tanıtan, markayı güçlendiren ve video üreticilerini çeken markalı sosyal medya tasarımları.",
+        "en": "Branded social creatives that introduce the AI music studio, strengthen the brand and attract video creators."
+      }
+    },
+    {
+      "type": "strip",
+      "images": [
+        "/images/cueform/social-1.webp",
+        "/images/cueform/social-2.webp",
+        "/images/cueform/social-3.webp",
+        "/images/cueform/social-4.webp"
+      ]
+    }
+  ],
+  "featured": true,
+  "dark": true
+}

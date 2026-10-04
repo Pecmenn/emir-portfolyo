@@ -13,14 +13,20 @@ export type Lang = 'tr' | 'en';
 export type Text = { tr: string; en: string };
 
 export type GalleryBlock =
-  // İki görsel: büyük solda, küçük sağda (aşağı kaydırılmış)
+  // Yan yana iki eşit görsel
   | { type: 'pair'; image1: string; image2: string }
   // Bir metin ve bir görsel yan yana; side görselin hangi tarafta olduğunu belirler
   | { type: 'text-image'; text: Text; image: string; side: 'left' | 'right' }
-  // Tam genişlikte görsel, üzerinde isteğe bağlı büyük bir alıntı
+  // Sayfa genişliğinde görsel (kendi oranında), altında isteğe bağlı büyük bir cümle
   | { type: 'full'; image: string; quote?: Text }
-  // Sessiz, döngüde, ekranda görününce oynayan video. full: tam ekran; değilse kenar boşluklu 16:9
-  | { type: 'video'; video: string; full: boolean };
+  // Sessiz, döngüde, ekranda görününce oynayan video. full: tam genişlik; değilse ortada daha dar
+  | { type: 'video'; video: string; full: boolean }
+  // Bölüm başlığı ve açıklaması
+  | { type: 'text'; title: Text; text: Text }
+  // Fare hareketine göre 3 boyutlu eğilen tek görsel (ör. saydam zeminli cihaz görseli)
+  | { type: 'showcase'; image: string }
+  // Fareyle ya da parmakla yatayda sürüklenen görsel şeridi
+  | { type: 'strip'; images: string[] };
 
 export type CaseStudy = {
   challenge: Text;
@@ -48,6 +54,8 @@ export type Project = {
   caseStudy?: CaseStudy;
   gallery: GalleryBlock[];
   featured?: boolean;
+  // Künye ve galeri koyu zeminde gösterilir (koyu tonlu sunumlar için)
+  dark?: boolean;
 };
 
 type Site = {

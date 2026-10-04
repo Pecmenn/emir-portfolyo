@@ -141,14 +141,15 @@ export default function Work() {
                 ratio="aspect-[10/7]"
                 className={mirrored ? 'sm:col-span-7 sm:col-start-6 sm:row-start-1' : 'sm:col-span-7'}
               />
-              {small && (
+              {/* Satırda tek proje kaldıysa slogan sütunda tek başına, dikeyde ortada durur */}
+              {(small || slogan) && (
                 <div
-                  className={`flex flex-col gap-10 sm:col-span-5 sm:row-start-1 sm:gap-12 ${mirrored ? 'sm:col-start-1' : 'sm:col-start-8'}`}
+                  className={`flex flex-col gap-10 sm:col-span-5 sm:row-start-1 sm:gap-12 ${mirrored ? 'sm:col-start-1' : 'sm:col-start-8'} ${small ? '' : 'sm:justify-center'}`}
                 >
                   {slogan && (
                     <FitSlogan key={lang} lines={slogan[lang]} />
                   )}
-                  <Card project={small} index={r * 2 + 1} ratio="aspect-[5/4]" fill />
+                  {small && <Card project={small} index={r * 2 + 1} ratio="aspect-[5/4]" fill />}
                 </div>
               )}
             </div>
