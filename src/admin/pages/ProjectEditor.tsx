@@ -355,6 +355,12 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
               checked={!!draft.featured}
               onChange={(v) => set('featured', v)}
             />
+            <Toggle
+              label="Pasif"
+              hint="Açıksa proje sitede hiçbir yerde görünmez (giriş, işler listesi, proje sayfası). Panelde kalır, istediğiniz zaman yeniden açabilirsiniz."
+              checked={!!draft.hidden}
+              onChange={(v) => set('hidden', v || undefined)}
+            />
             <p className="rounded-xl bg-paper p-3 text-[13px] text-ink/60">Projenin işler bölümündeki sırasını Projeler sayfasında kartları sürükleyerek değiştirebilirsiniz.</p>
           </Card>
 

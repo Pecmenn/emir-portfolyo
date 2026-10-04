@@ -58,6 +58,8 @@ export type Project = {
   featured?: boolean;
   // Künye ve galeri koyu zeminde gösterilir (koyu tonlu sunumlar için)
   dark?: boolean;
+  // Pasif proje sitede hiçbir yerde gösterilmez (giriş, işler listesi, sonraki proje, proje sayfası); panelde kalır
+  hidden?: boolean;
   // İsteğe bağlı zemin rengi (ör. #131814). Sunum görsellerinin zeminiyle aynı renk verilirse görseller
   // sayfayla kesintisiz bir yüzey oluşturur
   canvas?: string;
@@ -89,6 +91,8 @@ function hasCaseStudy(cs: CaseStudy | undefined): cs is CaseStudy {
 
 const projectFiles = import.meta.glob<Project>('./content/projects/*.json', { eager: true, import: 'default' });
 
+// Sitede yalnızca aktif projeler kullanılır
 export const projects: Project[] = Object.values(projectFiles)
+  .filter((p) => !p.hidden)
   .map((p) => ({ ...p, caseStudy: hasCaseStudy(p.caseStudy) ? p.caseStudy : undefined, gallery: p.gallery ?? [] }))
   .sort((a, b) => a.order - b.order);

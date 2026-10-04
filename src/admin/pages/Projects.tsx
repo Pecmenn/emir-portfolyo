@@ -1,15 +1,27 @@
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, Plus, Star } from 'lucide-react';
+import { Eye, EyeOff, GripVertical, Plus, Star } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { Project } from '../../content';
 import { href, go } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin } from '../store';
 import { Button, PageHeader, SaveBar } from '../ui';
 
-function SortableCard({ project, index }: { project: Project; index: number }) {
+function SortableCard({
+  project,
+  index,
+  onToggle,
+  toggleDisabled,
+}: {
+  project: Project;
+  // Aktif projeler arasındaki sırası; pasif projede kullanılmaz
+  index: number;
+  onToggle: () => void;
+  toggleDisabled: boolean;
+}) {
   const { src } = useAdmin();
+  const passive = !!project.hidden;
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: project.slug });
   const row = Math.floor(index / 2) + 1;
   // Sitede her satırın düzeni değişir: tek satırlarda ilk proje büyük ve solda, çift satırlarda büyük ve sağda
@@ -22,6 +34,7 @@ function SortableCard({ project, index }: { project: Project; index: number }) {
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={`group relative rounded-2xl border bg-white p-2 transition-shadow ${isDragging ? 'z-10 border-accent shadow-2xl' : 'border-black/[0.06] shadow-sm hover:shadow-md'}`}
     >
+      <div className={passive ? 'opacity-45 grayscale' : ''}>
       <a href={href('projeler', project.slug)} className="block">
         <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-paper">
           {project.cover ? (
@@ -31,7 +44,7 @@ function SortableCard({ project, index }: { project: Project; index: number }) {
           ) : (
             <span className="grid h-full place-items-center text-sm font-medium text-ink/40">Kapak görseli yok</span>
           )}
-          {project.featured && (
+          {project.featured && !passive && (
             <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[11px] font-bold backdrop-blur">
               <Star size={12} className="fill-accent-strong text-accent-strong" /> Girişte
             </span>
@@ -44,10 +57,22 @@ function SortableCard({ project, index }: { project: Project; index: number }) {
           </div>
           <p className="truncate text-sm text-ink/55">{project.discipline?.tr}</p>
           <p className="mt-2 inline-block rounded-md bg-paper px-2 py-1 text-[11px] font-semibold text-ink/60">
-            Satır {row} · {big ? 'büyük' : 'küçük'} · {side}
+            {passive ? 'Pasif · sitede görünmüyor' : `Satır ${row} · ${big ? 'büyük' : 'küçük'} · ${side}`}
           </p>
         </div>
       </a>
+      </div>
+      <button
+        type="button"
+        onClick={onToggle}
+        disabled={toggleDisabled}
+        title={toggleDisabled ? 'Önce sıralamayı kaydedin' : passive ? 'Aktifleştir: sitede göster' : 'Pasifleştir: sitede gizle'}
+        aria-label={passive ? `${project.title} projesini aktifleştir` : `${project.title} projesini pasifleştir`}
+        className={`absolute right-14 top-3 inline-flex h-9 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold shadow backdrop-blur transition disabled:cursor-not-allowed disabled:opacity-50 ${passive ? 'bg-ink text-white hover:bg-ink/80' : 'bg-white/90 text-ink/70 hover:text-ink'}`}
+      >
+        {passive ? <EyeOff size={15} /> : <Eye size={15} />}
+        {passive ? 'Pasif' : 'Aktif'}
+      </button>
       <button
         type="button"
         aria-label={`${project.title} projesini sürükleyerek taşı`}
@@ -82,6 +107,16 @@ export default function Projects() {
     setOrder((o) => arrayMove(o, o.indexOf(String(active.id)), o.indexOf(String(over.id))));
   };
 
+  // Projeyi tek tıkla pasifleştirir ya da yeniden aktifleştirir; yalnızca o projenin dosyası kaydedilir
+  const toggleHidden = async (p: Project) => {
+    const updated = { ...p, hidden: p.hidden ? undefined : true };
+    await save(
+      [{ path: PATHS.project(p.slug), text: toJSON(updated) }],
+      `Panel: ${p.title} ${updated.hidden ? 'pasifleştirildi' : 'aktifleştirildi'}`,
+      { projects: content.projects.map((x) => (x.slug === p.slug ? updated : x)) },
+    );
+  };
+
   const saveOrder = async () => {
     const updated = list.map((p, i) => ({ ...p, order: i + 1 }));
     const changes = updated.filter((p) => bySlug.get(p.slug)?.order !== p.order).map((p) => ({ path: PATHS.project(p.slug), text: toJSON(p) }));
@@ -92,7 +127,7 @@ export default function Projects() {
     <div>
       <PageHeader
         title="Projeler"
-        description="Ana sayfada ikişer ikişer satırlara dizilir. Sırayı değiştirmek için kartı sağ üstteki tutamaçtan sürükleyin."
+        description="Ana sayfada ikişer ikişer satırlara dizilir. Sırayı değiştirmek için kartı sağ üstteki tutamaçtan sürükleyin. Pasif projeler sitede görünmez."
         actions={
           <Button onClick={() => go('projeler', 'yeni')}>
             <Plus size={18} /> Yeni proje
@@ -102,8 +137,14 @@ export default function Projects() {
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
         <SortableContext items={order} strategy={rectSortingStrategy}>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-            {list.map((p, i) => (
-              <SortableCard key={p.slug} project={p} index={i} />
+            {list.map((p) => (
+              <SortableCard
+                key={p.slug}
+                project={p}
+                index={list.filter((x) => !x.hidden).indexOf(p)}
+                onToggle={() => toggleHidden(p)}
+                toggleDisabled={dirty || saving}
+              />
             ))}
           </div>
         </SortableContext>
