@@ -1,0 +1,82 @@
+{
+  "order": 6,
+  "slug": "card-towers",
+  "title": "Card Towers",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/card-towers/cover.webp",
+  "summary": {
+    "tr": "Doğru renkteki kartlarla kuleni renkli düşman dalgalarına karşı savunduğun bir kule savunma oyunu.",
+    "en": "A tower defense game where the right colored cards protect your tower from colorful waves."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "Level tasarımı, UI tasarımı, asset tasarımı",
+    "en": "Level design, UI design, asset design"
+  },
+  "intro": {
+    "tr": "Card Towers, kule savunmasını kart stratejisi ve renk bulmacasıyla birleştiriyor. Oyuncu sınırlı bir desteden doğru renkte ve sayıda kart seçerek kuleye savunma katmanları ekliyor; her kart yeni bir top katmanı ya da yalnızca kendi rengindeki düşmanlara işleyen özel bir güç getiriyor.",
+    "en": "Card Towers mixes tower defense with card strategy and color puzzles. Players pick the right color and number of cards from a limited deck to build defense layers; each card adds a cannon layer or a special power that only works on enemies of its own color."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Konsept ekranlar ve kart sistemine göre kurulan UI kiti.",
+        "en": "Concept screens and a UI kit built around the card system."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/card-towers/03.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Modeller ve level tasarımı",
+        "en": "Models & level design"
+      },
+      "text": {
+        "tr": "Toplar, kule ve çevre modelleri; zorluğu kademeli artan bölümler.",
+        "en": "Cannons, tower and environment models, and levels that ramp up in difficulty."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/card-towers/04.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/card-towers/05.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/card-towers/06.webp"
+    }
+  ],
+  "featured": true,
+  "canvas": "#ECECEC",
+  "hidden": true
+}

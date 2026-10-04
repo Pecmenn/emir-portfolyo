@@ -1,0 +1,85 @@
+{
+  "order": 5,
+  "slug": "mystic-match",
+  "title": "Mystic Match",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/mystic-match/cover.webp",
+  "summary": {
+    "tr": "Silahları eşleştirerek güçlenilen, bulmaca ile RPG’yi birleştiren bir savaşçı macerası.",
+    "en": "A warrior adventure that blends puzzle and RPG: match weapons to grow stronger."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "Karakter tasarımı, UI tasarımı, asset tasarımı",
+    "en": "Character design, UI design, asset design"
+  },
+  "intro": {
+    "tr": "Mystic Match: Warrior Quest, bulmaca ile rol yapma ilerlemesini bir araya getiren bir mobil oyun. Oyuncu Kadim Savaşçılar Loncası’na katılıyor, silahları eşleştirerek düşmanlara saldırıyor; her aşamada daha güçlü rakiplerle karşılaşıp yeni yetenekler ve efsanevi zırhlar kazanıyor.",
+    "en": "Mystic Match: Warrior Quest brings puzzle play and role-playing progression together. Players join the Ancient Warrior Guild and match weapons to attack enemies; each stage brings tougher foes, new abilities and legendary armour."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz ve harita",
+        "en": "Interface & map"
+      },
+      "text": {
+        "tr": "Bölüm haritası ve antik dünyaya uygun UI kiti.",
+        "en": "The level map and a UI kit built for an ancient-world setting."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/mystic-match/03.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Karakterler ve özelleştirme",
+        "en": "Characters & customization"
+      },
+      "text": {
+        "tr": "Oyuncu karakteri, zırh setleri, evcil hayvanlar ve düşman kadrosu.",
+        "en": "The player character, armour sets, pets and the enemy roster."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/mystic-match/04.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/mystic-match/05.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/mystic-match/06.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/mystic-match/07.webp"
+    }
+  ],
+  "featured": true,
+  "canvas": "#ECECEC"
+}

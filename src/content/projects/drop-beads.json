@@ -1,0 +1,81 @@
+{
+  "order": 7,
+  "slug": "drop-beads",
+  "title": "Drop Beads",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/drop-beads/cover.webp",
+  "summary": {
+    "tr": "Renkli bilyelerin pinlerden sekerek doğru tüplere dolduğu fizik tabanlı bir bulmaca.",
+    "en": "A physics puzzle where colored beads bounce off pins into the right tubes."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "Level tasarımı, UI tasarımı, asset tasarımı",
+    "en": "Level design, UI design, asset design"
+  },
+  "intro": {
+    "tr": "Drop Beads, yerçekimi ve fiziğe dayalı bir bulmaca oyunu. Oyuncu yukarıdan renkli bilyeler bırakıyor; bilyeler pinlere, engellere ve kılavuzlara çarparak aşağı düşüyor. Amaç tüpleri hedefe göre doldurup göndermek.",
+    "en": "Drop Beads is a gravity-driven physics puzzle. Players drop colored beads from above; they bounce off pins, obstacles and guides on the way down. The goal is to fill and send off the tubes according to the target."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Yükleme ekranından ikon setine kadar oyunun UI kiti.",
+        "en": "The game’s UI kit, from the loading screen to the icon set."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/drop-beads/03.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Modeller ve level tasarımı",
+        "en": "Models & level design"
+      },
+      "text": {
+        "tr": "Tüpler, pinler ve mekanizmalar; fizik kurallarına göre kurulan bölümler.",
+        "en": "Tubes, pins and mechanisms, and levels built around the physics rules."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/drop-beads/04.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/drop-beads/05.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/drop-beads/06.webp"
+    }
+  ],
+  "canvas": "#ECECEC",
+  "hidden": true
+}

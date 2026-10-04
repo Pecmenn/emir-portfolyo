@@ -1,0 +1,101 @@
+{
+  "order": 3,
+  "slug": "skate-odyssey",
+  "title": "Skate Odyssey",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/skate-odyssey/cover.webp",
+  "summary": {
+    "tr": "Bir gencin yatak odasından açılan portallarla farklı dünyalara uzanan, kaykaylı bir sonsuz koşu oyunu.",
+    "en": "An endless skate runner where portals in a teenager’s bedroom open onto themed worlds."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "Karakter tasarımı, UI tasarımı, asset tasarımı",
+    "en": "Character design, UI design, asset design"
+  },
+  "intro": {
+    "tr": "Skate Odyssey, mobil için tasarlanmış hibrit-casual bir sonsuz koşu oyunu. Oyuncu bir gencin yatak odasından yola çıkıp ateş, su, toprak ve hava dünyalarında engellerden kaçarak en yüksek skoru kovalıyor. Oda, dünyalara açılan portalların merkezi; toplanan ikonlar yeni dünyaların kilidini açıyor.",
+    "en": "Skate Odyssey is a hybrid-casual endless runner for mobile. Players start in a teenager’s bedroom and skate through fire, water, earth and air realms, dodging obstacles and chasing high scores. The bedroom is a hub of portals, and collected icons unlock new worlds."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Profil ve başarı ikonlarından buton setine kadar oyunun UI kiti; ardından akışı belirleyen UX taslakları ve son ekranlar.",
+        "en": "The game’s UI kit, from profile and achievement icons to the button set, followed by the UX flows and final screens."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/03.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/04.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/05.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Karakterler ve dünya",
+        "en": "Characters & world"
+      },
+      "text": {
+        "tr": "Kaykaylar ve güçlendiriciler, 3D karakter kadrosu, ifade setleri ve engel modelleri.",
+        "en": "Skateboards and power-ups, the 3D character roster, expression sets and obstacle models."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/06.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/07.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/08.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/09.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Sosyal medya ve mağaza",
+        "en": "Social & store"
+      },
+      "text": {
+        "tr": "Sosyal medya paylaşımları ve Google Play tanıtım görselleri.",
+        "en": "Social media posts and Google Play promotional visuals."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/10.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/11.webp"
+    }
+  ],
+  "featured": true,
+  "canvas": "#ECECEC"
+}

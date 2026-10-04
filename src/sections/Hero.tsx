@@ -111,7 +111,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       >
         {featured.map((p, i) => (
           <div key={p.slug} ref={(el) => (slidesRef.current[i] = el)} className="absolute inset-0">
-            {p.cover && <img src={p.cover} alt={p.title} draggable={false} className="h-full w-full scale-105 object-cover" />}
+            {p.cover && <img src={p.cover} alt={p.title} draggable={false} className="h-full w-full scale-105 object-cover object-[28%_50%] md:object-center" />}
             {p.coverVideo && (
               <AutoVideo
                 src={p.coverVideo}
@@ -130,7 +130,9 @@ export default function Hero({ ready }: { ready: boolean }) {
         {/* Her slaytın başlığı aynı yerde üst üste durur; böylece eskisi çıkarken yenisi girebilir */}
         <h1 className="display grid text-[clamp(4rem,13vw,12rem)]">
           {featured.map((p, i) => (
-            <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="line-mask [grid-area:1/1]">
+            // self-end: her başlık kendi yüksekliğinde maskelenir ve alt çizgiye oturur; iki satıra kırılan uzun
+            // başlıklar varken tek satırlıklar gizliyken ikinci satırda görünmez
+            <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="line-mask self-end [grid-area:1/1]">
               <span data-hero-line className="block">
                 {p.title}
               </span>

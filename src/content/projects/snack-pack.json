@@ -1,0 +1,80 @@
+{
+  "order": 4,
+  "slug": "snack-pack",
+  "title": "Snack Pack",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/snack-pack/cover.webp",
+  "summary": {
+    "tr": "Ekrana çizilen yollarla kurabiyeleri torbaya ulaştırdığın, fizik tabanlı hiper-casual bir bulmaca.",
+    "en": "A hyper-casual physics puzzle: draw paths to guide cookies into the bag."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "Level tasarımı, UI tasarımı, asset tasarımı",
+    "en": "Level design, UI design, asset design"
+  },
+  "intro": {
+    "tr": "Snack Pack: Cookies Rush’ta oyuncu ekrana çizgiler çizerek kurabiyelere yol açıyor. Serbest bırakılan kurabiyeler gerçekçi fizikle hareket ediyor; engellerden kaçırılıp torbaya ulaşan her kurabiye daha fazla yıldız kazandırıyor.",
+    "en": "In Snack Pack: Cookies Rush, players draw lines on the screen to create paths for cookies. Released cookies move with real-world physics; every cookie guided past obstacles into the bag earns more stars."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Sahne tasarımına uyan sıcak tonlu UI kiti.",
+        "en": "A warm-toned UI kit that matches the stage setting."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/snack-pack/03.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Asset’ler ve level tasarımı",
+        "en": "Assets & level design"
+      },
+      "text": {
+        "tr": "Karakterler, platform parçaları ve bölüm tasarımları.",
+        "en": "Characters, platform pieces and level layouts."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/snack-pack/04.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/snack-pack/05.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/snack-pack/06.webp"
+    }
+  ],
+  "canvas": "#ECECEC"
+}

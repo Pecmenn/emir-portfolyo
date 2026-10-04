@@ -1,0 +1,100 @@
+{
+  "order": 1,
+  "slug": "denge",
+  "title": "Denge",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "/images/denge/cover.webp",
+  "summary": {
+    "tr": "Gelir, gider ve birikimi tek bakışta gösteren, sakin ve güven veren bir kişisel finans uygulaması.",
+    "en": "A calm, reassuring personal finance app that shows income, spending and savings at a glance."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "Ürün ve marka tasarımcısı",
+    "en": "Product & brand designer"
+  },
+  "services": {
+    "tr": "UI/UX, ürün tasarımı, marka kimliği, kart tasarımı",
+    "en": "UI/UX, product design, brand identity, card design"
+  },
+  "intro": {
+    "tr": "Finans uygulamaları çoğu zaman kaygı veren bir dille konuşuyor: kırmızı uyarılar, kalabalık grafikler, sıkıştırılmış rakamlar. Denge’de amaç tersini yapmaktı. Bakiye, harcama ve birikimi tek bir sakin yüzeyde toplayan, kullanıcıya her ekranda ne durumda olduğunu söyleyen bir deneyim tasarladım.",
+    "en": "Finance apps often speak in an anxious voice: red alerts, crowded charts, cramped numbers. Denge set out to do the opposite. I designed an experience that gathers balance, spending and savings on one calm surface and tells users where they stand on every screen."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Ürün deneyimi",
+        "en": "Product experience"
+      },
+      "text": {
+        "tr": "Ana sayfa, kartlar ve fiziksel kart aynı yüzeyi paylaşıyor: koyu orman yeşili, krem zemin ve tek bir altın vurgu.",
+        "en": "The home screen, card controls and the physical card share one surface: deep forest green, a cream base and a single gold accent."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/denge/urun.webp"
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Yedi ekran, tek ritim",
+        "en": "Seven screens, one rhythm"
+      },
+      "text": {
+        "tr": "Karşılamadan dekonta kadar her ekran aynı tipografiyi, aynı köşe ölçüsünü ve aynı boşluk sistemini kullanıyor.",
+        "en": "From onboarding to the receipt, every screen uses the same type, the same corner radius and the same spacing system."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/denge/ekranlar.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/denge/kafe.webp",
+      "quote": {
+        "tr": "Para göndermek bir kahve molası kadar kısa.",
+        "en": "Sending money takes as long as a coffee break."
+      }
+    },
+    {
+      "type": "text",
+      "title": {
+        "tr": "Harcamayı anlamak",
+        "en": "Making sense of spending"
+      },
+      "text": {
+        "tr": "Analiz ekranı son altı ayı tek bakışta gösteriyor; kategoriler ve küçük önerilerle harcamayı suçlamadan anlatıyor.",
+        "en": "The analysis screen shows six months at a glance and explains spending through categories and gentle suggestions, without judgement."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/denge/omuz.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Marka sistemi",
+        "en": "Brand system"
+      },
+      "text": {
+        "tr": "İki daire ve tek bir çizgiden oluşan logo, gelen ve giden parayı aynı zeminde dengede gösteriyor.",
+        "en": "The logo, two circles on a single line, shows money in and money out balanced on the same ground."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/denge/marka.webp"
+    }
+  ],
+  "featured": true,
+  "canvas": "#ECE8DC"
+}

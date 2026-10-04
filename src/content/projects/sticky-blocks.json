@@ -1,0 +1,85 @@
+{
+  "order": 8,
+  "slug": "sticky-blocks",
+  "title": "Sticky Blocks",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/sticky-blocks/cover.webp",
+  "summary": {
+    "tr": "Sınırlı hamlede tahtadaki tüm blokları tek bir şekilde birleştirmeye dayanan mekanik bir bulmaca.",
+    "en": "A mechanical puzzle about joining every block on the board into one shape within limited moves."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "Level tasarımı, UI tasarımı, asset tasarımı",
+    "en": "Level design, UI design, asset design"
+  },
+  "intro": {
+    "tr": "Sticky Blocks, ızgara tabanlı ve tek parmakla oynanan bir mekanik bulmaca oyunu. Amaç, tahtadaki tüm blokları sınırlı sayıda hamlede birleştirip tek ve daha büyük bir şekil oluşturmak.",
+    "en": "Sticky Blocks is a grid-based, one-finger mechanical puzzle. The goal is to connect every block on the board into a single, larger shape within a limited number of moves."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "UI kiti ve oyun akışını gösteren konsept ekranlar.",
+        "en": "The UI kit and concept screens that show the game flow."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/sticky-blocks/03.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/sticky-blocks/04.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Modeller ve level tasarımı",
+        "en": "Models & level design"
+      },
+      "text": {
+        "tr": "Blok parçaları ve kademeli zorlaşan bölüm tasarımları.",
+        "en": "Block pieces and level layouts that gradually get harder."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/sticky-blocks/05.webp"
+    },
+    {
+      "type": "full",
+      "image": "/images/sticky-blocks/06.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/sticky-blocks/07.webp"
+    }
+  ],
+  "canvas": "#ECECEC",
+  "hidden": true
+}
