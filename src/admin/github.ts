@@ -2,8 +2,6 @@
 
 export const REPO = 'Pecmenn/emir-portfolyo';
 export const BRANCH = 'main';
-// GitHub girişi Netlify'nın OAuth hizmeti üzerinden yapılır (site Cloudflare'da yayında olsa da); giriş bu Netlify sitesi adına açılır
-export const SITE_ID = 'emir-portfolyo.netlify.app';
 // Görseller ve "Siteyi aç" bağlantısı panelin açıldığı adresten gelir: yerelde geliştirme sunucusu,
 // yayında ise sitenin kendi adresi (hangi barındırma veya alan adı olursa olsun)
 export const SITE_URL = window.location.origin;
@@ -27,8 +25,8 @@ export function forgetToken() {
   }
 }
 
-// Netlify'ın OAuth penceresiyle el sıkışma: pencere "authorizing:github" der, biz aynısını geri yollarız,
-// pencere de sonucu "authorization:github:success:{...}" olarak bildirir.
+// GitHub girişi sitenin kendi /api/auth ucundan açılan pencerede yapılır (Vercel fonksiyonları, api/ klasörü);
+// pencere sonucu aynı adresteki bu sayfaya "authorization:github:success:{...}" olarak bildirir.
 export function login(): Promise<string> {
   return new Promise((resolve, reject) => {
     const w = 520;
@@ -36,7 +34,7 @@ export function login(): Promise<string> {
     const left = window.screenX + (window.outerWidth - w) / 2;
     const top = window.screenY + (window.outerHeight - h) / 2;
     const popup = window.open(
-      `https://api.netlify.com/auth?provider=github&site_id=${SITE_ID}&scope=repo`,
+      '/api/auth',
       'github-login',
       `width=${w},height=${h},left=${left},top=${top}`,
     );
@@ -46,11 +44,7 @@ export function login(): Promise<string> {
     }
 
     const onMessage = (e: MessageEvent) => {
-      if (e.origin !== 'https://api.netlify.com' || typeof e.data !== 'string') return;
-      if (e.data === 'authorizing:github') {
-        popup.postMessage(e.data, e.origin);
-        return;
-      }
+      if (e.origin !== window.location.origin || e.source !== popup || typeof e.data !== 'string') return;
       const match = e.data.match(/^authorization:github:(success|error):(.+)$/);
       if (!match) return;
       cleanup();
