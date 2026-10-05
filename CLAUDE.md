@@ -13,4 +13,4 @@ Kişisel portfolyo sitesi (Creative Generalist). React 18 + TypeScript + Vite 5 
 - Renk token'ları `tailwind.config.js`: `paper` #F4F4F1, `ink` #0A0A0A, `mute` #8C8C88, `accent` #B98CFF (mor). Sınıflarda bu adları kullan, sabit hex yazma. Fontlar: Clash Display (`font-display`), Satoshi (`font-sans`), Fontshare'den.
 - Proje görselleri şimdilik picsum yer tutucuları; gerçek görseller `public/images/` altına konup `/images/...` yoluyla verilir. CV dosyası `public/cv/ad-soyad-cv.pdf`.
 - Site iki dilli (TR varsayılan, EN); `<html lang>` dil seçimine göre güncellenir.
-- Yayın: Cloudflare Pages, `main` dalına her push otomatik yayınlanır (build `npm run build`, çıktı `dist`, Node sürümü `.node-version`). Kod değişikliklerini yerelde test edip commit'leri biriktir; kullanıcı "canlıya al" deyince tek seferde push et.
+- Yayın: Cloudflare Pages (https://emir-portfolyo.pages.dev, proje adı `emir-portfolyo`), `main` dalına her push otomatik yayınlanır (build `npm run build`, çıktı `dist`, Node sürümü `.node-version`). Kod değişikliklerini yerelde test edip commit'leri biriktir; kullanıcı "canlıya al" deyince tek seferde push et.
