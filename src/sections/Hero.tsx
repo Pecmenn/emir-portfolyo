@@ -1,12 +1,20 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { projects, ui } from '../content';
+import { expertise, projects, site, ui } from '../content';
 import AutoVideo from '../components/AutoVideo';
 import { useLang } from '../lib/i18n';
-import { gsap, reducedMotion } from '../lib/scroll';
+import { gsap, reducedMotion, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
 const featured = projects.filter((p) => p.featured);
 const AUTOPLAY = 7;
+
+function PauseIcon({ paused }: { paused: boolean }) {
+  return (
+    <svg viewBox='0 0 24 24' className='h-4 w-4' fill='currentColor' aria-hidden>
+      {paused ? <path d='M8 5v14l11-7z' /> : <path d='M7 5h3.5v14H7zM13.5 5H17v14h-3.5z' />}
+    </svg>
+  );
+}
 
 function SoundIcon({ on }: { on: boolean }) {
   return (
@@ -19,7 +27,7 @@ function SoundIcon({ on }: { on: boolean }) {
 
 // Tam ekran öne çıkan işler: otomatik ilerler, sürüklenebilir, ok tuşlarıyla gezilir
 export default function Hero({ ready }: { ready: boolean }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { openProject } = useTransition();
   const [index, setIndex] = useState(0);
   const rootRef = useRef<HTMLElement>(null);
@@ -31,6 +39,13 @@ export default function Hero({ ready }: { ready: boolean }) {
   // Showreel sesi: tarayıcılar sesli oynatmayı ancak kullanıcı düğmeye bastıktan sonra izin verir
   const [soundOn, setSoundOn] = useState(false);
   const hasVideo = !!current.coverVideo;
+  // Otomatik ilerleme: kullanıcı duraklatabilir; odak hero içindeyken (klavye, ekran okuyucu) ya da
+  // azaltılmış hareket tercihinde kendiliğinden ilerlemez
+  const [paused, setPaused] = useState(false);
+  const [focusInside, setFocusInside] = useState(false);
+  const hold = paused || focusInside || reducedMotion;
+  const holdRef = useRef(hold);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   const go = useCallback((dir: number) => setIndex((i) => (i + dir + featured.length) % featured.length), []);
 
@@ -66,6 +81,11 @@ export default function Hero({ ready }: { ready: boolean }) {
   // Bileşen kaldırılınca çalışan geçişleri durdur
   useEffect(() => () => gsap.killTweensOf(rootRef.current?.querySelectorAll('[data-hero-line], [data-slide-media], img, video') ?? []), []);
 
+  useEffect(() => {
+    holdRef.current = hold;
+    tweenRef.current?.paused(hold);
+  }, [hold]);
+
   // İlerleme çizgisi dolunca sonraki slayta geç
   useEffect(() => {
     // Ses açıkken izleyen kişiyi bölmemek için slayt kendiliğinden ilerlemez
@@ -73,8 +93,11 @@ export default function Hero({ ready }: { ready: boolean }) {
     const bar = progressRef.current[index];
     if (!bar) return;
     const tween = gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: AUTOPLAY, ease: 'none', onComplete: () => go(1) });
+    tween.paused(holdRef.current);
+    tweenRef.current = tween;
     return () => {
       tween.kill();
+      tweenRef.current = null;
       gsap.set(bar, { scaleX: 0 });
     };
   }, [index, ready, go, soundOn, hasVideo]);
@@ -103,7 +126,21 @@ export default function Hero({ ready }: { ready: boolean }) {
   };
 
   return (
-    <section ref={rootRef} data-theme="dark" className="relative h-[100svh] overflow-hidden bg-ink text-paper">
+    <section
+      ref={rootRef}
+      data-theme="dark"
+      aria-roledescription="carousel"
+      aria-label={t(ui.featured)}
+      onFocus={() => setFocusInside(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusInside(false);
+      }}
+      className="relative h-[100svh] overflow-hidden bg-ink text-paper"
+    >
+      {/* Sayfanın tek h1'i: kimlik; slayt başlıkları h2 */}
+      <h1 className="sr-only">
+        {site.name} — {t(site.role)}
+      </h1>
       <div
         className="absolute inset-0 cursor-grab touch-pan-y select-none active:cursor-grabbing"
         onPointerDown={onPointerDown}
@@ -111,7 +148,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       >
         {featured.map((p, i) => (
           <div key={p.slug} ref={(el) => (slidesRef.current[i] = el)} className="absolute inset-0">
-            {p.cover && <img src={p.cover} alt={p.title} draggable={false} style={{ ['--fx' as string]: `${p.coverFocus ?? 50}%` }} className="h-full w-full scale-105 object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]" />}
+            {p.cover && <img src={p.cover} alt="" draggable={false} style={{ ['--fx' as string]: `${p.coverFocus ?? 50}%` }} className="h-full w-full scale-105 object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]" />}
             {p.coverVideo && (
               <AutoVideo
                 src={p.coverVideo}
@@ -121,34 +158,54 @@ export default function Hero({ ready }: { ready: boolean }) {
                 className="absolute inset-0 h-full w-full scale-105 object-cover"
               />
             )}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/10 to-black/75" />
           </div>
         ))}
       </div>
 
-      <div ref={titleRef} className="gutter pointer-events-none absolute inset-x-0 top-1/2 z-10 flex -translate-y-1/2 items-end justify-between gap-6">
+      {/* Slayttan bağımsız kalıcı kimlik satırı */}
+      <p className="gutter pointer-events-none absolute inset-x-0 top-[76px] z-10 max-w-[44rem] text-sm font-medium leading-snug text-paper [text-shadow:0_1px_12px_rgb(0_0_0/0.5)] sm:top-[96px] sm:text-base">
+        {t(site.role)} <span aria-hidden>·</span> {expertise.marquee[lang].join(', ')}
+      </p>
+
+      <div
+        ref={titleRef}
+        className="gutter pointer-events-none absolute inset-x-0 bottom-[11.5rem] z-10 flex flex-col-reverse items-start gap-4 sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2 sm:flex-row sm:items-end sm:justify-between sm:gap-6"
+      >
         {/* Her slaytın başlığı aynı yerde üst üste durur; böylece eskisi çıkarken yenisi girebilir */}
-        <h1 className="display grid text-[clamp(4rem,13vw,12rem)]">
+        <div className="display grid text-[clamp(3.5rem,18vw,6rem)] sm:text-[clamp(4rem,13vw,12rem)]">
           {featured.map((p, i) => (
             // self-end: her başlık kendi yüksekliğinde maskelenir ve alt çizgiye oturur; iki satıra kırılan uzun
             // başlıklar varken tek satırlıklar gizliyken ikinci satırda görünmez
-            <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="line-mask self-end [grid-area:1/1]">
+            <h2 key={p.slug} data-slide={i} aria-hidden={i !== index} className="line-mask self-end [grid-area:1/1]">
               <span data-hero-line className="block">
-                {p.title}
+                {/* Gerçek bağlantı: klavye ve ekran okuyucu projeyi buradan açar (fare/dokunma yolu sahnenin kendisinde) */}
+                <a
+                  href={`/proje/${p.slug}`}
+                  tabIndex={i === index ? 0 : -1}
+                  aria-label={`${p.title}: ${t(ui.openProject)}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openProject(p.slug, p.cover, slidesRef.current[i]);
+                  }}
+                  className="pointer-events-auto rounded-sm focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                >
+                  {p.title}
+                </a>
               </span>
-            </span>
+            </h2>
           ))}
-        </h1>
-        <div className="grid pb-[1.2vw] text-right font-medium">
+        </div>
+        <div className="grid rounded-md bg-black/35 px-3 py-2 backdrop-blur-sm sm:pb-[1.2vw] sm:text-right sm:font-medium">
           {featured.map((p, i) => (
             <span key={p.slug} data-slide={i} aria-hidden={i !== index} className="[grid-area:1/1]">
               <span className="line-mask">
-                <span data-hero-line className="display block text-[clamp(1.75rem,2.6vw,3.25rem)]">
+                <span data-hero-line className="display block text-[clamp(1.5rem,2.6vw,3.25rem)]">
                   {p.year}
                 </span>
               </span>
               <span className="line-mask">
-                <span data-hero-line className="mt-1 block text-[clamp(1rem,1.3vw,1.6rem)] leading-tight text-paper/85">
+                <span data-hero-line className="mt-1 block text-[clamp(1rem,1.3vw,1.6rem)] leading-tight text-paper/90">
                   {t(p.discipline)}
                 </span>
               </span>
@@ -161,8 +218,14 @@ export default function Hero({ ready }: { ready: boolean }) {
         {/* Öne çıkan proje sayısı kadar sütun */}
         <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${featured.length}, minmax(0, 1fr))` }}>
           {featured.map((p, i) => (
-            <button key={p.slug} onClick={() => setIndex(i)} className="text-left" aria-label={p.title}>
-              <span className={`display block text-3xl transition-opacity sm:text-4xl ${i === index ? 'opacity-100' : 'opacity-30'}`}>
+            <button
+              key={p.slug}
+              onClick={() => setIndex(i)}
+              className="min-h-11 text-left"
+              aria-label={`${p.title}, ${i + 1}/${featured.length}`}
+              aria-current={i === index ? 'true' : undefined}
+            >
+              <span className={`display block text-3xl transition-opacity sm:text-4xl ${i === index ? 'opacity-100' : 'opacity-60'}`}>
                 0{i + 1}.
               </span>
               <span className="mt-3 block h-px w-full bg-white/20">
@@ -171,29 +234,42 @@ export default function Hero({ ready }: { ready: boolean }) {
             </button>
           ))}
         </div>
-        <div className="mt-5 flex items-center justify-between text-xs font-medium sm:text-sm">
-          <span className="hidden sm:inline">{t(ui.drag)}</span>
-          <div className="flex items-center gap-4">
-            <button onClick={() => go(-1)} aria-label="Previous" className="px-1 hover:text-accent">
-              ←
-            </button>
-            <span>{t(ui.navigate)}</span>
-            <button onClick={() => go(1)} aria-label="Next" className="px-1 hover:text-accent">
-              →
+        <div className="mt-3 flex items-center justify-between text-xs font-medium sm:mt-5 sm:text-sm">
+          <div className="flex items-center gap-5">
+            <span className="hidden lg:inline">{t(ui.drag)}</span>
+            <button onClick={() => scrollToTarget('#isler')} className="inline-flex min-h-11 items-center gap-1.5 hover:text-accent">
+              {t(ui.viewAllWork)} <span aria-hidden>↓</span>
             </button>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center">
+            <button onClick={() => go(-1)} aria-label={t(ui.prevSlide)} className="grid min-h-11 min-w-11 place-items-center hover:text-accent">
+              <span aria-hidden>←</span>
+            </button>
+            <button
+              onClick={() => setPaused((p) => !p)}
+              aria-pressed={paused}
+              aria-label={t(paused ? ui.play : ui.pause)}
+              className="grid min-h-11 min-w-11 place-items-center hover:text-accent"
+            >
+              <PauseIcon paused={paused} />
+            </button>
+            <span className="hidden px-1 sm:inline">{t(ui.navigate)}</span>
+            <button onClick={() => go(1)} aria-label={t(ui.nextSlide)} className="grid min-h-11 min-w-11 place-items-center hover:text-accent">
+              <span aria-hidden>→</span>
+            </button>
+          </div>
+          <div className="flex items-center justify-end gap-4">
             {hasVideo && (
               <button
                 onClick={() => setSoundOn((on) => !on)}
                 aria-pressed={soundOn}
-                className="pill border-white/40 px-3 py-1 text-xs hover:bg-paper hover:text-ink sm:text-sm"
+                className="pill min-h-11 border-white/40 px-3 py-1 text-xs hover:bg-paper hover:text-ink sm:text-sm"
               >
                 <SoundIcon on={soundOn} />
                 {t(soundOn ? ui.soundOff : ui.soundOn)}
               </button>
             )}
-            <span className="hidden sm:inline">{t(ui.featured)}</span>
+            <span className="hidden lg:inline">{t(ui.featured)}</span>
           </div>
         </div>
       </div>

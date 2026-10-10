@@ -208,7 +208,7 @@ export function Words({
     <Tag ref={ref} className={className}>
       {words.map((word, i) => (
         <Fragment key={i}>
-          <span className="-mb-[0.12em] -mr-[0.08em] inline-block overflow-hidden pb-[0.12em] pr-[0.08em] align-top">
+          <span className="-mb-[0.2em] -mr-[0.08em] inline-block overflow-hidden pb-[0.2em] pr-[0.08em] align-top">
             <span data-word className="inline-block">
               {word}
             </span>
