@@ -254,6 +254,13 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
               <BiField label="Gönderilirken" value={d.form.sending} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, sending: v } }))} />
               <BiField label="Başarılı mesajı" value={d.form.sent} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, sent: v } }))} />
               <BiField label="Hata mesajı" value={d.form.error} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, error: v } }))} />
+              <BiField label="Ad alanı: örnek metin" value={d.form.phName} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, phName: v } }))} />
+              <BiField label="E-posta alanı: örnek metin" value={d.form.phEmail} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, phEmail: v } }))} />
+              <BiField label="Mesaj alanı: örnek metin" value={d.form.phMessage} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, phMessage: v } }))} />
+              <BiField label="Boş alan uyarısı" value={d.form.required} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, required: v } }))} />
+              <BiField label="Hatalı e-posta uyarısı" value={d.form.emailInvalid} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, emailInvalid: v } }))} />
+              <BiField label="E-posta taslağı hazırlandı (form adresi yoksa)" long value={d.form.mailtoOpened} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, mailtoOpened: v } }))} />
+              <BiField label="“Uygulama açılmadıysa” notu" value={d.form.mailtoNote} onChange={(v) => set((x) => ({ ...x, form: { ...x.form, mailtoNote: v } }))} />
             </div>
           </Card>
         </>

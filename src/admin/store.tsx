@@ -25,7 +25,10 @@ export type ContactData = {
   text: Bi;
   copy: Bi;
   copied: Bi;
-  form: Record<'name' | 'email' | 'message' | 'send' | 'sending' | 'sent' | 'error', Bi>;
+  form: Record<
+    'name' | 'email' | 'message' | 'send' | 'sending' | 'sent' | 'error' | 'phName' | 'phEmail' | 'phMessage' | 'required' | 'emailInvalid' | 'mailtoOpened' | 'mailtoNote',
+    Bi
+  >;
 };
 export type UiData = Record<string, Bi | Record<string, Bi>>;
 

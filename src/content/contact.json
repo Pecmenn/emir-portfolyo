@@ -47,12 +47,40 @@
       "en": "Sending…"
     },
     "sent": {
-      "tr": "Teşekkürler, mesajınız iletildi.",
-      "en": "Thanks, your message has been sent."
+      "tr": "Teşekkürler, mesajınız iletildi. En kısa sürede dönerim.",
+      "en": "Thanks, your message has been sent. I’ll get back to you soon."
     },
     "error": {
-      "tr": "Gönderilemedi, lütfen e-postayla yazın.",
-      "en": "Couldn't send, please email me instead."
+      "tr": "Mesaj gönderilemedi. Lütfen birazdan tekrar deneyin ya da doğrudan e-posta yazın:",
+      "en": "Couldn’t send your message. Please try again shortly or email me directly:"
+    },
+    "phName": {
+      "tr": "Adınız Soyadınız",
+      "en": "Your full name"
+    },
+    "phEmail": {
+      "tr": "ornek@eposta.com",
+      "en": "name@example.com"
+    },
+    "phMessage": {
+      "tr": "Projeden ya da rolden kısaca bahsedin",
+      "en": "Tell me briefly about the project or role"
+    },
+    "required": {
+      "tr": "Bu alan boş bırakılamaz.",
+      "en": "This field can’t be empty."
+    },
+    "emailInvalid": {
+      "tr": "E-posta adresi eksik görünüyor, örn. ornek@eposta.com",
+      "en": "The email address looks incomplete, e.g. name@example.com"
+    },
+    "mailtoOpened": {
+      "tr": "E-posta taslağınız hazırlandı. Göndermek için e-posta uygulamanızda “Gönder”e basın.",
+      "en": "Your email draft is ready. Press “Send” in your email app to deliver it."
+    },
+    "mailtoNote": {
+      "tr": "E-posta uygulamanız açılmadıysa şu adrese yazın:",
+      "en": "If your email app didn’t open, write to:"
     }
   }
 }
