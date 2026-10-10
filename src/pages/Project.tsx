@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { projects, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
+import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
 import { EDGE_FADE, FadeUp, RevealImage, Words } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
+import { usePageMeta } from '../lib/meta';
 import { Draggable } from 'gsap/Draggable';
 import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import { gsap, reducedMotion, refreshSoon, scrollToTarget } from '../lib/scroll';
@@ -45,7 +46,7 @@ function Cover({ project }: { project: ProjectType }) {
         <img
           data-cover-img
           src={project.cover}
-          alt={project.title}
+          alt=""
           onLoad={coverReady}
           onError={coverReady}
           // Telefonda kapağın görünen bölümü projeye göre ayarlanır (coverFocus); geniş ekranda ortalanır
@@ -59,7 +60,7 @@ function Cover({ project }: { project: ProjectType }) {
           <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/65" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/75" />
 
       {/* Başlık solda, özet sağdaki üçte birlik sütunda; ikisi aynı alt çizgiye oturur */}
       <div className="gutter absolute inset-x-0 bottom-[calc(clamp(6.5rem,15vh,11rem)+2rem)] grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-8">
@@ -121,7 +122,7 @@ function Credits({ project, dark, canvas }: { project: ProjectType; dark?: boole
         <dl className="grid gap-8 text-[clamp(1.05rem,1.05vw,1.5rem)] leading-snug sm:grid-cols-3 lg:grid-cols-1">
           {rows.map((row) => (
             <div key={row.label.en}>
-              <dt className="text-mute">{t(row.label)}</dt>
+              <dt className={dark ? 'text-mute' : 'text-mute-ink'}>{t(row.label)}</dt>
               <dd className="mt-1 font-medium">{row.value}</dd>
             </div>
           ))}
@@ -169,8 +170,10 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
 
 // Galeri blokları sayfa kenar boşluklarının içinde aynı ızgaraya oturur; görseller arasında dar, metinlerin
 // çevresinde geniş boşluk bırakılır
-function Block({ block, title, dark, canvas, chapter }: { block: GalleryBlock; title: string; dark?: boolean; canvas?: boolean; chapter: number }) {
+function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: boolean; canvas?: boolean; chapter: number }) {
   const { t, lang } = useLang();
+  // Görsel açıklaması panelden girilir; boşsa görsel dekoratif sayılır (alt="") ve ekran okuyucu atlar
+  const title = 'alt' in block && block.alt ? t(block.alt) : '';
   if (block.type === 'chapter') return <Chapter index={chapter} title={t(block.title)} text={t(block.text)} />;
   if (block.type === 'pair' && canvas) {
     // Kesintisiz zeminde görseller kırpılmadan, kendi oranlarıyla yan yana durur
@@ -416,16 +419,16 @@ function Strip({ images, alt }: { images: string[]; alt: string }) {
   );
 }
 
-// Sayfanın sonunda bir sonraki proje belirir; sona kadar kaydırınca otomatik geçilir
+// Sayfanın sonunda bir sonraki proje belirir. Geçiş yalnızca ziyaretçi tıklayınca olur: otomatik atlama
+// altındaki iletişim alanına ve alt bilgiye ulaşmayı engelliyordu.
 function NextProject({ project }: { project: ProjectType }) {
   const { t } = useLang();
   const { openProject } = useTransition();
   const ref = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
-  const barRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
-    let fired = false;
+    if (reducedMotion) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         mediaRef.current,
@@ -433,45 +436,58 @@ function NextProject({ project }: { project: ProjectType }) {
         {
           clipPath: 'inset(0% 0% 0% 0%)',
           ease: 'none',
-          scrollTrigger: {
-            trigger: ref.current,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-            onUpdate: (self) => {
-              if (barRef.current) barRef.current.style.transform = `scaleX(${self.progress})`;
-              if (!fired && self.progress > 0.995 && self.direction > 0) {
-                fired = true;
-                openProject(project.slug, project.cover, mediaRef.current);
-              }
-            },
-          },
+          scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom bottom', scrub: true },
         },
       );
     }, ref);
     return () => ctx.revert();
-  }, [project, openProject]);
+  }, [project]);
 
   return (
-    <section ref={ref} data-theme="dark" className="relative h-[220vh] bg-ink text-paper">
+    <section ref={ref} data-theme="dark" className="relative h-[160vh] bg-ink text-paper">
       <div className="sticky top-0 h-[100svh] overflow-hidden">
         <div ref={mediaRef} className="absolute inset-0" style={reducedMotion ? undefined : { clipPath: 'inset(18% 22% 18% 22%)' }}>
-          <img src={project.cover} alt={project.title} onLoad={refreshSoon} className="h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-black/35" />
+          <img src={project.cover} alt="" onLoad={refreshSoon} className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-black/55" />
         </div>
         <button
           onClick={() => openProject(project.slug, project.cover, mediaRef.current)}
-          className="absolute inset-0 flex flex-col items-center justify-center text-center"
+          className="absolute inset-0 flex flex-col items-center justify-center text-center focus-visible:outline focus-visible:outline-4 focus-visible:-outline-offset-8 focus-visible:outline-accent"
         >
-          <span className="display max-w-full text-balance px-4 text-[clamp(2.6rem,7vw,9rem)]">{project.title}</span>
-          <span className="mt-5 text-[clamp(1rem,1vw,1.4rem)] font-medium">{t(ui.next)}</span>
-          <span className="mt-1 text-sm text-paper/60">{t(project.discipline)}</span>
-        </button>
-        <div className="gutter absolute inset-x-0 bottom-8 flex items-center gap-4 text-xs font-medium">
-          <span>{t(ui.keepScrolling)}</span>
-          <span className="h-px flex-1 bg-white/20">
-            <span ref={barRef} className="block h-full origin-left scale-x-0 bg-accent" />
+          <span className="text-[clamp(1rem,1vw,1.4rem)] font-medium">{t(ui.next)}</span>
+          <span className="display mt-3 max-w-full text-balance px-4 text-[clamp(2.6rem,7vw,9rem)]">{project.title}</span>
+          <span className="mt-3 text-sm text-paper/85">{t(project.discipline)}</span>
+          <span className="pill mt-8 min-h-11 border-paper/70 px-5 py-2.5 text-base">
+            {t(ui.openProject)} <span aria-hidden>→</span>
           </span>
+        </button>
+      </div>
+    </section>
+  );
+}
+
+// Vaka sayfasını bitiren ziyaretçi için iletişime çıkış
+function ContactStrip({ dark, canvas }: { dark?: boolean; canvas?: string }) {
+  const { t, lang } = useLang();
+  const { goTo } = useTransition();
+  return (
+    <section
+      data-theme={dark ? 'dark' : undefined}
+      style={canvas ? { backgroundColor: canvas } : undefined}
+      className={`gutter border-t py-[10vh] ${dark ? 'border-white/10 bg-ink text-paper' : 'border-ink/10 bg-paper'}`}
+    >
+      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <h2 className="display text-[clamp(2.6rem,6vw,7rem)]">{t(ui.contactCta)}</h2>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <button
+            onClick={() => goTo('/', 'iletisim')}
+            className={`pill min-h-11 px-6 py-3 text-base ${dark ? 'border-paper bg-paper text-ink hover:bg-transparent hover:text-paper' : 'border-ink bg-ink text-paper hover:bg-transparent hover:text-ink'}`}
+          >
+            {t(ui.getInTouch)} <span aria-hidden>→</span>
+          </button>
+          <a key={lang} href={`mailto:${site.email}`} className="inline-block py-2 text-base font-medium underline underline-offset-4">
+            {site.email}
+          </a>
         </div>
       </div>
     </section>
@@ -489,9 +505,15 @@ export default function Project() {
   if (index === -1) return <NotFound />;
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
+  return <ProjectPage project={project} next={next} />;
+}
+
+function ProjectPage({ project, next }: { project: ProjectType; next: ProjectType }) {
+  const { t } = useLang();
+  usePageMeta(`${project.title} — ${t(project.discipline)} · ${site.name}`, t(project.summary));
 
   return (
-    <main key={project.slug}>
+    <main id="main" tabIndex={-1} key={project.slug} className="outline-none">
       <Cover project={project} />
       <Credits project={project} dark={project.dark} canvas={project.canvas} />
       {project.caseStudy && <CaseStudySection data={project.caseStudy} />}
@@ -504,13 +526,13 @@ export default function Project() {
           <Block
             key={i}
             block={block}
-            title={project.title}
             dark={project.dark}
             canvas={!!project.canvas}
             chapter={project.gallery.slice(0, i + 1).filter((b) => b.type === 'chapter').length}
           />
         ))}
       </div>
+      <ContactStrip dark={project.dark} canvas={project.canvas} />
       <NextProject project={next} />
     </main>
   );

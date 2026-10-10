@@ -9,7 +9,7 @@ import { lenis } from '../lib/scroll';
 export function Toolkit() {
   const { lang } = useLang();
   return (
-    <section data-theme="dark" className="bg-ink pb-[6vh] pt-[1vh] text-paper">
+    <section data-theme="dark" className="bg-ink pb-8 pt-8 text-paper sm:pb-[6vh] sm:pt-[1vh]">
       <Marquee items={expertise.marquee[lang]} />
     </section>
   );
@@ -49,7 +49,8 @@ export function ServiceList() {
       <ul ref={listRef}>
         {expertise.list[lang].map((item, i) => {
           const dist = Math.abs(i - active);
-          const opacity = dist === 0 ? 1 : dist === 1 ? 0.4 : 0.14;
+          // Pasif satırlar da okunur kalır (kontrast); vurgu ekranın ortasındaki satırdadır
+          const opacity = dist === 0 ? 1 : 0.55;
           return (
             <li
               key={item}

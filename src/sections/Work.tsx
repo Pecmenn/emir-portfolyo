@@ -32,7 +32,7 @@ function FitSlogan({ lines }: { lines: string[] }) {
         }),
       );
       let next = (box.clientWidth / widest) * 100 * 0.98;
-      if (window.matchMedia('(min-width: 640px)').matches) {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
         next = Math.min(next, (column.clientHeight * 0.4) / (Math.max(lines.length, 1) * 1.15));
       }
       setSize(Math.round(Math.max(24, Math.min(next, 180))));
@@ -59,7 +59,8 @@ function FitSlogan({ lines }: { lines: string[] }) {
   );
 }
 
-// fill: geniş ekranda görsel sabit oran yerine bulunduğu sütunda kalan yüksekliği doldurur
+// fill: geniş ekranda (lg ve üstü) görsel sabit oran yerine bulunduğu sütunda kalan yüksekliği doldurur;
+// tablet genişliğinde sütun dar olduğundan kart kendi oranında akışta kalır
 function Card({
   project,
   index,
@@ -84,15 +85,15 @@ function Card({
         e.preventDefault();
         openProject(project.slug, project.cover, mediaRef.current);
       }}
-      className={`group ${fill ? 'flex flex-col sm:min-h-0 sm:flex-1' : 'block'} ${className}`}
+      className={`group ${fill ? 'flex flex-col lg:min-h-0 lg:flex-1' : 'block'} ${className}`}
     >
-      <p className="mb-2 text-right text-xs font-medium text-mute">{String(index + 1).padStart(2, '0')}</p>
-      <div ref={mediaRef} className={fill ? 'sm:min-h-0 sm:flex-1' : ''}>
+      <p className="mb-2 text-right text-xs font-medium text-mute-ink">{String(index + 1).padStart(2, '0')}</p>
+      <div ref={mediaRef} className={fill ? 'lg:min-h-0 lg:flex-1' : ''}>
         <RevealImage
           src={project.cover}
           video={project.coverVideo}
-          alt={project.title}
-          className={fill ? `${ratio} sm:aspect-auto sm:h-full` : ratio}
+          alt=""
+          className={fill ? `${ratio} lg:aspect-auto lg:h-full` : ratio}
           imgClassName="transition-transform duration-[1.2s] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-[1.04]"
         />
       </div>
@@ -102,7 +103,7 @@ function Card({
           <span className="absolute -left-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 scale-0 rounded-full bg-accent transition-transform group-hover:scale-100" />
           {project.title}
         </span>
-        <span className="text-mute">{t(project.discipline)}</span>
+        <span className="text-mute-ink">{t(project.discipline)}</span>
       </div>
     </a>
   );

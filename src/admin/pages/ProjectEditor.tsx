@@ -223,6 +223,15 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 <BiField label="Altındaki büyük cümle (isteğe bağlı)" hint="Görselin altında ortalanmış büyük yazıyla görünür." value={block.quote} onChange={(v) => update(i, { ...block, quote: v })} placeholder="Ör. Az biçim, çok anlam." />
               </div>
             )}
+            {(block.type === 'pair' || block.type === 'text-image' || block.type === 'full' || block.type === 'showcase' || block.type === 'strip') && (
+              <BiField
+                label="Görsel açıklaması (isteğe bağlı)"
+                hint="Görme engelli ziyaretçilerin ekran okuyucusu bunu okur. Görseli bir cümleyle anlatın; boş bırakılırsa görsel süs sayılır."
+                value={block.alt}
+                onChange={(v) => update(i, { ...block, alt: v })}
+                placeholder="Ör. Mobil uygulamanın ana ekranı"
+              />
+            )}
           </div>
         );
       })}
