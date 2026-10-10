@@ -12,13 +12,14 @@ import workData from './content/work.json';
 export type Lang = 'tr' | 'en';
 export type Text = { tr: string; en: string };
 
+// alt: ekran okuyucu için görsel açıklaması (isteğe bağlı); boşsa görsel dekoratif sayılır
 export type GalleryBlock =
   // Yan yana iki eşit görsel
-  | { type: 'pair'; image1: string; image2: string }
+  | { type: 'pair'; image1: string; image2: string; alt?: Text }
   // Bir metin ve bir görsel yan yana; side görselin hangi tarafta olduğunu belirler
-  | { type: 'text-image'; text: Text; image: string; side: 'left' | 'right' }
+  | { type: 'text-image'; text: Text; image: string; side: 'left' | 'right'; alt?: Text }
   // Sayfa genişliğinde görsel (kendi oranında), altında isteğe bağlı büyük bir cümle
-  | { type: 'full'; image: string; quote?: Text }
+  | { type: 'full'; image: string; quote?: Text; alt?: Text }
   // Sessiz, döngüde, ekranda görününce oynayan video. full: tam genişlik; değilse ortada daha dar
   | { type: 'video'; video: string; full: boolean }
   // Bölüm başlığı ve açıklaması
@@ -26,9 +27,9 @@ export type GalleryBlock =
   // Numaralı bölüm açılışı (01, 02 ...); numara bloğun sırasından otomatik gelir
   | { type: 'chapter'; title: Text; text: Text }
   // Fare hareketine göre 3 boyutlu eğilen tek görsel (ör. saydam zeminli cihaz görseli)
-  | { type: 'showcase'; image: string }
+  | { type: 'showcase'; image: string; alt?: Text }
   // Fareyle ya da parmakla yatayda sürüklenen görsel şeridi
-  | { type: 'strip'; images: string[] };
+  | { type: 'strip'; images: string[]; alt?: Text };
 
 export type CaseStudy = {
   challenge: Text;
@@ -80,6 +81,8 @@ type Site = {
 };
 
 export const site = siteData as Site;
+// CV bağlantısı yalnızca içerikte bir yol tanımlıysa gösterilir (boşsa düğmeler gizlenir)
+export const cvUrl = (site.cv ?? '').trim();
 export const ui = uiData;
 export const manifesto = aboutData;
 export const work = workData as { slogans: { tr: string[]; en: string[] }[] };

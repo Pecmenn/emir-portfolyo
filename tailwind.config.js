@@ -6,7 +6,9 @@ export default {
       colors: {
         paper: '#F4F4F1',
         ink: '#0A0A0A',
+        // Koyu zeminde okunur; açık zeminde (paper, proje tuvali) WCAG AA için mute-ink kullan
         mute: '#8C8C88',
+        'mute-ink': '#6B6B67',
         accent: '#B98CFF',
         'accent-strong': '#7C4DDB',
       },

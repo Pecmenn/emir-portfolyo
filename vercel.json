@@ -5,6 +5,6 @@
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/admin/(.*)", "destination": "/admin.html" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|cv/|images/|videos/|assets/|fonts/).*)", "destination": "/index.html" }
   ]
 }

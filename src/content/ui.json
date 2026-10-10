@@ -132,5 +132,49 @@
   "availableNote": {
     "tr": "Tam zamanlı, uzaktan veya hibrit roller için konuşalım.",
     "en": "Let’s talk about full-time, remote or hybrid roles."
+  },
+  "menu": {
+    "tr": "Menüyü aç / kapat",
+    "en": "Open / close menu"
+  },
+  "mainMenu": {
+    "tr": "Ana menü",
+    "en": "Main menu"
+  },
+  "language": {
+    "tr": "Dil",
+    "en": "Language"
+  },
+  "skip": {
+    "tr": "İçeriğe atla",
+    "en": "Skip to content"
+  },
+  "viewAllWork": {
+    "tr": "Tüm işleri gör",
+    "en": "See all work"
+  },
+  "prevSlide": {
+    "tr": "Önceki proje",
+    "en": "Previous project"
+  },
+  "nextSlide": {
+    "tr": "Sonraki proje",
+    "en": "Next project"
+  },
+  "pause": {
+    "tr": "Duraklat",
+    "en": "Pause"
+  },
+  "play": {
+    "tr": "Oynat",
+    "en": "Play"
+  },
+  "openProject": {
+    "tr": "Projeyi aç",
+    "en": "Open project"
+  },
+  "contactCta": {
+    "tr": "Birlikte çalışalım",
+    "en": "Let’s work together"
   }
 }

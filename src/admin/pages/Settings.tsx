@@ -49,7 +49,7 @@ function CvField({ value, onChange }: { value: string; onChange: (v: string) => 
         </button>
       </div>
       <input ref={input} type="file" accept="application/pdf" hidden onChange={(e) => pick(e.target.files?.[0])} />
-      <p className="mt-1.5 text-[13px] text-ink/50">Menüdeki ve Hakkımda bölümündeki “CV İndir” butonları bu dosyayı indirir.</p>
+      <p className="mt-1.5 text-[13px] text-ink/50">“CV İndir” butonları (menü, Hakkımda, alt bilgi) bu dosyayı indirir. CV yüklenmediyse butonlar sitede görünmez.</p>
     </div>
   );
 }

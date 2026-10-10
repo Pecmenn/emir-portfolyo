@@ -1,8 +1,9 @@
 import { ArrowUp, ArrowUpRight, Download } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { site, ui } from '../content';
+import { cvUrl, site, ui } from '../content';
 import { useLang } from '../lib/i18n';
+import { navLinks as sitemap } from '../lib/nav';
 import { gsap, reducedMotion, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 import SocialIcon from './SocialIcon';
@@ -20,7 +21,7 @@ function useLocalTime(timeZone: string, lang: string) {
   return time;
 }
 
-// Ad, alt bilginin genişliğini dolduracak kadar büyür; çok yüksek olmaması için ekran yüksekliğiyle de sınırlanır
+// Ad, alt bilginin genişliğini dolduracak kadar büyür; çok yüksek olmaması için ekran yüksekliğinin %22'siyle sınırlanır
 function useFitWidth(text: string) {
   const ref = useRef<HTMLParagraphElement>(null);
   const [size, setSize] = useState<number>();
@@ -35,7 +36,7 @@ function useFitWidth(text: string) {
     document.body.appendChild(probe);
     const fit = () => {
       const byWidth = (box.clientWidth / Math.max(probe.offsetWidth, 1)) * 100 * 0.97;
-      setSize(Math.round(Math.max(24, Math.min(byWidth, window.innerHeight * 0.15))));
+      setSize(Math.round(Math.max(24, Math.min(byWidth, window.innerHeight * 0.22))));
     };
     fit();
     document.fonts?.ready.then(fit);
@@ -89,12 +90,6 @@ export default function Footer() {
   }, []);
 
   const go = (id: string) => (pathname === '/' ? scrollToTarget(`#${id}`) : goTo('/', id));
-  const sitemap = [
-    { id: 'isler', label: ui.nav.work },
-    { id: 'hakkimda', label: ui.nav.about },
-    { id: 'uzmanlik', label: ui.nav.expertise },
-    { id: 'iletisim', label: ui.nav.contact },
-  ];
 
   return (
     <footer ref={ref} data-theme="dark" className="gutter overflow-hidden bg-ink pt-20 text-paper sm:pt-[4vh]">
@@ -106,17 +101,19 @@ export default function Footer() {
           <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-4">
             <a
               href={`mailto:${site.email}`}
-              className="display break-all text-[clamp(1.25rem,1.9vw,2rem)] underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors hover:text-accent hover:decoration-accent"
+              className="display inline-block break-all py-2 text-[clamp(1.25rem,1.9vw,2rem)] underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors hover:text-accent hover:decoration-accent"
             >
               {site.email}
             </a>
-            <a
-              href={site.cv}
-              download
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-ink transition hover:brightness-110"
-            >
-              <Download size={16} /> {t(ui.cv)}
-            </a>
+            {cvUrl && (
+              <a
+                href={cvUrl}
+                download
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-ink transition hover:brightness-110"
+              >
+                <Download size={16} /> {t(ui.cv)}
+              </a>
+            )}
           </div>
         </div>
 
@@ -124,11 +121,11 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-3 lg:col-span-7">
           <div>
             <Label>{t(ui.sitemap)}</Label>
-            <ul className="space-y-2.5">
+            <ul>
               {sitemap.map((item, i) => (
                 <li key={item.id}>
-                  <button onClick={() => go(item.id)} className="group flex items-baseline gap-3 text-[15px] transition-colors hover:text-accent">
-                    <span className="text-[11px] tabular-nums text-mute">0{i + 1}</span>
+                  <button onClick={() => go(item.id)} className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent">
+                    <span className="text-xs tabular-nums text-mute">0{i + 1}</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-1">{t(item.label)}</span>
                   </button>
                 </li>
@@ -138,10 +135,10 @@ export default function Footer() {
 
           <div>
             <Label>{t(ui.follow)}</Label>
-            <ul className="space-y-2.5">
+            <ul>
               {site.socials.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noreferrer" className="group flex items-center gap-3 text-[15px] transition-colors hover:text-accent">
+                  <a href={s.href} target="_blank" rel="noreferrer" className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent">
                     <span className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-paper/80 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
                       <SocialIcon href={s.href} label={s.label} className="h-[18px] w-[18px]" />
                     </span>
@@ -177,10 +174,10 @@ export default function Footer() {
         <button
           onClick={() => scrollToTarget(0)}
           aria-label={t(ui.backToTop)}
-          className="group inline-flex items-center gap-2 font-semibold text-paper/70 transition-colors hover:text-paper"
+          className="group inline-flex min-h-11 items-center gap-2 font-semibold text-paper/70 transition-colors hover:text-paper"
         >
           <span className="hidden sm:inline">{t(ui.backToTop)}</span>
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-white/15 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
+          <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
             <ArrowUp size={16} />
           </span>
         </button>

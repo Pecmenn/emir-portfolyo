@@ -1,4 +1,4 @@
-import { manifesto, site, ui } from '../content';
+import { cvUrl, manifesto, ui } from '../content';
 import { FadeUp, Lines } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
 
@@ -11,11 +11,13 @@ export default function Manifesto() {
         <Lines key={lang} lines={manifesto.lines[lang]} className="display text-[clamp(2.6rem,4.4vw,7.5rem)] leading-[1]" />
         <FadeUp className="lg:self-center">
           <p className="text-[clamp(1.15rem,1.8vw,2.4rem)] font-medium leading-[1.35] tracking-tight">{t(manifesto.text)}</p>
-          <div className="mt-8 flex lg:mt-12 lg:justify-center">
-            <a href={site.cv} download className="pill border-ink bg-ink px-6 py-3 text-base text-paper hover:bg-transparent hover:text-ink">
-              {t(ui.cv)} <span aria-hidden>↓</span>
-            </a>
-          </div>
+          {cvUrl && (
+            <div className="mt-8 flex lg:mt-12 lg:justify-center">
+              <a href={cvUrl} download className="pill border-ink bg-ink px-6 py-3 text-base text-paper hover:bg-transparent hover:text-ink">
+                {t(ui.cv)} <span aria-hidden>↓</span>
+              </a>
+            </div>
+          )}
         </FadeUp>
       </div>
     </section>
