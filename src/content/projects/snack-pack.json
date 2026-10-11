@@ -8,7 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/snack-pack/cover.webp",
-  "coverFocus": 28,
+  "coverFocus": 74,
   "summary": {
     "tr": "Ekrana çizilen yollarla kurabiyeleri torbaya ulaştırdığın, fizik tabanlı hiper-casual bir bulmaca.",
     "en": "A hyper-casual physics puzzle: draw paths to guide cookies into the bag."
@@ -77,5 +77,6 @@
       "image": "/images/snack-pack/06.webp"
     }
   ],
-  "canvas": "#ECECEC"
+  "canvas": "#ECECEC",
+  "featured": true
 }
