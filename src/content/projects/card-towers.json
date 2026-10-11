@@ -1,5 +1,5 @@
 {
-  "order": 6,
+  "order": 7,
   "slug": "card-towers",
   "title": "Card Towers",
   "discipline": {
@@ -8,7 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/card-towers/cover.webp",
-  "coverFocus": 28,
+  "coverFocus": 90,
   "summary": {
     "tr": "Doğru renkteki kartlarla kuleni renkli düşman dalgalarına karşı savunduğun bir kule savunma oyunu.",
     "en": "A tower defense game where the right colored cards protect your tower from colorful waves."
