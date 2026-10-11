@@ -148,7 +148,7 @@
       ]
     }
   ],
-  "featured": true,
+  "featured": false,
   "dark": true,
   "canvas": "#131814"
 }
