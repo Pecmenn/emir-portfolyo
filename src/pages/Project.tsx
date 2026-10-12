@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
+import { Compare, Flock, Pan } from '../components/MotionBlocks';
 import { EDGE_FADE, FadeUp, RevealImage, Words } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
@@ -62,9 +63,9 @@ function Cover({ project }: { project: ProjectType }) {
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/75" />
 
-      {/* Başlık solda, özet sağdaki üçte birlik sütunda; ikisi aynı alt çizgiye oturur */}
-      <div className="gutter absolute inset-x-0 bottom-[calc(clamp(6.5rem,15vh,11rem)+2rem)] grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-8">
-        <h1 className="display text-[clamp(3.5rem,7vw,9rem)] lg:col-span-8">
+      {/* Özet başlığın hemen altında, sola hizalı durur */}
+      <div className="gutter absolute inset-x-0 bottom-[calc(clamp(6.5rem,15vh,11rem)+2rem)] flex flex-col items-start gap-4 lg:gap-5">
+        <h1 className="display text-[clamp(3.5rem,7vw,9rem)]">
           <span className="line-mask">
             <span data-cover-line className="block">
               {project.title}
@@ -76,7 +77,7 @@ function Cover({ project }: { project: ProjectType }) {
           immediate
           delay={0.9}
           text={t(project.summary)}
-          className="max-w-xl text-[clamp(1.05rem,1vw,1.5rem)] font-medium leading-snug text-paper/90 lg:col-span-4 lg:pb-[0.35em]"
+          className="max-w-xl text-[clamp(1.05rem,1.1vw,1.5rem)] font-medium leading-snug text-paper/90"
         />
       </div>
 
@@ -244,6 +245,20 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
     const images = block.images.filter(Boolean);
     if (!images.length) return null;
     return <Strip images={images} alt={title} />;
+  }
+  if (block.type === 'flock') {
+    const images = block.images.filter(Boolean);
+    if (!images.length) return null;
+    return <Flock title={t(block.title)} text={t(block.text)} images={images} layout={block.layout} alt={title} />;
+  }
+  if (block.type === 'compare') {
+    if (!block.before || !block.after) return null;
+    return <Compare before={block.before} after={block.after} beforeLabel={t(block.beforeLabel)} afterLabel={t(block.afterLabel)} alt={title} />;
+  }
+  if (block.type === 'pan') {
+    const images = block.images.filter(Boolean);
+    if (!images.length) return null;
+    return <Pan title={t(block.title)} text={t(block.text)} images={images} alt={title} />;
   }
   return (
     <>

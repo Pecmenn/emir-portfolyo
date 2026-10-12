@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, GalleryHorizontal, Hash, Image as ImageIcon, Images, Plus, Quote, Rotate3d, Trash2, Type, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { GalleryBlock, Project } from '../../content';
 import { SITE_URL } from '../github';
@@ -53,7 +53,36 @@ const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; 
   { type: 'video', label: 'Video', description: 'Sessiz, döngüde oynayan video', icon: Film },
   { type: 'showcase', label: '3B vitrin', description: 'Fareyle 3 boyutlu eğilen tek görsel; saydam zeminli cihaz görselleri için ideal', icon: Rotate3d },
   { type: 'strip', label: 'Sürüklenen şerit', description: 'Yatayda fareyle sürüklenerek gezilen görsel dizisi', icon: GalleryHorizontal },
+  { type: 'flock', label: 'Uçuşan parçalar', description: 'Kaydırdıkça saydam zeminli parçalar uçarak gelip dizilir (ör. kaykaylar, karakterler)', icon: Sparkles },
+  { type: 'compare', label: 'Taslaktan sonuca', description: 'Kaydırdıkça taslak görselin üstünden son hâli açılır (ör. wireframe → son ekran)', icon: SquareSplitHorizontal },
+  { type: 'pan', label: 'Kaydırınca akan şerit', description: 'Sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)', icon: MoveHorizontal },
 ];
+
+// Şerit, uçuşan parçalar ve akan şerit bloklarının ortak görsel listesi
+function ImageList({ images, onChange }: { images: string[]; onChange: (images: string[]) => void }) {
+  return (
+    <>
+      <div className="grid gap-4 sm:grid-cols-3">
+        {images.map((img, j) => (
+          <div key={j} className="relative">
+            <ImageField label={`Görsel ${j + 1}`} aspect="aspect-[4/5]" value={img} onChange={(v) => onChange(images.map((x, k) => (k === j ? v : x)))} />
+            <button
+              type="button"
+              aria-label="Görseli çıkar"
+              onClick={() => onChange(images.filter((_, k) => k !== j))}
+              className="absolute right-0 top-0 grid h-7 w-7 place-items-center rounded-lg text-ink/45 hover:bg-red-50 hover:text-red-600"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        ))}
+      </div>
+      <Button type="button" variant="soft" onClick={() => onChange([...images, ''])}>
+        <Plus size={16} /> Görsel ekle
+      </Button>
+    </>
+  );
+}
 
 function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'pair') return { type, image1: '', image2: '' };
@@ -62,6 +91,9 @@ function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'text' || type === 'chapter') return { type, title: { ...empty }, text: { ...empty } };
   if (type === 'showcase') return { type, image: '' };
   if (type === 'strip') return { type, images: ['', ''] };
+  if (type === 'flock') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''], layout: 'fan' };
+  if (type === 'compare') return { type, before: '', after: '', beforeLabel: { tr: 'Taslak', en: 'Wireframe' }, afterLabel: { tr: 'Son hâli', en: 'Final' } };
+  if (type === 'pan') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''] };
   return { type: 'full', image: '', quote: { ...empty } };
 }
 
@@ -192,29 +224,52 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
             {block.type === 'strip' && (
               <div className="flex flex-col gap-4">
                 <p className="text-[13px] text-ink/55">Görseller aynı yükseklikte, kendi oranlarıyla yan yana dizilir.</p>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {block.images.map((img, j) => (
-                    <div key={j} className="relative">
-                      <ImageField
-                        label={`Görsel ${j + 1}`}
-                        aspect="aspect-[4/5]"
-                        value={img}
-                        onChange={(v) => update(i, { ...block, images: block.images.map((x, k) => (k === j ? v : x)) })}
-                      />
+                <ImageList images={block.images} onChange={(images) => update(i, { ...block, images })} />
+              </div>
+            )}
+            {block.type === 'flock' && (
+              <div className="flex flex-col gap-4">
+                <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Her dünyaya bir kaykay" />
+                <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
+                <Field label="Dizilim">
+                  <div className="inline-flex rounded-xl bg-black/[0.05] p-1">
+                    {(['fan', 'grid'] as const).map((layout) => (
                       <button
+                        key={layout}
                         type="button"
-                        aria-label="Görseli çıkar"
-                        onClick={() => update(i, { ...block, images: block.images.filter((_, k) => k !== j) })}
-                        className="absolute right-0 top-0 grid h-7 w-7 place-items-center rounded-lg text-ink/45 hover:bg-red-50 hover:text-red-600"
+                        onClick={() => update(i, { ...block, layout })}
+                        className={`rounded-lg px-4 py-1.5 text-sm font-semibold ${block.layout === layout ? 'bg-white shadow-sm' : 'text-ink/55'}`}
                       >
-                        <X size={14} />
+                        {layout === 'fan' ? 'Yelpaze' : 'Izgara'}
                       </button>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                </Field>
+                <p className="text-[13px] text-ink/55">
+                  Saydam zeminli PNG/WebP parçalar kullanın. Yelpazede parçalar dik durur ve aynı yükseklikte gösterilir; ızgarada en fazla 4 sütuna dizilir.
+                </p>
+                <ImageList images={block.images} onChange={(images) => update(i, { ...block, images })} />
+              </div>
+            )}
+            {block.type === 'compare' && (
+              <div className="flex flex-col gap-4">
+                <p className="text-[13px] text-ink/55">İki görsel üst üste birebir oturur; aynı boyutta ve aynı düzende olmalı.</p>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <ImageField label="Taslak görsel" value={block.before} onChange={(v) => update(i, { ...block, before: v })} />
+                  <ImageField label="Son hâli" value={block.after} onChange={(v) => update(i, { ...block, after: v })} />
                 </div>
-                <Button type="button" variant="soft" onClick={() => update(i, { ...block, images: [...block.images, ''] })}>
-                  <Plus size={16} /> Görsel ekle
-                </Button>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <BiField label="Taslak etiketi" value={block.beforeLabel} onChange={(v) => update(i, { ...block, beforeLabel: v })} />
+                  <BiField label="Son hâl etiketi" value={block.afterLabel} onChange={(v) => update(i, { ...block, afterLabel: v })} />
+                </div>
+              </div>
+            )}
+            {block.type === 'pan' && (
+              <div className="flex flex-col gap-4">
+                <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Akış, ekran ekran" />
+                <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
+                <p className="text-[13px] text-ink/55">Görseller aynı yükseklikte, kendi oranlarıyla yan yana dizilir ve sayfa kaydıkça yatayda akar.</p>
+                <ImageList images={block.images} onChange={(images) => update(i, { ...block, images })} />
               </div>
             )}
             {block.type === 'full' && (
@@ -223,7 +278,14 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 <BiField label="Altındaki büyük cümle (isteğe bağlı)" hint="Görselin altında ortalanmış büyük yazıyla görünür." value={block.quote} onChange={(v) => update(i, { ...block, quote: v })} placeholder="Ör. Az biçim, çok anlam." />
               </div>
             )}
-            {(block.type === 'pair' || block.type === 'text-image' || block.type === 'full' || block.type === 'showcase' || block.type === 'strip') && (
+            {(block.type === 'pair' ||
+              block.type === 'text-image' ||
+              block.type === 'full' ||
+              block.type === 'showcase' ||
+              block.type === 'strip' ||
+              block.type === 'flock' ||
+              block.type === 'compare' ||
+              block.type === 'pan') && (
               <BiField
                 label="Görsel açıklaması (isteğe bağlı)"
                 hint="Görme engelli ziyaretçilerin ekran okuyucusu bunu okur. Görseli bir cümleyle anlatın; boş bırakılırsa görsel süs sayılır."

@@ -29,7 +29,14 @@ export type GalleryBlock =
   // Fare hareketine göre 3 boyutlu eğilen tek görsel (ör. saydam zeminli cihaz görseli)
   | { type: 'showcase'; image: string; alt?: Text }
   // Fareyle ya da parmakla yatayda sürüklenen görsel şeridi
-  | { type: 'strip'; images: string[]; alt?: Text };
+  | { type: 'strip'; images: string[]; alt?: Text }
+  // Bölüm ekranda sabit kalır; kaydırdıkça saydam zeminli parçalar (ör. kaykaylar, karakterler) tek tek uçarak
+  // gelip yelpaze (fan) ya da ızgara (grid) biçiminde dizilir
+  | { type: 'flock'; title: Text; text: Text; images: string[]; layout: 'fan' | 'grid'; alt?: Text }
+  // Bölüm ekranda sabit kalır; kaydırdıkça taslak görselin üstünden son hâli açılır. İki görsel aynı boyutta olmalı
+  | { type: 'compare'; before: string; after: string; beforeLabel: Text; afterLabel: Text; alt?: Text }
+  // Bölüm ekranda sabit kalır; sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)
+  | { type: 'pan'; title: Text; text: Text; images: string[]; alt?: Text };
 
 export type CaseStudy = {
   challenge: Text;
