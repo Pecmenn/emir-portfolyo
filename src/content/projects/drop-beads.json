@@ -8,7 +8,7 @@
   },
   "year": "2025",
   "cover": "/images/drop-beads/cover.webp",
-  "coverFocus": 28,
+  "coverFocus": 66,
   "summary": {
     "tr": "Renkli bilyelerin pinlerden sekerek doğru tüplere dolduğu fizik tabanlı bir bulmaca.",
     "en": "A physics puzzle where colored beads bounce off pins into the right tubes."
@@ -54,12 +54,63 @@
       }
     },
     {
-      "type": "full",
-      "image": "/images/drop-beads/04.webp"
+      "type": "flock",
+      "title": {
+        "tr": "Düzeneğin parçaları",
+        "en": "Parts of the machine"
+      },
+      "text": {
+        "tr": "Üç renkte tüp, bilye, pin, tepsi, çark, ray ve kutu: oyunun 3D modelleri.",
+        "en": "Tubes in three colors, a bead, a pin, a tray, gears, a rail and a box: the game’s 3D models."
+      },
+      "images": [
+        "/images/drop-beads/model/01.webp",
+        "/images/drop-beads/model/02.webp",
+        "/images/drop-beads/model/03.webp",
+        "/images/drop-beads/model/04.webp",
+        "/images/drop-beads/model/05.webp",
+        "/images/drop-beads/model/06.webp",
+        "/images/drop-beads/model/07.webp",
+        "/images/drop-beads/model/08.webp",
+        "/images/drop-beads/model/09.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Drop Beads 3D modeli",
+        "en": "Drop Beads 3D model"
+      }
     },
     {
-      "type": "full",
-      "image": "/images/drop-beads/05.webp"
+      "type": "pan",
+      "title": {
+        "tr": "Bölüm 16’dan 30’a",
+        "en": "Levels 16 to 30"
+      },
+      "text": {
+        "tr": "Her bölümde pinlerin dizilişi, kılavuzlar ve hedef tüpler değişiyor.",
+        "en": "Each level changes the pin layout, the guides and the target tubes."
+      },
+      "images": [
+        "/images/drop-beads/bolum/01.webp",
+        "/images/drop-beads/bolum/02.webp",
+        "/images/drop-beads/bolum/03.webp",
+        "/images/drop-beads/bolum/04.webp",
+        "/images/drop-beads/bolum/05.webp",
+        "/images/drop-beads/bolum/06.webp",
+        "/images/drop-beads/bolum/07.webp",
+        "/images/drop-beads/bolum/08.webp",
+        "/images/drop-beads/bolum/09.webp",
+        "/images/drop-beads/bolum/10.webp",
+        "/images/drop-beads/bolum/11.webp",
+        "/images/drop-beads/bolum/12.webp",
+        "/images/drop-beads/bolum/13.webp",
+        "/images/drop-beads/bolum/14.webp",
+        "/images/drop-beads/bolum/15.webp"
+      ],
+      "alt": {
+        "tr": "Drop Beads bölüm ekranı",
+        "en": "Drop Beads level screen"
+      }
     },
     {
       "type": "chapter",

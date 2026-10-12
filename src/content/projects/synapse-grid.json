@@ -1,0 +1,110 @@
+{
+  "order": 12,
+  "slug": "synapse-grid",
+  "title": "Synapse Grid",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/synapse-grid/cover.webp",
+  "coverFocus": 70,
+  "summary": {
+    "tr": "Siber bir sinir ağı ızgarasında doğru bağlantıları kurarak hedef kelimeyi ya da sayıyı oluşturmaya dayanan bir bulmaca oyunu.",
+    "en": "A puzzle game where players build the target word or number by making the right connections in a cyber neural-network grid."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "UI tasarımı, asset tasarımı",
+    "en": "UI design, asset design"
+  },
+  "intro": {
+    "tr": "Synapse Grid, bulmaca, zekâ ve hafıza türlerini birleştiren bir mobil oyun. Oyuncu siber bir sinir ağında (Grid Matrix) doğru sinaptik bağlantıları kurarak hedef kelimeyi ya da sayıyı oluşturuyor; her bölümde rastgele dağılan zarlar için en stratejik dizilimi bulmak gerekiyor.",
+    "en": "Synapse Grid is a mobile game that blends puzzle, intelligence and memory. Players form the target word or number by making the correct synaptic connections in a cyber neural network (the Grid Matrix), finding the most strategic alignment for dice that are scattered randomly in each level."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Buton seti, renk paleti, ikonlar ve geri bildirim yazılarıyla oyunun UI kiti; ardından oyunun ekranları.",
+        "en": "The game’s UI kit, with its button set, color palette, icons and feedback labels, followed by the game screens."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/synapse-grid/03.webp"
+    },
+    {
+      "type": "flock",
+      "title": {
+        "tr": "Sekiz ekranlık akış",
+        "en": "An eight-screen flow"
+      },
+      "text": {
+        "tr": "Yükleme ekranından oyuna, ayarlardan zafer ve yenilgiye: oyunun sekiz ekranı.",
+        "en": "From the loading screen to gameplay, from settings to victory and defeat: the game’s eight screens."
+      },
+      "images": [
+        "/images/synapse-grid/ekran/01.webp",
+        "/images/synapse-grid/ekran/02.webp",
+        "/images/synapse-grid/ekran/03.webp",
+        "/images/synapse-grid/ekran/04.webp",
+        "/images/synapse-grid/ekran/05.webp",
+        "/images/synapse-grid/ekran/06.webp",
+        "/images/synapse-grid/ekran/07.webp",
+        "/images/synapse-grid/ekran/08.webp"
+      ],
+      "layout": "fan",
+      "alt": {
+        "tr": "Synapse Grid oyun ekranı",
+        "en": "Synapse Grid game screen"
+      }
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "pan",
+      "title": {
+        "tr": "Kaydır, birleştir, çöz",
+        "en": "Slide, merge, solve"
+      },
+      "text": {
+        "tr": "Öne çıkan görselin ardından telefon ve tablet ekranları: yedi mağaza görseli.",
+        "en": "A feature graphic followed by phone and tablet screenshots: seven store visuals."
+      },
+      "images": [
+        "/images/synapse-grid/magaza/01.webp",
+        "/images/synapse-grid/magaza/02.webp",
+        "/images/synapse-grid/magaza/03.webp",
+        "/images/synapse-grid/magaza/04.webp",
+        "/images/synapse-grid/magaza/05.webp",
+        "/images/synapse-grid/magaza/06.webp",
+        "/images/synapse-grid/magaza/07.webp"
+      ],
+      "alt": {
+        "tr": "Synapse Grid Google Play görseli",
+        "en": "Synapse Grid Google Play visual"
+      }
+    }
+  ],
+  "featured": false,
+  "canvas": "#ECECEC",
+  "hidden": true
+}

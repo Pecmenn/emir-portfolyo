@@ -54,12 +54,67 @@
       }
     },
     {
+      "type": "flock",
+      "title": {
+        "tr": "Kurabiyeleri bekleyenler",
+        "en": "Waiting for cookies"
+      },
+      "text": {
+        "tr": "Her bölümde kurabiyeleri karşılayan dört karakter: tavşan, panda, kumbara domuz ve tilki.",
+        "en": "The four characters that catch the cookies in each level: a bunny, a panda, a piggy bank and a fox."
+      },
+      "images": [
+        "/images/snack-pack/karakter/01.webp",
+        "/images/snack-pack/karakter/02.webp",
+        "/images/snack-pack/karakter/03.webp",
+        "/images/snack-pack/karakter/04.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Snack Pack karakteri",
+        "en": "Snack Pack character"
+      }
+    },
+    {
       "type": "full",
       "image": "/images/snack-pack/04.webp"
     },
     {
-      "type": "full",
-      "image": "/images/snack-pack/05.webp"
+      "type": "pan",
+      "title": {
+        "tr": "Yirmi bölüm, iki sahne",
+        "en": "Twenty levels, two stages"
+      },
+      "text": {
+        "tr": "21–40. bölümler: balonlu kırmızı sahnede ve sarı sahnede boru parçalarıyla kurulan düzenler.",
+        "en": "Levels 21–40: pipe layouts on the red balloon stage and the yellow stage."
+      },
+      "images": [
+        "/images/snack-pack/bolum/01.webp",
+        "/images/snack-pack/bolum/02.webp",
+        "/images/snack-pack/bolum/03.webp",
+        "/images/snack-pack/bolum/04.webp",
+        "/images/snack-pack/bolum/05.webp",
+        "/images/snack-pack/bolum/06.webp",
+        "/images/snack-pack/bolum/07.webp",
+        "/images/snack-pack/bolum/08.webp",
+        "/images/snack-pack/bolum/09.webp",
+        "/images/snack-pack/bolum/10.webp",
+        "/images/snack-pack/bolum/11.webp",
+        "/images/snack-pack/bolum/12.webp",
+        "/images/snack-pack/bolum/13.webp",
+        "/images/snack-pack/bolum/14.webp",
+        "/images/snack-pack/bolum/15.webp",
+        "/images/snack-pack/bolum/16.webp",
+        "/images/snack-pack/bolum/17.webp",
+        "/images/snack-pack/bolum/18.webp",
+        "/images/snack-pack/bolum/19.webp",
+        "/images/snack-pack/bolum/20.webp"
+      ],
+      "alt": {
+        "tr": "Snack Pack bölüm ekranı",
+        "en": "Snack Pack level screen"
+      }
     },
     {
       "type": "chapter",

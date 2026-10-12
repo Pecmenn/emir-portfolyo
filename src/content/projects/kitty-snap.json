@@ -1,0 +1,86 @@
+{
+  "order": 10,
+  "slug": "kitty-snap",
+  "title": "Kitty Snap",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/kitty-snap/cover.webp",
+  "coverFocus": 70,
+  "summary": {
+    "tr": "Sevimli bir kedinin en tatlı pozlarını yakalayıp fotoğrafları eşleştirdiğiniz bir match-3 bulmaca oyunu.",
+    "en": "A match-3 puzzle game where you snap an adorable cat’s cutest poses and match the photos."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "UI tasarımı, karakter tasarımı, asset tasarımı, Google Play görseli ve videosu",
+    "en": "UI design, character design, asset design, Google Play image and video"
+  },
+  "intro": {
+    "tr": "Kitty Snap’te oyuncu, sevimli bir kedinin en tatlı ve en komik pozlarını yakalamaya çalışan bir evcil hayvan fotoğrafçısı. Doğru anda çekilen her fotoğraf match-3 bulmacasında bir taşa dönüşüyor; amaç en iyi karelerle tahtayı temizleyip yüksek skor yapmak.",
+    "en": "In Kitty Snap, players become a pet photographer trying to capture the cutest and funniest poses of an adorable cat. Every photo snapped at the right moment becomes a tile in the match-3 puzzle; the goal is to clear the board and score high with the best shots."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Esneyebilen buton ve paneller, renk paleti ve Marvin Round yazı tipiyle oyunun UI kiti.",
+        "en": "The game’s UI kit: stretchable buttons and panels, the colour palette and the Marvin Round typeface."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/kitty-snap/03.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Karakter",
+        "en": "Character"
+      },
+      "text": {
+        "tr": "Oyuncunun fotoğrafladığı kedinin pozları ve oyunun sokak arka planı.",
+        "en": "The poses of the cat players photograph, and the game’s street background."
+      }
+    },
+    {
+      "type": "flock",
+      "title": {
+        "tr": "Objektife yedi poz",
+        "en": "Seven poses for the lens"
+      },
+      "text": {
+        "tr": "Gerinirken, patisini yalarken, kaşınırken: sokak arka planı ve kedinin yedi pozu, fotoğraf kartı olarak.",
+        "en": "Stretching, licking a paw, scratching: the street background and seven cat poses, as photo cards."
+      },
+      "images": [
+        "/images/kitty-snap/kart/01.webp",
+        "/images/kitty-snap/kart/02.webp",
+        "/images/kitty-snap/kart/03.webp",
+        "/images/kitty-snap/kart/04.webp",
+        "/images/kitty-snap/kart/05.webp",
+        "/images/kitty-snap/kart/06.webp",
+        "/images/kitty-snap/kart/07.webp",
+        "/images/kitty-snap/kart/08.webp"
+      ],
+      "layout": "fan",
+      "alt": {
+        "tr": "Kitty Snap kedi pozu fotoğraf kartı",
+        "en": "Kitty Snap cat pose photo card"
+      }
+    }
+  ],
+  "featured": false,
+  "hidden": true,
+  "canvas": "#ECECEC"
+}

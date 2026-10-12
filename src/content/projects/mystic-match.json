@@ -54,16 +54,86 @@
       }
     },
     {
-      "type": "full",
-      "image": "/images/mystic-match/04.webp"
+      "type": "flock",
+      "title": {
+        "tr": "Zırhlar ve evcil hayvanlar",
+        "en": "Armour sets and pets"
+      },
+      "text": {
+        "tr": "Oyuncu karakteri; Neptün, Jüpiter ve Mars zırh setleri; grifon ve ejderha evcil hayvanları.",
+        "en": "The player character, the Neptune, Jupiter and Mars armour sets, and the griffin and dragon pets."
+      },
+      "images": [
+        "/images/mystic-match/karakter/01.webp",
+        "/images/mystic-match/karakter/02.webp",
+        "/images/mystic-match/karakter/03.webp",
+        "/images/mystic-match/karakter/04.webp",
+        "/images/mystic-match/karakter/05.webp",
+        "/images/mystic-match/karakter/06.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Mystic Match karakteri",
+        "en": "Mystic Match character"
+      }
     },
     {
-      "type": "full",
-      "image": "/images/mystic-match/05.webp"
+      "type": "flock",
+      "title": {
+        "tr": "Düşman kadrosu",
+        "en": "The enemy roster"
+      },
+      "text": {
+        "tr": "Oyuncunun karşısına çıkan on düşman, her biri kendi kartında.",
+        "en": "Ten enemies the player faces, each on its own card."
+      },
+      "images": [
+        "/images/mystic-match/dusman/01.webp",
+        "/images/mystic-match/dusman/02.webp",
+        "/images/mystic-match/dusman/03.webp",
+        "/images/mystic-match/dusman/04.webp",
+        "/images/mystic-match/dusman/05.webp",
+        "/images/mystic-match/dusman/06.webp",
+        "/images/mystic-match/dusman/07.webp",
+        "/images/mystic-match/dusman/08.webp",
+        "/images/mystic-match/dusman/09.webp",
+        "/images/mystic-match/dusman/10.webp"
+      ],
+      "layout": "fan",
+      "alt": {
+        "tr": "Mystic Match düşman kartı",
+        "en": "Mystic Match enemy card"
+      }
     },
     {
-      "type": "full",
-      "image": "/images/mystic-match/06.webp"
+      "type": "flock",
+      "title": {
+        "tr": "Harita için 3D yapılar",
+        "en": "3D buildings for the map"
+      },
+      "text": {
+        "tr": "Bölüm haritası için Blender’da modellenen tapınak, kolezyum, su kemeri ve değirmen gibi on iki yapı.",
+        "en": "Twelve buildings modelled in Blender for the level map, from temples and a colosseum to an aqueduct and a mill."
+      },
+      "images": [
+        "/images/mystic-match/yapi/01.webp",
+        "/images/mystic-match/yapi/02.webp",
+        "/images/mystic-match/yapi/03.webp",
+        "/images/mystic-match/yapi/04.webp",
+        "/images/mystic-match/yapi/05.webp",
+        "/images/mystic-match/yapi/06.webp",
+        "/images/mystic-match/yapi/07.webp",
+        "/images/mystic-match/yapi/08.webp",
+        "/images/mystic-match/yapi/09.webp",
+        "/images/mystic-match/yapi/10.webp",
+        "/images/mystic-match/yapi/11.webp",
+        "/images/mystic-match/yapi/12.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Mystic Match 3D yapı modeli",
+        "en": "Mystic Match 3D building model"
+      }
     },
     {
       "type": "chapter",
@@ -77,8 +147,28 @@
       }
     },
     {
-      "type": "full",
-      "image": "/images/mystic-match/07.webp"
+      "type": "pan",
+      "title": {
+        "tr": "Google Play görselleri",
+        "en": "Google Play visuals"
+      },
+      "text": {
+        "tr": "Harita, silah birleştirme, zırh, evcil hayvan, ödül ve silah koleksiyonunu anlatan altı görsel ve mağaza sayfası.",
+        "en": "Six visuals on the map, weapon merging, armour, pets, rewards and the weapon collection, plus the store page."
+      },
+      "images": [
+        "/images/mystic-match/magaza/01.webp",
+        "/images/mystic-match/magaza/02.webp",
+        "/images/mystic-match/magaza/03.webp",
+        "/images/mystic-match/magaza/04.webp",
+        "/images/mystic-match/magaza/05.webp",
+        "/images/mystic-match/magaza/06.webp",
+        "/images/mystic-match/magaza/07.webp"
+      ],
+      "alt": {
+        "tr": "Mystic Match Google Play görseli",
+        "en": "Mystic Match Google Play visual"
+      }
     }
   ],
   "canvas": "#ECECEC",

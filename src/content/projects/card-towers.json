@@ -43,6 +43,30 @@
       "image": "/images/card-towers/03.webp"
     },
     {
+      "type": "flock",
+      "title": {
+        "tr": "Altı konsept ekran",
+        "en": "Six concept screens"
+      },
+      "text": {
+        "tr": "Yüklemeden ana menüye, oyun ekranından ayarlara, zaferden yenilgiye.",
+        "en": "From loading to the main menu, gameplay to settings, victory to defeat."
+      },
+      "images": [
+        "/images/card-towers/ekran/01.webp",
+        "/images/card-towers/ekran/02.webp",
+        "/images/card-towers/ekran/03.webp",
+        "/images/card-towers/ekran/04.webp",
+        "/images/card-towers/ekran/05.webp",
+        "/images/card-towers/ekran/06.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Card Towers konsept ekranı",
+        "en": "Card Towers concept screen"
+      }
+    },
+    {
       "type": "chapter",
       "title": {
         "tr": "Modeller ve level tasarımı",
@@ -54,12 +78,59 @@
       }
     },
     {
-      "type": "full",
-      "image": "/images/card-towers/04.webp"
+      "type": "flock",
+      "title": {
+        "tr": "On kart, on model",
+        "en": "Ten cards, ten models"
+      },
+      "text": {
+        "tr": "Dört top, kule, düşman figürleri, mermiler, taşlar, ağaçlar ve zemin karoları, her biri kendi kartında.",
+        "en": "Four cannons, the tower, enemy figures, projectiles, rocks, trees and ground tiles, each on its own card."
+      },
+      "images": [
+        "/images/card-towers/model/01.webp",
+        "/images/card-towers/model/02.webp",
+        "/images/card-towers/model/03.webp",
+        "/images/card-towers/model/04.webp",
+        "/images/card-towers/model/05.webp",
+        "/images/card-towers/model/06.webp",
+        "/images/card-towers/model/07.webp",
+        "/images/card-towers/model/08.webp",
+        "/images/card-towers/model/09.webp",
+        "/images/card-towers/model/10.webp"
+      ],
+      "layout": "fan",
+      "alt": {
+        "tr": "Card Towers 3D model kartı",
+        "en": "Card Towers 3D model card"
+      }
     },
     {
-      "type": "full",
-      "image": "/images/card-towers/05.webp"
+      "type": "pan",
+      "title": {
+        "tr": "Bölüm 31’den 40’a",
+        "en": "Levels 31 to 40"
+      },
+      "text": {
+        "tr": "Her biri kendi renk dalgaları ve kart eliyle kurulan on bölüm.",
+        "en": "Ten levels, each built with its own color waves and hand of cards."
+      },
+      "images": [
+        "/images/card-towers/bolum/01.webp",
+        "/images/card-towers/bolum/02.webp",
+        "/images/card-towers/bolum/03.webp",
+        "/images/card-towers/bolum/04.webp",
+        "/images/card-towers/bolum/05.webp",
+        "/images/card-towers/bolum/06.webp",
+        "/images/card-towers/bolum/07.webp",
+        "/images/card-towers/bolum/08.webp",
+        "/images/card-towers/bolum/09.webp",
+        "/images/card-towers/bolum/10.webp"
+      ],
+      "alt": {
+        "tr": "Card Towers bölüm ekranı",
+        "en": "Card Towers level screen"
+      }
     },
     {
       "type": "chapter",

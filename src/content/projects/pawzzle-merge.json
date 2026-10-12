@@ -1,0 +1,147 @@
+{
+  "order": 11,
+  "slug": "pawzzle-merge",
+  "title": "Pawzzle Merge",
+  "discipline": {
+    "tr": "Mobil Oyun",
+    "en": "Mobile Game"
+  },
+  "year": "2025",
+  "cover": "/images/pawzzle-merge/cover.webp",
+  "coverFocus": 70,
+  "summary": {
+    "tr": "Farklı renkteki blokları doğru stratejiyle birleştirip sahnede tek blok bırakmaya dayanan bir bulmaca oyunu.",
+    "en": "A puzzle game about merging blocks of different colors with the right strategy until only one block is left on the stage."
+  },
+  "client": "Asteri Game Studio",
+  "role": {
+    "tr": "Grafik Tasarımcı",
+    "en": "Graphic Designer"
+  },
+  "services": {
+    "tr": "UI tasarımı, asset tasarımı",
+    "en": "UI design, asset design"
+  },
+  "intro": {
+    "tr": "Pawzzle Merge, mobil için tasarlanmış bir bulmaca oyunu. Oyuncu farklı renklerdeki hayvan bloklarını doğru stratejiyle birleştiriyor; amaç sahnede tek bir blok bırakmak.",
+    "en": "Pawzzle Merge is a mobile puzzle game. Players merge animal blocks of different colors using the right strategy, aiming to leave just one block on the stage."
+  },
+  "gallery": [
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Arayüz",
+        "en": "Interface"
+      },
+      "text": {
+        "tr": "Yükleme ekranından buton setine, renk paletinden ikonlara: oyunun UI kiti.",
+        "en": "The game’s UI kit, from the loading screen and button set to the color palette and icons."
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/pawzzle-merge/03.webp"
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Bloklar",
+        "en": "Blocks"
+      },
+      "text": {
+        "tr": "Hayvan bloklarının 2D çizimleri ve oyun alanının 3D blokları.",
+        "en": "2D drawings of the animal blocks and the 3D blocks of the game board."
+      }
+    },
+    {
+      "type": "flock",
+      "title": {
+        "tr": "Yedi hayvan, yedi blok",
+        "en": "Seven animals, seven blocks"
+      },
+      "text": {
+        "tr": "Baykuştan pandaya, tilkiden kaplana: oyunun 2D hayvan blokları.",
+        "en": "From owl to panda, fox to tiger: the game’s 2D animal blocks."
+      },
+      "images": [
+        "/images/pawzzle-merge/blok-2d/01.webp",
+        "/images/pawzzle-merge/blok-2d/02.webp",
+        "/images/pawzzle-merge/blok-2d/03.webp",
+        "/images/pawzzle-merge/blok-2d/04.webp",
+        "/images/pawzzle-merge/blok-2d/05.webp",
+        "/images/pawzzle-merge/blok-2d/06.webp",
+        "/images/pawzzle-merge/blok-2d/07.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Pawzzle Merge 2D hayvan bloğu",
+        "en": "Pawzzle Merge 2D animal block"
+      }
+    },
+    {
+      "type": "flock",
+      "title": {
+        "tr": "Üç boyutta",
+        "en": "In three dimensions"
+      },
+      "text": {
+        "tr": "Yedi hayvan bloğunun 3D modelleri ve oyun alanı karoları.",
+        "en": "3D models of the seven animal blocks, plus board tiles."
+      },
+      "images": [
+        "/images/pawzzle-merge/blok-3d/01.webp",
+        "/images/pawzzle-merge/blok-3d/02.webp",
+        "/images/pawzzle-merge/blok-3d/03.webp",
+        "/images/pawzzle-merge/blok-3d/04.webp",
+        "/images/pawzzle-merge/blok-3d/05.webp",
+        "/images/pawzzle-merge/blok-3d/06.webp",
+        "/images/pawzzle-merge/blok-3d/07.webp",
+        "/images/pawzzle-merge/blok-3d/08.webp",
+        "/images/pawzzle-merge/blok-3d/09.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Pawzzle Merge 3D bloğu",
+        "en": "Pawzzle Merge 3D block"
+      }
+    },
+    {
+      "type": "chapter",
+      "title": {
+        "tr": "Mağaza görselleri",
+        "en": "Store visuals"
+      },
+      "text": {
+        "tr": "Oyunu Google Play sayfasında anlatan tanıtım görselleri.",
+        "en": "Promotional visuals that present the game on its Google Play page."
+      }
+    },
+    {
+      "type": "pan",
+      "title": {
+        "tr": "Kaostan düzene",
+        "en": "Order from chaos"
+      },
+      "text": {
+        "tr": "Öne çıkan görselin ardından telefon ve tablet ekranları: yedi mağaza görseli.",
+        "en": "A feature graphic followed by phone and tablet screenshots: seven store visuals."
+      },
+      "images": [
+        "/images/pawzzle-merge/magaza/01.webp",
+        "/images/pawzzle-merge/magaza/02.webp",
+        "/images/pawzzle-merge/magaza/03.webp",
+        "/images/pawzzle-merge/magaza/04.webp",
+        "/images/pawzzle-merge/magaza/05.webp",
+        "/images/pawzzle-merge/magaza/06.webp",
+        "/images/pawzzle-merge/magaza/07.webp"
+      ],
+      "alt": {
+        "tr": "Pawzzle Merge Google Play görseli",
+        "en": "Pawzzle Merge Google Play visual"
+      }
+    }
+  ],
+  "featured": false,
+  "canvas": "#ECECEC",
+  "hidden": true
+}

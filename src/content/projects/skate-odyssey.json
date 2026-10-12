@@ -43,12 +43,60 @@
       "image": "/images/skate-odyssey/03.webp"
     },
     {
-      "type": "full",
-      "image": "/images/skate-odyssey/04.webp"
+      "type": "compare",
+      "before": "/images/skate-odyssey/taslak.webp",
+      "after": "/images/skate-odyssey/son-hal.webp",
+      "beforeLabel": {
+        "tr": "UX taslağı",
+        "en": "Wireframe"
+      },
+      "afterLabel": {
+        "tr": "Son ekran",
+        "en": "Final screen"
+      },
+      "alt": {
+        "tr": "Oyun ekranlarının UX taslakları ve son hâlleri",
+        "en": "Wireframes and final versions of the game screens"
+      }
     },
     {
-      "type": "full",
-      "image": "/images/skate-odyssey/05.webp"
+      "type": "pan",
+      "title": {
+        "tr": "Akış, ekran ekran",
+        "en": "The flow, screen by screen"
+      },
+      "text": {
+        "tr": "Yükleme ekranından ayarlara, mağazadan liderlik tablosuna: oyunun 22 ekranı.",
+        "en": "From the loading screen to settings, from the store to the leaderboard: all 22 screens of the game."
+      },
+      "images": [
+        "/images/skate-odyssey/ekran/01.webp",
+        "/images/skate-odyssey/ekran/02.webp",
+        "/images/skate-odyssey/ekran/03.webp",
+        "/images/skate-odyssey/ekran/04.webp",
+        "/images/skate-odyssey/ekran/05.webp",
+        "/images/skate-odyssey/ekran/06.webp",
+        "/images/skate-odyssey/ekran/07.webp",
+        "/images/skate-odyssey/ekran/08.webp",
+        "/images/skate-odyssey/ekran/09.webp",
+        "/images/skate-odyssey/ekran/10.webp",
+        "/images/skate-odyssey/ekran/11.webp",
+        "/images/skate-odyssey/ekran/12.webp",
+        "/images/skate-odyssey/ekran/13.webp",
+        "/images/skate-odyssey/ekran/14.webp",
+        "/images/skate-odyssey/ekran/15.webp",
+        "/images/skate-odyssey/ekran/16.webp",
+        "/images/skate-odyssey/ekran/17.webp",
+        "/images/skate-odyssey/ekran/18.webp",
+        "/images/skate-odyssey/ekran/19.webp",
+        "/images/skate-odyssey/ekran/20.webp",
+        "/images/skate-odyssey/ekran/21.webp",
+        "/images/skate-odyssey/ekran/22.webp"
+      ],
+      "alt": {
+        "tr": "Skate Odyssey oyun ekranı",
+        "en": "Skate Odyssey game screen"
+      }
     },
     {
       "type": "chapter",
@@ -62,12 +110,68 @@
       }
     },
     {
+      "type": "flock",
+      "title": {
+        "tr": "Her dünyaya bir kaykay",
+        "en": "A board for every world"
+      },
+      "text": {
+        "tr": "Alevli, gitar biçimli ya da sörf tahtası gibi: oyunun 11 kaykayı.",
+        "en": "Flaming, guitar-shaped or surfboard-style: the game’s 11 skateboards."
+      },
+      "images": [
+        "/images/skate-odyssey/kaykay/01.webp",
+        "/images/skate-odyssey/kaykay/02.webp",
+        "/images/skate-odyssey/kaykay/03.webp",
+        "/images/skate-odyssey/kaykay/04.webp",
+        "/images/skate-odyssey/kaykay/05.webp",
+        "/images/skate-odyssey/kaykay/06.webp",
+        "/images/skate-odyssey/kaykay/07.webp",
+        "/images/skate-odyssey/kaykay/08.webp",
+        "/images/skate-odyssey/kaykay/09.webp",
+        "/images/skate-odyssey/kaykay/10.webp",
+        "/images/skate-odyssey/kaykay/11.webp"
+      ],
+      "layout": "fan",
+      "alt": {
+        "tr": "Skate Odyssey kaykayı",
+        "en": "Skate Odyssey skateboard"
+      }
+    },
+    {
       "type": "full",
       "image": "/images/skate-odyssey/06.webp"
     },
     {
       "type": "full",
       "image": "/images/skate-odyssey/07.webp"
+    },
+    {
+      "type": "flock",
+      "title": {
+        "tr": "Dokuz karakter, dokuz tavır",
+        "en": "Nine characters, nine attitudes"
+      },
+      "text": {
+        "tr": "Her karakterin ifade setinin başında duran portreler.",
+        "en": "The portraits that lead each character’s expression set."
+      },
+      "images": [
+        "/images/skate-odyssey/kafa/01.webp",
+        "/images/skate-odyssey/kafa/02.webp",
+        "/images/skate-odyssey/kafa/03.webp",
+        "/images/skate-odyssey/kafa/04.webp",
+        "/images/skate-odyssey/kafa/05.webp",
+        "/images/skate-odyssey/kafa/06.webp",
+        "/images/skate-odyssey/kafa/07.webp",
+        "/images/skate-odyssey/kafa/08.webp",
+        "/images/skate-odyssey/kafa/09.webp"
+      ],
+      "layout": "grid",
+      "alt": {
+        "tr": "Skate Odyssey karakter portresi",
+        "en": "Skate Odyssey character portrait"
+      }
     },
     {
       "type": "full",
