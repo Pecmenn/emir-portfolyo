@@ -31,12 +31,15 @@ export default function StickerField({
   hostRef,
   textRef,
   keepClearRef,
+  ready = true,
   onFirstDrag,
 }: {
   stickers: Sticker[];
   hostRef: RefObject<HTMLElement>;
   textRef: RefObject<HTMLElement>;
   keepClearRef: RefObject<HTMLElement>;
+  // false iken görseller yüklenir ama parçalar düşmeye başlamaz (ör. açılış ekranı sürerken)
+  ready?: boolean;
   onFirstDrag?: () => void;
 }) {
   const { t } = useLang();
@@ -79,7 +82,7 @@ export default function StickerField({
 
   useEffect(() => {
     const host = hostRef.current;
-    if (!host || !items.length) return;
+    if (!host || !items.length || !ready) return;
     let W = host.clientWidth;
     let H = host.clientHeight;
 
@@ -232,7 +235,7 @@ export default function StickerField({
       Engine.clear(engine);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, hostRef]);
+  }, [items, hostRef, ready]);
 
   const showLabel = (i: number | null) => {
     labelIndex.current = i;

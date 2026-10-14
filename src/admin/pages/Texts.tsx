@@ -7,8 +7,7 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
     title: 'Üst menü',
     items: [
       ['nav.work', 'İşler'],
-      ['nav.about', 'Hakkımda'],
-      ['nav.expertise', 'Uzmanlık'],
+      ['nav.services', 'Hizmetler'],
       ['nav.contact', 'İletişim'],
       ['cv', 'CV butonu'],
       ['menu', 'Mobil menü düğmesi (ekran okuyucu)'],
@@ -18,25 +17,11 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
     ],
   },
   {
-    title: 'Giriş bölümü',
-    items: [
-      ['loading', 'Yükleme ekranı'],
-      ['drag', '“Sürükle” yazısı'],
-      ['navigate', '“Gezin” yazısı'],
-      ['featured', 'Sağ alt etiket ve slayt bölgesi adı'],
-      ['viewAllWork', '“Tüm işleri gör” bağlantısı'],
-      ['prevSlide', 'Önceki proje düğmesi (ekran okuyucu)'],
-      ['nextSlide', 'Sonraki proje düğmesi (ekran okuyucu)'],
-      ['pause', 'Duraklat düğmesi'],
-      ['play', 'Oynat düğmesi'],
-      ['openProject', '“Projeyi aç” bağlantısı'],
-      ['soundOn', 'Video: “Sesi aç” düğmesi'],
-      ['soundOff', 'Video: “Sesi kapat” düğmesi'],
-    ],
-  },
-  {
     title: 'İşler ve proje sayfası',
     items: [
+      ['loading', 'Yükleme ekranı'],
+      ['drag', 'Sürüklenen şerit: “Sürükle” yazısı'],
+      ['openProject', '“Projeyi aç” bağlantısı'],
       ['client', '“Müşteri” etiketi'],
       ['role', '“Rol” etiketi'],
       ['services', '“Kapsam” etiketi'],

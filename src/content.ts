@@ -2,13 +2,10 @@
 // Bu dosya yalnızca türleri tanımlar ve içeriği bileşenlere dağıtır.
 // Her metin { tr, en } çiftidir; dil seçicisi ikisi arasında geçiş yapar.
 
-import aboutData from './content/about.json';
 import contactData from './content/contact.json';
-import expertiseData from './content/expertise.json';
 import playData from './content/play.json';
 import siteData from './content/site.json';
 import uiData from './content/ui.json';
-import workData from './content/work.json';
 
 export type Lang = 'tr' | 'en';
 export type Text = { tr: string; en: string };
@@ -66,7 +63,6 @@ export type Project = {
   // UI/UX ve pazarlama projelerinde vaka çalışması bölümü gösterilir; marka ve motion projelerinde boş bırakılır
   caseStudy?: CaseStudy;
   gallery: GalleryBlock[];
-  featured?: boolean;
   // Künye ve galeri koyu zeminde gösterilir (koyu tonlu sunumlar için)
   dark?: boolean;
   // Pasif proje sitede hiçbir yerde gösterilmez (giriş, işler listesi, sonraki proje, proje sayfası); panelde kalır
@@ -92,9 +88,6 @@ export const site = siteData as Site;
 // CV bağlantısı yalnızca içerikte bir yol tanımlıysa gösterilir (boşsa düğmeler gizlenir)
 export const cvUrl = (site.cv ?? '').trim();
 export const ui = uiData;
-export const manifesto = aboutData;
-export const work = workData as { slogans: { tr: string[]; en: string[] }[] };
-export const expertise = expertiseData;
 export const contact = contactData;
 
 // Panelde boş bırakılan vaka çalışması alanları sayfada bölüm olarak görünmesin

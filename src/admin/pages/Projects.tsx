@@ -1,7 +1,7 @@
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Eye, EyeOff, GripVertical, Plus, Star } from 'lucide-react';
+import { Eye, EyeOff, GripVertical, Plus } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { Project } from '../../content';
 import { href, go } from '../router';
@@ -43,11 +43,6 @@ function SortableCard({
             <video src={src(project.coverVideo)} muted loop playsInline autoPlay className="h-full w-full object-cover" />
           ) : (
             <span className="grid h-full place-items-center text-sm font-medium text-ink/40">Kapak görseli yok</span>
-          )}
-          {project.featured && !passive && (
-            <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[11px] font-bold backdrop-blur">
-              <Star size={12} className="fill-accent-strong text-accent-strong" /> Girişte
-            </span>
           )}
         </div>
         <div className="px-2 pb-1 pt-3">

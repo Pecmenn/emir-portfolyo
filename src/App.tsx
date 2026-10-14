@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Cursor from './components/Cursor';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -7,9 +7,6 @@ import Preloader from './components/Preloader';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Project from './pages/Project';
-
-// Prototip sayfası fizik motoruyla birlikte ayrı yüklenir; ana sayfanın paketi büyümesin
-const Playground = lazy(() => import('./pages/Playground'));
 
 // Sayfa değişince yeni başlığı ekran okuyucuya duyurur ve odağı ana içeriğe taşır
 function RouteAnnouncer() {
@@ -45,15 +42,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home ready={ready} />} />
         <Route path="/proje/:slug" element={<Project />} />
-        {/* Yeni ana sayfa prototipi; menüde bağlantısı yok */}
-        <Route
-          path="/yeni"
-          element={
-            <Suspense fallback={<div className="h-[100svh] bg-paper" />}>
-              <Playground />
-            </Suspense>
-          }
-        />
+        {/* Prototip adresi paylaşılmış olabilir; ana sayfaya yönlendirilir */}
+        <Route path="/yeni" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

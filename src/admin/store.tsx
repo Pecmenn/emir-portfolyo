@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import type { Project } from '../content';
+import type { Play, Project } from '../content';
 import { LOCAL_MODE, SITE_URL, type FileChange, type GitHubClient } from './github';
 
 export type Bi = { tr: string; en: string };
@@ -16,9 +16,8 @@ export type SiteData = {
   formEndpoint: string;
   socials: { label: string; href: string }[];
 };
-export type AboutData = { label: Bi; lines: Lines; text: Bi };
-export type WorkData = { slogans: Lines[] };
-export type ExpertiseData = { marquee: Lines; listLabel: Bi; list: Lines };
+// Ana sayfa: açılış (oyun alanı), işler, hizmetler
+export type PlayData = Play;
 export type ContactData = {
   label: Bi;
   title: Lines;
@@ -34,9 +33,7 @@ export type UiData = Record<string, Bi | Record<string, Bi>>;
 
 export type Content = {
   site: SiteData;
-  about: AboutData;
-  work: WorkData;
-  expertise: ExpertiseData;
+  play: PlayData;
   contact: ContactData;
   ui: UiData;
   projects: Project[];
@@ -44,9 +41,7 @@ export type Content = {
 
 export const PATHS = {
   site: 'src/content/site.json',
-  about: 'src/content/about.json',
-  work: 'src/content/work.json',
-  expertise: 'src/content/expertise.json',
+  play: 'src/content/play.json',
   contact: 'src/content/contact.json',
   ui: 'src/content/ui.json',
   projectsDir: 'src/content/projects',
@@ -223,15 +218,13 @@ export function AdminProvider({
 }
 
 export async function loadContent(client: GitHubClient): Promise<Content> {
-  const [site, about, work, expertise, contact, ui, files] = await Promise.all([
+  const [site, play, contact, ui, files] = await Promise.all([
     client.readJSON<SiteData>(PATHS.site),
-    client.readJSON<AboutData>(PATHS.about),
-    client.readJSON<WorkData>(PATHS.work),
-    client.readJSON<ExpertiseData>(PATHS.expertise),
+    client.readJSON<PlayData>(PATHS.play),
     client.readJSON<ContactData>(PATHS.contact),
     client.readJSON<UiData>(PATHS.ui),
     client.listDir(PATHS.projectsDir),
   ]);
   const projects = await Promise.all(files.filter((f) => f.name.endsWith('.json')).map((f) => client.readJSON<Project>(f.path)));
-  return { site, about, work, expertise, contact, ui, projects: sortProjects(projects) };
+  return { site, play, contact, ui, projects: sortProjects(projects) };
 }

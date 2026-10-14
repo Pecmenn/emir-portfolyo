@@ -32,7 +32,6 @@ function newProject(order: number): Project {
     services: { ...empty },
     intro: { ...empty },
     gallery: [],
-    featured: false,
   };
 }
 
@@ -448,14 +447,8 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
 
           <Card title="Ana sayfadaki yeri">
             <Toggle
-              label="Girişte öne çıkar"
-              hint="Açıksa ana sayfanın en üstündeki tam ekran slider’da gösterilir. 3 proje önerilir."
-              checked={!!draft.featured}
-              onChange={(v) => set('featured', v)}
-            />
-            <Toggle
               label="Pasif"
-              hint="Açıksa proje sitede hiçbir yerde görünmez (giriş, işler listesi, proje sayfası). Panelde kalır, istediğiniz zaman yeniden açabilirsiniz."
+              hint="Açıksa proje sitede hiçbir yerde görünmez (işler listesi, proje sayfası, sonraki proje). Panelde kalır, istediğiniz zaman yeniden açabilirsiniz."
               checked={!!draft.hidden}
               onChange={(v) => set('hidden', v || undefined)}
             />
