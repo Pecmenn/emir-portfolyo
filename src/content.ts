@@ -5,6 +5,7 @@
 import aboutData from './content/about.json';
 import contactData from './content/contact.json';
 import expertiseData from './content/expertise.json';
+import playData from './content/play.json';
 import siteData from './content/site.json';
 import uiData from './content/ui.json';
 import workData from './content/work.json';
@@ -108,3 +109,27 @@ export const projects: Project[] = Object.values(projectFiles)
   .filter((p) => !p.hidden)
   .map((p) => ({ ...p, caseStudy: hasCaseStudy(p.caseStudy) ? p.caseStudy : undefined, gallery: p.gallery ?? [] }))
   .sort((a, b) => a.order - b.order);
+
+// Pasif projeler dahil tüm başlıklar: oyun alanındaki parçaların etiketinde kullanılır
+export const projectTitles: Record<string, string> = Object.fromEntries(Object.values(projectFiles).map((p) => [p.slug, p.title]));
+
+// Yeni ana sayfa prototipi (/yeni): oyun alanı, proje indeksi ve hizmetler
+// h: parçanın geniş ekrandaki yüksekliği (px); dar ekranda oranla küçülür
+export type Sticker = { src: string; slug: string; h: number };
+export type Play = {
+  hello: Text;
+  statement: { tr: string[]; en: string[] };
+  text: Text;
+  ctaWork: Text;
+  ctaContact: Text;
+  hint: Text;
+  hintTouch: Text;
+  open: Text;
+  workTitle: Text;
+  all: Text;
+  servicesTitle: Text;
+  services: { title: Text; text: Text; example: string }[];
+  exampleLabel: Text;
+  stickers: Sticker[];
+};
+export const play = playData as Play;

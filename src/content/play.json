@@ -1,0 +1,102 @@
+{
+  "hello": {
+    "tr": "Merhaba, ben Emir.",
+    "en": "Hi, I'm Emir."
+  },
+  "statement": {
+    "tr": ["Tasarlarım,", "kodlarım,", "otomatikleştiririm."],
+    "en": ["I design it,", "build it,", "automate it."]
+  },
+  "text": {
+    "tr": "Oyun ve uygulama arayüzlerinden markalara, web sitelerinden pazarlama otomasyonlarına kadar işi fikirden yayına taşıyorum.",
+    "en": "From game and app interfaces to brands, websites and marketing automation, I take work from idea to launch."
+  },
+  "ctaWork": {
+    "tr": "İşlere bak",
+    "en": "See the work"
+  },
+  "ctaContact": {
+    "tr": "Birlikte çalışalım",
+    "en": "Let's work together"
+  },
+  "hint": {
+    "tr": "Parçaları sürükle, fırlat",
+    "en": "Drag and throw the pieces"
+  },
+  "hintTouch": {
+    "tr": "Parçalara dokun",
+    "en": "Tap the pieces"
+  },
+  "open": {
+    "tr": "Projeyi aç",
+    "en": "Open project"
+  },
+  "workTitle": {
+    "tr": "İşler",
+    "en": "Work"
+  },
+  "all": {
+    "tr": "Tümü",
+    "en": "All"
+  },
+  "servicesTitle": {
+    "tr": "Neler yapıyorum",
+    "en": "What I do"
+  },
+  "services": [
+    {
+      "title": { "tr": "Tasarım", "en": "Design" },
+      "text": {
+        "tr": "Marka kimliği, uygulama ve oyun arayüzleri, asset ve karakter tasarımı.",
+        "en": "Brand identity, app and game interfaces, asset and character design."
+      },
+      "example": "skate-odyssey"
+    },
+    {
+      "title": { "tr": "Web", "en": "Web" },
+      "text": {
+        "tr": "Landing page ve kurumsal site: tasarımdan kodlamaya, yayına kadar.",
+        "en": "Landing pages and websites, from design and code to launch."
+      },
+      "example": ""
+    },
+    {
+      "title": { "tr": "Otomasyon", "en": "Automation" },
+      "text": {
+        "tr": "E-posta, sosyal medya ve raporlama işlerini elle yapılmaktan kurtaran sistemler.",
+        "en": "Systems that take email, social media and reporting work off your hands."
+      },
+      "example": ""
+    }
+  ],
+  "exampleLabel": {
+    "tr": "Örnek iş",
+    "en": "Example"
+  },
+  "stickers": [
+    { "src": "/images/skate-odyssey/kaykay/02.webp", "slug": "skate-odyssey", "h": 190 },
+    { "src": "/images/mystic-match/karakter/01.webp", "slug": "mystic-match", "h": 150 },
+    { "src": "/images/skate-odyssey/kafa/01.webp", "slug": "skate-odyssey", "h": 130 },
+    { "src": "/images/snack-pack/karakter/01.webp", "slug": "snack-pack", "h": 110 },
+    { "src": "/images/skate-odyssey/kaykay/09.webp", "slug": "skate-odyssey", "h": 190 },
+    { "src": "/images/card-towers/model/03.webp", "slug": "card-towers", "h": 170 },
+    { "src": "/images/skate-odyssey/kafa/02.webp", "slug": "skate-odyssey", "h": 130 },
+    { "src": "/images/pawzzle-merge/blok-2d/01.webp", "slug": "pawzzle-merge", "h": 90 },
+    { "src": "/images/mystic-match/karakter/05.webp", "slug": "mystic-match", "h": 130 },
+    { "src": "/images/skate-odyssey/kaykay/05.webp", "slug": "skate-odyssey", "h": 190 },
+    { "src": "/images/snack-pack/karakter/02.webp", "slug": "snack-pack", "h": 110 },
+    { "src": "/images/drop-beads/model/01.webp", "slug": "drop-beads", "h": 140 },
+    { "src": "/images/skate-odyssey/kafa/04.webp", "slug": "skate-odyssey", "h": 130 },
+    { "src": "/images/pawzzle-merge/blok-2d/03.webp", "slug": "pawzzle-merge", "h": 90 },
+    { "src": "/images/skate-odyssey/kaykay/10.webp", "slug": "skate-odyssey", "h": 190 },
+    { "src": "/images/mystic-match/karakter/06.webp", "slug": "mystic-match", "h": 130 },
+    { "src": "/images/snack-pack/karakter/03.webp", "slug": "snack-pack", "h": 110 },
+    { "src": "/images/card-towers/model/07.webp", "slug": "card-towers", "h": 170 },
+    { "src": "/images/skate-odyssey/kafa/07.webp", "slug": "skate-odyssey", "h": 130 },
+    { "src": "/images/skate-odyssey/kaykay/03.webp", "slug": "skate-odyssey", "h": 190 },
+    { "src": "/images/pawzzle-merge/blok-2d/05.webp", "slug": "pawzzle-merge", "h": 90 },
+    { "src": "/images/snack-pack/karakter/04.webp", "slug": "snack-pack", "h": 110 },
+    { "src": "/images/skate-odyssey/kafa/09.webp", "slug": "skate-odyssey", "h": 130 },
+    { "src": "/images/drop-beads/model/05.webp", "slug": "drop-beads", "h": 140 }
+  ]
+}
