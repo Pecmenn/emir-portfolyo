@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { play, projects, type Project, type Text } from '../content';
+import { play, projects, type Text } from '../content';
 import { FadeUp, Lines } from '../components/Reveal';
 import Contact from '../sections/Contact';
 import { useLang } from '../lib/i18n';
@@ -60,13 +60,12 @@ function PlayHero({ ready }: { ready: boolean }) {
   );
 }
 
-// Dev puntolu proje listesi; disipline göre süzülür. Fareyle bir projenin üstüne gelince kapağı imleci izler
+// Dev puntolu proje listesi; disipline göre süzülür. Fareyle bir projenin başlık şeridine gelince kapak o şeridin içinde açılır
 function ProjectIndex() {
   const { t } = useLang();
   const { openProject } = useTransition();
   const [filter, setFilter] = useState('all');
-  const [hover, setHover] = useState<Project | null>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
+  const [hover, setHover] = useState<string | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   const disciplines: Text[] = [];
@@ -92,13 +91,16 @@ function ProjectIndex() {
     refreshSoon();
   }, [filter]);
 
-  const follow = (e: React.PointerEvent) => {
-    if (e.pointerType !== 'mouse' || !previewRef.current) return;
-    gsap.to(previewRef.current, { x: e.clientX, y: e.clientY, duration: reducedMotion ? 0 : 0.6, ease: 'power3.out' });
+  // Kapak, imlecin şerit içindeki yatay konumuna göre hafifçe ters yöne kayar
+  const drift = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse' || reducedMotion) return;
+    const box = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - box.left) / box.width - 0.5;
+    gsap.to(e.currentTarget.querySelector('[data-strip-drift]'), { xPercent: x * -6, duration: 0.9, ease: 'power3.out' });
   };
 
   return (
-    <section ref={sectionRef} id="isler" onPointerMove={follow} className="relative bg-paper pb-[14vh] pt-[16vh]">
+    <section ref={sectionRef} id="isler" className="relative bg-paper pb-[14vh] pt-[16vh]">
       <div className="gutter flex flex-col gap-6 border-b border-ink/15 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <h2 className="display text-[clamp(2.6rem,5vw,6rem)]">{t(play.workTitle)}</h2>
         <div className="flex flex-wrap gap-2" role="group" aria-label={t(play.workTitle)}>
@@ -115,41 +117,58 @@ function ProjectIndex() {
           ))}
         </div>
       </div>
-      <ul onPointerLeave={() => setHover(null)}>
-        {list.map((p, i) => (
-          <li key={p.slug} className="overflow-hidden border-b border-ink/15">
-            <a
-              data-index-row
-              href={`/proje/${p.slug}`}
-              onPointerEnter={(e) => e.pointerType === 'mouse' && setHover(p)}
-              onClick={(e) => {
-                e.preventDefault();
-                openProject(p.slug, p.cover, hover?.slug === p.slug ? previewRef.current : null);
-              }}
-              className="group gutter grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-1 py-[2.4vh] sm:grid-cols-12 sm:items-baseline sm:gap-8"
-            >
-              <img src={p.cover} alt="" className="row-span-2 aspect-[4/3] w-20 rounded-md object-cover sm:hidden" />
-              <span className="hidden text-sm font-medium tabular-nums opacity-40 sm:col-span-1 sm:block">{String(i + 1).padStart(2, '0')}</span>
-              <span className="display text-[clamp(2rem,6vw,6.5rem)] leading-[1] transition-transform duration-500 ease-out group-hover:translate-x-3 sm:col-span-8">
-                {p.title}
-              </span>
-              <span className="text-sm font-medium opacity-60 sm:col-span-2">{t(p.discipline)}</span>
-              <span className="hidden text-right text-sm font-medium tabular-nums opacity-60 sm:col-span-1 sm:block">{p.year}</span>
-            </a>
-          </li>
-        ))}
+      <ul>
+        {list.map((p, i) => {
+          const active = hover === p.slug;
+          return (
+            <li key={p.slug} className="overflow-hidden border-b border-ink/15">
+              <a
+                data-index-row
+                href={`/proje/${p.slug}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  openProject(p.slug, p.cover, active ? e.currentTarget.querySelector<HTMLElement>('[data-strip]') : null);
+                }}
+                className="group gutter relative grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-1 py-[2.4vh] sm:grid-cols-12 sm:items-baseline sm:gap-8"
+              >
+                {/* Başlık şeridi: numaranın sağından disiplin sütununa kadar, satırın tam yüksekliğinde (yalnızca fareyle, geniş ekranda).
+                    Dış kutu fare alanıdır; kırpılan iç kutu kapağı ortadan yukarı ve aşağı açılan bir perdeyle gösterir */}
+                <span
+                  aria-hidden
+                  onPointerEnter={(e) => e.pointerType === 'mouse' && setHover(p.slug)}
+                  onPointerMove={drift}
+                  onPointerLeave={() => setHover((h) => (h === p.slug ? null : h))}
+                  className="absolute inset-y-0 left-12 right-0 col-start-1 col-end-10 hidden lg:block"
+                >
+                  <span
+                    data-strip
+                    className={`absolute inset-0 overflow-hidden transition-[clip-path] duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] motion-reduce:transition-none ${active ? '[clip-path:inset(0%_0%_0%_0%)]' : '[clip-path:inset(50%_0%_50%_0%)]'}`}
+                  >
+                    <span data-strip-drift className="absolute -inset-x-[4%] inset-y-0">
+                      <img
+                        src={p.cover}
+                        alt=""
+                        loading="lazy"
+                        className={`h-full w-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.19,1,0.22,1)] motion-reduce:transition-none ${active ? 'scale-100' : 'scale-125'}`}
+                      />
+                    </span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-ink/55 via-ink/20 to-ink/0" />
+                  </span>
+                </span>
+                <img src={p.cover} alt="" className="row-span-2 aspect-[4/3] w-20 rounded-md object-cover sm:hidden" />
+                <span className="hidden text-sm font-medium tabular-nums opacity-40 sm:col-span-1 sm:block">{String(i + 1).padStart(2, '0')}</span>
+                <span
+                  className={`display pointer-events-none relative text-[clamp(2rem,6vw,6.5rem)] leading-[1] transition-[transform,color] duration-500 ease-out max-lg:group-hover:translate-x-3 sm:col-span-8 ${active ? 'translate-x-6 text-paper' : ''}`}
+                >
+                  {p.title}
+                </span>
+                <span className="text-sm font-medium opacity-60 sm:col-span-2">{t(p.discipline)}</span>
+                <span className="hidden text-right text-sm font-medium tabular-nums opacity-60 sm:col-span-1 sm:block">{p.year}</span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
-      {/* İmleci izleyen kapak önizlemesi; yalnızca fareyle görünür */}
-      {/* Dış kutunun konumunu GSAP taşır; ortalama ve büyüyerek belirme iç kutuda */}
-      <div ref={previewRef} aria-hidden className="pointer-events-none fixed left-0 top-0 z-40 hidden lg:block">
-        <div
-          className={`w-[clamp(16rem,24vw,26rem)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl shadow-[0_30px_60px_-30px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-300 ${hover ? 'scale-100 opacity-100' : 'scale-90 opacity-0'}`}
-        >
-          {projects.map((p) => (
-            <img key={p.slug} src={p.cover} alt="" className={`aspect-[4/3] w-full object-cover ${hover?.slug === p.slug ? 'block' : 'hidden'}`} />
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

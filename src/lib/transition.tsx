@@ -48,7 +48,8 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
       const rect = source?.getBoundingClientRect() ?? { left: vw * 0.38, top: vh * 0.3, width: vw * 0.24, height: vh * 0.4 };
-      const ratio = rect.width / rect.height || 1.3;
+      // Çok geniş kaynaklar (ör. proje listesindeki başlık şeridi) ortada ince bir çizgiye dönüşmesin
+      const ratio = Math.min(rect.width / rect.height || 1.3, 2.4);
       const centerW = Math.min(vw * 0.26, 420);
       const centerH = centerW / ratio;
 
