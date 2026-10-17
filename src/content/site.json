@@ -2,15 +2,15 @@
   "socials": [
     {
       "label": "LinkedIn",
-      "href": "https://linkedin.com/"
+      "href": "https://linkedin.com/aliemirokutan"
     },
     {
       "label": "Behance",
-      "href": "https://behance.net/"
+      "href": "https://behance.net/aliemirokutan"
     },
     {
       "label": "Instagram",
-      "href": "https://instagram.com/"
+      "href": "https://instagram.com/emirrokutan"
     }
   ],
   "name": "Ali Emir Okutan",
@@ -23,5 +23,5 @@
   "timeZone": "Europe/Istanbul",
   "formEndpoint": "",
   "monogram": "Emir Okutan",
-  "email": "Emir_okutan@hotmail.com"
+  "email": "emir_okutan@hotmail.com"
 }
