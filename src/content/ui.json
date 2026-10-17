@@ -38,7 +38,7 @@
     "en": "Scope"
   },
   "credits": {
-    "tr": "Proje künyesi",
+    "tr": "Proje Künyesi",
     "en": "Project credits"
   },
   "challenge": {
@@ -54,7 +54,7 @@
     "en": "Result"
   },
   "next": {
-    "tr": "Sıradaki proje",
+    "tr": "Sıradaki Proje",
     "en": "Next project"
   },
   "backToTop": {
@@ -118,7 +118,7 @@
     "en": "Open project"
   },
   "contactCta": {
-    "tr": "Birlikte çalışalım",
+    "tr": "Birlikte Çalışalım",
     "en": "Let’s work together"
   }
 }
