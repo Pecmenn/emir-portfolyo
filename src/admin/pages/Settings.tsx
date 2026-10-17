@@ -3,15 +3,6 @@ import { useRef, useState } from 'react';
 import { PATHS, toJSON, useAdmin, type SiteData } from '../store';
 import { BiField, Card, EditLangProvider, Field, LangSwitch, PageHeader, SaveBar, TextInput, useDraft } from '../ui';
 
-const TIMEZONES = [
-  { value: 'Europe/Istanbul', label: 'İstanbul (GMT+3)' },
-  { value: 'Europe/London', label: 'Londra' },
-  { value: 'Europe/Berlin', label: 'Berlin / Amsterdam' },
-  { value: 'America/New_York', label: 'New York' },
-  { value: 'America/Los_Angeles', label: 'Los Angeles' },
-  { value: 'Asia/Dubai', label: 'Dubai' },
-];
-
 function CvField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   const { addPendingFile, src, notify } = useAdmin();
   const input = useRef<HTMLInputElement>(null);
@@ -82,25 +73,6 @@ function SettingsForm() {
           <Field label="E-posta" hint="Alt bilgide görünür.">
             <TextInput type="email" value={draft.email} onChange={(v) => set('email', v)} />
           </Field>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <Field label="Şehir">
-              <TextInput value={draft.location} onChange={(v) => set('location', v)} />
-            </Field>
-            <Field label="Saat dilimi" hint="Alt bilgideki yerel saat için.">
-              <select
-                value={draft.timeZone}
-                onChange={(e) => set('timeZone', e.target.value)}
-                className="w-full rounded-xl border border-black/10 bg-paper/60 px-3.5 py-2.5 text-[15px] outline-none focus:border-accent focus:ring-4 focus:ring-accent/20"
-              >
-                {!TIMEZONES.some((z) => z.value === draft.timeZone) && <option value={draft.timeZone}>{draft.timeZone}</option>}
-                {TIMEZONES.map((z) => (
-                  <option key={z.value} value={z.value}>
-                    {z.label}
-                  </option>
-                ))}
-              </select>
-            </Field>
-          </div>
           <CvField value={draft.cv} onChange={(v) => set('cv', v)} />
         </Card>
 

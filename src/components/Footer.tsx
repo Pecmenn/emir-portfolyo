@@ -8,19 +8,6 @@ import { gsap, reducedMotion, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 import SocialIcon from './SocialIcon';
 
-function useLocalTime(timeZone: string, lang: string) {
-  const format = () =>
-    new Intl.DateTimeFormat(lang === 'tr' ? 'tr-TR' : 'en-GB', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date());
-  const [time, setTime] = useState(format);
-  useEffect(() => {
-    setTime(format());
-    const id = window.setInterval(() => setTime(format()), 15_000);
-    return () => window.clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeZone, lang]);
-  return time;
-}
-
 // Ad, alt bilginin genişliğini dolduracak kadar büyür; çok yüksek olmaması için ekran yüksekliğinin %22'siyle sınırlanır
 function useFitWidth(text: string) {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -57,10 +44,9 @@ function Label({ children }: { children: string }) {
 }
 
 export default function Footer() {
-  const { t, lang } = useLang();
+  const { t } = useLang();
   const { goTo } = useTransition();
   const { pathname } = useLocation();
-  const time = useLocalTime(site.timeZone, lang);
   const ref = useRef<HTMLElement>(null);
   const name = useFitWidth(site.name);
 
@@ -117,8 +103,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Menü, sosyal ve iletişim */}
-        <div className="grid gap-10 sm:grid-cols-3 lg:col-span-7">
+        {/* Menü ve sosyal */}
+        <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
           <div>
             <Label>{t(ui.sitemap)}</Label>
             <ul>
@@ -148,12 +134,6 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div>
-            <Label>{t(ui.localTime)}</Label>
-            <p className="display text-3xl tabular-nums">{time}</p>
-            <p className="text-sm text-paper/60">{site.location}</p>
           </div>
         </div>
       </div>

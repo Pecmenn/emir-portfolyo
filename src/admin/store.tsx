@@ -10,8 +10,6 @@ export type SiteData = {
   monogram: string;
   role: Bi;
   email: string;
-  location: string;
-  timeZone: string;
   cv: string;
   formEndpoint: string;
   socials: { label: string; href: string }[];

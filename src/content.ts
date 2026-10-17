@@ -77,8 +77,6 @@ type Site = {
   monogram: string;
   role: Text;
   email: string;
-  location: string;
-  timeZone: string;
   cv: string;
   formEndpoint: string;
   socials: { label: string; href: string }[];

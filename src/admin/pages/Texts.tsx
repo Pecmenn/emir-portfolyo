@@ -40,7 +40,6 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ['availableNote', 'Alt bilgi: durum açıklaması'],
       ['sitemap', 'Site haritası başlığı'],
       ['follow', 'Takip et başlığı'],
-      ['localTime', '“Yerel saat”'],
       ['backToTop', '“Başa dön”'],
       ['rights', 'Telif yazısı'],
       ['notFound', '404 sayfası metni'],
