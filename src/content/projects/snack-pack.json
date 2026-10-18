@@ -28,6 +28,18 @@
   },
   "gallery": [
     {
+      "type": "game",
+      "game": "snack-pack",
+      "title": {
+        "tr": "Bir bölüm oyna",
+        "en": "Play a level"
+      },
+      "text": {
+        "tr": "Çizgi çiz, sonra kurabiyeleri bırak. Kumbaraya ne kadar çok kurabiye girerse o kadar çok yıldız kazanırsın.",
+        "en": "Draw lines, then release the cookies. The more cookies reach the piggy bank, the more stars you earn."
+      }
+    },
+    {
       "type": "chapter",
       "title": {
         "tr": "Arayüz",

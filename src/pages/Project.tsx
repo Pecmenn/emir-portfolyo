@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
@@ -13,6 +13,9 @@ import { useTransition } from '../lib/transition';
 import NotFound from './NotFound';
 
 gsap.registerPlugin(Draggable, InertiaPlugin);
+
+// Oyun ve fizik motoru yalnızca oyun bloğu olan sayfada yüklenir
+const SnackPackGame = lazy(() => import('../components/SnackPackGame'));
 
 function Cover({ project }: { project: ProjectType }) {
   const { t, lang } = useLang();
@@ -259,6 +262,13 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
     const images = block.images.filter(Boolean);
     if (!images.length) return null;
     return <Pan title={t(block.title)} text={t(block.text)} images={images} alt={title} />;
+  }
+  if (block.type === 'game') {
+    return (
+      <Suspense fallback={null}>
+        <SnackPackGame title={t(block.title)} text={t(block.text)} />
+      </Suspense>
+    );
   }
   return (
     <>

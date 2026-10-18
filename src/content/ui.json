@@ -116,5 +116,43 @@
   "contactCta": {
     "tr": "Birlikte Çalışalım",
     "en": "Let’s work together"
+  },
+  "game": {
+    "release": {
+      "tr": "Kurabiyeleri bırak",
+      "en": "Release the cookies"
+    },
+    "restart": {
+      "tr": "Baştan başla",
+      "en": "Start over"
+    },
+    "hint": {
+      "tr": "Kumbaraya giden yolu çiz",
+      "en": "Draw a path to the piggy bank"
+    },
+    "noInk": {
+      "tr": "Mürekkep bitti, kurabiyeleri bırak",
+      "en": "Out of ink, release the cookies"
+    },
+    "tap": {
+      "tr": "Oynamak için dokun",
+      "en": "Tap to play"
+    },
+    "exit": {
+      "tr": "Oyundan çık",
+      "en": "Exit the game"
+    },
+    "result": {
+      "tr": "{n}/{total} kurabiye kumbarada",
+      "en": "{n}/{total} cookies in the bank"
+    },
+    "again": {
+      "tr": "Tekrar oyna",
+      "en": "Play again"
+    },
+    "stage": {
+      "tr": "Snack Pack oyun alanı: çizgi çizerek kurabiyeleri kumbaraya ulaştır",
+      "en": "Snack Pack play area: draw lines to guide the cookies into the piggy bank"
+    }
   }
 }

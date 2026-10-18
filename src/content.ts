@@ -34,7 +34,9 @@ export type GalleryBlock =
   // Bölüm ekranda sabit kalır; kaydırdıkça taslak görselin üstünden son hâli açılır. İki görsel aynı boyutta olmalı
   | { type: 'compare'; before: string; after: string; beforeLabel: Text; afterLabel: Text; alt?: Text }
   // Bölüm ekranda sabit kalır; sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)
-  | { type: 'pan'; title: Text; text: Text; images: string[]; alt?: Text };
+  | { type: 'pan'; title: Text; text: Text; images: string[]; alt?: Text }
+  // Sayfada oynanan bir oyun bölümü; game hangi oyunun kodlanmış bölümünün gösterileceğini seçer
+  | { type: 'game'; game: 'snack-pack'; title: Text; text: Text };
 
 export type CaseStudy = {
   challenge: Text;

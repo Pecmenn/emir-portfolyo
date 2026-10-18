@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Gamepad2, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { GalleryBlock, Project } from '../../content';
 import { SITE_URL } from '../github';
@@ -55,6 +55,7 @@ const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; 
   { type: 'flock', label: 'Uçuşan parçalar', description: 'Kaydırdıkça saydam zeminli parçalar uçarak gelip dizilir (ör. kaykaylar, karakterler)', icon: Sparkles },
   { type: 'compare', label: 'Taslaktan sonuca', description: 'Kaydırdıkça taslak görselin üstünden son hâli açılır (ör. wireframe → son ekran)', icon: SquareSplitHorizontal },
   { type: 'pan', label: 'Kaydırınca akan şerit', description: 'Sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)', icon: MoveHorizontal },
+  { type: 'game', label: 'Oynanabilir bölüm', description: 'Ziyaretçinin sayfada oynadığı kodlanmış oyun bölümü (şimdilik Snack Pack)', icon: Gamepad2 },
 ];
 
 // Şerit, uçuşan parçalar ve akan şerit bloklarının ortak görsel listesi
@@ -93,6 +94,7 @@ function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'flock') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''], layout: 'fan' };
   if (type === 'compare') return { type, before: '', after: '', beforeLabel: { tr: 'Taslak', en: 'Wireframe' }, afterLabel: { tr: 'Son hâli', en: 'Final' } };
   if (type === 'pan') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''] };
+  if (type === 'game') return { type, game: 'snack-pack', title: { ...empty }, text: { ...empty } };
   return { type: 'full', image: '', quote: { ...empty } };
 }
 
@@ -269,6 +271,16 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
                 <p className="text-[13px] text-ink/55">Görseller aynı yükseklikte, kendi oranlarıyla yan yana dizilir ve sayfa kaydıkça yatayda akar.</p>
                 <ImageList images={block.images} onChange={(images) => update(i, { ...block, images })} />
+              </div>
+            )}
+            {block.type === 'game' && (
+              <div className="flex flex-col gap-4">
+                <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Bir bölüm oyna" />
+                <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
+                <p className="text-[13px] text-ink/55">
+                  Snack Pack'in 4. bölümü oynanır: ziyaretçi çizgi çizer, kurabiyeleri bırakır, kumbaraya girenler sayılır. Oyunun kendisi kodla
+                  hazırlandığı için burada yalnızca başlık, açıklama ve bloğun sayfadaki yeri değişir.
+                </p>
               </div>
             )}
             {block.type === 'full' && (

@@ -46,6 +46,20 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ['home', '404: ana sayfa butonu'],
     ],
   },
+  {
+    title: 'Oynanabilir bölüm (Snack Pack)',
+    items: [
+      ['game.release', '“Kurabiyeleri bırak” butonu'],
+      ['game.restart', '“Baştan başla” butonu'],
+      ['game.hint', 'Çizim ipucu'],
+      ['game.noInk', 'Mürekkep bitince görünen yazı'],
+      ['game.tap', 'Telefonda “Oynamak için dokun”'],
+      ['game.exit', 'Telefonda oyundan çıkma düğmesi (ekran okuyucu)'],
+      ['game.result', 'Sonuç yazısı ({n} kumbaradaki, {total} toplam kurabiye)'],
+      ['game.again', '“Tekrar oyna” butonu'],
+      ['game.stage', 'Oyun alanının açıklaması (ekran okuyucu)'],
+    ],
+  },
 ];
 
 const getAt = (data: UiData, key: string): Bi => {
