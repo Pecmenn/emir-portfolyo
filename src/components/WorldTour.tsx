@@ -1,17 +1,36 @@
 import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import type { Ambient } from '../content';
 import { gsap, reducedMotion, ScrollTrigger } from '../lib/scroll';
+import { COIN } from './WorldGate';
 
 // Dünyalı sayfa: dünyası olan her bölüm (data-world-at) ekrana girince sayfa kabının rengi o dünyaya akar, yazılar ve
-// üst menü koyu temaya geçer, ekranda o dünyanın renginde bir portal halkası açılır. Kenarda sayfadaki ilerlemeyi
-// gösteren yol arkadaşı (karakter ve o dünyanın kaykayı) iner; arkada dünyaya özel hafif bir ortam efekti oynar.
-// Bileşen sayfa kabının ilk çocuğudur (data-world-fx); efekt tuvali içeriğin altında, halka ve yol arkadaşı üstünde durur.
+// üst menü koyu temaya geçer, ekranda o dünyanın renginde bir portal halkası açılır. Dünya boyunca o dünyanın objeleri
+// üç derinlikte süzülür (arkada küçük ve yavaş, kenarlarda net, önde büyük ve hızlı); arkada dünyaya özel hafif bir
+// ortam efekti oynar. Sağ üstteki oyun göstergesi toplanan altınları (bkz. WorldGate) ve gidilen mesafeyi gösterir.
+// Bileşen sayfa kabının ilk çocuğudur (data-world-fx): efekt tuvali ve arka objeler içeriğin altında, ön objeler,
+// halka ve gösterge üstünde durur.
 
-export type TourWorld = { color: string; accent: string; ambient: Ambient };
+export type TourWorld = { color: string; ambient: Ambient; icon?: string; props: string[] };
 
 type Particle = { x: number; y: number; vx: number; vy: number; r: number; seed: number; fade: number };
+type Layer = 'back' | 'mid' | 'front';
+type Placed = { src: string; layer: Layer; left: number; top: number; depth: number; rot: number; spin: number; flip: boolean; seed: number };
 
 const COUNT: Record<Ambient, number> = { none: 0, embers: 60, bubbles: 36, sand: 90, clouds: 9 };
+// Katmanların sırası: arka ve kenar objeleri sık, öndekiler seyrek gelir
+const ORDER: Layer[] = ['back', 'mid', 'front', 'back', 'mid', 'back', 'mid', 'front', 'back', 'mid'];
+const STYLE: Record<Layer, string> = {
+  back: 'w-[clamp(44px,5.5vw,100px)] opacity-55 blur-[1px]',
+  mid: 'w-[clamp(64px,9vw,170px)]',
+  front: 'w-[clamp(100px,14vw,260px)] opacity-90 blur-[2.5px] lg:z-[3]',
+};
+const DEPTH: Record<Layer, number> = { back: 0.55, mid: 1.05, front: 1.7 };
+
+// Sıraya bağlı sabit sahte rastgele sayı (0–1): objeler her çizimde aynı yere düşer
+function seeded(i: number, k: number) {
+  const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+}
 
 function spawn(kind: Ambient, w: number, h: number, initial: boolean): Particle {
   const rnd = Math.random;
@@ -24,8 +43,7 @@ function spawn(kind: Ambient, w: number, h: number, initial: boolean): Particle 
 
 function drawParticle(ctx: CanvasRenderingContext2D, kind: Ambient, p: Particle, t: number) {
   if (kind === 'embers') {
-    const flicker = 0.55 + Math.sin(t * 0.008 + p.seed) * 0.35;
-    ctx.globalAlpha = flicker * p.fade;
+    ctx.globalAlpha = (0.55 + Math.sin(t * 0.008 + p.seed) * 0.35) * p.fade;
     ctx.fillStyle = 'rgba(255, 170, 60, 0.35)';
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r * 2.6, 0, Math.PI * 2);
@@ -62,20 +80,19 @@ function drawParticle(ctx: CanvasRenderingContext2D, kind: Ambient, p: Particle,
   }
 }
 
-export default function WorldTour({ host, worlds, rider, base }: { host: RefObject<HTMLDivElement>; worlds: TourWorld[]; rider?: string; base?: string }) {
+export default function WorldTour({ host, worlds, base }: { host: RefObject<HTMLDivElement>; worlds: TourWorld[]; base?: string }) {
   const [active, setActive] = useState(-1);
   const [inside, setInside] = useState(false);
+  const [placed, setPlaced] = useState<Placed[]>([]);
+  const [coins, setCoins] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const railRef = useRef<HTMLDivElement>(null);
-  const riderRef = useRef<HTMLDivElement>(null);
-  const tiltRef = useRef<HTMLDivElement>(null);
-  const boardRef = useRef<HTMLDivElement>(null);
-  const fillRef = useRef<HTMLDivElement>(null);
-  const activeRef = useRef(-1);
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const meterRef = useRef<HTMLSpanElement>(null);
+  const coinRef = useRef<HTMLImageElement>(null);
   const insideRef = useRef(false);
+  const moveRef = useRef<() => void>(() => {});
   const ambientRef = useRef<Ambient>('none');
-  activeRef.current = active;
   insideRef.current = inside;
   ambientRef.current = active >= 0 ? worlds[active]?.ambient ?? 'none' : 'none';
 
@@ -95,9 +112,50 @@ export default function WorldTour({ host, worlds, rider, base }: { host: RefObje
   useLayoutEffect(() => {
     const el = host.current;
     if (!el) return;
-    const marks = Array.from(el.querySelectorAll<HTMLElement>('[data-world-at]')).sort((a, b) => Number(a.dataset.worldAt) - Number(b.dataset.worldAt));
-    if (!marks.length) return;
-    const triggers = marks.map((mark, i) =>
+    const marks = () => Array.from(el.querySelectorAll<HTMLElement>('[data-world-at]')).sort((a, b) => Number(a.dataset.worldAt) - Number(b.dataset.worldAt));
+    const list = marks();
+    if (!list.length) return;
+
+    // Sahne objeleri her dünyanın kendi aralığına (bölüm başından bir sonraki dünyanın başına) dağıtılır
+    const layout = () => {
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      const ms = marks();
+      const narrow = window.innerWidth < 1024;
+      const next: Placed[] = [];
+      ms.forEach((m, i) => {
+        const props = worlds[i]?.props ?? [];
+        if (!props.length) return;
+        const start = m.getBoundingClientRect().top + window.scrollY - top;
+        const end = i + 1 < ms.length ? ms[i + 1].getBoundingClientRect().top + window.scrollY - top : el.offsetHeight;
+        const count = Math.max(4, Math.round((end - start) / (narrow ? 520 : 380)));
+        for (let k = 0; k < count; k++) {
+          const r = (q: number) => seeded(i * 97 + k, q);
+          // Telefonda öndeki objeler içeriği örtmesin diye kenar katmanında kalır
+          const layer: Layer = narrow && ORDER[k % ORDER.length] === 'front' ? 'mid' : ORDER[k % ORDER.length];
+          // Başlıklar ve metinler solda olduğu için öndeki büyük objeler yalnızca sağ kenardan geçer
+          const right = k % 2 === 1;
+          const person = props[(k + i) % props.length].includes('karakter');
+          const left =
+            layer === 'back' ? 4 + r(1) * 88 : layer === 'front' ? 90 + r(1) * 6 : right ? 87 + r(1) * 8 : r(1) * 8;
+          next.push({
+            src: props[(k + i) % props.length],
+            layer,
+            left,
+            top: start + ((k + 0.25 + r(2) * 0.5) * (end - start)) / count,
+            depth: DEPTH[layer],
+            // Karakterler neredeyse dik kalır; diğer objeler ekrandan geçerken hafifçe döner
+            rot: (r(3) - 0.5) * (person ? 14 : 50),
+            spin: (r(4) - 0.5) * (person ? 0.008 : 0.06),
+            flip: r(5) > 0.5,
+            seed: r(6) * 6,
+          });
+        }
+      });
+      setPlaced(next);
+    };
+    layout();
+
+    const triggers = list.map((mark, i) =>
       ScrollTrigger.create({
         trigger: mark,
         start: i === 0 ? 'top bottom+=50%' : 'top 70%',
@@ -105,35 +163,52 @@ export default function WorldTour({ host, worlds, rider, base }: { host: RefObje
         onLeaveBack: () => setActive(i - 1),
       }),
     );
-    // Yol arkadaşı ilk dünyadan sayfa kabının sonuna kadar iner
+    // Dünyalar boyunca: göstergenin görünürlüğü, mesafe ve objelerin derinliğe göre kayması
     triggers.push(
       ScrollTrigger.create({
-        trigger: marks[0],
+        trigger: list[0],
         start: 'top 70%',
         endTrigger: el,
         end: 'bottom bottom',
         onToggle: (self) => setInside(self.isActive),
         onUpdate: (self) => {
-          const rail = railRef.current;
-          if (!rail || !riderRef.current) return;
-          const travel = rail.clientHeight - riderRef.current.offsetHeight;
-          gsap.set(riderRef.current, { y: self.progress * travel });
-          if (fillRef.current) gsap.set(fillRef.current, { scaleY: self.progress });
-          if (!reducedMotion && tiltRef.current) gsap.to(tiltRef.current, { rotate: gsap.utils.clamp(-18, 18, self.getVelocity() / 120), duration: 0.4, overwrite: true });
+          if (meterRef.current) meterRef.current.textContent = `${Math.round(self.progress * 2400).toLocaleString('tr-TR')} m`;
         },
       }),
     );
-    return () => triggers.forEach((t) => t.kill());
-  }, [host, worlds.length]);
+    const move = () => {
+      const scene = sceneRef.current;
+      if (!scene || reducedMotion) return;
+      const top = el.getBoundingClientRect().top;
+      const mid = window.innerHeight / 2;
+      scene.querySelectorAll<HTMLElement>('[data-prop]').forEach((p) => {
+        const y = Number(p.dataset.top);
+        const depth = Number(p.dataset.depth);
+        const delta = top + y - mid;
+        const rot = Number(p.dataset.rot) + delta * Number(p.dataset.spin);
+        p.style.transform = `translate3d(0, ${delta * (depth - 1) * 0.6}px, 0) rotate(${rot}deg) scaleX(${p.dataset.flip === '1' ? -1 : 1})`;
+      });
+    };
+    moveRef.current = move;
+    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top bottom', end: 'bottom top', onUpdate: move }));
+    ScrollTrigger.addEventListener('refresh', layout);
+    return () => {
+      triggers.forEach((t) => t.kill());
+      ScrollTrigger.removeEventListener('refresh', layout);
+    };
+  }, [host, worlds]);
 
-  // Portal halkası ve kaykay değişimi (ilk dünyaya geçişte portalı açılış bloğu zaten açmıştır)
+  // Yerleşim değişince objeler kaydırmayı beklemeden doğru derinliğe taşınır
+  useLayoutEffect(() => {
+    moveRef.current();
+  }, [placed]);
+
+  // Portal halkası (ilk dünyaya geçişte portalı açılış bloğu zaten açmıştır)
   const prev = useRef(-1);
   useEffect(() => {
     const from = prev.current;
     prev.current = active;
-    if (reducedMotion || active < 0) return;
-    if (boardRef.current) gsap.fromTo(boardRef.current, { rotate: -360, scale: 0.4 }, { rotate: 0, scale: 1, duration: 0.7, ease: 'back.out(1.6)' });
-    if (from < 0 || !ringRef.current) return;
+    if (reducedMotion || active < 0 || from < 0 || !ringRef.current) return;
     const size = Math.hypot(window.innerWidth, window.innerHeight) * 2;
     gsap.fromTo(
       ringRef.current,
@@ -141,6 +216,35 @@ export default function WorldTour({ host, worlds, rider, base }: { host: RefObje
       { scale: 1, opacity: 0, duration: 1.2, ease: 'power2.out' },
     );
   }, [active, worlds]);
+
+  // Toplanan altın göstergeye uçar ve sayaç artar
+  useEffect(() => {
+    const onCoin = (e: Event) => {
+      const { x, y, delta } = (e as CustomEvent<{ x: number; y: number; delta: number }>).detail;
+      setCoins((c) => Math.max(0, c + delta));
+      const target = coinRef.current;
+      if (delta < 0 || reducedMotion || !target) return;
+      const t = target.getBoundingClientRect();
+      const fly = document.createElement('img');
+      fly.src = COIN;
+      fly.alt = '';
+      Object.assign(fly.style, { position: 'fixed', left: `${x - 18}px`, top: `${y - 18}px`, width: '36px', zIndex: '60', pointerEvents: 'none' });
+      document.body.appendChild(fly);
+      gsap.to(fly, {
+        x: t.left + t.width / 2 - x,
+        y: t.top + t.height / 2 - y,
+        scale: 0.55,
+        duration: 0.65,
+        ease: 'power2.in',
+        onComplete: () => {
+          fly.remove();
+          gsap.fromTo(target, { scale: 1.45 }, { scale: 1, duration: 0.35, ease: 'back.out(3)' });
+        },
+      });
+    };
+    window.addEventListener('world:coin', onCoin);
+    return () => window.removeEventListener('world:coin', onCoin);
+  }, []);
 
   // Ortam efekti: tek tuval, yalnızca sayfa kabındayken ve sekme görünürken çizilir
   useEffect(() => {
@@ -176,9 +280,10 @@ export default function WorldTour({ host, worlds, rider, base }: { host: RefObje
       }
       ctx.clearRect(0, 0, w, h);
       if (leaving) {
-        leaving.parts.forEach((p) => (p.fade = Math.max(0, p.fade - 0.03)));
-        leaving.parts.forEach((p) => drawParticle(ctx, leaving!.kind, p, t));
-        if (leaving.parts.every((p) => p.fade <= 0)) leaving = null;
+        const l = leaving;
+        l.parts.forEach((p) => (p.fade = Math.max(0, p.fade - 0.03)));
+        l.parts.forEach((p) => drawParticle(ctx, l.kind, p, t));
+        if (l.parts.every((p) => p.fade <= 0)) leaving = null;
       }
       for (let i = 0; i < parts.length; i++) {
         const p = parts[i];
@@ -197,42 +302,52 @@ export default function WorldTour({ host, worlds, rider, base }: { host: RefObje
     };
   }, []);
 
-  // Yol arkadaşının hafif zıplaması
-  const headRef = useRef<HTMLImageElement>(null);
-  useEffect(() => {
-    if (reducedMotion || !headRef.current) return;
-    const tween = gsap.to(headRef.current, { y: -5, duration: 0.7, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    return () => {
-      tween.kill();
-    };
-  }, [rider]);
-
   const world = worlds[Math.max(0, active)];
 
   return (
     <div data-world-fx aria-hidden className="contents">
       {!reducedMotion && <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-0 h-full w-full" />}
+      {/* Sahne objeleri sayfa kabının içinde, bulundukları dünyanın yüksekliğinde durur */}
+      <div ref={sceneRef} className="pointer-events-none absolute inset-0 overflow-hidden">
+        {placed.map((p, i) => (
+          <div
+            key={`${p.src}-${i}`}
+            data-prop
+            data-top={p.top}
+            data-depth={p.depth}
+            data-rot={p.rot}
+            data-spin={p.spin}
+            data-flip={p.flip ? '1' : '0'}
+            className={`absolute will-change-transform ${STYLE[p.layer]}`}
+            style={{ left: `${p.left}%`, top: p.top, transform: `rotate(${p.rot}deg)` }}
+          >
+            <img
+              src={p.src}
+              alt=""
+              draggable={false}
+              loading="lazy"
+              className="w-full select-none drop-shadow-[0_18px_22px_rgba(0,0,0,0.3)] motion-safe:animate-[world-float_7s_ease-in-out_infinite]"
+              style={{ animationDelay: `-${p.seed}s` }}
+            />
+          </div>
+        ))}
+      </div>
       <div className="pointer-events-none fixed inset-0 z-[55] grid place-items-center overflow-hidden">
         <div ref={ringRef} className="shrink-0 rounded-full border-[clamp(6px,0.8vw,14px)] border-solid opacity-0" />
       </div>
-      {/* Yol arkadaşı: sağ kenarda ince bir ray, üstünde inen karakter ve o dünyanın kaykayı. Telefonda içeriği
-          olabildiğince az örtsün diye daha küçük ve kenara daha yakındır */}
+      {/* Oyun göstergesi: toplanan altınlar, etkin dünyanın simgesi ve gidilen mesafe */}
       <div
-        ref={railRef}
-        className={`pointer-events-none fixed bottom-[10vh] right-1 top-[16vh] z-[55] w-[2.1rem] transition-opacity duration-500 sm:right-[clamp(0.5rem,1.6vw,2rem)] sm:w-[clamp(2.75rem,4.2vw,4.5rem)] ${inside ? 'opacity-100' : 'opacity-0'}`}
+        className={`pointer-events-none fixed right-3 top-[4.6rem] z-[56] flex items-center gap-2 transition-opacity duration-500 sm:right-6 sm:top-[5.2rem] ${inside ? 'opacity-100' : 'opacity-0'}`}
       >
-        <div className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-paper/20" />
-        <div ref={fillRef} className="absolute inset-y-0 left-1/2 w-[2px] origin-top -translate-x-1/2 scale-y-0 bg-paper/70" />
-        <div ref={riderRef} className="absolute inset-x-0 top-0">
-          <div ref={tiltRef} className="relative">
-            {rider && <img ref={headRef} src={rider} alt="" className="relative z-[1] mx-auto w-[78%] drop-shadow-[0_6px_10px_rgba(0,0,0,0.35)]" />}
-            {/* Kaykay görselleri dik durur; yatay görünsün diye döndürülür */}
-            <div ref={boardRef} className="relative -mt-[34%] h-[1.1em] text-[2.1rem] sm:text-[clamp(2.75rem,4.2vw,4.5rem)]">
-              {world?.accent && (
-                <img src={world.accent} alt="" className="absolute left-1/2 top-1/2 h-[1em] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 -rotate-90 drop-shadow-[0_6px_8px_rgba(0,0,0,0.35)]" />
-              )}
-            </div>
-          </div>
+        <div className="flex items-center gap-2 rounded-full bg-ink/55 py-1.5 pl-1.5 pr-3.5 text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] backdrop-blur-md">
+          <img ref={coinRef} src={COIN} alt="" className="h-7 w-7" />
+          <span className="display min-w-[2ch] text-lg tabular-nums">{String(coins).padStart(2, '0')}</span>
+        </div>
+        <div className="hidden items-center gap-2 rounded-full bg-ink/55 py-1.5 pl-2 pr-3.5 text-paper shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] backdrop-blur-md sm:flex">
+          {world?.icon && <img src={world.icon} alt="" className="h-6 w-auto" />}
+          <span ref={meterRef} className="display text-lg tabular-nums">
+            0 m
+          </span>
         </div>
       </div>
     </div>

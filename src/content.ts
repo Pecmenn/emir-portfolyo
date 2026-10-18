@@ -49,9 +49,20 @@ export type JourneyStop = { title: Text; text: Text; image: string; accent: stri
 // Dünyanın arka planında oynayan hafif ortam efekti
 export type Ambient = 'none' | 'embers' | 'bubbles' | 'sand' | 'clouds';
 
-// Bölümün geçtiği dünya: adı, sayfanın akacağı renk, bölüm başında gösterilen görsel (ör. oyunun o dünyadaki ekranı),
-// o dünyanın parçası (ör. kaykayı; yol arkadaşının altında da bu görünür) ve ortam efekti
-export type ChapterWorld = { name: Text; color: string; image: string; accent: string; ambient: Ambient };
+// Bölümün geçtiği dünya: adı, sayfanın akacağı renk, o dünyanın kaykayı (kahraman kapıya bununla girer), ortam efekti,
+// dünya kapısı (portal görseli; bölüm başında kahraman içine kayar), element simgesi (bölüm başında büyük filigran)
+// ve sahne objeleri (dünya boyunca kenarlarda ve arkada farklı derinliklerde süzülen saydam objeler).
+// image: kapı yoksa bölüm başında kart olarak gösterilen görsel (ör. oyunun o dünyadaki ekranı)
+export type ChapterWorld = {
+  name: Text;
+  color: string;
+  image: string;
+  accent: string;
+  ambient: Ambient;
+  gate?: string;
+  icon?: string;
+  props?: string[];
+};
 
 export type CaseStudy = {
   challenge: Text;
@@ -87,7 +98,8 @@ export type Project = {
   // İsteğe bağlı zemin rengi (ör. #131814). Sunum görsellerinin zeminiyle aynı renk verilirse görseller
   // sayfayla kesintisiz bir yüzey oluşturur
   canvas?: string;
-  // Dünyalı (yolculuk) sayfalarda ekranın kenarında ilerleyen yol arkadaşının görseli (saydam zeminli, ör. karakter kafası)
+  // Dünyalı (yolculuk) sayfalarda kaykaya binen kahramanın yandan görünen tam boy görseli (saydam zeminli); her dünyanın
+  // girişinde o dünyanın kaykayıyla kapıya kayar
   rider?: string;
 };
 

@@ -61,8 +61,22 @@
         },
         "color": "#C9341C",
         "image": "/images/skate-odyssey/dunya/ates.webp",
-        "accent": "/images/skate-odyssey/kaykay/02.webp",
-        "ambient": "embers"
+        "accent": "/images/skate-odyssey/obje/kaykay-yatay-02.webp",
+        "ambient": "embers",
+        "gate": "/images/skate-odyssey/obje/kapi-ates.webp",
+        "icon": "/images/skate-odyssey/obje/simge-ates.webp",
+        "props": [
+          "/images/skate-odyssey/obje/dikenli.webp",
+          "/images/skate-odyssey/obje/roket.webp",
+          "/images/skate-odyssey/obje/ors.webp",
+          "/images/skate-odyssey/obje/cark.webp",
+          "/images/skate-odyssey/obje/karakter-sovalye.webp",
+          "/images/skate-odyssey/obje/cekic.webp",
+          "/images/skate-odyssey/obje/tabela.webp",
+          "/images/skate-odyssey/obje/guc-x2.webp",
+          "/images/skate-odyssey/obje/roket-2.webp",
+          "/images/skate-odyssey/obje/karakter-ayi.webp"
+        ]
       }
     },
     {
@@ -142,13 +156,46 @@
         },
         "color": "#1677D9",
         "image": "/images/skate-odyssey/dunya/su.webp",
-        "accent": "/images/skate-odyssey/kaykay/08.webp",
-        "ambient": "bubbles"
+        "accent": "/images/skate-odyssey/obje/kaykay-yatay-08.webp",
+        "ambient": "bubbles",
+        "gate": "/images/skate-odyssey/obje/kapi-su.webp",
+        "icon": "/images/skate-odyssey/obje/simge-su.webp",
+        "props": [
+          "/images/skate-odyssey/obje/buz.webp",
+          "/images/skate-odyssey/obje/ordek.webp",
+          "/images/skate-odyssey/obje/dalga.webp",
+          "/images/skate-odyssey/obje/karakter-kardan.webp",
+          "/images/skate-odyssey/obje/plaj-topu.webp",
+          "/images/skate-odyssey/obje/silindir.webp",
+          "/images/skate-odyssey/obje/buz-2.webp",
+          "/images/skate-odyssey/obje/bowling.webp",
+          "/images/skate-odyssey/obje/guc-hiz.webp",
+          "/images/skate-odyssey/obje/rulo.webp"
+        ]
       }
     },
     {
-      "type": "full",
-      "image": "/images/skate-odyssey/07.webp"
+      "type": "flock",
+      "layout": "grid",
+      "title": {
+        "tr": "Kadro, tam boy",
+        "en": "The roster, full body"
+      },
+      "text": {
+        "tr": "Dokuz karakterin oyundaki 3B modelleri.",
+        "en": "The in-game 3D models of all nine characters."
+      },
+      "images": [
+        "/images/skate-odyssey/obje/karakter-ana.webp",
+        "/images/skate-odyssey/obje/karakter-kovboy.webp",
+        "/images/skate-odyssey/obje/karakter-kesis.webp",
+        "/images/skate-odyssey/obje/karakter-sovalye.webp",
+        "/images/skate-odyssey/obje/karakter-robot.webp",
+        "/images/skate-odyssey/obje/karakter-mantar.webp",
+        "/images/skate-odyssey/obje/karakter-kardan.webp",
+        "/images/skate-odyssey/obje/karakter-leydi.webp",
+        "/images/skate-odyssey/obje/karakter-ayi.webp"
+      ]
     },
     {
       "type": "flock",
@@ -198,8 +245,21 @@
         },
         "color": "#C2611F",
         "image": "/images/skate-odyssey/dunya/toprak.webp",
-        "accent": "/images/skate-odyssey/kaykay/11.webp",
-        "ambient": "sand"
+        "accent": "/images/skate-odyssey/obje/kaykay-yatay-11.webp",
+        "ambient": "sand",
+        "gate": "/images/skate-odyssey/obje/kapi-toprak.webp",
+        "icon": "/images/skate-odyssey/obje/simge-toprak.webp",
+        "props": [
+          "/images/skate-odyssey/obje/rampa.webp",
+          "/images/skate-odyssey/obje/kutular.webp",
+          "/images/skate-odyssey/obje/karakter-kovboy.webp",
+          "/images/skate-odyssey/obje/lego.webp",
+          "/images/skate-odyssey/obje/davul.webp",
+          "/images/skate-odyssey/obje/engel-x.webp",
+          "/images/skate-odyssey/obje/karakter-mantar.webp",
+          "/images/skate-odyssey/obje/kup.webp",
+          "/images/skate-odyssey/obje/guc-x2-altin.webp"
+        ]
       }
     },
     {
@@ -232,12 +292,56 @@
       }
     },
     {
-      "type": "full",
-      "image": "/images/skate-odyssey/06.webp"
+      "type": "flock",
+      "layout": "grid",
+      "title": {
+        "tr": "Güçlendiriciler ve kapılar",
+        "en": "Power-ups & gates"
+      },
+      "text": {
+        "tr": "Altın, hız ve x2 güçlendiricileri, taçlar ve her dünyanın kapısı.",
+        "en": "Coin, speed and x2 power-ups, crowns and every world's gate."
+      },
+      "images": [
+        "/images/skate-odyssey/obje/guc-x2-altin.webp",
+        "/images/skate-odyssey/obje/guc-hiz.webp",
+        "/images/skate-odyssey/obje/guc-peri.webp",
+        "/images/skate-odyssey/obje/guc-x2.webp",
+        "/images/skate-odyssey/obje/tac-mor.webp",
+        "/images/skate-odyssey/obje/tac-yesil.webp",
+        "/images/skate-odyssey/obje/kapi-ates.webp",
+        "/images/skate-odyssey/obje/kapi-su.webp",
+        "/images/skate-odyssey/obje/kapi-toprak.webp",
+        "/images/skate-odyssey/obje/kapi-hava.webp",
+        "/images/skate-odyssey/obje/kapi-ana.webp",
+        "/images/skate-odyssey/obje/altin.webp"
+      ]
     },
     {
-      "type": "full",
-      "image": "/images/skate-odyssey/09.webp"
+      "type": "flock",
+      "layout": "grid",
+      "title": {
+        "tr": "Engeller ve objeler",
+        "en": "Obstacles & props"
+      },
+      "text": {
+        "tr": "Pistin üstüne dizilen 3B engeller: roketlerden lego kulelerine.",
+        "en": "3D obstacles laid along the track: from rockets to lego towers."
+      },
+      "images": [
+        "/images/skate-odyssey/obje/roket.webp",
+        "/images/skate-odyssey/obje/lego.webp",
+        "/images/skate-odyssey/obje/ordek.webp",
+        "/images/skate-odyssey/obje/plaj-topu.webp",
+        "/images/skate-odyssey/obje/bowling.webp",
+        "/images/skate-odyssey/obje/ors.webp",
+        "/images/skate-odyssey/obje/firildak.webp",
+        "/images/skate-odyssey/obje/hediye.webp",
+        "/images/skate-odyssey/obje/silindir.webp",
+        "/images/skate-odyssey/obje/kutular.webp",
+        "/images/skate-odyssey/obje/rampa.webp",
+        "/images/skate-odyssey/obje/buz.webp"
+      ]
     },
     {
       "type": "chapter",
@@ -256,8 +360,22 @@
         },
         "color": "#7A2BD6",
         "image": "/images/skate-odyssey/dunya/hava.webp",
-        "accent": "/images/skate-odyssey/kaykay/09.webp",
-        "ambient": "clouds"
+        "accent": "/images/skate-odyssey/obje/kaykay-yatay-09.webp",
+        "ambient": "clouds",
+        "gate": "/images/skate-odyssey/obje/kapi-hava.webp",
+        "icon": "/images/skate-odyssey/obje/simge-hava.webp",
+        "props": [
+          "/images/skate-odyssey/obje/bariyer.webp",
+          "/images/skate-odyssey/obje/firildak.webp",
+          "/images/skate-odyssey/obje/hediye.webp",
+          "/images/skate-odyssey/obje/karakter-robot.webp",
+          "/images/skate-odyssey/obje/guc-peri.webp",
+          "/images/skate-odyssey/obje/simge-yildiz.webp",
+          "/images/skate-odyssey/obje/tac-mor.webp",
+          "/images/skate-odyssey/obje/karakter-kesis.webp",
+          "/images/skate-odyssey/obje/tac-yesil.webp",
+          "/images/skate-odyssey/obje/karakter-leydi.webp"
+        ]
       }
     },
     {
@@ -271,5 +389,5 @@
   ],
   "featured": true,
   "canvas": "#ECECEC",
-  "rider": "/images/skate-odyssey/kafa/01.webp"
+  "rider": "/images/skate-odyssey/obje/kahraman-yan.webp"
 }

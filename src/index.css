@@ -44,3 +44,14 @@ body {
     display: none;
   }
 }
+
+/* Dünyalı sayfadaki sahne objelerinin kendiliğinden süzülmesi (WorldTour) */
+@keyframes world-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(4deg);
+  }
+}

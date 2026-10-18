@@ -104,14 +104,41 @@ function WorldFields({ world, onChange }: { world: ChapterWorld | undefined; onC
             <ColorInput value={world.color} onChange={(v) => set({ color: v })} />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <ImageField label="Dünyanın görseli (isteğe bağlı)" hint="Bölüm başlığının altında kart olarak durur (ör. oyunun o dünyadaki ekranı)." value={world.image} onChange={(v) => set({ image: v })} />
             <ImageField
-              label="Dünyanın parçası (isteğe bağlı)"
-              hint="Saydam zeminli PNG/WebP (ör. o dünyanın kaykayı). Kartın yanında süzülür, yol arkadaşının altında da görünür."
-              aspect="aspect-[4/5]"
+              label="Dünyanın kapısı (isteğe bağlı)"
+              hint="Saydam zeminli portal görseli. Verilirse bölüm başında kapı durur; kahraman bu dünyanın kaykayıyla kayıp içine girer."
+              aspect="aspect-[3/4]"
+              value={world.gate}
+              onChange={(v) => set({ gate: v || undefined })}
+            />
+            <ImageField
+              label="Element simgesi (isteğe bağlı)"
+              hint="Saydam zeminli simge (ör. alev, damla). Bölüm başında büyük bir filigran olarak döner; oyun göstergesinde de görünür."
+              aspect="aspect-square"
+              value={world.icon}
+              onChange={(v) => set({ icon: v || undefined })}
+            />
+            <ImageField
+              label="Dünyanın kaykayı"
+              hint="Saydam zeminli, yatay duran kaykay. Kahraman kapıya bununla kayar."
+              aspect="aspect-[5/2]"
               value={world.accent}
               onChange={(v) => set({ accent: v })}
             />
+            <ImageField
+              label="Dünyanın görseli (isteğe bağlı)"
+              hint="Kapı yoksa bölüm başlığının altında kart olarak durur (ör. oyunun o dünyadaki ekranı)."
+              value={world.image}
+              onChange={(v) => set({ image: v })}
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <p className="text-sm font-medium">Sahne objeleri</p>
+            <p className="-mt-1 text-[13px] text-ink/55">
+              Saydam zeminli objeler (engeller, güçlendiriciler, karakterler). Dünya boyunca arkada, kenarlarda ve önde farklı derinliklerde süzülür. İlki,
+              kahramanın kapıya giderken üstünden atladığı engeldir.
+            </p>
+            <ImageList images={world.props ?? []} onChange={(props) => set({ props })} />
           </div>
           <Field label="Ortam efekti">
             <div className="inline-flex flex-wrap rounded-xl bg-black/[0.05] p-1">
@@ -653,8 +680,8 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
               </div>
             </Field>
             <ImageField
-              label="Yol arkadaşı (isteğe bağlı)"
-              hint="Galeride dünyalı bölümler varsa ekranın sağ kenarında, sayfada ilerledikçe inen karakter. Saydam zeminli bir görsel kullanın (ör. karakterin kafası); altında o dünyanın parçası görünür."
+              label="Kahraman (isteğe bağlı)"
+              hint="Galeride kapılı dünyalar varsa her dünyanın girişinde o dünyanın kaykayıyla kapıya kayan karakter. Yandan görünen, sağa bakan, saydam zeminli tam boy bir görsel kullanın."
               aspect="aspect-square"
               value={draft.rider}
               onChange={(v) => set('rider', v || undefined)}

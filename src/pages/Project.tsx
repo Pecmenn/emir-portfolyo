@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
 import Journey from '../components/Journey';
+import WorldGate from '../components/WorldGate';
 import WorldTour from '../components/WorldTour';
 import { Compare, Flock, Pan } from '../components/MotionBlocks';
 import { EDGE_FADE, FadeUp, RevealImage, Words } from '../components/Reveal';
@@ -176,11 +177,38 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
 
 // Galeri blokları sayfa kenar boşluklarının içinde aynı ızgaraya oturur; görseller arasında dar, metinlerin
 // çevresinde geniş boşluk bırakılır
-// world: bloğun geçtiği dünyanın sırası (-1: dünya yok)
-function Block({ block, dark, canvas, chapter, world = -1 }: { block: GalleryBlock; dark?: boolean; canvas?: boolean; chapter: number; world?: number }) {
+// world: bloğun geçtiği dünyanın sırası (-1: dünya yok); hero: dünya girişlerinde kapıya kayan kahraman
+function Block({
+  block,
+  dark,
+  canvas,
+  chapter,
+  world = -1,
+  hero,
+}: {
+  block: GalleryBlock;
+  dark?: boolean;
+  canvas?: boolean;
+  chapter: number;
+  world?: number;
+  hero?: string;
+}) {
   const { t, lang } = useLang();
   // Görsel açıklaması panelden girilir; boşsa görsel dekoratif sayılır (alt="") ve ekran okuyucu atlar
   const title = 'alt' in block && block.alt ? t(block.alt) : '';
+  if (block.type === 'chapter' && block.world?.gate) {
+    const w = block.world;
+    return (
+      <WorldGate
+        index={chapter}
+        title={t(block.title)}
+        text={t(block.text)}
+        // Kahramanın yolundaki engel, dünyanın sahne objelerinden ilkidir
+        world={{ at: world, name: t(w.name), gate: w.gate!, icon: w.icon, accent: w.accent, obstacle: w.props?.find(Boolean) }}
+        hero={hero}
+      />
+    );
+  }
   if (block.type === 'chapter') {
     return (
       <Chapter
@@ -644,11 +672,15 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
         style={project.canvas ? { backgroundColor: project.canvas } : undefined}
         className={`flex flex-col gap-[var(--gap)] pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.dark ? 'bg-ink text-paper' : 'bg-paper'} ${project.caseStudy ? 'pt-[12vh]' : ''} ${
           // Dünyalarda renk yumuşakça akar; bloklar arkadaki ortam efektinin üstünde durur
-          worlds.length ? 'transition-[background-color,color] duration-1000 [&>*:not([data-world-fx])]:relative [&>*:not([data-world-fx])]:z-[1]' : ''
+          worlds.length ? 'relative transition-[background-color,color] duration-1000 [&>*:not([data-world-fx])]:relative [&>*:not([data-world-fx])]:z-[1]' : ''
         }`}
       >
         {worlds.length > 0 && (
-          <WorldTour host={galleryRef} worlds={worlds.map((w) => ({ color: w.color, accent: w.accent, ambient: w.ambient }))} rider={project.rider} base={project.canvas} />
+          <WorldTour
+            host={galleryRef}
+            worlds={worlds.map((w) => ({ color: w.color, ambient: w.ambient, icon: w.icon, props: (w.props ?? []).filter(Boolean) }))}
+            base={project.canvas}
+          />
         )}
         {project.gallery.map((block, i) => (
           <Block
@@ -658,6 +690,7 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
             canvas={!!project.canvas}
             chapter={project.gallery.slice(0, i + 1).filter((b) => b.type === 'chapter').length}
             world={blockWorld[i]}
+            hero={project.rider}
           />
         ))}
       </div>
