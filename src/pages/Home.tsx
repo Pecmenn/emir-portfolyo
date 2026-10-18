@@ -50,7 +50,8 @@ function PlayHero({ ready }: { ready: boolean }) {
       {!reducedMotion && (
         <p
           aria-hidden
-          className={`pointer-events-none absolute bottom-6 right-5 z-30 flex items-center gap-2 text-sm font-medium transition-opacity duration-700 sm:right-8 lg:bottom-auto lg:top-[clamp(6.5rem,15vh,10rem)] ${dragged ? 'opacity-0' : 'opacity-60'}`}
+          // Telefonda parçaların üstünde durur; okunması için zeminli bir etiket olarak gösterilir
+          className={`pointer-events-none absolute bottom-6 right-5 z-30 flex items-center gap-2 rounded-full bg-paper/90 px-3 py-1.5 text-sm font-medium text-ink/75 backdrop-blur-sm transition-opacity duration-700 sm:right-8 lg:bottom-auto lg:top-[clamp(6.5rem,15vh,10rem)] lg:bg-transparent lg:p-0 lg:text-ink lg:backdrop-blur-none ${dragged ? 'opacity-0' : 'opacity-100 lg:opacity-60'}`}
         >
           <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-accent" />
           {t(touch ? play.hintTouch : play.hint)}

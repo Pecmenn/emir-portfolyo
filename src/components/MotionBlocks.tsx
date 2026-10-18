@@ -81,11 +81,19 @@ export function Flock({ title, text, images, layout, alt }: { title: string; tex
   const spread = Math.min(76, n * 7);
   const cols = n <= 4 ? n : n <= 9 ? 3 : 4;
   const rows = Math.ceil(n / cols);
+  // Telefonda dörde kadar parça tek sıra yerine ikişerli dizilir; tek sırada çok küçük kalıyorlardı
+  const mCols = n <= 2 ? n : n <= 4 ? 2 : n <= 9 ? 3 : 4;
+  const mRows = Math.ceil(n / mCols);
+  // Telefonda sahne ekrana yapışıkken başlık üste yaslanır, parçaların alanı kalan yüksekliği doldurur
+  // (ortalanınca başlığın üstünde ve altında büyük boşluklar kalıyordu). Hareket azaltmada sahne sabit yükseklikte
+  const fill = !reducedMotion;
 
   return (
     <section ref={ref} className="relative" style={reducedMotion ? undefined : { height: `${100 + n * (fan ? 16 : 9)}vh` }}>
-      <div className={reducedMotion ? 'py-[8vh]' : 'sticky top-0 flex h-[100svh] items-center overflow-hidden'}>
-        <div className="gutter grid w-full gap-[4vh] pt-16 lg:grid-cols-12 lg:items-center lg:gap-8 lg:pt-0">
+      <div className={reducedMotion ? 'py-[8vh]' : 'sticky top-0 flex h-[100svh] items-start overflow-hidden lg:items-center'}>
+        <div
+          className={`gutter flex w-full flex-col gap-[4vh] lg:grid lg:h-auto lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-0 ${fill ? 'h-full pb-[6vh] pt-[calc(4rem+3vh)]' : 'pt-16'}`}
+        >
           <div className="lg:col-span-4">
             <p aria-hidden className="display text-[clamp(2.75rem,6vw,8rem)] leading-[0.85] tabular-nums opacity-25">
               <span ref={countRef}>{pad(reducedMotion ? n : 0)}</span>
@@ -93,9 +101,10 @@ export function Flock({ title, text, images, layout, alt }: { title: string; tex
             </p>
             <Heading title={title} text={text} className="mt-[2.5vh]" />
           </div>
-          <div className="lg:col-span-8">
+          <div className={`min-h-0 flex-1 lg:col-span-8 ${fan ? 'flex flex-col justify-center lg:block' : ''}`}>
             {fan ? (
-              <div className="relative mx-auto h-[34svh] lg:h-[60vh]">
+              // Yelpaze telefonda kalan alanın ortasında durur; fazla büyüyünce iki yandan ekran dışına taşıyordu
+              <div className={`relative mx-auto w-full lg:h-[60vh] ${fill ? 'h-full max-h-[40svh]' : 'h-[40svh]'}`}>
                 {images.map((src, i) => {
                   const t = n > 1 ? i / (n - 1) - 0.5 : 0;
                   return (
@@ -119,14 +128,19 @@ export function Flock({ title, text, images, layout, alt }: { title: string; tex
                 })}
               </div>
             ) : (
-              // Izgara genişliği sütun/satır oranına göre sınırlanır; parçalar geniş hücrelere dağılmadan bir arada durur
+              // Geniş ekranda ızgara genişliği sütun/satır oranına göre sınırlanır; parçalar geniş hücrelere dağılmadan bir arada durur.
+              // Telefonda ekran zaten dar olduğu için ızgara kalan alanı doldurur
               <div
-                className="mx-auto grid h-[var(--gh)] gap-[1.5vh] [--gh:42svh] lg:gap-[2.5vh] lg:[--gh:68vh]"
-                style={{
-                  maxWidth: `calc(var(--gh) * ${(cols / rows) * 0.95})`,
-                  gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-                  gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`,
-                }}
+                className={`mx-auto grid gap-[1.5vh] [grid-template-columns:repeat(var(--mc),minmax(0,1fr))] [grid-template-rows:repeat(var(--mr),minmax(0,1fr))] lg:h-[var(--gh)] lg:max-w-[var(--gmw)] lg:gap-[2.5vh] lg:[--gh:68vh] lg:[grid-template-columns:repeat(var(--c),minmax(0,1fr))] lg:[grid-template-rows:repeat(var(--r),minmax(0,1fr))] ${fill ? 'h-full' : 'h-[46svh]'}`}
+                style={
+                  {
+                    '--gmw': `calc(var(--gh) * ${(cols / rows) * 0.95})`,
+                    '--c': cols,
+                    '--r': rows,
+                    '--mc': mCols,
+                    '--mr': mRows,
+                  } as React.CSSProperties
+                }
               >
                 {images.map((src, i) => (
                   <div key={`${src}-${i}`} data-flock-item className="flex min-h-0 items-center justify-center">
@@ -152,18 +166,26 @@ export function Flock({ title, text, images, layout, alt }: { title: string; tex
 // İki görsel üst üste birebir oturduğu için aynı boyutta olmalı
 export function Compare({ before, after, beforeLabel, afterLabel, alt }: { before: string; after: string; beforeLabel: string; afterLabel: string; alt: string }) {
   const ref = useRef<HTMLElement>(null);
+  const panRef = useRef<HTMLDivElement>(null);
   // Görselin oranı: kutu ekran yüksekliğine sığacak genişlikte tutulur, iki görsel ve çizgi aynı kutuya oturur
   const [ratio, setRatio] = useState<number>();
 
   useLayoutEffect(() => {
     if (reducedMotion) return;
+    // Telefonda görsel okunabilsin diye ekrandan geniş tutulur; perde açıldıkça görsel de sola kayar,
+    // böylece çizgi ekranın içinde soldan sağa ilerler. Geniş ekranda görsel kutuya sığdığı için kayma sıfırdır
+    const shift = () => {
+      const pan = panRef.current;
+      return pan ? -Math.max(0, pan.offsetWidth - (pan.parentElement?.clientWidth ?? 0)) : 0;
+    };
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom bottom', scrub: 0.6 },
+        scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom bottom', scrub: 0.6, invalidateOnRefresh: true },
       });
       tl.fromTo('[data-compare-after]', { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1 }, 0.15)
         .fromTo('[data-compare-line]', { left: '0%' }, { left: '100%', duration: 1 }, 0.15)
+        .fromTo(panRef.current, { x: 0 }, { x: shift, duration: 1 }, 0.15)
         .fromTo('[data-compare-before-label]', { opacity: 1 }, { opacity: 0.35, duration: 0.4 }, 0.45)
         .fromTo('[data-compare-after-label]', { opacity: 0.35 }, { opacity: 1, duration: 0.4 }, 0.6)
         .to({}, { duration: 0.2 });
@@ -194,7 +216,11 @@ export function Compare({ before, after, beforeLabel, afterLabel, alt }: { befor
               <span aria-hidden className="h-2 w-2 rounded-full bg-current" />
             </span>
           </div>
-          <div className="relative">
+          <div
+            ref={panRef}
+            className={`relative ${reducedMotion ? '' : 'max-lg:w-[max(100%,var(--cw))]'}`}
+            style={ratio ? ({ '--cw': `calc(58svh * ${ratio})` } as React.CSSProperties) : undefined}
+          >
             <img
               src={before}
               alt={reducedMotion ? alt : ''}
@@ -293,7 +319,8 @@ export function Pan({ title, text, images, alt }: { title: string; text: string;
                 draggable={false}
                 onLoad={refreshSoon}
                 // Tek ve çift sıradaki görseller hafif kaydırılır; dizi düz bir şerit yerine dalgalı akar
-                className={`h-[clamp(15rem,50vh,38rem)] w-auto max-w-none select-none rounded-[clamp(0.6rem,1vw,1.25rem)] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.4)] ${i % 2 ? 'translate-y-[3vh]' : '-translate-y-[1.5vh]'}`}
+                // Telefonda geniş görseller ekran genişliğini aşmaz (yükseklik orantılı küçülür), dikey görseller aynı boyda kalır
+                className={`h-[clamp(15rem,50vh,38rem)] w-auto max-w-none select-none rounded-[clamp(0.6rem,1vw,1.25rem)] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.4)] max-lg:h-auto max-lg:max-h-[clamp(15rem,50vh,38rem)] max-lg:max-w-[calc(100vw-2.5rem)] ${i % 2 ? 'translate-y-[3vh]' : '-translate-y-[1.5vh]'}`}
               />
             ))}
           </div>

@@ -132,7 +132,7 @@ function Credits({ project, dark, canvas }: { project: ProjectType; dark?: boole
       <Words
         key={lang}
         text={t(project.intro)}
-        className="display text-[clamp(1.6rem,2vw,3rem)] leading-[1.12] lg:col-span-8"
+        className="display text-[clamp(1.6rem,2vw,3rem)] leading-[1.12] max-lg:tracking-[-0.015em] lg:col-span-8"
       />
     </section>
   );
@@ -210,7 +210,7 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
         <Words
           key={lang}
           text={t(block.text)}
-          className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] lg:sticky lg:top-28 lg:col-span-4 ${imageRight ? '' : 'lg:order-2'}`}
+          className={`display max-w-xl text-[clamp(1.4rem,1.7vw,2.6rem)] leading-[1.15] max-lg:tracking-[-0.015em] lg:sticky lg:top-28 lg:col-span-4 ${imageRight ? '' : 'lg:order-2'}`}
         />
         <RevealImage
           hoverZoom
