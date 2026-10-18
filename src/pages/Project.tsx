@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
 import Journey from '../components/Journey';
+import WorldTour from '../components/WorldTour';
 import { Compare, Flock, Pan } from '../components/MotionBlocks';
 import { EDGE_FADE, FadeUp, RevealImage, Words } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
@@ -175,11 +176,37 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
 
 // Galeri blokları sayfa kenar boşluklarının içinde aynı ızgaraya oturur; görseller arasında dar, metinlerin
 // çevresinde geniş boşluk bırakılır
-function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: boolean; canvas?: boolean; chapter: number }) {
+// world: bloğun geçtiği dünyanın sırası (-1: dünya yok)
+function Block({ block, dark, canvas, chapter, world = -1 }: { block: GalleryBlock; dark?: boolean; canvas?: boolean; chapter: number; world?: number }) {
   const { t, lang } = useLang();
   // Görsel açıklaması panelden girilir; boşsa görsel dekoratif sayılır (alt="") ve ekran okuyucu atlar
   const title = 'alt' in block && block.alt ? t(block.alt) : '';
-  if (block.type === 'chapter') return <Chapter index={chapter} title={t(block.title)} text={t(block.text)} />;
+  if (block.type === 'chapter') {
+    return (
+      <Chapter
+        index={chapter}
+        title={t(block.title)}
+        text={t(block.text)}
+        world={block.world ? { at: world, name: t(block.world.name), image: block.world.image, accent: block.world.accent } : undefined}
+      />
+    );
+  }
+  if (block.type === 'full' && world >= 0) {
+    // Renkli dünyada sunum görselleri zemine eritilmez; gölgeli, köşeleri yuvarlak bir kart olarak durur
+    return (
+      <div className="gutter">
+        <RevealImage
+          hoverZoom
+          natural
+          capHeight={false}
+          density={canvas ? 1.6 : undefined}
+          src={block.image}
+          alt={title}
+          className="mx-auto max-w-[1600px] overflow-hidden rounded-[clamp(0.75rem,1.2vw,1.75rem)] shadow-[0_50px_90px_-50px_rgba(0,0,0,0.6)]"
+        />
+      </div>
+    );
+  }
   if (block.type === 'pair' && canvas) {
     // Kesintisiz zeminde görseller kırpılmadan, kendi oranlarıyla yan yana durur
     return (
@@ -267,7 +294,8 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
   if (block.type === 'journey') {
     // Başlığı ya da görseli olmayan duraklar atlanır
     const stops = block.stages.filter((s) => s.title.tr.trim() || s.image);
-    if (!block.image || !stops.length) return null;
+    const exit = block.exit?.trim() || undefined;
+    if (!block.image || (!stops.length && !exit)) return null;
     return (
       <Journey
         title={t(block.title)}
@@ -276,6 +304,7 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
         from={block.from}
         to={{ x: block.toX, y: block.toY }}
         stages={stops.map((s) => ({ title: t(s.title), text: t(s.text), image: s.image, accent: s.accent, color: s.color || '#0A0A0A' }))}
+        exit={exit}
         alt={title}
       />
     );
@@ -309,8 +338,20 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
   );
 }
 
-// Numaralı bölüm açılışı: ince çizgi soldan çizilir, büyük numara ve başlık maskeden kayar, açıklama kelime kelime gelir
-function Chapter({ index, title, text }: { index: number; title: string; text: string }) {
+// Numaralı bölüm açılışı: ince çizgi soldan çizilir, büyük numara ve başlık maskeden kayar, açıklama kelime kelime gelir.
+// Dünyası olan bölümde numaranın altında dünyanın adı durur; oyunun o dünyadaki ekranı kaydırdıkça yerine oturan bir
+// kart olarak gelir, dünyanın parçası (ör. kaykay) kartın yanından süzülür. data-world-at, WorldTour'un izlediği işarettir
+function Chapter({
+  index,
+  title,
+  text,
+  world,
+}: {
+  index: number;
+  title: string;
+  text: string;
+  world?: { at: number; name: string; image: string; accent: string };
+}) {
   const { lang } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -319,18 +360,31 @@ function Chapter({ index, title, text }: { index: number; title: string; text: s
       const tl = gsap.timeline({ scrollTrigger: { trigger: ref.current, start: 'top 80%' } });
       tl.from('[data-chapter-rule]', { scaleX: 0, duration: 1.4, ease: 'expo.inOut' });
       tl.from('[data-chapter-num]', { yPercent: 110, duration: 1.2, ease: 'expo.out' }, 0.3);
+      tl.from('[data-chapter-world]', { y: 24, opacity: 0, duration: 0.9, ease: 'expo.out' }, 0.5);
+      const scrub = { trigger: ref.current, start: 'top bottom', end: 'bottom top', scrub: true };
+      gsap.fromTo('[data-world-card]', { y: 90, rotate: -4 }, { y: -40, rotate: 1.5, ease: 'none', scrollTrigger: scrub });
+      gsap.fromTo('[data-world-accent]', { y: 110, rotate: -20 }, { y: -50, rotate: 24, ease: 'none', scrollTrigger: scrub });
     }, ref);
     return () => ctx.revert();
-  }, []);
+  }, [world?.image, world?.accent]);
   return (
-    <div ref={ref} className="gutter pb-[8vh] pt-[18vh]">
+    // Kartın yanından taşan kaykay sayfayı yatayda genişletmesin diye taşma kesilir
+    <div ref={ref} data-world-at={world?.at} className="gutter overflow-x-clip pb-[8vh] pt-[18vh]">
       <div data-chapter-rule className="h-px origin-left bg-current opacity-20" />
       <div className="mt-[4vh] grid gap-6 lg:grid-cols-12 lg:gap-8">
-        <p className="line-mask display text-[clamp(4.5rem,11vw,15rem)] leading-[0.85] opacity-25 lg:col-span-4">
-          <span data-chapter-num className="block">
-            {String(index).padStart(2, '0')}
-          </span>
-        </p>
+        <div className="lg:col-span-4">
+          <p className="line-mask display text-[clamp(4.5rem,11vw,15rem)] leading-[0.85] opacity-25">
+            <span data-chapter-num className="block">
+              {String(index).padStart(2, '0')}
+            </span>
+          </p>
+          {world?.name && (
+            <p data-chapter-world className="mt-[2vh] flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.14em] opacity-85">
+              <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-current" />
+              {world.name}
+            </p>
+          )}
+        </div>
         <div className="lg:col-span-8">
           <Words key={`c-${lang}`} as="h2" text={title} className="display text-[clamp(2.6rem,4.8vw,7.5rem)] leading-[0.98]" />
           {text.trim() && (
@@ -339,6 +393,25 @@ function Chapter({ index, title, text }: { index: number; title: string; text: s
               text={text}
               className="mt-[4vh] max-w-2xl text-[clamp(1.05rem,1.15vw,1.6rem)] font-medium leading-snug opacity-75"
             />
+          )}
+          {world?.image && (
+            <div className="relative mt-[7vh] max-w-[34rem]">
+              {world.accent && (
+                <img
+                  data-world-accent
+                  src={world.accent}
+                  alt=""
+                  aria-hidden
+                  className="pointer-events-none absolute -right-[2%] -top-[6%] h-[125%] w-auto max-w-none select-none drop-shadow-[0_24px_30px_rgba(0,0,0,0.35)] lg:-right-[18%]"
+                />
+              )}
+              <img
+                data-world-card
+                src={world.image}
+                alt=""
+                className="relative w-full select-none rounded-[clamp(0.8rem,1.4vw,1.75rem)] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] ring-[6px] ring-white/15"
+              />
+            </div>
           )}
         </div>
       </div>
@@ -552,7 +625,13 @@ export default function Project() {
 
 function ProjectPage({ project, next }: { project: ProjectType; next: ProjectType }) {
   const { t } = useLang();
+  const galleryRef = useRef<HTMLDivElement>(null);
   usePageMeta(`${project.title} — ${t(project.discipline)} · ${site.name}`, t(project.summary));
+
+  // Dünyalı sayfa: dünyası olan bölümler sırayla numaralanır; her blok, önündeki son dünyalı bölümün dünyasında geçer
+  const worlds = project.gallery.flatMap((b) => (b.type === 'chapter' && b.world ? [b.world] : []));
+  let current = -1;
+  const blockWorld = project.gallery.map((b) => (b.type === 'chapter' && b.world ? ++current : current));
 
   return (
     <main id="main" tabIndex={-1} key={project.slug} className="outline-none">
@@ -560,10 +639,17 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
       <Credits project={project} dark={project.dark} canvas={project.canvas} />
       {project.caseStudy && <CaseStudySection data={project.caseStudy} />}
       <div
+        ref={galleryRef}
         data-theme={project.dark ? 'dark' : undefined}
         style={project.canvas ? { backgroundColor: project.canvas } : undefined}
-        className={`flex flex-col gap-[var(--gap)] pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.dark ? 'bg-ink text-paper' : 'bg-paper'} ${project.caseStudy ? 'pt-[12vh]' : ''}`}
+        className={`flex flex-col gap-[var(--gap)] pb-[14vh] [--gap:clamp(0.75rem,1vw,1.5rem)] ${project.dark ? 'bg-ink text-paper' : 'bg-paper'} ${project.caseStudy ? 'pt-[12vh]' : ''} ${
+          // Dünyalarda renk yumuşakça akar; bloklar arkadaki ortam efektinin üstünde durur
+          worlds.length ? 'transition-[background-color,color] duration-1000 [&>*:not([data-world-fx])]:relative [&>*:not([data-world-fx])]:z-[1]' : ''
+        }`}
       >
+        {worlds.length > 0 && (
+          <WorldTour host={galleryRef} worlds={worlds.map((w) => ({ color: w.color, accent: w.accent, ambient: w.ambient }))} rider={project.rider} base={project.canvas} />
+        )}
         {project.gallery.map((block, i) => (
           <Block
             key={i}
@@ -571,6 +657,7 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
             dark={project.dark}
             canvas={!!project.canvas}
             chapter={project.gallery.slice(0, i + 1).filter((b) => b.type === 'chapter').length}
+            world={blockWorld[i]}
           />
         ))}
       </div>

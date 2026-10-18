@@ -34,67 +34,15 @@
         "en": "It all starts in a bedroom"
       },
       "text": {
-        "tr": "Aşağı kaydır: portaldan geç, dört dünyayı gez.",
-        "en": "Scroll down: step through the portal and ride through four worlds."
+        "tr": "Aşağı kaydır: portaldan geç ve oyunun dört dünyasını gez.",
+        "en": "Scroll down: step through the portal and ride through the game's four worlds."
       },
       "image": "/images/skate-odyssey/cover.webp",
       "from": 14,
       "toX": 49,
       "toY": 55,
-      "stages": [
-        {
-          "title": {
-            "tr": "Ateş",
-            "en": "Fire"
-          },
-          "text": {
-            "tr": "Lav nehirlerinin üstünden, alevli bir kaykayla.",
-            "en": "Over rivers of lava, on a flaming board."
-          },
-          "image": "/images/skate-odyssey/dunya/ates.webp",
-          "accent": "/images/skate-odyssey/kaykay/02.webp",
-          "color": "#C9341C"
-        },
-        {
-          "title": {
-            "tr": "Su",
-            "en": "Water"
-          },
-          "text": {
-            "tr": "Mercanların arasından akan bir pistte, sörf tahtasıyla.",
-            "en": "Down a track that flows between corals, on a surfboard."
-          },
-          "image": "/images/skate-odyssey/dunya/su.webp",
-          "accent": "/images/skate-odyssey/kaykay/08.webp",
-          "color": "#1677D9"
-        },
-        {
-          "title": {
-            "tr": "Toprak",
-            "en": "Earth"
-          },
-          "text": {
-            "tr": "Kızıl kanyonlar ve kaktüsler arasında, ahşap bir longboardla.",
-            "en": "Through red canyons and cacti, on a wooden longboard."
-          },
-          "image": "/images/skate-odyssey/dunya/toprak.webp",
-          "accent": "/images/skate-odyssey/kaykay/11.webp",
-          "color": "#C2611F"
-        },
-        {
-          "title": {
-            "tr": "Hava",
-            "en": "Air"
-          },
-          "text": {
-            "tr": "Gökyüzündeki platformlarda, şimşek desenli bir kaykayla.",
-            "en": "Across platforms in the sky, on a lightning board."
-          },
-          "image": "/images/skate-odyssey/dunya/hava.webp",
-          "accent": "/images/skate-odyssey/kaykay/09.webp",
-          "color": "#7A2BD6"
-        }
-      ]
+      "stages": [],
+      "exit": "#C9341C"
     },
     {
       "type": "chapter",
@@ -105,6 +53,16 @@
       "text": {
         "tr": "Profil ve başarı ikonlarından buton setine kadar oyunun UI kiti; ardından akışı belirleyen UX taslakları ve son ekranlar.",
         "en": "The game’s UI kit, from profile and achievement icons to the button set, followed by the UX flows and final screens."
+      },
+      "world": {
+        "name": {
+          "tr": "Ateş dünyası",
+          "en": "Fire world"
+        },
+        "color": "#C9341C",
+        "image": "/images/skate-odyssey/dunya/ates.webp",
+        "accent": "/images/skate-odyssey/kaykay/02.webp",
+        "ambient": "embers"
       }
     },
     {
@@ -170,46 +128,23 @@
     {
       "type": "chapter",
       "title": {
-        "tr": "Karakterler ve dünya",
-        "en": "Characters & world"
+        "tr": "Karakterler",
+        "en": "Characters"
       },
       "text": {
-        "tr": "Kaykaylar ve güçlendiriciler, 3D karakter kadrosu, ifade setleri ve engel modelleri.",
-        "en": "Skateboards and power-ups, the 3D character roster, expression sets and obstacle models."
-      }
-    },
-    {
-      "type": "flock",
-      "title": {
-        "tr": "Her dünyaya bir kaykay",
-        "en": "A board for every world"
+        "tr": "3B karakter kadrosu ve her karakterin ifade seti.",
+        "en": "The 3D character roster and each character's expression set."
       },
-      "text": {
-        "tr": "Alevli, gitar biçimli ya da sörf tahtası gibi: oyunun 11 kaykayı.",
-        "en": "Flaming, guitar-shaped or surfboard-style: the game’s 11 skateboards."
-      },
-      "images": [
-        "/images/skate-odyssey/kaykay/01.webp",
-        "/images/skate-odyssey/kaykay/02.webp",
-        "/images/skate-odyssey/kaykay/03.webp",
-        "/images/skate-odyssey/kaykay/04.webp",
-        "/images/skate-odyssey/kaykay/05.webp",
-        "/images/skate-odyssey/kaykay/06.webp",
-        "/images/skate-odyssey/kaykay/07.webp",
-        "/images/skate-odyssey/kaykay/08.webp",
-        "/images/skate-odyssey/kaykay/09.webp",
-        "/images/skate-odyssey/kaykay/10.webp",
-        "/images/skate-odyssey/kaykay/11.webp"
-      ],
-      "layout": "fan",
-      "alt": {
-        "tr": "Skate Odyssey kaykayı",
-        "en": "Skate Odyssey skateboard"
+      "world": {
+        "name": {
+          "tr": "Su dünyası",
+          "en": "Water world"
+        },
+        "color": "#1677D9",
+        "image": "/images/skate-odyssey/dunya/su.webp",
+        "accent": "/images/skate-odyssey/kaykay/08.webp",
+        "ambient": "bubbles"
       }
-    },
-    {
-      "type": "full",
-      "image": "/images/skate-odyssey/06.webp"
     },
     {
       "type": "full",
@@ -247,6 +182,60 @@
       "image": "/images/skate-odyssey/08.webp"
     },
     {
+      "type": "chapter",
+      "title": {
+        "tr": "Dünya ve engeller",
+        "en": "World & obstacles"
+      },
+      "text": {
+        "tr": "Her dünyanın kaykayı, güçlendiriciler, portallar ve engel modelleri.",
+        "en": "Each world's board, power-ups, portals and obstacle models."
+      },
+      "world": {
+        "name": {
+          "tr": "Toprak dünyası",
+          "en": "Earth world"
+        },
+        "color": "#C2611F",
+        "image": "/images/skate-odyssey/dunya/toprak.webp",
+        "accent": "/images/skate-odyssey/kaykay/11.webp",
+        "ambient": "sand"
+      }
+    },
+    {
+      "type": "flock",
+      "title": {
+        "tr": "Her dünyaya bir kaykay",
+        "en": "A board for every world"
+      },
+      "text": {
+        "tr": "Alevli, gitar biçimli ya da sörf tahtası gibi: oyunun 11 kaykayı.",
+        "en": "Flaming, guitar-shaped or surfboard-style: the game’s 11 skateboards."
+      },
+      "images": [
+        "/images/skate-odyssey/kaykay/01.webp",
+        "/images/skate-odyssey/kaykay/02.webp",
+        "/images/skate-odyssey/kaykay/03.webp",
+        "/images/skate-odyssey/kaykay/04.webp",
+        "/images/skate-odyssey/kaykay/05.webp",
+        "/images/skate-odyssey/kaykay/06.webp",
+        "/images/skate-odyssey/kaykay/07.webp",
+        "/images/skate-odyssey/kaykay/08.webp",
+        "/images/skate-odyssey/kaykay/09.webp",
+        "/images/skate-odyssey/kaykay/10.webp",
+        "/images/skate-odyssey/kaykay/11.webp"
+      ],
+      "layout": "fan",
+      "alt": {
+        "tr": "Skate Odyssey kaykayı",
+        "en": "Skate Odyssey skateboard"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/skate-odyssey/06.webp"
+    },
+    {
       "type": "full",
       "image": "/images/skate-odyssey/09.webp"
     },
@@ -259,6 +248,16 @@
       "text": {
         "tr": "Sosyal medya paylaşımları ve Google Play tanıtım görselleri.",
         "en": "Social media posts and Google Play promotional visuals."
+      },
+      "world": {
+        "name": {
+          "tr": "Hava dünyası",
+          "en": "Air world"
+        },
+        "color": "#7A2BD6",
+        "image": "/images/skate-odyssey/dunya/hava.webp",
+        "accent": "/images/skate-odyssey/kaykay/09.webp",
+        "ambient": "clouds"
       }
     },
     {
@@ -271,5 +270,6 @@
     }
   ],
   "featured": true,
-  "canvas": "#ECECEC"
+  "canvas": "#ECECEC",
+  "rider": "/images/skate-odyssey/kafa/01.webp"
 }

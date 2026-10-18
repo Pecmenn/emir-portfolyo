@@ -22,8 +22,9 @@ export type GalleryBlock =
   | { type: 'video'; video: string; full: boolean }
   // Bölüm başlığı ve açıklaması
   | { type: 'text'; title: Text; text: Text }
-  // Numaralı bölüm açılışı (01, 02 ...); numara bloğun sırasından otomatik gelir
-  | { type: 'chapter'; title: Text; text: Text }
+  // Numaralı bölüm açılışı (01, 02 ...); numara bloğun sırasından otomatik gelir. world verilirse bölüm ve
+  // ardından gelen bloklar o dünyada geçer: sayfa rengi o dünyaya akar, portal halkası açılır (bkz. WorldTour)
+  | { type: 'chapter'; title: Text; text: Text; world?: ChapterWorld }
   // Fare hareketine göre 3 boyutlu eğilen tek görsel (ör. saydam zeminli cihaz görseli)
   | { type: 'showcase'; image: string; alt?: Text }
   // Fareyle ya da parmakla yatayda sürüklenen görsel şeridi
@@ -38,11 +39,19 @@ export type GalleryBlock =
   // Sayfada oynanan bir oyun bölümü; game hangi oyunun kodlanmış bölümünün gösterileceğini seçer
   | { type: 'game'; game: 'snack-pack'; title: Text; text: Text }
   // Bölüm ekranda sabit kalır; kaydırdıkça geniş açılış görselinde kamera from noktasından (yatay %) portala
-  // (toX / toY, %) kayıp içine dalar, ardından duraklar portaldan kendi renkleriyle açılır (ör. oyunun dünyaları)
-  | { type: 'journey'; title: Text; text: Text; image: string; from: number; toX: number; toY: number; stages: JourneyStop[]; alt?: Text };
+  // (toX / toY, %) kayıp içine dalar, ardından duraklar portaldan kendi renkleriyle açılır (ör. oyunun dünyaları).
+  // exit verilirse sonunda portal bu renge açılır (ör. ardından gelen ilk dünyanın rengi); duraklar boş olabilir
+  | { type: 'journey'; title: Text; text: Text; image: string; from: number; toX: number; toY: number; stages: JourneyStop[]; exit?: string; alt?: Text };
 
 // Yolculuk durağı: başlık, açıklama, görsel, arkadan süzülen saydam parça (isteğe bağlı) ve zemin rengi
 export type JourneyStop = { title: Text; text: Text; image: string; accent: string; color: string };
+
+// Dünyanın arka planında oynayan hafif ortam efekti
+export type Ambient = 'none' | 'embers' | 'bubbles' | 'sand' | 'clouds';
+
+// Bölümün geçtiği dünya: adı, sayfanın akacağı renk, bölüm başında gösterilen görsel (ör. oyunun o dünyadaki ekranı),
+// o dünyanın parçası (ör. kaykayı; yol arkadaşının altında da bu görünür) ve ortam efekti
+export type ChapterWorld = { name: Text; color: string; image: string; accent: string; ambient: Ambient };
 
 export type CaseStudy = {
   challenge: Text;
@@ -78,6 +87,8 @@ export type Project = {
   // İsteğe bağlı zemin rengi (ör. #131814). Sunum görsellerinin zeminiyle aynı renk verilirse görseller
   // sayfayla kesintisiz bir yüzey oluşturur
   canvas?: string;
+  // Dünyalı (yolculuk) sayfalarda ekranın kenarında ilerleyen yol arkadaşının görseli (saydam zeminli, ör. karakter kafası)
+  rider?: string;
 };
 
 type Site = {

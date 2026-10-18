@@ -27,6 +27,7 @@ export default function Journey({
   from,
   to,
   stages,
+  exit,
   alt,
 }: {
   title: string;
@@ -35,13 +36,19 @@ export default function Journey({
   from: number;
   to: { x: number; y: number };
   stages: JourneyStage[];
+  // Verilirse yolculuk, portalın bu renge açılmasıyla biter (ör. sayfada ardından gelen ilk dünyanın rengi)
+  exit?: string;
   alt: string;
 }) {
   const { lang } = useLang();
   const ref = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const n = stages.length;
-  const total = FIRST + n * STEP + 0.4;
+  // Çıkış, içeriksiz son bir durak olarak çizilir; sayaçta sayılmaz
+  const all = exit ? [...stages, { title: '', text: '', image: '', accent: '', color: exit }] : stages;
+  // Çıkış portalı açılınca bölüm hemen biter; durak yoksa sonunda bekleme payı bırakılmaz
+  const tail = stages.length ? 0.4 : 0.05;
+  const total = FIRST + n * STEP + (exit ? 0.6 : 0) + tail;
 
   useLayoutEffect(() => {
     if (reducedMotion) return;
@@ -91,8 +98,9 @@ export default function Journey({
           ring.style.opacity = String(portal.r > 0 ? Math.max(0, 1 - portal.r) : 0);
         };
         apply();
-        tl.fromTo(portal, { r: 0 }, { r: 1, duration: 0.5, ease: 'power2.inOut', onUpdate: apply, immediateRender: false }, at)
-          .from(el.querySelectorAll('[data-j-text]'), { yPercent: 40, opacity: 0, duration: 0.35, stagger: 0.05 }, at + 0.2);
+        tl.fromTo(portal, { r: 0 }, { r: 1, duration: 0.5, ease: 'power2.inOut', onUpdate: apply, immediateRender: false }, at);
+        const texts = el.querySelectorAll('[data-j-text]');
+        if (texts.length) tl.from(texts, { yPercent: 40, opacity: 0, duration: 0.35, stagger: 0.05 }, at + 0.2);
         const card = el.querySelector('[data-j-card]');
         if (card) tl.from(card, { xPercent: 25, yPercent: 10, rotate: 6, opacity: 0, duration: 0.45 }, at + 0.25);
         const accent = el.querySelector('[data-j-accent]');
@@ -106,14 +114,14 @@ export default function Journey({
           );
         }
       });
-      tl.to({}, { duration: 0.4 });
+      tl.to({}, { duration: tail });
     }, ref);
     return () => {
       img.removeEventListener('load', place);
       ScrollTrigger.removeEventListener('refresh', place);
       ctx.revert();
     };
-  }, [image, from, to.x, to.y, n, stages.map((s) => s.image + s.accent + s.color).join('|')]);
+  }, [image, from, to.x, to.y, n, exit, stages.map((s) => s.image + s.accent + s.color).join('|')]);
 
   const stage = (s: JourneyStage, i: number) => (
     <div className="gutter relative grid h-full content-center gap-[4vh] pb-[6vh] pt-[calc(4rem+2vh)] lg:grid-cols-12 lg:items-center lg:gap-8 lg:py-0">
@@ -183,7 +191,7 @@ export default function Journey({
           className="pointer-events-none absolute inset-0 opacity-0"
           style={{ background: `radial-gradient(circle at 50% 50%, #fff 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0) 75%)` }}
         />
-        {stages.map((s, i) => (
+        {all.map((s, i) => (
           <div key={i}>
             {/* Portal halkası: açılan dairenin kenarında, durağın renginde parlayan çember */}
             <div
@@ -206,7 +214,7 @@ export default function Journey({
                   className="pointer-events-none absolute left-1/2 top-1/2 h-[min(42vh,24rem)] w-auto select-none opacity-90 drop-shadow-[0_24px_30px_rgba(0,0,0,0.35)]"
                 />
               )}
-              {stage(s, i)}
+              {(s.title || s.image) && stage(s, i)}
             </div>
           </div>
         ))}

@@ -1,6 +1,6 @@
 import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Gamepad2, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Route, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import type { GalleryBlock, JourneyStop, Project } from '../../content';
+import type { Ambient, ChapterWorld, GalleryBlock, JourneyStop, Project } from '../../content';
 import { SITE_URL } from '../github';
 import { go, href } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin, type Bi } from '../store';
@@ -60,6 +60,78 @@ const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; 
 ];
 
 const blankStop = (): JourneyStop => ({ title: { ...empty }, text: { ...empty }, image: '', accent: '', color: '#0A0A0A' });
+
+// Renk seçici ve yanında elle yazılabilen değer
+function ColorInput({ value, onChange, placeholder = '#C9341C' }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
+  return (
+    <div className="flex items-center gap-3">
+      <input
+        type="color"
+        aria-label="Renk seç"
+        value={/^#[0-9a-f]{6}$/i.test(value) ? value : '#0a0a0a'}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-10 w-14 shrink-0 cursor-pointer rounded-lg border border-black/10 bg-transparent"
+      />
+      <TextInput value={value} onChange={onChange} placeholder={placeholder} />
+    </div>
+  );
+}
+
+const AMBIENTS: { value: Ambient; label: string }[] = [
+  { value: 'none', label: 'Yok' },
+  { value: 'embers', label: 'Kıvılcım' },
+  { value: 'bubbles', label: 'Kabarcık' },
+  { value: 'sand', label: 'Kum' },
+  { value: 'clouds', label: 'Bulut' },
+];
+
+// Bölümün dünyası: açılınca bölüm ve ardından gelen bloklar o dünyada geçer (sayfa rengi akar, portal açılır,
+// kenarda yol arkadaşı iner, arkada ortam efekti oynar)
+function WorldFields({ world, onChange }: { world: ChapterWorld | undefined; onChange: (world: ChapterWorld | undefined) => void }) {
+  const set = (patch: Partial<ChapterWorld>) => world && onChange({ ...world, ...patch });
+  return (
+    <div className="flex flex-col gap-4 rounded-xl border border-black/10 p-4">
+      <Toggle
+        label="Bu bölüm bir dünyada geçsin"
+        hint="Açıksa bölüme gelince sayfanın rengi bu dünyaya akar, ekranda portal halkası açılır; sonraki dünyalı bölüme kadar bütün bloklar bu dünyada kalır."
+        checked={!!world}
+        onChange={(on) => onChange(on ? { name: { ...empty }, color: '#C9341C', image: '', accent: '', ambient: 'none' } : undefined)}
+      />
+      {world && (
+        <>
+          <BiField label="Dünyanın adı" value={world.name} onChange={(v) => set({ name: v })} placeholder="Ör. Ateş dünyası" />
+          <Field label="Dünyanın rengi" hint="Sayfanın zemini bu renge akar; yazılar açık renge döner.">
+            <ColorInput value={world.color} onChange={(v) => set({ color: v })} />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ImageField label="Dünyanın görseli (isteğe bağlı)" hint="Bölüm başlığının altında kart olarak durur (ör. oyunun o dünyadaki ekranı)." value={world.image} onChange={(v) => set({ image: v })} />
+            <ImageField
+              label="Dünyanın parçası (isteğe bağlı)"
+              hint="Saydam zeminli PNG/WebP (ör. o dünyanın kaykayı). Kartın yanında süzülür, yol arkadaşının altında da görünür."
+              aspect="aspect-[4/5]"
+              value={world.accent}
+              onChange={(v) => set({ accent: v })}
+            />
+          </div>
+          <Field label="Ortam efekti">
+            <div className="inline-flex flex-wrap rounded-xl bg-black/[0.05] p-1">
+              {AMBIENTS.map((a) => (
+                <button
+                  key={a.value}
+                  type="button"
+                  onClick={() => set({ ambient: a.value })}
+                  className={`rounded-lg px-3.5 py-1.5 text-sm font-semibold ${world.ambient === a.value ? 'bg-white shadow-sm' : 'text-ink/55'}`}
+                >
+                  {a.label}
+                </button>
+              ))}
+            </div>
+          </Field>
+        </>
+      )}
+    </div>
+  );
+}
 const percent = (v: string) => Math.max(0, Math.min(100, Number(v) || 0));
 
 // Yolculuk duraklarının listesi: her durak başlık, açıklama, görsel, süzülen parça ve zemin renginden oluşur
@@ -100,15 +172,7 @@ function StopList({ stops, onChange }: { stops: JourneyStop[]; onChange: (stops:
             />
           </div>
           <Field label="Zemin rengi">
-            <div className="flex items-center gap-3">
-              <input
-                type="color"
-                value={/^#[0-9a-f]{6}$/i.test(s.color) ? s.color : '#0a0a0a'}
-                onChange={(e) => set(j, { color: e.target.value })}
-                className="h-10 w-14 shrink-0 cursor-pointer rounded-lg border border-black/10 bg-transparent"
-              />
-              <TextInput value={s.color} onChange={(v) => set(j, { color: v })} placeholder="#C9341C" />
-            </div>
+            <ColorInput value={s.color} onChange={(v) => set(j, { color: v })} />
           </Field>
         </div>
       ))}
@@ -276,6 +340,9 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
               </div>
             )}
+            {block.type === 'chapter' && (
+              <WorldFields world={block.world} onChange={(world) => update(i, { ...block, world })} />
+            )}
             {block.type === 'showcase' && (
               <ImageField
                 label="Görsel"
@@ -367,6 +434,14 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                   </Field>
                 </div>
                 <p className="text-[13px] text-ink/55">Kamera önce görselin başladığı yere bakar, kaydırdıkça portala kayar ve içine dalar. Duraklar sırayla portalın olduğu noktadan açılır.</p>
+                <Field
+                  label="Çıkış rengi (isteğe bağlı)"
+                  hint="Açılış bitince portal bu renge açılır. Sayfada ardından dünyalı bir bölüm geliyorsa onun rengini yazın; geçiş kesintisiz olur."
+                >
+                  <ColorInput value={block.exit ?? ''} onChange={(v) => update(i, { ...block, exit: v.trim() || undefined })} />
+                </Field>
+                <p className="text-sm font-medium">Duraklar (isteğe bağlı)</p>
+                <p className="-mt-3 text-[13px] text-ink/55">Sayfanın kendisi dünyalardan geçiyorsa durak eklemeye gerek yoktur; açılış yalnızca portala dalışı gösterir.</p>
                 <StopList stops={block.stages} onChange={(stages) => update(i, { ...block, stages })} />
               </div>
             )}
@@ -577,6 +652,13 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
                 <TextInput value={draft.canvas ?? ''} placeholder="#131814" onChange={(v) => set('canvas', v.trim() || undefined)} />
               </div>
             </Field>
+            <ImageField
+              label="Yol arkadaşı (isteğe bağlı)"
+              hint="Galeride dünyalı bölümler varsa ekranın sağ kenarında, sayfada ilerledikçe inen karakter. Saydam zeminli bir görsel kullanın (ör. karakterin kafası); altında o dünyanın parçası görünür."
+              aspect="aspect-square"
+              value={draft.rider}
+              onChange={(v) => set('rider', v || undefined)}
+            />
           </Card>
 
           <Card title="Künye" description="Proje sayfasında kapaktan hemen sonra gelen bilgiler.">
