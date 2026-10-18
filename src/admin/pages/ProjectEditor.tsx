@@ -1,6 +1,6 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Gamepad2, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Gamepad2, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Route, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import type { GalleryBlock, Project } from '../../content';
+import type { GalleryBlock, JourneyStop, Project } from '../../content';
 import { SITE_URL } from '../github';
 import { go, href } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin, type Bi } from '../store';
@@ -56,7 +56,68 @@ const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; 
   { type: 'compare', label: 'Taslaktan sonuca', description: 'Kaydırdıkça taslak görselin üstünden son hâli açılır (ör. wireframe → son ekran)', icon: SquareSplitHorizontal },
   { type: 'pan', label: 'Kaydırınca akan şerit', description: 'Sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)', icon: MoveHorizontal },
   { type: 'game', label: 'Oynanabilir bölüm', description: 'Ziyaretçinin sayfada oynadığı kodlanmış oyun bölümü (şimdilik Snack Pack)', icon: Gamepad2 },
+  { type: 'journey', label: 'Yolculuk', description: 'Kaydırdıkça kamera açılış görselinde portala dalar, duraklar portaldan kendi renkleriyle açılır (ör. oyunun dünyaları)', icon: Route },
 ];
+
+const blankStop = (): JourneyStop => ({ title: { ...empty }, text: { ...empty }, image: '', accent: '', color: '#0A0A0A' });
+const percent = (v: string) => Math.max(0, Math.min(100, Number(v) || 0));
+
+// Yolculuk duraklarının listesi: her durak başlık, açıklama, görsel, süzülen parça ve zemin renginden oluşur
+function StopList({ stops, onChange }: { stops: JourneyStop[]; onChange: (stops: JourneyStop[]) => void }) {
+  const set = (j: number, patch: Partial<JourneyStop>) => onChange(stops.map((s, k) => (k === j ? { ...s, ...patch } : s)));
+  const iconButton = 'grid h-8 w-8 place-items-center rounded-lg text-ink/50 hover:bg-black/5 disabled:opacity-30';
+  return (
+    <div className="flex flex-col gap-4">
+      {stops.map((s, j) => (
+        <div key={j} className="flex flex-col gap-4 rounded-xl border border-black/10 p-4">
+          <div className="flex items-center justify-between gap-3">
+            <p className="flex items-center gap-2 text-sm font-semibold">
+              <span className="h-3 w-3 rounded-full" style={{ backgroundColor: s.color }} />
+              Durak {j + 1}
+            </p>
+            <div className="flex gap-1">
+              <button type="button" aria-label="Durağı yukarı taşı" disabled={j === 0} onClick={() => onChange(move(stops, j, j - 1))} className={iconButton}>
+                <ArrowUp size={15} />
+              </button>
+              <button type="button" aria-label="Durağı aşağı taşı" disabled={j === stops.length - 1} onClick={() => onChange(move(stops, j, j + 1))} className={iconButton}>
+                <ArrowDown size={15} />
+              </button>
+              <button type="button" aria-label="Durağı sil" onClick={() => onChange(stops.filter((_, k) => k !== j))} className={`${iconButton} hover:bg-red-50 hover:text-red-600`}>
+                <Trash2 size={15} />
+              </button>
+            </div>
+          </div>
+          <BiField label="Başlık" value={s.title} onChange={(v) => set(j, { title: v })} placeholder="Ör. Ateş" />
+          <BiField label="Açıklama" long value={s.text} onChange={(v) => set(j, { text: v })} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <ImageField label="Görsel" value={s.image} onChange={(v) => set(j, { image: v })} />
+            <ImageField
+              label="Süzülen parça (isteğe bağlı)"
+              hint="Saydam zeminli PNG/WebP; durak açılırken ekranı çapraz geçer."
+              aspect="aspect-[4/5]"
+              value={s.accent}
+              onChange={(v) => set(j, { accent: v })}
+            />
+          </div>
+          <Field label="Zemin rengi">
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                value={/^#[0-9a-f]{6}$/i.test(s.color) ? s.color : '#0a0a0a'}
+                onChange={(e) => set(j, { color: e.target.value })}
+                className="h-10 w-14 shrink-0 cursor-pointer rounded-lg border border-black/10 bg-transparent"
+              />
+              <TextInput value={s.color} onChange={(v) => set(j, { color: v })} placeholder="#C9341C" />
+            </div>
+          </Field>
+        </div>
+      ))}
+      <Button type="button" variant="soft" onClick={() => onChange([...stops, blankStop()])}>
+        <Plus size={16} /> Durak ekle
+      </Button>
+    </div>
+  );
+}
 
 // Şerit, uçuşan parçalar ve akan şerit bloklarının ortak görsel listesi
 function ImageList({ images, onChange }: { images: string[]; onChange: (images: string[]) => void }) {
@@ -95,6 +156,7 @@ function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'compare') return { type, before: '', after: '', beforeLabel: { tr: 'Taslak', en: 'Wireframe' }, afterLabel: { tr: 'Son hâli', en: 'Final' } };
   if (type === 'pan') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''] };
   if (type === 'game') return { type, game: 'snack-pack', title: { ...empty }, text: { ...empty } };
+  if (type === 'journey') return { type, title: { ...empty }, text: { ...empty }, image: '', from: 15, toX: 50, toY: 50, stages: [blankStop()] };
   return { type: 'full', image: '', quote: { ...empty } };
 }
 
@@ -283,6 +345,31 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 </p>
               </div>
             )}
+            {block.type === 'journey' && (
+              <div className="flex flex-col gap-4">
+                <BiField label="Açılış başlığı" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Her şey bir yatak odasında başlar" />
+                <BiField label="Açılış açıklaması" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
+                <ImageField
+                  label="Açılış görseli"
+                  hint="Geniş bir görsel (ör. kapak). Kamera bu görselde kayıp portala dalar."
+                  value={block.image}
+                  onChange={(v) => update(i, { ...block, image: v })}
+                />
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <Field label="Kameranın başladığı yer" hint="Görselde yatay %, 0 sol kenar, 100 sağ kenar">
+                    <TextInput type="number" value={String(block.from)} onChange={(v) => update(i, { ...block, from: percent(v) })} />
+                  </Field>
+                  <Field label="Portal: yatay %" hint="Görselde kameranın dalacağı nokta">
+                    <TextInput type="number" value={String(block.toX)} onChange={(v) => update(i, { ...block, toX: percent(v) })} />
+                  </Field>
+                  <Field label="Portal: dikey %" hint="Görselde, 0 üst kenar, 100 alt kenar">
+                    <TextInput type="number" value={String(block.toY)} onChange={(v) => update(i, { ...block, toY: percent(v) })} />
+                  </Field>
+                </div>
+                <p className="text-[13px] text-ink/55">Kamera önce görselin başladığı yere bakar, kaydırdıkça portala kayar ve içine dalar. Duraklar sırayla portalın olduğu noktadan açılır.</p>
+                <StopList stops={block.stages} onChange={(stages) => update(i, { ...block, stages })} />
+              </div>
+            )}
             {block.type === 'full' && (
               <div className="flex flex-col gap-4">
                 <ImageField label="Görsel" value={block.image} onChange={(v) => update(i, { ...block, image: v })} />
@@ -296,7 +383,8 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
               block.type === 'strip' ||
               block.type === 'flock' ||
               block.type === 'compare' ||
-              block.type === 'pan') && (
+              block.type === 'pan' ||
+              block.type === 'journey') && (
               <BiField
                 label="Görsel açıklaması (isteğe bağlı)"
                 hint="Görme engelli ziyaretçilerin ekran okuyucusu bunu okur. Görseli bir cümleyle anlatın; boş bırakılırsa görsel süs sayılır."

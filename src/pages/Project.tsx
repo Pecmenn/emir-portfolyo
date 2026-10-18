@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
 import AutoVideo from '../components/AutoVideo';
+import Journey from '../components/Journey';
 import { Compare, Flock, Pan } from '../components/MotionBlocks';
 import { EDGE_FADE, FadeUp, RevealImage, Words } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
@@ -262,6 +263,22 @@ function Block({ block, dark, canvas, chapter }: { block: GalleryBlock; dark?: b
     const images = block.images.filter(Boolean);
     if (!images.length) return null;
     return <Pan title={t(block.title)} text={t(block.text)} images={images} alt={title} />;
+  }
+  if (block.type === 'journey') {
+    // Başlığı ya da görseli olmayan duraklar atlanır
+    const stops = block.stages.filter((s) => s.title.tr.trim() || s.image);
+    if (!block.image || !stops.length) return null;
+    return (
+      <Journey
+        title={t(block.title)}
+        text={t(block.text)}
+        image={block.image}
+        from={block.from}
+        to={{ x: block.toX, y: block.toY }}
+        stages={stops.map((s) => ({ title: t(s.title), text: t(s.text), image: s.image, accent: s.accent, color: s.color || '#0A0A0A' }))}
+        alt={title}
+      />
+    );
   }
   if (block.type === 'game') {
     return (

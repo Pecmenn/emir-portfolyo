@@ -28,6 +28,75 @@
   },
   "gallery": [
     {
+      "type": "journey",
+      "title": {
+        "tr": "Her şey bir yatak odasında başlar",
+        "en": "It all starts in a bedroom"
+      },
+      "text": {
+        "tr": "Aşağı kaydır: portaldan geç, dört dünyayı gez.",
+        "en": "Scroll down: step through the portal and ride through four worlds."
+      },
+      "image": "/images/skate-odyssey/cover.webp",
+      "from": 14,
+      "toX": 49,
+      "toY": 55,
+      "stages": [
+        {
+          "title": {
+            "tr": "Ateş",
+            "en": "Fire"
+          },
+          "text": {
+            "tr": "Lav nehirlerinin üstünden, alevli bir kaykayla.",
+            "en": "Over rivers of lava, on a flaming board."
+          },
+          "image": "/images/skate-odyssey/dunya/ates.webp",
+          "accent": "/images/skate-odyssey/kaykay/02.webp",
+          "color": "#C9341C"
+        },
+        {
+          "title": {
+            "tr": "Su",
+            "en": "Water"
+          },
+          "text": {
+            "tr": "Mercanların arasından akan bir pistte, sörf tahtasıyla.",
+            "en": "Down a track that flows between corals, on a surfboard."
+          },
+          "image": "/images/skate-odyssey/dunya/su.webp",
+          "accent": "/images/skate-odyssey/kaykay/08.webp",
+          "color": "#1677D9"
+        },
+        {
+          "title": {
+            "tr": "Toprak",
+            "en": "Earth"
+          },
+          "text": {
+            "tr": "Kızıl kanyonlar ve kaktüsler arasında, ahşap bir longboardla.",
+            "en": "Through red canyons and cacti, on a wooden longboard."
+          },
+          "image": "/images/skate-odyssey/dunya/toprak.webp",
+          "accent": "/images/skate-odyssey/kaykay/11.webp",
+          "color": "#C2611F"
+        },
+        {
+          "title": {
+            "tr": "Hava",
+            "en": "Air"
+          },
+          "text": {
+            "tr": "Gökyüzündeki platformlarda, şimşek desenli bir kaykayla.",
+            "en": "Across platforms in the sky, on a lightning board."
+          },
+          "image": "/images/skate-odyssey/dunya/hava.webp",
+          "accent": "/images/skate-odyssey/kaykay/09.webp",
+          "color": "#7A2BD6"
+        }
+      ]
+    },
+    {
       "type": "chapter",
       "title": {
         "tr": "Arayüz",

@@ -36,7 +36,13 @@ export type GalleryBlock =
   // Bölüm ekranda sabit kalır; sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)
   | { type: 'pan'; title: Text; text: Text; images: string[]; alt?: Text }
   // Sayfada oynanan bir oyun bölümü; game hangi oyunun kodlanmış bölümünün gösterileceğini seçer
-  | { type: 'game'; game: 'snack-pack'; title: Text; text: Text };
+  | { type: 'game'; game: 'snack-pack'; title: Text; text: Text }
+  // Bölüm ekranda sabit kalır; kaydırdıkça geniş açılış görselinde kamera from noktasından (yatay %) portala
+  // (toX / toY, %) kayıp içine dalar, ardından duraklar portaldan kendi renkleriyle açılır (ör. oyunun dünyaları)
+  | { type: 'journey'; title: Text; text: Text; image: string; from: number; toX: number; toY: number; stages: JourneyStop[]; alt?: Text };
+
+// Yolculuk durağı: başlık, açıklama, görsel, arkadan süzülen saydam parça (isteğe bağlı) ve zemin rengi
+export type JourneyStop = { title: Text; text: Text; image: string; accent: string; color: string };
 
 export type CaseStudy = {
   challenge: Text;
