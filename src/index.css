@@ -18,7 +18,7 @@ body {
 }
 
 ::selection {
-  @apply bg-accent text-ink;
+  @apply bg-accent text-paper;
 }
 
 @layer components {
@@ -26,7 +26,7 @@ body {
     @apply px-4 sm:px-8;
   }
   .display {
-    @apply font-display font-semibold leading-[0.95] tracking-tightest;
+    @apply font-display font-normal leading-[0.95] tracking-[-0.04em];
   }
   /* Satır satır kayarak beliren metinler için maske */
   /* Sıkı harf aralığında son harf kutunun biraz dışına taşar; maske sağa genişletilir,
@@ -36,6 +36,36 @@ body {
   }
   .pill {
     @apply inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors;
+  }
+  /* Harf yuvarlanması (Roll): her harfin gölgesi bir satır altta kopyasını çizer; hover'da harfler bir satır kayar */
+  .roll {
+    @apply inline-block align-top;
+  }
+  .roll-line {
+    @apply inline-flex overflow-hidden;
+    line-height: 1.12;
+    padding-right: 0.04em;
+    margin-right: -0.04em;
+  }
+  .roll-ch {
+    @apply inline-block;
+    text-shadow: 0 1.12em currentColor;
+    transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .group:hover .roll-ch,
+  .roll:hover .roll-ch,
+  .group:focus-visible .roll-ch {
+    transform: translateY(-1.12em);
+  }
+  /* Köşeleri yuvarlatılmış büyük görsel kartı */
+  .card {
+    @apply overflow-hidden rounded-[clamp(0.9rem,1.4vw,1.6rem)];
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-ch {
+    transition: none;
   }
 }
 

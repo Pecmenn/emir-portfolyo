@@ -146,6 +146,8 @@ export type Play = {
   ctaContact: Text;
   hint: Text;
   hintTouch: Text;
+  // Ana sayfadaki 3B kutunun köşesindeki açıklama (objelerin hangi oyunlardan geldiği)
+  pitCaption?: Text;
   open: Text;
   workTitle: Text;
   all: Text;

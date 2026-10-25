@@ -9,12 +9,18 @@ export default {
         // Koyu zeminde okunur; açık zeminde (paper, proje tuvali) WCAG AA için mute-ink kullan
         mute: '#8C8C88',
         'mute-ink': '#6B6B67',
-        accent: '#B98CFF',
-        'accent-strong': '#7C4DDB',
+        // Elektrik mor: açık zeminde vurgu ve düğmeler; koyu zeminde metin için accent-soft
+        accent: '#6236FF',
+        'accent-soft': '#A993FF',
+        'accent-strong': '#6236FF',
+        // Ana sayfadaki 3B kutunun zemini (morumsu gece)
+        night: '#120E22',
+        // Görsel kartlarının açık zemini (soluk lila)
+        mist: '#ECEAF3',
       },
       fontFamily: {
-        display: ['"Clash Display"', 'system-ui', 'sans-serif'],
-        sans: ['Satoshi', 'system-ui', 'sans-serif'],
+        display: ['"General Sans"', 'system-ui', 'sans-serif'],
+        sans: ['"General Sans"', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.045em',

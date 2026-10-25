@@ -338,6 +338,7 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
                 <BiField label="İletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
                 <BiField label="İpucu (fare)" value={d.hint} onChange={(v) => set((x) => ({ ...x, hint: v }))} />
                 <BiField label="İpucu (dokunmatik)" value={d.hintTouch} onChange={(v) => set((x) => ({ ...x, hintTouch: v }))} />
+                <BiField label="3B kutu açıklaması" value={d.pitCaption ?? { tr: '', en: '' }} onChange={(v) => set((x) => ({ ...x, pitCaption: v }))} />
                 <BiField label="“Projeyi aç” (ekran okuyucu)" value={d.open} onChange={(v) => set((x) => ({ ...x, open: v }))} />
               </div>
             </Card>

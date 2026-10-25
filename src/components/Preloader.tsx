@@ -44,10 +44,10 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
   if (gone) return null;
 
   return (
-    <div ref={rootRef} className="fixed inset-0 z-[100] bg-accent text-ink" aria-hidden>
+    <div ref={rootRef} className="fixed inset-0 z-[100] bg-ink text-paper" aria-hidden>
       <div className="gutter absolute inset-0 flex">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} data-col className="h-full flex-1 border-l border-ink/10 first:border-l-0" />
+          <div key={i} data-col className="h-full flex-1 border-l border-white/10 first:border-l-0" />
         ))}
       </div>
       <p className="gutter absolute bottom-6 left-0 text-xs font-medium uppercase tracking-[0.2em]">{t(ui.loading)}…</p>

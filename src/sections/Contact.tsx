@@ -178,7 +178,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="pill min-h-11 border-ink bg-ink px-6 py-3 text-base text-paper hover:border-accent hover:bg-accent hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong disabled:opacity-50"
+                  className="pill min-h-11 border-ink bg-ink px-6 py-3 text-base text-paper hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong disabled:opacity-50"
                 >
                   {status === 'sending' ? t(contact.form.sending) : t(contact.form.send)} <span aria-hidden>→</span>
                 </button>

@@ -1,29 +1,35 @@
 import { createContext, useCallback, useContext, useRef, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { projects, ui } from '../content';
+import { useLang } from './i18n';
 import { gsap, lenis, reducedMotion } from './scroll';
 
+// Sayfa geçişi: koyu bir perde üst kenarı kavisli olarak aşağıdan yükselir, ortasında gidilen sayfanın adı belirir;
+// yeni sayfa hazır olunca perde yukarı çekilir. Proje sayfasında kapak görseli yüklenene kadar beklenir.
 type TransitionContextValue = {
-  // Proje kapağı: tıklanan görsel ekranın ortasında küçülür, sonra yeni sayfanın tam ekran kapağına dönüşür
-  openProject: (slug: string, cover: string, source?: HTMLElement | null) => void;
-  // Diğer sayfa geçişleri: sütunlar aşağıdan yükselip ekranı kapatır, yeni sayfada yukarı çekilir
+  // source ve cover eski geçişten kalma imza uyumu için kabul edilir; perde yalnızca proje adını kullanır
+  openProject: (slug: string, cover?: string, source?: HTMLElement | null) => void;
   goTo: (path: string, hash?: string) => void;
   // Proje sayfası kapak görseli hazır olunca çağırır
   coverReady: () => void;
 };
 
 const TransitionContext = createContext<TransitionContextValue | null>(null);
-const COLUMNS = 5;
 
 function nextFrame() {
   return new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
 }
 
+const CURVE_IN = '50% 50% 0% 0% / 14vh 14vh 0vh 0vh';
+const CURVE_FLAT = '0% 0% 0% 0% / 0vh 0vh 0vh 0vh';
+const CURVE_OUT = '0% 0% 50% 50% / 0vh 0vh 14vh 14vh';
+
 export function TransitionProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
+  const { t } = useLang();
   const busy = useRef(false);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const cloneRef = useRef<HTMLImageElement>(null);
-  const columnsRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLParagraphElement>(null);
   const coverResolver = useRef<(() => void) | null>(null);
 
   const coverReady = useCallback(() => {
@@ -31,115 +37,88 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
     coverResolver.current = null;
   }, []);
 
-  const openProject = useCallback(
-    async (slug: string, cover: string, source?: HTMLElement | null) => {
+  const run = useCallback(
+    async (path: string, label: string, after: () => void, waitCover: boolean) => {
       if (busy.current) return;
-      const path = `/proje/${slug}`;
       if (reducedMotion) {
         navigate(path);
-        lenis.scrollTo(0, { immediate: true, force: true });
+        await nextFrame();
+        after();
         return;
       }
       busy.current = true;
-      const overlay = overlayRef.current!;
-      const clone = cloneRef.current!;
       lenis.stop();
+      const panel = panelRef.current!;
+      const text = labelRef.current!;
+      text.textContent = label;
+      const line = text.parentElement!;
+      line.style.visibility = label ? 'visible' : 'hidden';
+      gsap.set(panel, { display: 'flex', yPercent: 100, borderRadius: CURVE_IN });
+      gsap.set(line, { yPercent: 60, opacity: 0 });
 
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const rect = source?.getBoundingClientRect() ?? { left: vw * 0.38, top: vh * 0.3, width: vw * 0.24, height: vh * 0.4 };
-      // Çok geniş kaynaklar (ör. proje listesindeki başlık şeridi) ortada ince bir çizgiye dönüşmesin
-      const ratio = Math.min(rect.width / rect.height || 1.3, 2.4);
-      const centerW = Math.min(vw * 0.26, 420);
-      const centerH = centerW / ratio;
+      const cover = gsap.timeline();
+      cover.to(panel, { yPercent: 0, borderRadius: CURVE_FLAT, duration: 0.75, ease: 'power3.inOut' }, 0);
+      cover.to(line, { yPercent: 0, opacity: 1, duration: 0.5, ease: 'power3.out' }, 0.35);
+      await cover;
 
-      // Kapak görseli olmayan (yalnızca videolu) projelerde görsel uçuşu atlanır, sadece renk perdesi kullanılır
-      const hasCover = !!cover;
-      if (hasCover) {
-        clone.src = cover;
-        gsap.set(clone, { display: 'block', left: rect.left, top: rect.top, width: rect.width, height: rect.height });
-      }
-      gsap.set(overlay, { display: 'block', clipPath: 'inset(100% 0% 0% 0%)' });
-
-      const out = gsap.timeline();
-      out.to(overlay, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.6, ease: 'power3.inOut' }, 0);
-      if (hasCover) {
-        out.to(
-          clone,
-          { left: (vw - centerW) / 2, top: (vh - centerH) / 2, width: centerW, height: centerH, duration: 0.8, ease: 'power3.inOut' },
-          0,
-        );
-      }
-      await out;
-
-      const ready = new Promise<void>((resolve) => {
-        coverResolver.current = resolve;
-        // Kapak hiç yüklenmezse geçişi takılı bırakma
-        window.setTimeout(resolve, 2500);
-      });
+      const ready = waitCover
+        ? new Promise<void>((resolve) => {
+            coverResolver.current = resolve;
+            // Kapak hiç yüklenmezse geçişi takılı bırakma
+            window.setTimeout(resolve, 1800);
+          })
+        : Promise.resolve();
       navigate(path);
-      lenis.scrollTo(0, { immediate: true, force: true });
-      await ready;
+      await nextFrame();
+      lenis.start();
+      after();
+      await Promise.all([ready, new Promise((r) => window.setTimeout(r, 250))]);
       await nextFrame();
 
       const reveal = gsap.timeline();
-      if (hasCover) reveal.to(clone, { left: 0, top: 0, width: vw, height: vh, duration: 0.9, ease: 'expo.inOut' }, 0);
-      reveal.to(overlay, { opacity: 0, duration: hasCover ? 0.3 : 0.6 }, hasCover ? 0.75 : 0);
+      reveal.to(line, { yPercent: -60, opacity: 0, duration: 0.35, ease: 'power2.in' }, 0);
+      reveal.to(panel, { yPercent: -100, borderRadius: CURVE_OUT, duration: 0.85, ease: 'power3.inOut' }, 0.1);
       await reveal;
-
-      gsap.set(clone, { display: 'none' });
-      gsap.set(overlay, { display: 'none', opacity: 1 });
-      lenis.start();
+      gsap.set(panel, { display: 'none' });
       busy.current = false;
     },
     [navigate],
   );
 
-  const goTo = useCallback(
-    async (path: string, hash?: string) => {
-      if (busy.current) return;
-      const scrollAfter = () => {
-        // Yeni sayfanın yüksekliği ölçülmeden kaydırılırsa hedef eski sınıra takılır
-        lenis.resize();
-        if (hash) lenis.scrollTo(`#${hash}`, { immediate: true, force: true });
-        else lenis.scrollTo(0, { immediate: true, force: true });
-      };
-      if (reducedMotion) {
-        navigate(path);
-        await nextFrame();
-        scrollAfter();
-        return;
-      }
-      busy.current = true;
-      lenis.stop();
-      const cols = columnsRef.current!;
-      const bars = cols.children;
-      gsap.set(cols, { display: 'flex' });
-      await gsap.fromTo(
-        bars,
-        { scaleY: 0, transformOrigin: '50% 100%' },
-        { scaleY: 1, duration: 0.55, ease: 'power3.inOut', stagger: 0.06 },
-      );
-      navigate(path);
-      await nextFrame();
-      lenis.start();
-      scrollAfter();
-      await gsap.to(bars, { scaleY: 0, transformOrigin: '50% 0%', duration: 0.55, ease: 'power3.inOut', stagger: 0.06 });
-      gsap.set(cols, { display: 'none' });
-      busy.current = false;
+  const openProject = useCallback(
+    (slug: string) => {
+      const title = projects.find((p) => p.slug === slug)?.title ?? '';
+      run(`/proje/${slug}`, title, () => lenis.scrollTo(0, { immediate: true, force: true }), true);
     },
-    [navigate],
+    [run],
+  );
+
+  const goTo = useCallback(
+    (path: string, hash?: string) => {
+      const label = path === '/' ? t(ui.home) : '';
+      run(
+        path,
+        label,
+        () => {
+          // Yeni sayfanın yüksekliği ölçülmeden kaydırılırsa hedef eski sınıra takılır
+          lenis.resize();
+          if (hash) lenis.scrollTo(`#${hash}`, { immediate: true, force: true });
+          else lenis.scrollTo(0, { immediate: true, force: true });
+        },
+        false,
+      );
+    },
+    [run, t],
   );
 
   return (
     <TransitionContext.Provider value={{ openProject, goTo, coverReady }}>
       {children}
-      <div ref={overlayRef} className="pointer-events-none fixed inset-0 z-[90] hidden bg-accent" />
-      <img ref={cloneRef} alt="" className="pointer-events-none fixed z-[91] hidden object-cover" />
-      <div ref={columnsRef} className="pointer-events-none fixed inset-0 z-[90] hidden">
-        {Array.from({ length: COLUMNS }, (_, i) => (
-          <div key={i} className="h-full flex-1 bg-ink" />
-        ))}
+      <div ref={panelRef} aria-hidden className="pointer-events-none fixed inset-x-0 -bottom-[14vh] top-0 z-[90] hidden items-center justify-center bg-ink pb-[14vh] text-paper">
+        <p className="flex items-center gap-4 text-[clamp(1.8rem,3.4vw,3.6rem)] tracking-[-0.03em]">
+          <span className="h-2.5 w-2.5 rounded-full bg-accent-soft" />
+          <span ref={labelRef} />
+        </p>
       </div>
     </TransitionContext.Provider>
   );

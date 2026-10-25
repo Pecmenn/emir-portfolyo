@@ -1,62 +1,97 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { play, projects, type Text } from '../content';
 import { FadeUp, Lines } from '../components/Reveal';
+import { Magnetic, Roll } from '../components/Roll';
 import Contact from '../sections/Contact';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
 import { gsap, reducedMotion, refreshSoon, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
-// Ana sayfa: açılışta projelerden kesilmiş parçalarla bir oyun alanı, altında filtrelenebilen proje indeksi,
-// hizmetler ve iletişim. Metinler ve parçalar src/content/play.json'da, panelde "Ana sayfa" altında.
+// Ana sayfa: üstte kısa tanıtım ve oyunlardaki objelerin gerçek 3B modelleriyle dolu bir kutu, ardından büyük cümle,
+// filtrelenebilen proje indeksi, hizmetler ve iletişim. Metinler src/content/play.json'da, panelde "Ana sayfa" altında.
 
-// Fizik motoru metinden sonra yüklenir; açılış yazısı beklemeden görünür
-const StickerField = lazy(() => import('../components/StickerField'));
+// three.js ve modeller metinden sonra yüklenir; açılış yazısı beklemeden görünür
+const ObjectPit = lazy(() => import('../components/ObjectPit'));
 
-function PlayHero({ ready }: { ready: boolean }) {
-  const { t, lang } = useLang();
+function Hero({ ready }: { ready: boolean }) {
+  const { t } = useLang();
   const ref = useRef<HTMLElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
-  const clearRef = useRef<HTMLDivElement>(null);
-  const [dragged, setDragged] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const touch = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
 
+  // Açılış ekranı kalkınca üst satır yukarı kayarak belirir, kutu alttan açılır
+  useLayoutEffect(() => {
+    if (reducedMotion || !ready) return;
+    const ctx = gsap.context(() => {
+      gsap.from('[data-hero-line]', { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.07 });
+      gsap.fromTo('[data-hero-box]', { clipPath: 'inset(18% 6% 0% 6% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 1.6, ease: 'expo.inOut' });
+    }, ref);
+    return () => ctx.revert();
+  }, [ready]);
+
   return (
-    <section ref={ref} className="relative h-[100svh] min-h-[600px] overflow-hidden bg-paper">
-      <div ref={textRef} className="gutter relative z-10 pt-[clamp(6.5rem,15vh,10rem)]">
-        <p className="text-[clamp(1rem,1.2vw,1.4rem)] font-medium">{t(play.hello)}</p>
-        <Lines key={lang} as="h1" lines={play.statement[lang]} className="display mt-3 text-[clamp(1.75rem,9.4vw,4.5rem)] leading-[0.92] lg:text-[clamp(3rem,7.6vw,9.5rem)]" />
-        {/* Parçaların üstüne yığılmaması gereken alan: açıklama ve düğmeler */}
-        <div ref={clearRef} className="inline-block">
-          <p className="mt-6 max-w-md text-[clamp(1rem,1.1vw,1.35rem)] font-medium leading-snug opacity-75">{t(play.text)}</p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => scrollToTarget('#isler')}
-              className="pill min-h-11 border-ink bg-ink px-5 py-2.5 text-base text-paper hover:bg-transparent hover:text-ink"
-            >
-              {t(play.ctaWork)} <span aria-hidden>↓</span>
-            </button>
-            <button type="button" onClick={() => scrollToTarget('#iletisim')} className="pill min-h-11 border-ink px-5 py-2.5 text-base hover:bg-ink hover:text-paper">
-              {t(play.ctaContact)}
-            </button>
-          </div>
-        </div>
-      </div>
-      {/* Parçalar açılış ekranı kalkınca düşmeye başlar */}
-      <Suspense fallback={null}>
-        <StickerField hostRef={ref} textRef={textRef} keepClearRef={clearRef} stickers={play.stickers} ready={ready} onFirstDrag={() => setDragged(true)} />
-      </Suspense>
-      {!reducedMotion && (
-        <p
-          aria-hidden
-          // Telefonda parçaların üstünde durur; okunması için zeminli bir etiket olarak gösterilir
-          className={`pointer-events-none absolute bottom-6 right-5 z-30 flex items-center gap-2 rounded-full bg-paper/90 px-3 py-1.5 text-sm font-medium text-ink/75 backdrop-blur-sm transition-opacity duration-700 sm:right-8 lg:bottom-auto lg:top-[clamp(6.5rem,15vh,10rem)] lg:bg-transparent lg:p-0 lg:text-ink lg:backdrop-blur-none ${dragged ? 'opacity-0' : 'opacity-100 lg:opacity-60'}`}
-        >
-          <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-accent" />
-          {t(touch ? play.hintTouch : play.hint)}
+    <section ref={ref} className="gutter flex h-[100svh] min-h-[620px] flex-col bg-paper pb-3 pt-[76px] sm:pb-4 sm:pt-[88px]">
+      <div className="grid gap-3 pb-4 sm:pb-5 lg:grid-cols-12 lg:items-end lg:gap-8">
+        <p className="line-mask text-[clamp(1rem,1.1vw,1.3rem)] font-medium lg:col-span-4">
+          <span data-hero-line className="block">
+            {t(play.hello)}
+          </span>
         </p>
-      )}
+        <p className="max-w-[34ch] text-[clamp(1.2rem,2.05vw,2.35rem)] leading-[1.12] tracking-[-0.025em] lg:col-span-8 lg:col-start-5">
+          <span className="line-mask">
+            <span data-hero-line className="block">
+              {t(play.text)}
+            </span>
+          </span>
+        </p>
+      </div>
+
+      {/* Kutu: koyu morumsu zeminde 3B objeler; köşelerde ipucu ve objelerin kaynağı */}
+      <div data-hero-box className="card relative min-h-0 flex-1 bg-night text-paper">
+        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_45%,rgba(98,54,255,0.42),rgba(18,14,34,0)_70%)]" />
+        <Suspense fallback={null}>
+          <ObjectPit className={`absolute inset-0 transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`} onReady={() => setLoaded(true)} />
+        </Suspense>
+        {!reducedMotion && (
+          <p aria-hidden className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-paper/70 sm:left-6 sm:top-5">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent-soft" />
+            {t(touch ? play.hintTouch : play.hint)}
+          </p>
+        )}
+        {play.pitCaption && t(play.pitCaption) && (
+          <p className="pointer-events-none absolute bottom-4 left-4 max-w-[22rem] text-xs leading-snug text-paper/55 sm:bottom-5 sm:left-6">{t(play.pitCaption)}</p>
+        )}
+        <button
+          type="button"
+          onClick={() => scrollToTarget('#isler')}
+          className="absolute bottom-3 right-3 hidden min-h-11 items-center gap-2 rounded-full px-4 text-xs font-medium uppercase tracking-[0.14em] text-paper/70 transition-colors hover:text-paper sm:bottom-4 sm:right-4 sm:flex"
+        >
+          {t(play.ctaWork)} <span aria-hidden>↓</span>
+        </button>
+      </div>
+    </section>
+  );
+}
+
+// Büyük cümle: normal kalınlıkta dev yazı; altında tanıtım düğmeleri
+function Statement() {
+  const { t, lang } = useLang();
+  return (
+    <section className="gutter grid gap-10 bg-paper pb-[12vh] pt-[16vh] lg:grid-cols-12 lg:gap-8">
+      <Lines key={lang} as="h1" lines={play.statement[lang]} className="display text-[clamp(3rem,8.6vw,11rem)] leading-[0.92] lg:col-span-12" />
+      <FadeUp className="flex flex-wrap gap-3 lg:col-span-6 lg:col-start-7">
+        <Magnetic>
+          <button type="button" onClick={() => scrollToTarget('#isler')} className="pill min-h-12 border-ink bg-ink px-6 text-base text-paper transition-colors hover:border-accent hover:bg-accent">
+            {t(play.ctaWork)} <span aria-hidden>↓</span>
+          </button>
+        </Magnetic>
+        <Magnetic>
+          <button type="button" onClick={() => scrollToTarget('#iletisim')} className="pill min-h-12 border-ink/25 px-6 text-base hover:border-ink">
+            {t(play.ctaContact)}
+          </button>
+        </Magnetic>
+      </FadeUp>
     </section>
   );
 }
@@ -161,7 +196,7 @@ function ProjectIndex() {
                 <span
                   className={`display pointer-events-none relative text-[clamp(2rem,6vw,6.5rem)] leading-[1] transition-[transform,color] duration-500 ease-out max-lg:group-hover:translate-x-3 sm:col-span-8 ${active ? 'translate-x-6 text-paper' : ''}`}
                 >
-                  {p.title}
+                  <Roll text={p.title} />
                 </span>
                 <span className="text-sm font-medium opacity-60 sm:col-span-2">{t(p.discipline)}</span>
                 <span className="hidden text-right text-sm font-medium tabular-nums opacity-60 sm:col-span-1 sm:block">{p.year}</span>
@@ -185,7 +220,7 @@ function Services() {
           const example = projects.find((p) => p.slug === s.example);
           return (
             <FadeUp key={s.title.en} delay={i * 0.08} className="flex flex-col gap-4 border-t border-white/15 pt-6">
-              <p className="text-sm font-medium text-accent">0{i + 1}</p>
+              <p className="text-sm font-medium text-accent-soft">0{i + 1}</p>
               <h3 className="display text-[clamp(2rem,3vw,3.5rem)]">{t(s.title)}</h3>
               <p className="max-w-sm text-[clamp(1rem,1.05vw,1.3rem)] leading-snug text-paper/75">{t(s.text)}</p>
               {example && (
@@ -212,7 +247,8 @@ export default function Home({ ready }: { ready: boolean }) {
   }, []);
   return (
     <main id="main" tabIndex={-1} className="outline-none">
-      <PlayHero ready={ready} />
+      <Hero ready={ready} />
+      <Statement />
       <ProjectIndex />
       <Services />
       <Contact />

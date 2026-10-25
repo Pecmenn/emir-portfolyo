@@ -87,7 +87,7 @@ export default function Footer() {
           <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-4">
             <a
               href={`mailto:${site.email}`}
-              className="display inline-block break-all py-2 text-[clamp(1.25rem,1.9vw,2rem)] underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors hover:text-accent hover:decoration-accent"
+              className="display inline-block break-all py-2 text-[clamp(1.25rem,1.9vw,2rem)] underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors hover:text-accent-soft hover:decoration-accent-soft"
             >
               {site.email}
             </a>
@@ -95,7 +95,7 @@ export default function Footer() {
               <a
                 href={cvUrl}
                 download
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-ink transition hover:brightness-110"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-paper transition hover:brightness-110"
               >
                 <Download size={16} /> {t(ui.cv)}
               </a>
@@ -110,7 +110,7 @@ export default function Footer() {
             <ul>
               {sitemap.map((item, i) => (
                 <li key={item.id}>
-                  <button onClick={() => go(item.id)} className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent">
+                  <button onClick={() => go(item.id)} className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent-soft">
                     <span className="text-xs tabular-nums text-mute">0{i + 1}</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-1">{t(item.label)}</span>
                   </button>
@@ -124,8 +124,8 @@ export default function Footer() {
             <ul>
               {site.socials.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noreferrer" className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent">
-                    <span className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-paper/80 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
+                  <a href={s.href} target="_blank" rel="noreferrer" className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent-soft">
+                    <span className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-paper/80 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-paper">
                       <SocialIcon href={s.href} label={s.label} className="h-[18px] w-[18px]" />
                     </span>
                     {s.label}
@@ -157,7 +157,7 @@ export default function Footer() {
           className="group inline-flex min-h-11 items-center gap-2 font-semibold text-paper/70 transition-colors hover:text-paper"
         >
           <span className="hidden sm:inline">{t(ui.backToTop)}</span>
-          <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-ink">
+          <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-paper">
             <ArrowUp size={16} />
           </span>
         </button>
