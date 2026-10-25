@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import Preloader from './components/Preloader';
 import Home from './pages/Home';
+import MotionMenu from './pages/Motion';
 import NotFound from './pages/NotFound';
 import Project from './pages/Project';
 
@@ -42,6 +43,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home ready={ready} />} />
         <Route path="/proje/:slug" element={<Project />} />
+        {/* Geçici: hareket türlerini seçmek için menü sayfası */}
+        <Route path="/hareket" element={<MotionMenu />} />
         {/* Prototip adresi paylaşılmış olabilir; ana sayfaya yönlendirilir */}
         <Route path="/yeni" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFound />} />
