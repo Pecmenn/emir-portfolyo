@@ -105,9 +105,74 @@ export type Project = {
   rider?: string;
   // Projenin ait olduğu alanlar (Design / Build / Automate); İşler sayfasındaki filtreler bundan oluşur
   areas?: Area[];
+  // Varsa galerinin yerine kaydırmayla oynayan sahneler gösterilir; sceneFont sahnelerde kullanılan marka yazısı
+  // (Google Fonts biçiminde, ör. "Sora:wght@400;600;800")
+  scenes?: Scene[];
+  sceneFont?: string;
 };
 
 export type Area = 'design' | 'build' | 'automate';
+
+// Sahne motoru (bkz. src/components/Scenes.tsx). Değerler [x, y, dönüş, ölçek, opaklık]; x ve y çalışma alanı
+// biriminde (masaüstünde 1600×900, telefonda 400×700). start/end sahne ilerlemesinde 0-1 aralığıdır; out varsa
+// katman aynı sahnede ikinci bir hareketle çıkar. Eksik değerler bir sonraki duruşun değerini alır
+export type SceneMotion = {
+  from?: number[];
+  to?: number[];
+  start?: number;
+  end?: number;
+  out?: { to: number[]; start: number; end: number };
+};
+
+// Fotoğraftaki bir telefon ekranı: maske (parmaklar önde kalsın diye), perspektif matrisi ve sırayla gösterilecek
+// ekran görselleri. swap: her geçişin sahne ilerlemesindeki yeri (görsel sayısından bir eksik)
+export type SceneScreen = { mask: string; matrix: string; w: number; h: number; images: string[]; swap?: number[] };
+
+export type SceneLayer = {
+  // photo: ekranı yerleştirilmiş fotoğraf · screen: tek uygulama ekranı · text: başlık ve metin · para: kaydırdıkça
+  // kelime kelime aydınlanan paragraf · scrim: okunurluk için karartma · glow: renkli ışık · swatch: renk örneği ·
+  // svg: logo gibi vektör · word: marka yazısıyla tek kelime · type: yazı tipi örneği · toast: bildirim kartı ·
+  // steps: sahnedeki adımların ilerleme çizgisi
+  kind: 'photo' | 'screen' | 'text' | 'para' | 'scrim' | 'glow' | 'swatch' | 'svg' | 'word' | 'type' | 'toast' | 'steps';
+  // [x, y, genişlik, yükseklik?] çalışma alanı biriminde; full verilirse katman bütün sahneyi kaplar
+  box?: number[];
+  full?: boolean;
+  z?: number;
+  motion?: SceneMotion;
+  // Hareketin merkezi: fotoğrafta fotoğraf pikseli, diğerlerinde katmanın yüzdesi
+  origin?: number[];
+  // Metin, paragraf ve adım katmanları: [giriş, çıkış?] sahne ilerlemesinde
+  at?: number[];
+  src?: string;
+  width?: number;
+  height?: number;
+  screens?: SceneScreen[];
+  // Bütün sahneyi kaplayan fotoğrafta kırpmanın odağı [0-1, 0-1]
+  focus?: number[];
+  radius?: number;
+  kicker?: Text;
+  title?: Text;
+  text?: Text;
+  label?: Text;
+  labels?: Text[];
+  size?: number;
+  textSize?: number;
+  align?: 'left' | 'center';
+  side?: 'left' | 'bottom' | 'top';
+  color?: string;
+  ink?: string;
+  accent?: string;
+  font?: string;
+  weight?: number;
+  name?: string;
+  value?: string;
+  svg?: string;
+  // Telefonda değişen alanlar; hide verilirse katman telefonda gösterilmez
+  m?: Partial<Omit<SceneLayer, 'm' | 'kind'>> & { hide?: boolean };
+};
+
+// length: sahnenin kaydırma uzunluğu (vh, telefonda mlength); sahne bu süre boyunca ekranda sabit kalır
+export type Scene = { length: number; mlength?: number; bg?: string; layers: SceneLayer[] };
 
 type Site = {
   name: string;

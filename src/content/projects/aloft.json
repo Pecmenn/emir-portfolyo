@@ -100,5 +100,1881 @@
   "canvas": "#E9ECFB",
   "areas": [
     "design"
+  ],
+  "sceneFont": "Sora:wght@400;600;700;800",
+  "scenes": [
+    {
+      "length": 260,
+      "mlength": 240,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "photo",
+          "full": true,
+          "src": "/images/aloft/sahne/kapak.webp",
+          "width": 1280,
+          "height": 720,
+          "origin": [
+            667,
+            386
+          ],
+          "screens": [
+            {
+              "mask": "/images/aloft/sahne/kapak-maske-0.png",
+              "matrix": "matrix3d(0.21441393458621924,0.007752899801623074,0,0.000008128840591233067,0.012119911222988633,0.2212328276117665,0,0.000023534609968627655,0,0,1,0,626.9,294.3,0,1)",
+              "w": 393,
+              "h": 852,
+              "images": [
+                "/images/aloft/ui/karsilama.webp",
+                "/images/aloft/ui/kesfet.webp",
+                "/images/aloft/ui/sonuclar.webp"
+              ],
+              "swap": [
+                0.42,
+                0.66
+              ]
+            }
+          ],
+          "motion": {
+            "from": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              2.1,
+              1
+            ],
+            "start": 0.1,
+            "end": 0.62
+          },
+          "m": {
+            "focus": [
+              0.53,
+              0.5
+            ],
+            "motion": {
+              "from": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                2.3,
+                1
+              ],
+              "start": 0.1,
+              "end": 0.62
+            }
+          }
+        },
+        {
+          "kind": "scrim",
+          "side": "left",
+          "motion": {
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "out": {
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                0
+              ],
+              "start": 0.2,
+              "end": 0.36
+            }
+          },
+          "m": {
+            "side": "bottom"
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            470,
+            880
+          ],
+          "kicker": {
+            "tr": "Ürün deneyimi",
+            "en": "Product experience"
+          },
+          "accent": "#C8FF3D",
+          "title": {
+            "tr": "Fiyat düştüğünde\nhaberin olsun.",
+            "en": "Know when\nthe price drops."
+          },
+          "size": 100,
+          "text": {
+            "tr": "Rota ve hedef fiyat bir kez belirleniyor; fiyat düştüğü anda haber geliyor, uçuşla otel tek dokunuşla aynı sepete giriyor.",
+            "en": "Set a route and a target price once; the alert arrives the moment it drops, and flight and hotel land in one basket with a single tap."
+          },
+          "at": [
+            -0.25,
+            0.24
+          ],
+          "m": {
+            "box": [
+              24,
+              405,
+              352
+            ],
+            "size": 50,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "steps",
+          "box": [
+            480,
+            800,
+            640
+          ],
+          "labels": [
+            {
+              "tr": "Karşılama",
+              "en": "Welcome"
+            },
+            {
+              "tr": "Keşfet",
+              "en": "Explore"
+            },
+            {
+              "tr": "Sonuçlar",
+              "en": "Results"
+            }
+          ],
+          "at": [
+            0.28,
+            0.42,
+            0.66
+          ],
+          "motion": {
+            "from": [
+              0,
+              30,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.24,
+            "end": 0.34
+          },
+          "m": {
+            "box": [
+              24,
+              636,
+              352
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "length": 150,
+      "mlength": 150,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            880,
+            -120,
+            900
+          ],
+          "color": "#2B50FF66",
+          "motion": {
+            "from": [
+              0,
+              160,
+              0,
+              0.8,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.5,
+            "end": 0.4
+          },
+          "m": {
+            "box": [
+              -120,
+              295,
+              640
+            ]
+          }
+        },
+        {
+          "kind": "para",
+          "box": [
+            200,
+            190,
+            1200
+          ],
+          "size": 46,
+          "text": {
+            "tr": "Seyahat planlamak çoğu zaman sekmeler arasında fiyat kovalamak demek. Aloft bu işi tersine çeviriyor: kullanıcı rotasını ve hedef fiyatını bir kez belirliyor, uygulama fiyat düştüğü anda haber veriyor ve uçuşla oteli tek dokunuşla aynı sepette topluyor. Arayüzü bu hızı hissettirecek şekilde tasarladım: kobalt zemin güven veriyor, limon vurgu yalnızca bir sonraki adımı gösteriyor.",
+            "en": "Planning a trip usually means chasing prices across tabs. Aloft flips that: users set a route and a target price once, the app tells them the moment it drops, and flight and hotel land in one basket with a single tap. I designed the interface to feel that fast: cobalt builds trust, and lime only ever marks the next step."
+          },
+          "at": [
+            -0.35,
+            0.7
+          ],
+          "color": "#F3F5FF",
+          "m": {
+            "box": [
+              24,
+              55,
+              352
+            ],
+            "size": 25
+          }
+        }
+      ]
+    },
+    {
+      "length": 230,
+      "mlength": 210,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            300,
+            280,
+            1000
+          ],
+          "color": "#2B50FF55",
+          "m": {
+            "box": [
+              -100,
+              276,
+              600
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            70,
+            700
+          ],
+          "kicker": {
+            "tr": "Ürün akışı",
+            "en": "Product flow"
+          },
+          "accent": "#C8FF3D",
+          "title": {
+            "tr": "Yedi ekran,\ntek hız",
+            "en": "Seven screens,\none pace"
+          },
+          "size": 96,
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 54
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            930,
+            96,
+            560
+          ],
+          "text": {
+            "tr": "Her ekranda tek bir ana eylem var. Fiyatlar en büyük ve en net öğe; düşüş rozetleri yalnızca gerçekten fırsat olduğunda görünüyor.",
+            "en": "Every screen has one primary action. Prices are the largest, clearest element, and drop badges appear only for a real deal."
+          },
+          "textSize": 22,
+          "m": {
+            "box": [
+              24,
+              175,
+              352
+            ],
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/karsilama.webp",
+          "box": [
+            189,
+            402,
+            190
+          ],
+          "z": 7,
+          "motion": {
+            "from": [
+              -90,
+              620,
+              -30,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -10.5,
+              1,
+              1
+            ],
+            "start": -0.1,
+            "end": 0.30000000000000004
+          },
+          "m": {
+            "box": [
+              16,
+              411,
+              128
+            ],
+            "motion": {
+              "from": [
+                -36,
+                420,
+                -42,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -18,
+                1,
+                1
+              ],
+              "start": -0.1,
+              "end": 0.30000000000000004
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/kesfet.webp",
+          "box": [
+            361,
+            362,
+            190
+          ],
+          "z": 8,
+          "motion": {
+            "from": [
+              -60,
+              620,
+              -20,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -7,
+              1,
+              1
+            ],
+            "start": -0.04000000000000001,
+            "end": 0.36
+          },
+          "m": {
+            "box": [
+              56,
+              392,
+              128
+            ],
+            "motion": {
+              "from": [
+                -24,
+                420,
+                -28,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -12,
+                1,
+                1
+              ],
+              "start": -0.04000000000000001,
+              "end": 0.36
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/sonuclar.webp",
+          "box": [
+            533,
+            338,
+            190
+          ],
+          "z": 9,
+          "motion": {
+            "from": [
+              -30,
+              620,
+              -10,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -3.5,
+              1,
+              1
+            ],
+            "start": 0.01999999999999999,
+            "end": 0.42000000000000004
+          },
+          "m": {
+            "box": [
+              96,
+              381,
+              128
+            ],
+            "motion": {
+              "from": [
+                -12,
+                420,
+                -14,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -6,
+                1,
+                1
+              ],
+              "start": 0.01999999999999999,
+              "end": 0.42000000000000004
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/alarm.webp",
+          "box": [
+            705,
+            330,
+            190
+          ],
+          "z": 10,
+          "motion": {
+            "from": [
+              0,
+              620,
+              0,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.07999999999999999,
+            "end": 0.48
+          },
+          "m": {
+            "box": [
+              136,
+              378,
+              128
+            ],
+            "motion": {
+              "from": [
+                0,
+                420,
+                0,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.07999999999999999,
+              "end": 0.48
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/bilet.webp",
+          "box": [
+            877,
+            338,
+            190
+          ],
+          "z": 9,
+          "motion": {
+            "from": [
+              30,
+              620,
+              10,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              3.5,
+              1,
+              1
+            ],
+            "start": 0.13999999999999999,
+            "end": 0.54
+          },
+          "m": {
+            "box": [
+              176,
+              381,
+              128
+            ],
+            "motion": {
+              "from": [
+                12,
+                420,
+                14,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                6,
+                1,
+                1
+              ],
+              "start": 0.13999999999999999,
+              "end": 0.54
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/otel.webp",
+          "box": [
+            1049,
+            362,
+            190
+          ],
+          "z": 8,
+          "motion": {
+            "from": [
+              60,
+              620,
+              20,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              7,
+              1,
+              1
+            ],
+            "start": 0.19999999999999998,
+            "end": 0.6
+          },
+          "m": {
+            "box": [
+              216,
+              392,
+              128
+            ],
+            "motion": {
+              "from": [
+                24,
+                420,
+                28,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                12,
+                1,
+                1
+              ],
+              "start": 0.19999999999999998,
+              "end": 0.6
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/odeme.webp",
+          "box": [
+            1221,
+            402,
+            190
+          ],
+          "z": 7,
+          "motion": {
+            "from": [
+              90,
+              620,
+              30,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              10.5,
+              1,
+              1
+            ],
+            "start": 0.26,
+            "end": 0.66
+          },
+          "m": {
+            "box": [
+              256,
+              411,
+              128
+            ],
+            "motion": {
+              "from": [
+                36,
+                420,
+                42,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                18,
+                1,
+                1
+              ],
+              "start": 0.26,
+              "end": 0.66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 210,
+      "mlength": 200,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "photo",
+          "box": [
+            600,
+            120,
+            940
+          ],
+          "radius": 28,
+          "src": "/images/aloft/sahne/ucak.webp",
+          "width": 1248,
+          "height": 832,
+          "screens": [
+            {
+              "mask": "/images/aloft/sahne/ucak-maske-0.png",
+              "matrix": "matrix3d(0.6548645409105989,-0.05339374068895723,0,0.00008037951337351748,0.07499012354501275,0.6258608125123905,0,-0.000017897082666583483,0,0,1,0,453.3,175,0,1)",
+              "w": 393,
+              "h": 852,
+              "images": [
+                "/images/aloft/ui/alarm.webp"
+              ]
+            }
+          ],
+          "motion": {
+            "from": [
+              140,
+              40,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.35,
+            "end": 0.15
+          },
+          "m": {
+            "box": [
+              16,
+              251,
+              368
+            ],
+            "radius": 20,
+            "motion": {
+              "from": [
+                0,
+                60,
+                0,
+                0.94,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.35,
+              "end": 0.15
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            90,
+            250,
+            480
+          ],
+          "kicker": {
+            "tr": "Fiyat alarmı",
+            "en": "Price alerts"
+          },
+          "accent": "#C8FF3D",
+          "title": {
+            "tr": "Fiyat düşünce\nhaberin olur",
+            "en": "The drop comes\nto you"
+          },
+          "size": 72,
+          "text": {
+            "tr": "Rota ve hedef fiyat bir kez giriliyor. Aloft fiyatı izliyor, hedefin altına indiği anda bildirim gönderiyor.",
+            "en": "Enter a route and a target price once. Aloft watches the fare and sends an alert the moment it dips below the target."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 50,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "toast",
+          "box": [
+            1110,
+            170,
+            400
+          ],
+          "font": "Sora",
+          "svg": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"64\" height=\"64\" rx=\"18\" fill=\"#C8FF3D\"/><path d=\"M16 44L44 20M44 20H28M44 20V36\" fill=\"none\" stroke=\"#0B1020\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "name": "aloft",
+          "label": {
+            "tr": "şimdi",
+            "en": "now"
+          },
+          "title": {
+            "tr": "İstanbul → Roma ₺3.790",
+            "en": "Istanbul → Rome ₺3,790"
+          },
+          "text": {
+            "tr": "Hedef fiyatının altına indi.",
+            "en": "Dropped below your target."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.32,
+            "end": 0.44
+          },
+          "m": {
+            "box": [
+              24,
+              471,
+              352
+            ]
+          }
+        },
+        {
+          "kind": "toast",
+          "box": [
+            1110,
+            300,
+            400
+          ],
+          "font": "Sora",
+          "svg": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"64\" height=\"64\" rx=\"18\" fill=\"#C8FF3D\"/><path d=\"M16 44L44 20M44 20H28M44 20V36\" fill=\"none\" stroke=\"#0B1020\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "name": "aloft",
+          "label": {
+            "tr": "2 dk önce",
+            "en": "2 min ago"
+          },
+          "title": {
+            "tr": "Bodrum otelleri ₺2.850/gece",
+            "en": "Bodrum hotels ₺2,850/night"
+          },
+          "text": {
+            "tr": "Üç otel bütçenin altında.",
+            "en": "Three hotels under your budget."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.5,
+            "end": 0.62
+          },
+          "m": {
+            "box": [
+              24,
+              580,
+              352
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "length": 210,
+      "mlength": 200,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "photo",
+          "full": true,
+          "src": "/images/aloft/sahne/kapi.webp",
+          "width": 1248,
+          "height": 832,
+          "origin": [
+            702,
+            431
+          ],
+          "screens": [
+            {
+              "mask": "/images/aloft/sahne/kapi-maske-0.png",
+              "matrix": "matrix3d(0.23880461841346873,0.001507819907175558,0,-0.00010106336180422237,-0.10711213990861587,0.30120624955467756,0,-0.000035718149555653295,0,0,1,0,676.2,287.3,0,1)",
+              "w": 393,
+              "h": 852,
+              "images": [
+                "/images/aloft/ui/bilet.webp",
+                "/images/aloft/ui/otel.webp"
+              ],
+              "swap": [
+                0.5
+              ]
+            }
+          ],
+          "motion": {
+            "from": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1.45,
+              1
+            ],
+            "start": 0,
+            "end": 0.75
+          },
+          "m": {
+            "focus": [
+              0.594,
+              0.5
+            ],
+            "motion": {
+              "from": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1.08,
+                1
+              ],
+              "start": 0,
+              "end": 0.75
+            }
+          }
+        },
+        {
+          "kind": "scrim",
+          "side": "left",
+          "m": {
+            "side": "bottom"
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            300,
+            640
+          ],
+          "kicker": {
+            "tr": "Yolculuk günü",
+            "en": "Travel day"
+          },
+          "accent": "#C8FF3D",
+          "title": {
+            "tr": "Kapıda her şey\nhazır",
+            "en": "Ready at\nthe gate"
+          },
+          "size": 96,
+          "text": {
+            "tr": "Biniş kartı ve otel girişi aynı yerde; kapı, koltuk ve biniş saati uzaktan bile okunuyor.",
+            "en": "Boarding pass and hotel check-in live side by side; gate, seat and boarding time read at a glance."
+          },
+          "m": {
+            "box": [
+              24,
+              444,
+              352
+            ],
+            "size": 52,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "steps",
+          "box": [
+            100,
+            780,
+            460
+          ],
+          "labels": [
+            {
+              "tr": "Biniş kartı",
+              "en": "Boarding pass"
+            },
+            {
+              "tr": "Otel",
+              "en": "Hotel"
+            }
+          ],
+          "at": [
+            0.05,
+            0.5
+          ],
+          "motion": {
+            "from": [
+              0,
+              30,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0,
+            "end": 0.1
+          },
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 190,
+      "mlength": 180,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "photo",
+          "box": [
+            60,
+            100,
+            1000
+          ],
+          "radius": 28,
+          "src": "/images/aloft/sahne/urun.webp",
+          "width": 1152,
+          "height": 864,
+          "screens": [
+            {
+              "mask": "/images/aloft/sahne/urun-maske-0.png",
+              "matrix": "matrix3d(0.5569947897572732,-0.186622071241516,0,0.00003872008341254145,0.1908588084891837,0.43042381322745554,0,-0.00008262728224380929,0,0,1,0,234.7,284,0,1)",
+              "w": 393,
+              "h": 852,
+              "images": [
+                "/images/aloft/ui/kesfet.webp",
+                "/images/aloft/ui/otel.webp"
+              ],
+              "swap": [
+                0.45
+              ]
+            },
+            {
+              "mask": "/images/aloft/sahne/urun-maske-1.png",
+              "matrix": "matrix3d(0.5558948916174299,-0.1850361376248521,0,0.00003772658048835947,0.18357165108588308,0.4258998155778773,0,-0.00008504891852176784,0,0,1,0,552.7,269.9,0,1)",
+              "w": 393,
+              "h": 852,
+              "images": [
+                "/images/aloft/ui/sonuclar.webp",
+                "/images/aloft/ui/odeme.webp"
+              ],
+              "swap": [
+                0.6
+              ]
+            }
+          ],
+          "motion": {
+            "from": [
+              -120,
+              40,
+              -3,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.35,
+            "end": 0.15
+          },
+          "m": {
+            "box": [
+              0,
+              267,
+              400
+            ],
+            "radius": 0,
+            "motion": {
+              "from": [
+                0,
+                60,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.35,
+              "end": 0.15
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            1130,
+            290,
+            440
+          ],
+          "kicker": {
+            "tr": "Rezervasyon",
+            "en": "Booking"
+          },
+          "accent": "#C8FF3D",
+          "title": {
+            "tr": "Uçuş ve otel\ntek sepette",
+            "en": "One basket,\nflight + hotel"
+          },
+          "size": 66,
+          "text": {
+            "tr": "Seçilen uçuş ve otel tek özette toplanıyor; ödeme tek adımda bitiyor.",
+            "en": "The chosen flight and hotel come together in one summary, and payment takes a single step."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 50,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "toast",
+          "box": [
+            820,
+            640,
+            380
+          ],
+          "font": "Sora",
+          "svg": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"64\" height=\"64\" rx=\"18\" fill=\"#C8FF3D\"/><path d=\"M16 44L44 20M44 20H28M44 20V36\" fill=\"none\" stroke=\"#0B1020\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "name": "aloft",
+          "label": {
+            "tr": "paket",
+            "en": "bundle"
+          },
+          "title": {
+            "tr": "Toplam ₺11.650",
+            "en": "Total ₺11,650"
+          },
+          "text": {
+            "tr": "Ayrı ayrı almaya göre ₺1.120 tasarruf.",
+            "en": "₺1,120 less than booking separately."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.64,
+            "end": 0.76
+          },
+          "m": {
+            "box": [
+              40,
+              553,
+              320
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "length": 240,
+      "mlength": 220,
+      "bg": "#0B1020",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [
+            100,
+            60,
+            720
+          ],
+          "kicker": {
+            "tr": "Marka sistemi",
+            "en": "Brand system"
+          },
+          "accent": "#C8FF3D",
+          "title": {
+            "tr": "Yukarı bakan\nbir ok",
+            "en": "An arrow\npointing up"
+          },
+          "size": 96,
+          "m": {
+            "box": [
+              24,
+              22,
+              352
+            ],
+            "size": 54
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            930,
+            86,
+            560
+          ],
+          "text": {
+            "tr": "Ok hem kalkışı hem fırsatı anlatıyor; ad \"havada, yükseklerde\" demek. Kobalt güven veriyor, limon yalnızca bir sonraki adımı gösteriyor.",
+            "en": "The arrow speaks of both take-off and a good deal; the name means up in the air. Cobalt builds trust, and lime only ever marks the next step."
+          },
+          "textSize": 21,
+          "m": {
+            "box": [
+              24,
+              184,
+              352
+            ],
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "svg",
+          "box": [
+            100,
+            330,
+            290,
+            290
+          ],
+          "svg": "<svg viewBox=\"0 0 64 64\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"64\" height=\"64\" rx=\"18\" fill=\"#C8FF3D\"/><path d=\"M16 44L44 20M44 20H28M44 20V36\" fill=\"none\" stroke=\"#0B1020\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "motion": {
+            "from": [
+              560,
+              20,
+              -16,
+              0.6,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.05,
+            "end": 0.3
+          },
+          "m": {
+            "box": [
+              24,
+              273,
+              96,
+              88
+            ],
+            "motion": {
+              "from": [
+                130,
+                80,
+                -16,
+                0.6,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.05,
+              "end": 0.3
+            }
+          }
+        },
+        {
+          "kind": "word",
+          "box": [
+            100,
+            660,
+            600
+          ],
+          "value": "aloft",
+          "font": "Sora",
+          "size": 150,
+          "color": "#F3F5FF",
+          "at": [
+            0.12
+          ],
+          "m": {
+            "box": [
+              136,
+              287,
+              240
+            ],
+            "size": 66
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            520,
+            330,
+            180,
+            300
+          ],
+          "color": "#2B50FF",
+          "label": {
+            "tr": "Kobalt",
+            "en": "Cobalt"
+          },
+          "ink": "#fff",
+          "value": "#2B50FF",
+          "font": "Sora",
+          "motion": {
+            "from": [
+              80,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.2,
+            "end": 0.45
+          },
+          "m": {
+            "box": [
+              24,
+              379,
+              112,
+              81
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            715,
+            330,
+            180,
+            300
+          ],
+          "color": "#C8FF3D",
+          "label": {
+            "tr": "Limon",
+            "en": "Lime"
+          },
+          "ink": "#0B1020",
+          "value": "#C8FF3D",
+          "font": "Sora",
+          "motion": {
+            "from": [
+              110,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.25,
+            "end": 0.5
+          },
+          "m": {
+            "box": [
+              144,
+              379,
+              112,
+              81
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            910,
+            330,
+            180,
+            300
+          ],
+          "color": "#FF6B9D",
+          "label": {
+            "tr": "Pembe",
+            "en": "Pink"
+          },
+          "ink": "#0B1020",
+          "value": "#FF6B9D",
+          "font": "Sora",
+          "motion": {
+            "from": [
+              140,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.30000000000000004,
+            "end": 0.55
+          },
+          "m": {
+            "box": [
+              264,
+              379,
+              112,
+              81
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            1105,
+            330,
+            180,
+            300
+          ],
+          "color": "#0B1020",
+          "label": {
+            "tr": "Gece",
+            "en": "Night"
+          },
+          "ink": "#F3F5FF",
+          "value": "#0B1020",
+          "font": "Sora",
+          "motion": {
+            "from": [
+              170,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.35000000000000003,
+            "end": 0.6000000000000001
+          },
+          "m": {
+            "box": [
+              24,
+              468,
+              112,
+              81
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            1300,
+            330,
+            180,
+            300
+          ],
+          "color": "#F3F5FF",
+          "label": {
+            "tr": "Zemin",
+            "en": "Base"
+          },
+          "ink": "#0B1020",
+          "value": "#F3F5FF",
+          "font": "Sora",
+          "motion": {
+            "from": [
+              200,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.4,
+            "end": 0.65
+          },
+          "m": {
+            "box": [
+              144,
+              468,
+              112,
+              81
+            ]
+          }
+        },
+        {
+          "kind": "type",
+          "box": [
+            520,
+            660,
+            960,
+            180
+          ],
+          "font": "Sora",
+          "name": "Sora",
+          "label": {
+            "tr": "Regular 400 · Semibold 600 · Extrabold 800",
+            "en": "Regular 400 · Semibold 600 · Extrabold 800"
+          },
+          "value": "₺1.840 · 08:15 → 09:25",
+          "accent": "#C8FF3D",
+          "motion": {
+            "from": [
+              0,
+              50,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.5,
+            "end": 0.72
+          },
+          "m": {
+            "box": [
+              24,
+              556,
+              352,
+              138
+            ],
+            "size": 56,
+            "label": {
+              "tr": "400 · 600 · 800",
+              "en": "400 · 600 · 800"
+            },
+            "value": "₺1.840"
+          }
+        }
+      ]
+    },
+    {
+      "length": 170,
+      "mlength": 160,
+      "bg": "#2B50FF",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [
+            400,
+            64,
+            800
+          ],
+          "align": "center",
+          "text": {
+            "tr": "Fiyat düştüğünde haberin olsun.",
+            "en": "Know when the price drops."
+          },
+          "textSize": 22,
+          "ink": "#F3F5FF",
+          "at": [
+            -0.4
+          ],
+          "m": {
+            "box": [
+              24,
+              64,
+              352
+            ],
+            "textSize": 17
+          }
+        },
+        {
+          "kind": "word",
+          "box": [
+            0,
+            120,
+            1600
+          ],
+          "align": "center",
+          "value": "aloft",
+          "font": "Sora",
+          "size": 360,
+          "color": "#C8FF3D",
+          "at": [
+            -0.6
+          ],
+          "motion": {
+            "from": [
+              0,
+              160,
+              0,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              -30,
+              0,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 1
+          },
+          "m": {
+            "box": [
+              0,
+              120,
+              400
+            ],
+            "size": 130,
+            "motion": {
+              "from": [
+                0,
+                80,
+                0,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                -10,
+                0,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 1
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/karsilama.webp",
+          "box": [
+            395,
+            470,
+            250
+          ],
+          "z": 10,
+          "motion": {
+            "from": [
+              0,
+              560,
+              -7,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              -7,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 0.9
+          },
+          "m": {
+            "box": [
+              30,
+              304,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                280,
+                -7,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                -7,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 0.9
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/bilet.webp",
+          "box": [
+            675,
+            430,
+            250
+          ],
+          "z": 11,
+          "motion": {
+            "from": [
+              0,
+              700,
+              0,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 0.9
+          },
+          "m": {
+            "box": [
+              125,
+              276,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                350,
+                0,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 0.9
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/aloft/ui/kesfet.webp",
+          "box": [
+            955,
+            470,
+            250
+          ],
+          "z": 12,
+          "motion": {
+            "from": [
+              0,
+              560,
+              7,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              7,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 0.9
+          },
+          "m": {
+            "box": [
+              220,
+              304,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                280,
+                7,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                7,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 0.9
+            }
+          }
+        }
+      ]
+    }
   ]
 }

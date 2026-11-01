@@ -38,9 +38,10 @@ body {
   .eyebrow {
     @apply text-[13px] font-medium uppercase tracking-[0.14em] text-stone;
   }
-  /* Satır satır kayarak beliren metinler için maske */
+  /* Satır satır kayarak beliren metinler için maske. Üstteki boşluk (eksi payla dengelenir) büyük harflerin
+     şapkası ve İ'nin noktası satır yüksekliğinin dışına taşsa da kesilmesin diye */
   .line-mask {
-    @apply block overflow-hidden pb-[0.04em];
+    @apply -mt-[0.16em] block overflow-hidden pb-[0.04em] pt-[0.16em];
   }
   .pill {
     @apply inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors;
@@ -123,6 +124,16 @@ body {
 .is-in > .soft-rise {
   opacity: 1;
   transform: none;
+}
+
+/* Sahne metinleri sahne içinde çıkar da; çıkarken harf uçları maskenin altında iz bırakmasın diye solar */
+.scene-text .soft-line > span {
+  transition:
+    transform 1.1s var(--ease-soft),
+    opacity 0.6s var(--ease-soft);
+}
+.scene-text:not(.is-in) .soft-line > span {
+  opacity: 0;
 }
 
 /* Proje kapağı: alttan perde gibi açılır, görsel hafifçe küçülerek yerine oturur */

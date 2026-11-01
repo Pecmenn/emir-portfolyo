@@ -4,6 +4,7 @@ import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as 
 import AutoVideo from '../components/AutoVideo';
 import { RevealImage } from '../components/Reveal';
 import { Magnetic, Roll } from '../components/Roll';
+import Scenes from '../components/Scenes';
 import { AREA_LABEL } from '../components/WorkCard';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
@@ -17,16 +18,17 @@ import NotFound from './NotFound';
 // - Otomasyon işi: aynı düzene "Sorun → Nasıl çalışıyor → Sonuç" bölümü (caseStudy) ve akış şeması bloğu (flow) eklenir.
 // Görsel dizileri (pan, strip, flock) sakin ızgaralar olarak dizilir. Eski "dünya", "yolculuk" ve "oyun" blokları
 // bu düzende gösterilmez (kodları park/oyun-ve-dunyalar dalında).
+// Projede sahneler (scenes) varsa kapak, giriş metni ve galeri yerine kaydırmayla oynayan sahneler gösterilir.
 
-function Intro({ project }: { project: ProjectType }) {
+function Intro({ project, bare }: { project: ProjectType; bare?: boolean }) {
   const { t, lang } = useLang();
   const { coverReady } = useTransition();
   const ref = useRef<HTMLElement>(null);
 
   // Yalnızca videolu projede beklenecek bir kapak görseli yok; geçiş hemen açılsın
   useEffect(() => {
-    if (!project.cover) coverReady();
-  }, [project.cover, coverReady]);
+    if (!project.cover || bare) coverReady();
+  }, [project.cover, bare, coverReady]);
 
   // Geçiş perdesi kalktıktan sonra başlık ve kapak yumuşakça açılır
   useEffect(() => {
@@ -43,7 +45,7 @@ function Intro({ project }: { project: ProjectType }) {
   const areas = project.areas ?? ['design'];
 
   return (
-    <section ref={ref} className="gutter pt-[calc(68px+clamp(32px,6vw,80px))]">
+    <section ref={ref} className={`gutter pt-[calc(68px+clamp(32px,6vw,80px))] ${bare ? 'pb-[clamp(48px,7vw,96px)]' : ''}`}>
       <p className="soft-rise eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
         <span lang="en" className="text-wine-light">
           {areas.map((a) => AREA_LABEL[a]).join(' · ')}
@@ -69,23 +71,25 @@ function Intro({ project }: { project: ProjectType }) {
           ))}
         </dl>
       </div>
-      <div className="soft-cover card relative mt-[clamp(32px,5vw,64px)] aspect-[4/5] bg-coal-2 sm:aspect-[16/9]">
-        {project.cover && (
-          <img
-            src={project.cover}
-            alt=""
-            onLoad={coverReady}
-            onError={coverReady}
-            style={{ ['--fx' as string]: `${project.coverFocus ?? 50}%` }}
-            className="absolute inset-0 h-full w-full object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]"
-          />
-        )}
-        {project.coverVideo && (
-          <div className="absolute inset-0">
-            <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
-          </div>
-        )}
-      </div>
+      {!bare && (
+        <div className="soft-cover card relative mt-[clamp(32px,5vw,64px)] aspect-[4/5] bg-coal-2 sm:aspect-[16/9]">
+          {project.cover && (
+            <img
+              src={project.cover}
+              alt=""
+              onLoad={coverReady}
+              onError={coverReady}
+              style={{ ['--fx' as string]: `${project.coverFocus ?? 50}%` }}
+              className="absolute inset-0 h-full w-full object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]"
+            />
+          )}
+          {project.coverVideo && (
+            <div className="absolute inset-0">
+              <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
+            </div>
+          )}
+        </div>
+      )}
     </section>
   );
 }
@@ -390,6 +394,16 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
   const { t } = useLang();
   usePageMeta(`${project.title} — ${t(project.discipline)} · ${site.name}`, t(project.summary));
   let chapter = 0;
+
+  if (project.scenes?.length)
+    return (
+      <main id="main" tabIndex={-1} key={project.slug} className="outline-none">
+        <Intro project={project} bare />
+        <Scenes scenes={project.scenes} font={project.sceneFont} />
+        <NextProject project={next} />
+        <ContactStrip />
+      </main>
+    );
 
   return (
     <main id="main" tabIndex={-1} key={project.slug} className="outline-none">
