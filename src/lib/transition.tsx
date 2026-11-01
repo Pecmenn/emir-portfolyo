@@ -114,9 +114,9 @@ export function TransitionProvider({ children }: { children: ReactNode }) {
   return (
     <TransitionContext.Provider value={{ openProject, goTo, coverReady }}>
       {children}
-      <div ref={panelRef} aria-hidden className="pointer-events-none fixed inset-x-0 -bottom-[14vh] top-0 z-[90] hidden items-center justify-center bg-ink pb-[14vh] text-paper">
-        <p className="flex items-center gap-4 text-[clamp(1.8rem,3.4vw,3.6rem)] tracking-[-0.03em]">
-          <span className="h-2.5 w-2.5 rounded-full bg-accent-soft" />
+      <div ref={panelRef} aria-hidden className="pointer-events-none fixed inset-x-0 -bottom-[14vh] top-0 z-[90] hidden items-center justify-center bg-wine pb-[14vh] text-cream">
+        <p lang="en" className="display flex items-center gap-4 text-[clamp(2.4rem,5vw,5rem)]">
+          <span className="h-2.5 w-2.5 rounded-full bg-cream" />
           <span ref={labelRef} />
         </p>
       </div>

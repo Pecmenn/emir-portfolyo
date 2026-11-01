@@ -1,0 +1,96 @@
+{
+  "order": 2,
+  "slug": "akis",
+  "title": "Akış",
+  "discipline": {
+    "tr": "Uygulama ve otomasyon",
+    "en": "App and automation"
+  },
+  "year": "2026",
+  "cover": "/images/akis/pano.webp",
+  "summary": {
+    "tr": "Görevleri, takvimi, alışkanlıkları ve parayı tek yerde toplayan, Claude ile sohbet edebilen kişisel asistan ve planlayıcı.",
+    "en": "A personal assistant and planner that brings tasks, calendar, habits and money together and can chat with Claude."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "Tasarım ve geliştirme",
+    "en": "Design and development"
+  },
+  "services": {
+    "tr": "Arayüz tasarımı, masaüstü uygulama, yapay zekâ asistanı",
+    "en": "Interface design, desktop app, AI assistant"
+  },
+  "intro": {
+    "tr": "Akış bir Windows uygulaması olarak çalışıyor; aynı arayüzün tarayıcıda açılan bir sürümü de var. Asistan günü otomatik planlıyor, hatırlatmaları yönetiyor ve Claude ile sohbet ederek görev ekleyip düzenleyebiliyor. Veriler bilgisayarda kalıyor ve her gün yedekleniyor.",
+    "en": "Akış runs as a Windows app, with a browser version of the same interface. The assistant plans the day automatically, manages reminders and can add and edit tasks by chatting with Claude. Data stays on the computer and is backed up every day."
+  },
+  "gallery": [
+    {
+      "type": "full",
+      "image": "/images/akis/pano.webp",
+      "alt": {
+        "tr": "Akış görev panosu",
+        "en": "Akış task board"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/akis/ozet.webp",
+      "alt": {
+        "tr": "Akış özet ekranı",
+        "en": "Akış overview screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/akis/asistan.webp",
+      "alt": {
+        "tr": "Akış asistan penceresi",
+        "en": "Akış assistant window"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/akis/takvim.webp",
+      "alt": {
+        "tr": "Akış takvim ekranı",
+        "en": "Akış calendar screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/akis/finans.webp",
+      "alt": {
+        "tr": "Akış finans ekranı",
+        "en": "Akış finance screen"
+      }
+    },
+    {
+      "type": "pan",
+      "title": {
+        "tr": "Telefonda da aynı",
+        "en": "The same on the phone"
+      },
+      "text": {
+        "tr": "Arayüz dar ekrana göre yeniden düzenleniyor.",
+        "en": "The interface reorganises itself for narrow screens."
+      },
+      "images": [
+        "/images/akis/mobil-ozet.webp",
+        "/images/akis/mobil-isler.webp",
+        "/images/akis/mobil-takvim.webp",
+        "/images/akis/mobil-finans.webp",
+        "/images/akis/mobil-asistan.webp"
+      ],
+      "alt": {
+        "tr": "Akış telefon ekranı",
+        "en": "Akış phone screen"
+      }
+    }
+  ],
+  "areas": [
+    "build",
+    "automate"
+  ]
+}

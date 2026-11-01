@@ -1,5 +1,5 @@
 {
-  "order": 12,
+  "order": 32,
   "slug": "synapse-grid",
   "title": "Synapse Grid",
   "discipline": {
@@ -106,5 +106,8 @@
   ],
   "featured": false,
   "canvas": "#ECECEC",
-  "hidden": true
+  "hidden": true,
+  "areas": [
+    "design"
+  ]
 }

@@ -97,5 +97,8 @@
     }
   ],
   "featured": false,
-  "canvas": "#ECE8DC"
+  "canvas": "#ECE8DC",
+  "areas": [
+    "design"
+  ]
 }

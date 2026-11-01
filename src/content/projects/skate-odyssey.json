@@ -1,5 +1,5 @@
 {
-  "order": 1,
+  "order": 4,
   "slug": "skate-odyssey",
   "title": "Skate Odyssey",
   "discipline": {
@@ -389,5 +389,8 @@
   ],
   "featured": true,
   "canvas": "#ECECEC",
-  "rider": "/images/skate-odyssey/obje/kahraman-yan.webp"
+  "rider": "/images/skate-odyssey/obje/kahraman-yan.webp",
+  "areas": [
+    "design"
+  ]
 }

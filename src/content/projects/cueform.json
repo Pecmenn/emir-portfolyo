@@ -1,5 +1,5 @@
 {
-  "order": 6,
+  "order": 7,
   "slug": "cueform",
   "title": "Cueform",
   "discipline": {
@@ -150,5 +150,8 @@
   ],
   "featured": false,
   "dark": true,
-  "canvas": "#131814"
+  "canvas": "#131814",
+  "areas": [
+    "design"
+  ]
 }

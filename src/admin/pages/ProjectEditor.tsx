@@ -598,6 +598,28 @@ function Editor({ original, isNew }: { original: Project; isNew: boolean }) {
                 </button>
               ))}
             </div>
+            <Field label="Alanlar" hint="İşler sayfasındaki filtreler buradan oluşur. Birden fazla seçilirse kartın etiketi şarap renginde olur.">
+              <div className="flex flex-wrap gap-2">
+                {(['design', 'build', 'automate'] as const).map((a) => {
+                  const areas = draft.areas ?? ['design'];
+                  const on = areas.includes(a);
+                  return (
+                    <button
+                      key={a}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => {
+                        const next = on ? areas.filter((x) => x !== a) : [...areas, a];
+                        set('areas', next.length ? next : ['design']);
+                      }}
+                      className={`rounded-full border px-4 py-1.5 text-sm font-semibold capitalize transition ${on ? 'border-ink bg-ink text-paper' : 'border-black/10 text-ink/60 hover:border-accent'}`}
+                    >
+                      {a}
+                    </button>
+                  );
+                })}
+              </div>
+            </Field>
             <div className="grid gap-5 sm:grid-cols-2">
               <Field label="Yıl">
                 <TextInput value={draft.year} onChange={(v) => set('year', v)} placeholder="2026" />

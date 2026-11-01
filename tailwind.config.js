@@ -17,10 +17,21 @@ export default {
         night: '#120E22',
         // Görsel kartlarının açık zemini (soluk lila)
         mist: '#ECEAF3',
+        // Yeni kimlik (LinkedIn kapağıyla aynı aile): siyah zemin, krem yazı, şarap vurgu
+        coal: '#0D0B0B',
+        'coal-2': '#161212',
+        'coal-3': '#1E1818',
+        seam: '#2C2525',
+        cream: '#F1E9DE',
+        stone: '#A99F95',
+        wine: '#6B0F17',
+        'wine-deep': '#4A0A10',
+        'wine-light': '#D26A72',
       },
       fontFamily: {
-        display: ['"General Sans"', 'system-ui', 'sans-serif'],
-        sans: ['"General Sans"', 'system-ui', 'sans-serif'],
+        // Başlıklar dar ve kalın (Anton), gövde sade (Hanken Grotesk)
+        display: ['Anton', 'Impact', '"Arial Narrow"', 'sans-serif'],
+        sans: ['"Hanken Grotesk"', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.045em',

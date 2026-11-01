@@ -1,16 +1,24 @@
 {
   "nav": {
+    "areas": {
+      "tr": "Ne yapıyorum",
+      "en": "What I do"
+    },
     "work": {
       "tr": "İşler",
       "en": "Work"
     },
-    "services": {
-      "tr": "Hizmetler",
-      "en": "Services"
+    "about": {
+      "tr": "Hakkımda",
+      "en": "About"
     },
     "contact": {
       "tr": "İletişim",
       "en": "Contact"
+    },
+    "services": {
+      "tr": "Hizmetler",
+      "en": "Services"
     }
   },
   "cv": {

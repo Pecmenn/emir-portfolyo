@@ -1,26 +1,31 @@
 import { ArrowDown, ArrowLeft, ArrowUp, ChevronRight, Plus, Trash2 } from 'lucide-react';
 import type { ReactNode } from 'react';
-import type { Sticker } from '../../content';
+import type { Step } from '../../content';
 import { href } from '../router';
 import { PATHS, toJSON, useAdmin, type ContactData, type Content, type PlayData } from '../store';
-import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, useDraft, useEditLang } from '../ui';
+import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, TextInput, Toggle, useDraft, useEditLang } from '../ui';
 
-type SectionKey = 'acilis' | 'isler' | 'hizmetler' | 'iletisim';
+// Ana sayfa (Design. Build. Automate.) bölümleri; sitede yukarıdan aşağı bu sırayla görünür.
+// Çok satırlı başlıklarda her satır ayrı satıra yazılır (Enter); sitede her satır ayrı kayar.
+type SectionKey = 'acilis' | 'alanlar' | 'isler' | 'vaka' | 'hakkimda' | 'surec' | 'iletisim';
 
-const SECTIONS: { key: SectionKey; title: string; description: string; highlight: number }[] = [
-  { key: 'acilis', title: 'Açılış', description: 'İlk ekrandaki cümle, düğmeler ve düşen proje parçaları.', highlight: 0 },
-  { key: 'isler', title: 'İşler', description: 'Proje listesinin başlığı ve filtre yazısı. Projeler “Projeler” sayfasından gelir.', highlight: 1 },
-  { key: 'hizmetler', title: 'Hizmetler', description: 'Koyu bantta yan yana duran hizmet kartları.', highlight: 2 },
-  { key: 'iletisim', title: 'İletişim', description: '“Birlikte çalışalım” başlığı, paragraf ve form yazıları.', highlight: 3 },
+const SECTIONS: { key: SectionKey; title: string; description: string }[] = [
+  { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi, durum ve kayan disiplin şeridi.' },
+  { key: 'alanlar', title: 'Üç alan', description: 'Design, Build ve Automate satırları: açıklama, etiketler ve küçük görseller.' },
+  { key: 'isler', title: 'Seçili işler', description: 'Ana sayfada büyük kartlarla gösterilen projeler ve sırası.' },
+  { key: 'vaka', title: 'Uçtan uca vaka', description: 'Şarap renkli bant: bir markanın kimlik, site ve otomasyon adımları.' },
+  { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve kullandığın araçlar.' },
+  { key: 'surec', title: 'Nasıl çalışırım', description: 'Dört adımlık çalışma süreci.' },
+  { key: 'iletisim', title: 'İletişim', description: '“Birlikte çalışalım” başlığı, paragraf ve form yazıları.' },
 ];
 
 // Sayfanın küçük şeması: düzenlenen bölümün sitede nerede olduğunu gösterir
 function PageMap({ highlight }: { highlight: number }) {
-  const blocks = [{ h: 'h-9' }, { h: 'h-7' }, { h: 'h-4', dark: true }, { h: 'h-5' }, { h: 'h-3', dark: true }];
+  const blocks = ['h-7', 'h-5', 'h-6', 'h-4', 'h-5', 'h-3', 'h-4'];
   return (
-    <div className="flex w-16 shrink-0 flex-col gap-0.5 rounded-lg border border-black/10 bg-white p-1">
-      {blocks.map((b, i) => (
-        <div key={i} className={`${b.h} rounded-[3px] ${i === highlight ? 'bg-accent' : b.dark ? 'bg-ink/80' : 'bg-black/[0.07]'}`} />
+    <div className="flex w-16 shrink-0 flex-col gap-0.5 rounded-lg border border-black/10 bg-[#0D0B0B] p-1">
+      {blocks.map((h, i) => (
+        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#D26A72]' : i === 3 ? 'bg-[#6B0F17]' : 'bg-white/10'}`} />
       ))}
     </div>
   );
@@ -29,11 +34,11 @@ function PageMap({ highlight }: { highlight: number }) {
 export function HomeSectionsList() {
   return (
     <div>
-      <PageHeader title="Ana sayfa" description="Bölümler sitede yukarıdan aşağı bu sırayla görünür. Mor alan, bölümün sayfadaki yerini gösterir." />
+      <PageHeader title="Ana sayfa" description="Bölümler sitede yukarıdan aşağı bu sırayla görünür. Renkli alan, bölümün sayfadaki yerini gösterir." />
       <div className="grid gap-3 md:grid-cols-2">
         {SECTIONS.map((s, i) => (
           <a key={s.key} href={href('ana-sayfa', s.key)} className="group flex items-center gap-4 rounded-2xl border border-black/[0.06] bg-white p-4 shadow-sm transition hover:border-accent/60 hover:shadow-md">
-            <PageMap highlight={s.highlight} />
+            <PageMap highlight={i} />
             <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold text-ink/40">{i + 1}. bölüm</p>
               <h2 className="font-display text-xl font-semibold tracking-tight">{s.title}</h2>
@@ -52,14 +57,14 @@ export function HomeSectionsList() {
 }
 
 function SectionShell<T>({
-  section,
+  sectionKey,
   original,
   file,
   contentKey,
   children,
   preview,
 }: {
-  section: (typeof SECTIONS)[number];
+  sectionKey: SectionKey;
   original: T;
   file: string;
   contentKey: keyof Content;
@@ -68,7 +73,9 @@ function SectionShell<T>({
 }) {
   const { save, saving, pendingFor } = useAdmin();
   const { draft, setDraft, dirty, reset } = useDraft(original);
-  // Yeni yüklenen parça görselleri de aynı commit'e girer
+  const index = SECTIONS.findIndex((s) => s.key === sectionKey);
+  const section = SECTIONS[index];
+  // Yeni yüklenen görseller de aynı commit'e girer
   const onSave = () =>
     save([{ path: file, text: toJSON(draft) }, ...pendingFor(draft)], `Panel: ana sayfa “${section.title}” güncellendi`, { [contentKey]: draft } as Partial<Content>);
 
@@ -79,7 +86,7 @@ function SectionShell<T>({
       </a>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-4">
-          <PageMap highlight={section.highlight} />
+          <PageMap highlight={index} />
           <div>
             <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">{section.title}</h1>
             <p className="text-[15px] text-ink/60">{section.description}</p>
@@ -99,102 +106,21 @@ function SectionShell<T>({
   );
 }
 
-function BigLines({ lines, size = 'text-3xl' }: { lines: string[] | undefined; size?: string }) {
+// Önizleme: sitedeki siyah zeminde dar başlık ve sade metin
+function Preview({ title, text, children }: { title?: string; text?: string; children?: ReactNode }) {
   return (
-    <p className={`font-display font-semibold leading-[0.95] tracking-tight ${size}`}>
-      {(lines ?? []).map((l, i) => (
-        <span key={i} className="block">
-          {l || '…'}
-        </span>
-      ))}
-    </p>
-  );
-}
-
-// Sıraya bağlı sabit sahte rastgele sayı: önizlemedeki parçalar her çizimde aynı yerde durur
-const seeded = (i: number, k: number) => {
-  const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453;
-  return x - Math.floor(x);
-};
-
-function HeroPreview({ d }: { d: PlayData }) {
-  const { lang } = useEditLang();
-  const { src } = useAdmin();
-  return (
-    <div className="relative h-80 overflow-hidden rounded-lg bg-paper p-3">
-      <p className="text-[11px] font-medium">{d.hello?.[lang]}</p>
-      <BigLines lines={d.statement?.[lang]} size="text-2xl mt-1" />
-      <p className="mt-2 max-w-[60%] text-[10px] leading-snug text-ink/70">{d.text?.[lang]}</p>
-      <div className="mt-2 flex gap-1.5">
-        <span className="rounded-full bg-ink px-2 py-1 text-[9px] font-semibold text-paper">{d.ctaWork?.[lang]}</span>
-        <span className="rounded-full border border-ink px-2 py-1 text-[9px] font-semibold">{d.ctaContact?.[lang]}</span>
-      </div>
-      {d.stickers.slice(0, 14).map((s, i) =>
-        s.src ? (
-          <img
-            key={i}
-            src={src(s.src)}
-            alt=""
-            style={{ height: Math.max(18, s.h * 0.22), left: `${40 + seeded(i, 1) * 52}%`, bottom: `${seeded(i, 2) * 22}%`, transform: `rotate(${(seeded(i, 3) - 0.5) * 80}deg)` }}
-            className="absolute w-auto drop-shadow"
-          />
-        ) : null,
-      )}
-    </div>
-  );
-}
-
-function WorkPreview({ d }: { d: PlayData }) {
-  const { lang } = useEditLang();
-  const { content } = useAdmin();
-  const visible = content.projects.filter((p) => !p.hidden);
-  const disciplines = [...new Set(visible.map((p) => p.discipline?.[lang]).filter(Boolean))];
-  return (
-    <div>
-      <div className="flex items-end justify-between gap-2 border-b border-black/10 pb-2">
-        <p className="font-display text-2xl font-semibold">{d.workTitle?.[lang]}</p>
-        <div className="flex flex-wrap justify-end gap-1">
-          {[d.all?.[lang], ...disciplines].map((x, i) => (
-            <span key={i} className={`rounded-full px-2 py-0.5 text-[9px] font-semibold ${i === 0 ? 'bg-ink text-paper' : 'border border-black/15'}`}>
-              {x}
+    <div className="rounded-lg bg-[#0D0B0B] p-4 text-[#F1E9DE]">
+      {title && (
+        <p className="font-['Anton',sans-serif] text-3xl uppercase leading-[0.9]">
+          {title.split('\n').map((l, i) => (
+            <span key={i} className="block">
+              {l || '…'}
             </span>
           ))}
-        </div>
-      </div>
-      {visible.map((p) => (
-        <p key={p.slug} className="border-b border-black/10 py-1.5 font-display text-lg font-semibold leading-none">
-          {p.title}
         </p>
-      ))}
-    </div>
-  );
-}
-
-function ServicesPreview({ d }: { d: PlayData }) {
-  const { lang } = useEditLang();
-  return (
-    <div className="rounded-lg bg-ink p-4 text-paper">
-      <p className="font-display text-2xl font-semibold">{d.servicesTitle?.[lang]}</p>
-      <div className="mt-3 flex flex-col gap-3">
-        {d.services.map((s, i) => (
-          <div key={i} className="border-t border-white/15 pt-2">
-            <p className="text-[10px] text-accent">0{i + 1}</p>
-            <p className="font-display text-lg font-semibold">{s.title?.[lang] || '…'}</p>
-            <p className="text-[11px] leading-snug text-paper/70">{s.text?.[lang]}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ContactPreview({ d }: { d: ContactData }) {
-  const { lang } = useEditLang();
-  return (
-    <div>
-      <BigLines lines={d.title?.[lang]} size="text-4xl" />
-      <p className="mt-4 text-sm leading-relaxed">{d.text?.[lang]}</p>
-      <span className="mt-4 inline-block rounded-full bg-ink px-4 py-2 text-xs font-semibold text-paper">{d.form?.send?.[lang]} →</span>
+      )}
+      {text && <p className="mt-3 text-[11px] leading-snug text-[#A99F95]">{text}</p>}
+      {children}
     </div>
   );
 }
@@ -213,175 +139,275 @@ function IconButton({ label, onClick, disabled, danger, children }: { label: str
   );
 }
 
-const selectClass = 'h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-medium outline-none focus:border-accent';
-
-// Düşen parçalar: görsel, tıklanınca açılacak proje ve geniş ekrandaki yüksekliği
-function StickerList({ value, onChange }: { value: Sticker[]; onChange: (v: Sticker[]) => void }) {
-  const { content } = useAdmin();
-  const update = (i: number, next: Partial<Sticker>) => onChange(value.map((s, j) => (j === i ? { ...s, ...next } : s)));
+function ListTools({ i, length, onMove, onRemove, what }: { i: number; length: number; onMove: (to: number) => void; onRemove: () => void; what: string }) {
   return (
-    <Card
-      title="Düşen parçalar"
-      description="Projelerden kesilmiş saydam zeminli PNG/WebP parçalar. Sırayla düşerler; telefonda yalnızca ilk 12, geniş ekranda ilk 20 parça gösterilir. Pasif bir projeye bağlanan parçaya tıklanınca yalnızca adı görünür."
-    >
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {value.map((s, i) => (
-          <div key={i} className="flex flex-col gap-3 rounded-xl border border-black/[0.08] p-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold">{i + 1}. parça</span>
-              <div className="flex">
-                <IconButton label="Öne al" disabled={i === 0} onClick={() => onChange(move(value, i, i - 1))}>
-                  <ArrowUp size={15} />
-                </IconButton>
-                <IconButton label="Arkaya al" disabled={i === value.length - 1} onClick={() => onChange(move(value, i, i + 1))}>
-                  <ArrowDown size={15} />
-                </IconButton>
-                <IconButton label="Parçayı sil" danger onClick={() => onChange(value.filter((_, j) => j !== i))}>
-                  <Trash2 size={15} />
-                </IconButton>
-              </div>
-            </div>
-            <ImageField label="Görsel" aspect="aspect-square" value={s.src} onChange={(v) => update(i, { src: v })} />
-            <Field label="Proje">
-              <select value={s.slug} onChange={(e) => update(i, { slug: e.target.value })} className={selectClass}>
-                <option value="">Seçin</option>
-                {content.projects.map((p) => (
-                  <option key={p.slug} value={p.slug}>
-                    {p.title}
-                    {p.hidden ? ' (pasif)' : ''}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label={`Boyut: ${s.h} px`} hint="Geniş ekrandaki yükseklik; dar ekranda oranla küçülür.">
-              <input type="range" min={60} max={240} step={10} value={s.h} onChange={(e) => update(i, { h: Number(e.target.value) })} className="w-full accent-accent" />
-            </Field>
-          </div>
-        ))}
-      </div>
-      <button
-        type="button"
-        onClick={() => onChange([...value, { src: '', slug: '', h: 140 }])}
-        className="flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/10 py-4 text-sm font-semibold text-ink/60 transition hover:border-accent hover:text-accent-strong"
-      >
-        <Plus size={18} /> Parça ekle
-      </button>
-    </Card>
+    <div className="flex">
+      <IconButton label="Yukarı taşı" disabled={i === 0} onClick={() => onMove(i - 1)}>
+        <ArrowUp size={16} />
+      </IconButton>
+      <IconButton label="Aşağı taşı" disabled={i === length - 1} onClick={() => onMove(i + 1)}>
+        <ArrowDown size={16} />
+      </IconButton>
+      <IconButton label={`${what} sil`} danger onClick={onRemove}>
+        <Trash2 size={16} />
+      </IconButton>
+    </div>
   );
 }
 
-function ServiceList({ value, onChange }: { value: PlayData['services']; onChange: (v: PlayData['services']) => void }) {
-  const { content } = useAdmin();
-  const update = (i: number, next: Partial<PlayData['services'][number]>) => onChange(value.map((s, j) => (j === i ? { ...s, ...next } : s)));
+function AddButton({ onClick, children }: { onClick: () => void; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/10 py-3 text-sm font-semibold text-ink/60 transition hover:border-accent hover:text-accent-strong"
+    >
+      <Plus size={18} /> {children}
+    </button>
+  );
+}
+
+const selectClass = 'h-11 w-full rounded-xl border border-black/10 bg-white px-3 text-sm font-medium outline-none focus:border-accent';
+const blank = { tr: '', en: '' };
+const titleHint = 'Her satır ayrı satıra yazılır (Enter); sitede her satır ayrı kayar.';
+
+// Adım listesi (vaka ve süreç): başlık ve kısa açıklama
+function StepList({ value, onChange, what }: { value: Step[]; onChange: (v: Step[]) => void; what: string }) {
+  const update = (i: number, next: Partial<Step>) => onChange(value.map((s, j) => (j === i ? { ...s, ...next } : s)));
   return (
     <>
       {value.map((s, i) => (
-        <Card
-          key={i}
-          title={`${i + 1}. hizmet`}
-          aside={
-            <div className="flex">
-              <IconButton label="Yukarı taşı" disabled={i === 0} onClick={() => onChange(move(value, i, i - 1))}>
-                <ArrowUp size={16} />
-              </IconButton>
-              <IconButton label="Aşağı taşı" disabled={i === value.length - 1} onClick={() => onChange(move(value, i, i + 1))}>
-                <ArrowDown size={16} />
-              </IconButton>
-              <IconButton label="Hizmeti sil" danger onClick={() => onChange(value.filter((_, j) => j !== i))}>
-                <Trash2 size={16} />
-              </IconButton>
-            </div>
-          }
-        >
-          <BiField label="Başlık" value={s.title} onChange={(v) => update(i, { title: v })} placeholder="Ör. Tasarım" />
+        <Card key={i} title={`${i + 1}. ${what}`} aside={<ListTools i={i} length={value.length} what={what} onMove={(to) => onChange(move(value, i, to))} onRemove={() => onChange(value.filter((_, j) => j !== i))} />}>
+          <BiField label="Başlık" value={s.title} onChange={(v) => update(i, { title: v })} />
           <BiField label="Açıklama" long value={s.text} onChange={(v) => update(i, { text: v })} />
-          <Field label="Örnek iş (isteğe bağlı)" hint="Kartın altında bu projeye giden bir düğme görünür. Yalnızca aktif projeler seçilebilir.">
-            <select value={s.example} onChange={(e) => update(i, { example: e.target.value })} className={selectClass}>
-              <option value="">Yok</option>
-              {content.projects
-                .filter((p) => !p.hidden)
-                .map((p) => (
-                  <option key={p.slug} value={p.slug}>
-                    {p.title}
-                  </option>
-                ))}
-            </select>
-          </Field>
         </Card>
       ))}
-      <button
-        type="button"
-        onClick={() => onChange([...value, { title: { tr: '', en: '' }, text: { tr: '', en: '' }, example: '' }])}
-        className="flex items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-black/10 py-4 text-sm font-semibold text-ink/60 transition hover:border-accent hover:text-accent-strong"
-      >
-        <Plus size={18} /> Hizmet ekle
-      </button>
+      <AddButton onClick={() => onChange([...value, { title: blank, text: blank }])}>{what[0].toUpperCase() + what.slice(1)} ekle</AddButton>
     </>
   );
 }
 
 function Section({ sectionKey }: { sectionKey: SectionKey }) {
   const { content } = useAdmin();
-  const section = SECTIONS.find((s) => s.key === sectionKey)!;
+  const { lang } = useEditLang();
+  const visible = content.projects.filter((p) => !p.hidden);
+  const shell = { sectionKey, original: content.play, file: PATHS.play, contentKey: 'play' as const };
 
   if (sectionKey === 'acilis') {
     return (
-      <SectionShell section={section} original={content.play} file={PATHS.play} contentKey="play" preview={(d) => <HeroPreview d={d} />}>
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.hero.lines.join('\n')} text={d.hero.intro?.[lang]} />}>
         {(d, set) => (
           <>
+            <Card title="Büyük başlık" description="Üç satır; dil seçiminden bağımsızdır (İngilizce kalır). Şarap renkli satırı aşağıdan seçin.">
+              {d.hero.lines.map((line, i) => (
+                <Field key={i} label={`${i + 1}. satır`}>
+                  <TextInput value={line} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, lines: x.hero.lines.map((l, j) => (j === i ? v : l)) } }))} />
+                </Field>
+              ))}
+              <Field label="Şarap renkli satır">
+                <select value={d.hero.accent} onChange={(e) => set((x) => ({ ...x, hero: { ...x.hero, accent: Number(e.target.value) } }))} className={selectClass}>
+                  <option value={-1}>Hiçbiri</option>
+                  {d.hero.lines.map((l, i) => (
+                    <option key={i} value={i}>
+                      {i + 1}. satır ({l})
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            </Card>
             <Card>
-              <BiField label="Selam satırı" value={d.hello} onChange={(v) => set((x) => ({ ...x, hello: v }))} placeholder="Ör. Merhaba, ben Emir." />
-              <LinesField label="Büyük cümle" hint="Her satır ayrı kayarak belirir. Kısa satırlar en iyi sonucu verir; telefonda en uzun satır ekrana sığacak kadar küçülür." value={d.statement} onChange={(v) => set((x) => ({ ...x, statement: v }))} />
-              <BiField label="Açıklama" long value={d.text} onChange={(v) => set((x) => ({ ...x, text: v }))} />
+              <BiField label="Tanıtım cümlesi" long value={d.hero.intro} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, intro: v } }))} />
+              <BiField label="Durum (yeşil noktalı satır)" value={d.hero.status} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, status: v } }))} />
               <div className="grid gap-5 sm:grid-cols-2">
                 <BiField label="İşler düğmesi" value={d.ctaWork} onChange={(v) => set((x) => ({ ...x, ctaWork: v }))} />
                 <BiField label="İletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
-                <BiField label="İpucu (fare)" value={d.hint} onChange={(v) => set((x) => ({ ...x, hint: v }))} />
-                <BiField label="İpucu (dokunmatik)" value={d.hintTouch} onChange={(v) => set((x) => ({ ...x, hintTouch: v }))} />
-                <BiField label="3B kutu açıklaması" value={d.pitCaption ?? { tr: '', en: '' }} onChange={(v) => set((x) => ({ ...x, pitCaption: v }))} />
-                <BiField label="“Projeyi aç” (ekran okuyucu)" value={d.open} onChange={(v) => set((x) => ({ ...x, open: v }))} />
               </div>
             </Card>
-            <StickerList value={d.stickers} onChange={(v) => set((x) => ({ ...x, stickers: v }))} />
+            <Card title="Kayan disiplin şeridi" description="Açılışın altında yavaşça akan kelimeler.">
+              {d.ticker.map((item, i) => (
+                <div key={i} className="flex items-end gap-2">
+                  <div className="flex-1">
+                    <BiField label={`${i + 1}. kelime`} value={item} onChange={(v) => set((x) => ({ ...x, ticker: x.ticker.map((t, j) => (j === i ? v : t)) }))} />
+                  </div>
+                  <ListTools i={i} length={d.ticker.length} what="Kelimeyi" onMove={(to) => set((x) => ({ ...x, ticker: move(x.ticker, i, to) }))} onRemove={() => set((x) => ({ ...x, ticker: x.ticker.filter((_, j) => j !== i) }))} />
+                </div>
+              ))}
+              <AddButton onClick={() => set((x) => ({ ...x, ticker: [...x.ticker, blank] }))}>Kelime ekle</AddButton>
+            </Card>
           </>
         )}
       </SectionShell>
     );
   }
-  if (sectionKey === 'isler') {
+
+  if (sectionKey === 'alanlar') {
     return (
-      <SectionShell section={section} original={content.play} file={PATHS.play} contentKey="play" preview={(d) => <WorkPreview d={d} />}>
-        {(d, set) => (
-          <Card description="Filtreler projelerin disiplinlerinden kendiliğinden oluşur; sıralama “Projeler” sayfasındaki sıradır.">
-            <BiField label="Bölüm başlığı" value={d.workTitle} onChange={(v) => set((x) => ({ ...x, workTitle: v }))} />
-            <BiField label="“Tümü” filtresi" value={d.all} onChange={(v) => set((x) => ({ ...x, all: v }))} />
-          </Card>
-        )}
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.areas.title?.[lang]} text={d.areas.text?.[lang]} />}>
+        {(d, set) => {
+          const update = (i: number, next: Partial<PlayData['areas']['items'][number]>) =>
+            set((x) => ({ ...x, areas: { ...x.areas, items: x.areas.items.map((it, j) => (j === i ? { ...it, ...next } : it)) } }));
+          return (
+            <>
+              <Card>
+                <BiField label="Bölüm başlığı" hint={titleHint} long value={d.areas.title} onChange={(v) => set((x) => ({ ...x, areas: { ...x.areas, title: v } }))} />
+                <BiField label="Açıklama" long value={d.areas.text} onChange={(v) => set((x) => ({ ...x, areas: { ...x.areas, text: v } }))} />
+              </Card>
+              {d.areas.items.map((item, i) => (
+                <Card key={item.key} title={item.title}>
+                  <BiField label="Açıklama" long value={item.text} onChange={(v) => update(i, { text: v })} />
+                  <Field label="Etiketler" hint="Seçili dilde, virgülle ayırarak yazın.">
+                    <TextInput
+                      value={item.tags.map((tg) => tg[lang]).join(', ')}
+                      onChange={(v) => {
+                        const parts = v.split(',').map((p) => p.trim());
+                        update(i, { tags: parts.map((p, j) => ({ ...(item.tags[j] ?? blank), [lang]: p })) });
+                      }}
+                    />
+                  </Field>
+                  <Toggle
+                    label="İlk görselin yerine akış şeması çiz"
+                    hint="Otomasyon gibi görseli olmayan alanlar için."
+                    checked={item.images[0] === 'flow'}
+                    onChange={(on) => update(i, { images: [on ? 'flow' : '', item.images[1] ?? ''] })}
+                  />
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {item.images[0] !== 'flow' && <ImageField label="1. görsel" aspect="aspect-[4/3]" value={item.images[0]} onChange={(v) => update(i, { images: [v, item.images[1] ?? ''] })} />}
+                    <ImageField label="2. görsel" aspect="aspect-[4/3]" value={item.images[1]} onChange={(v) => update(i, { images: [item.images[0] ?? '', v] })} />
+                  </div>
+                </Card>
+              ))}
+            </>
+          );
+        }}
       </SectionShell>
     );
   }
-  if (sectionKey === 'hizmetler') {
+
+  if (sectionKey === 'isler') {
     return (
-      <SectionShell section={section} original={content.play} file={PATHS.play} contentKey="play" preview={(d) => <ServicesPreview d={d} />}>
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.work.title?.[lang]} text={d.work.featured.map((s) => visible.find((p) => p.slug === s)?.title ?? s).join(' · ')} />}>
         {(d, set) => (
           <>
             <Card>
-              <BiField label="Bölüm başlığı" value={d.servicesTitle} onChange={(v) => set((x) => ({ ...x, servicesTitle: v }))} />
-              <BiField label="Örnek iş düğmesi" value={d.exampleLabel} onChange={(v) => set((x) => ({ ...x, exampleLabel: v }))} />
+              <BiField label="Bölüm başlığı" hint={titleHint} long value={d.work.title} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, title: v } }))} />
+              <BiField label="Açıklama" long value={d.work.text} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, text: v } }))} />
+              <BiField label="“Bütün işler” düğmesi ve sayfa başlığı" value={d.work.all} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, all: v } }))} />
             </Card>
-            <ServiceList value={d.services} onChange={(v) => set((x) => ({ ...x, services: v }))} />
+            <Card title="Ana sayfadaki projeler" description="Büyük kartlarla bu sırayla görünürler; 6 proje en iyi sonucu verir. Bütün projeler “Bütün işler” sayfasında.">
+              {d.work.featured.map((slug, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <select
+                    value={slug}
+                    onChange={(e) => set((x) => ({ ...x, work: { ...x.work, featured: x.work.featured.map((s, j) => (j === i ? e.target.value : s)) } }))}
+                    className={selectClass}
+                  >
+                    {visible.map((p) => (
+                      <option key={p.slug} value={p.slug}>
+                        {p.title}
+                      </option>
+                    ))}
+                  </select>
+                  <ListTools
+                    i={i}
+                    length={d.work.featured.length}
+                    what="Projeyi"
+                    onMove={(to) => set((x) => ({ ...x, work: { ...x.work, featured: move(x.work.featured, i, to) } }))}
+                    onRemove={() => set((x) => ({ ...x, work: { ...x.work, featured: x.work.featured.filter((_, j) => j !== i) } }))}
+                  />
+                </div>
+              ))}
+              <AddButton onClick={() => set((x) => ({ ...x, work: { ...x.work, featured: [...x.work.featured, visible[0]?.slug ?? ''] } }))}>Proje ekle</AddButton>
+            </Card>
           </>
         )}
       </SectionShell>
     );
   }
+
+  if (sectionKey === 'vaka') {
+    return (
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.case.title?.[lang]} text={d.case.text?.[lang]} />}>
+        {(d, set) => (
+          <>
+            <Card>
+              <BiField label="Bölüm başlığı" hint={titleHint} long value={d.case.title} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, title: v } }))} />
+              <BiField label="Açıklama" long value={d.case.text} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, text: v } }))} />
+              <BiField label="Adım rozeti (ör. Hazırlanıyor)" hint="Boş bırakılırsa rozet gizlenir." value={d.case.soon} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, soon: v } }))} />
+            </Card>
+            <StepList what="adım" value={d.case.steps} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, steps: v } }))} />
+          </>
+        )}
+      </SectionShell>
+    );
+  }
+
+  if (sectionKey === 'hakkimda') {
+    return (
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.about.title?.[lang]} text={d.about.text?.[lang]} />}>
+        {(d, set) => {
+          const tools = d.about.tools;
+          const setTools = (next: typeof tools) => set((x) => ({ ...x, about: { ...x.about, tools: next } }));
+          return (
+            <>
+              <Card>
+                <BiField label="Başlık" hint={titleHint} long value={d.about.title} onChange={(v) => set((x) => ({ ...x, about: { ...x.about, title: v } }))} />
+                <BiField label="Tanıtım metni" long value={d.about.text} onChange={(v) => set((x) => ({ ...x, about: { ...x.about, text: v } }))} />
+                <ImageField label="Fotoğraf" hint="Dikey (4:5) bir portre en iyi sonucu verir. Boşsa baş harfleriniz gösterilir." aspect="aspect-[4/5]" value={d.about.photo} onChange={(v) => set((x) => ({ ...x, about: { ...x.about, photo: v } }))} />
+              </Card>
+              <Card title="Araçlar" description="Her grup bir satır; araçları virgülle ayırın.">
+                {tools.map((g, i) => (
+                  <div key={i} className="grid gap-3 rounded-xl border border-black/[0.08] p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold">{i + 1}. grup</span>
+                      <ListTools i={i} length={tools.length} what="Grubu" onMove={(to) => setTools(move(tools, i, to))} onRemove={() => setTools(tools.filter((_, j) => j !== i))} />
+                    </div>
+                    <BiField label="Grup adı" value={g.label} onChange={(v) => setTools(tools.map((x, j) => (j === i ? { ...x, label: v } : x)))} />
+                    <Field label="Araçlar">
+                      <TextInput
+                        value={g.items.join(', ')}
+                        onChange={(v) => setTools(tools.map((x, j) => (j === i ? { ...x, items: v.split(',').map((s) => s.trim()) } : x)))}
+                      />
+                    </Field>
+                  </div>
+                ))}
+                <AddButton onClick={() => setTools([...tools, { label: blank, items: [] }])}>Grup ekle</AddButton>
+              </Card>
+            </>
+          );
+        }}
+      </SectionShell>
+    );
+  }
+
+  if (sectionKey === 'surec') {
+    return (
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.process.title?.[lang]} text={d.process.steps.map((s) => s.title?.[lang]).join(' · ')} />}>
+        {(d, set) => (
+          <>
+            <Card>
+              <BiField label="Bölüm başlığı" hint={titleHint} long value={d.process.title} onChange={(v) => set((x) => ({ ...x, process: { ...x.process, title: v } }))} />
+              <BiField label="Açıklama" long value={d.process.text} onChange={(v) => set((x) => ({ ...x, process: { ...x.process, text: v } }))} />
+            </Card>
+            <StepList what="adım" value={d.process.steps} onChange={(v) => set((x) => ({ ...x, process: { ...x.process, steps: v } }))} />
+          </>
+        )}
+      </SectionShell>
+    );
+  }
+
   return (
-    <SectionShell section={section} original={content.contact} file={PATHS.contact} contentKey="contact" preview={(d) => <ContactPreview d={d} />}>
+    <SectionShell<ContactData>
+      sectionKey="iletisim"
+      original={content.contact}
+      file={PATHS.contact}
+      contentKey="contact"
+      preview={(d) => <Preview title={(d.title?.[lang] ?? []).join('\n')} text={d.text?.[lang]} />}
+    >
       {(d, set) => (
         <>
           <Card>
-            <LinesField label="Büyük başlık" hint="Her satır ayrı ayrı kayarak belirir." value={d.title} onChange={(v) => set((x) => ({ ...x, title: v }))} />
-            <BiField label="Paragraf" long value={d.text} onChange={(v) => set((x) => ({ ...x, text: v }))} />
+            <LinesField label="Büyük başlık" hint="Her satır ayrı ayrı kayarak belirir; son satır şarap renginde olur." value={d.title} onChange={(v) => set((x) => ({ ...x, title: v }))} />
+            <BiField label="Paragraf (isteğe bağlı)" long value={d.text} onChange={(v) => set((x) => ({ ...x, text: v }))} />
           </Card>
           <Card title="Form yazıları">
             <div className="grid gap-5 sm:grid-cols-2">

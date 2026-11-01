@@ -1,5 +1,5 @@
 {
-  "order": 10,
+  "order": 30,
   "slug": "kitty-snap",
   "title": "Kitty Snap",
   "discipline": {
@@ -82,5 +82,8 @@
   ],
   "featured": false,
   "hidden": true,
-  "canvas": "#ECECEC"
+  "canvas": "#ECECEC",
+  "areas": [
+    "design"
+  ]
 }

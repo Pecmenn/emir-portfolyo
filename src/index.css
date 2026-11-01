@@ -13,39 +13,75 @@ html.lenis body {
   overflow: hidden;
 }
 
+:root {
+  color-scheme: dark;
+  /* Yumuşak hareketlerin ortak eğrisi */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 body {
-  @apply bg-paper font-sans text-ink antialiased;
+  @apply bg-coal font-sans text-cream antialiased;
 }
 
 ::selection {
-  @apply bg-accent text-paper;
+  @apply bg-wine text-cream;
 }
 
 @layer components {
   .gutter {
-    @apply px-4 sm:px-8;
+    @apply px-5 lg:px-10;
   }
+  /* Dar ve kalın afiş başlığı (LinkedIn kapağındaki gibi) */
   .display {
-    @apply font-display font-normal leading-[0.95] tracking-[-0.04em];
+    @apply font-display font-normal uppercase leading-[0.9] tracking-[0.005em];
+  }
+  .eyebrow {
+    @apply text-[13px] font-medium uppercase tracking-[0.14em] text-stone;
   }
   /* Satır satır kayarak beliren metinler için maske */
-  /* Sıkı harf aralığında son harf kutunun biraz dışına taşar; maske sağa genişletilir,
-     negatif kenar boşluğuyla yerleşim değişmez, böylece harfin kenarı kırpılmaz */
   .line-mask {
-    @apply -mr-[0.12em] block overflow-hidden pb-[0.08em] pr-[0.12em];
+    @apply block overflow-hidden pb-[0.04em];
   }
   .pill {
     @apply inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors;
   }
-  /* Harf yuvarlanması (Roll): her harfin gölgesi bir satır altta kopyasını çizer; hover'da harfler bir satır kayar */
+  /* Ana düğme ölçüsü: şarap dolgulu ya da ince çizgili */
+  .btn {
+    @apply inline-flex min-h-12 items-center gap-2.5 rounded-full border border-seam px-6 text-[15px] font-medium text-cream;
+    transition:
+      background-color 0.4s var(--ease-soft),
+      border-color 0.4s var(--ease-soft),
+      transform 0.4s var(--ease-soft);
+  }
+  .btn:hover {
+    @apply -translate-y-0.5 border-cream;
+  }
+  .btn-wine {
+    @apply border-wine bg-wine;
+  }
+  .btn-wine:hover {
+    @apply border-[#7F141D] bg-[#7F141D];
+  }
+  .btn .arrow {
+    transition: transform 0.4s var(--ease-soft);
+  }
+  .btn:hover .arrow {
+    transform: translateX(4px);
+  }
+  .tag {
+    @apply rounded-full border border-seam bg-coal/40 px-3 py-1.5 text-[13px] font-medium text-cream;
+  }
+  /* Köşeleri yuvarlatılmış görsel kartı */
+  .card {
+    @apply overflow-hidden rounded-[clamp(0.9rem,1.4vw,1.4rem)];
+  }
+  /* Harf yuvarlanması (Roll) */
   .roll {
     @apply inline-block align-top;
   }
   .roll-line {
     @apply inline-flex overflow-hidden;
     line-height: 1.12;
-    padding-right: 0.04em;
-    margin-right: -0.04em;
   }
   .roll-ch {
     @apply inline-block;
@@ -57,31 +93,72 @@ body {
   .group:focus-visible .roll-ch {
     transform: translateY(-1.12em);
   }
-  /* Köşeleri yuvarlatılmış büyük görsel kartı */
-  .card {
-    @apply overflow-hidden rounded-[clamp(0.9rem,1.4vw,1.6rem)];
+}
+
+/* Yumuşak beliriş (bkz. src/lib/reveal.ts): satırlar maskenin altından kayar, bloklar hafifçe yükselir.
+   Görünür alana giren kaba ya da öğeye `is-in` sınıfı eklenir */
+.soft-line > span {
+  display: block;
+  transform: translateY(105%);
+  transition: transform 1.1s var(--ease-soft);
+}
+.is-in .soft-line > span,
+.soft-line.is-in > span {
+  transform: none;
+}
+.soft-line:nth-child(2) > span {
+  transition-delay: 0.08s;
+}
+.soft-line:nth-child(3) > span {
+  transition-delay: 0.16s;
+}
+.soft-rise {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease-soft),
+    transform 0.9s var(--ease-soft);
+}
+.soft-rise.is-in,
+.is-in > .soft-rise {
+  opacity: 1;
+  transform: none;
+}
+
+/* Disiplin şeridinin yavaş akışı */
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(94, 194, 122, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(94, 194, 122, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(94, 194, 122, 0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .roll-ch {
-    transition: none;
+  .roll-ch,
+  .soft-line > span,
+  .soft-rise {
+    transition: none !important;
+  }
+  .soft-line > span,
+  .soft-rise {
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
 
 @media (hover: none) {
   .cursor-follower {
     display: none;
-  }
-}
-
-/* Dünyalı sayfadaki sahne objelerinin kendiliğinden süzülmesi (WorldTour) */
-@keyframes world-float {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-14px) rotate(4deg);
   }
 }

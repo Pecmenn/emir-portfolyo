@@ -101,7 +101,11 @@ export type Project = {
   // Dünyalı (yolculuk) sayfalarda kaykaya binen kahramanın yandan görünen tam boy görseli (saydam zeminli); her dünyanın
   // girişinde o dünyanın kaykayıyla kapıya kayar
   rider?: string;
+  // Projenin ait olduğu alanlar (Design / Build / Automate); İşler sayfasındaki filtreler bundan oluşur
+  areas?: Area[];
 };
+
+export type Area = 'design' | 'build' | 'automate';
 
 type Site = {
   name: string;
@@ -155,5 +159,17 @@ export type Play = {
   services: { title: Text; text: Text; example: string }[];
   exampleLabel: Text;
   stickers: Sticker[];
+  // Yeni ana sayfa (Design. Build. Automate.). Çok satırlı başlıklarda satırlar "\n" ile ayrılır
+  hero: { lines: string[]; accent: number; intro: Text; status: Text };
+  ticker: Text[];
+  areas: { title: Text; text: Text; items: AreaItem[] };
+  work: { title: Text; text: Text; featured: string[]; all: Text };
+  case: { title: Text; text: Text; soon: Text; steps: Step[] };
+  about: { title: Text; text: Text; photo: string; tools: { label: Text; items: string[] }[] };
+  process: { title: Text; text: Text; steps: Step[] };
 };
+
+// images: satırdaki küçük görseller; "flow" yazılırsa yerine çizilmiş bir akış şeması gösterilir
+export type AreaItem = { key: Area; title: string; text: Text; tags: Text[]; images: string[] };
+export type Step = { title: Text; text: Text };
 export const play = playData as Play;

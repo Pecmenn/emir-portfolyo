@@ -1,8 +1,9 @@
 import { ui } from '../content';
 
-// Menü ve alt bilgi aynı sırayı kullanır: sayfadaki bölüm sırasıyla (İşler, Hizmetler, İletişim) aynıdır
+// Menü ve alt bilgi aynı sırayı kullanır: ana sayfadaki bölüm sırasıyla aynıdır
 export const navLinks = [
+  { id: 'alanlar', label: ui.nav.areas },
   { id: 'isler', label: ui.nav.work },
-  { id: 'hizmetler', label: ui.nav.services },
+  { id: 'hakkimda', label: ui.nav.about },
   { id: 'iletisim', label: ui.nav.contact },
 ];

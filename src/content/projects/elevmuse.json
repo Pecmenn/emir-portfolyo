@@ -1,0 +1,145 @@
+{
+  "order": 1,
+  "slug": "elevmuse",
+  "title": "ElevMuse",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "/images/elevmuse/01.webp",
+  "summary": {
+    "tr": "Bir cümleyle tarif ettiğin sesi, çalan bir parçayı ya da kaydettiğin bir melodiyi müziğe dönüştüren yapay zekâ müzik uygulaması.",
+    "en": "An AI music app that turns a sound you describe, a track you remix or a melody you record into music."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "UI/UX tasarımcısı",
+    "en": "UI/UX designer"
+  },
+  "services": {
+    "tr": "UI/UX, ürün tasarımı",
+    "en": "UI/UX, product design"
+  },
+  "intro": {
+    "tr": "ElevMuse, müzik üretmeyi bir sohbet kadar kolaylaştırmayı amaçlayan bir yapay zekâ uygulaması. Kullanıcı istediği sesi tarif ediyor, bir parçayı yeniden yorumluyor ya da Loop Studio, Voice to Song ve Genreshift gibi araçlardan biriyle başlıyor.",
+    "en": "ElevMuse is an AI app that aims to make making music as easy as a conversation. Users describe the sound they want, remix a track or start from one of the tools such as Loop Studio, Voice to Song and Genreshift."
+  },
+  "gallery": [
+    {
+      "type": "full",
+      "image": "/images/elevmuse/02.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/03.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/04.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/05.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/06.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/07.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/08.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/09.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/10.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/11.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/12.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/13.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/14.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    },
+    {
+      "type": "full",
+      "image": "/images/elevmuse/15.webp",
+      "alt": {
+        "tr": "ElevMuse uygulama ekranı",
+        "en": "ElevMuse app screen"
+      }
+    }
+  ],
+  "areas": [
+    "design"
+  ]
+}

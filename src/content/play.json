@@ -215,5 +215,309 @@
       "slug": "drop-beads",
       "h": 140
     }
-  ]
+  ],
+  "hero": {
+    "lines": [
+      "Design.",
+      "Build.",
+      "Automate."
+    ],
+    "accent": 1,
+    "intro": {
+      "tr": "Merhaba, ben Emir. Arayüz ve marka tasarlıyor, web sitelerini kodluyor, tekrar eden işleri otomatikleştiriyorum.",
+      "en": "Hi, I'm Emir. I design interfaces and brands, build websites and automate repetitive work."
+    },
+    "status": {
+      "tr": "Yeni projelere ve iş tekliflerine açığım",
+      "en": "Open to new projects and roles"
+    }
+  },
+  "ticker": [
+    {
+      "tr": "Arayüz tasarımı",
+      "en": "Interface design"
+    },
+    {
+      "tr": "Marka kimliği",
+      "en": "Brand identity"
+    },
+    {
+      "tr": "Web sitesi",
+      "en": "Websites"
+    },
+    {
+      "tr": "Otomasyon",
+      "en": "Automation"
+    },
+    {
+      "tr": "Yapay zekâ",
+      "en": "AI"
+    },
+    {
+      "tr": "Motion",
+      "en": "Motion"
+    }
+  ],
+  "areas": {
+    "title": {
+      "tr": "Üç alan,\ntek elden",
+      "en": "Three fields,\none person"
+    },
+    "text": {
+      "tr": "Bir işi tasarımdan koda, koddan otomasyona kadar götürüyorum. İhtiyacına göre birini ya da üçünü birden.",
+      "en": "I take work from design to code and from code to automation. One of them or all three, as you need."
+    },
+    "items": [
+      {
+        "key": "design",
+        "title": "Design",
+        "text": {
+          "tr": "Uygulama, oyun ve web arayüzleri; marka kimliği ve kampanya görselleri.",
+          "en": "App, game and web interfaces; brand identity and campaign visuals."
+        },
+        "tags": [
+          {
+            "tr": "UI/UX",
+            "en": "UI/UX"
+          },
+          {
+            "tr": "Marka",
+            "en": "Brand"
+          },
+          {
+            "tr": "Oyun arayüzü",
+            "en": "Game UI"
+          }
+        ],
+        "images": [
+          "/images/elevmuse/01.webp",
+          "/images/skate-odyssey/cover.webp"
+        ]
+      },
+      {
+        "key": "build",
+        "title": "Build",
+        "text": {
+          "tr": "Tasarladığımı kodluyorum: landing page, kurumsal site ve web uygulaması, yayına kadar.",
+          "en": "I build what I design: landing pages, websites and web apps, all the way to launch."
+        },
+        "tags": [
+          {
+            "tr": "React",
+            "en": "React"
+          },
+          {
+            "tr": "Next.js",
+            "en": "Next.js"
+          },
+          {
+            "tr": "Masaüstü uygulama",
+            "en": "Desktop apps"
+          }
+        ],
+        "images": [
+          "/images/akis/pano.webp",
+          "/images/akis/mobil-ozet.webp"
+        ]
+      },
+      {
+        "key": "automate",
+        "title": "Automate",
+        "text": {
+          "tr": "Tekrar eden işleri sistemlere devrediyorum: mailing, sosyal medya, raporlama ve yapay zekâ asistanları.",
+          "en": "I hand repetitive work over to systems: mailings, social media, reporting and AI assistants."
+        },
+        "tags": [
+          {
+            "tr": "Mailing",
+            "en": "Mailing"
+          },
+          {
+            "tr": "Raporlama",
+            "en": "Reporting"
+          },
+          {
+            "tr": "Yapay zekâ",
+            "en": "AI"
+          }
+        ],
+        "images": [
+          "flow",
+          "/images/akis/asistan.webp"
+        ]
+      }
+    ]
+  },
+  "work": {
+    "title": {
+      "tr": "Seçili\nişler",
+      "en": "Selected\nwork"
+    },
+    "text": {
+      "tr": "Arayüzden otomasyona, son dönemde en çok emek verdiğim işler.",
+      "en": "From interfaces to automation, the work I've put the most into lately."
+    },
+    "featured": [
+      "elevmuse",
+      "akis",
+      "aloft",
+      "skate-odyssey",
+      "evena",
+      "mystic-match"
+    ],
+    "all": {
+      "tr": "Bütün işler",
+      "en": "All work"
+    }
+  },
+  "case": {
+    "title": {
+      "tr": "Bir marka,\nbaştan sona",
+      "en": "One brand,\nend to end"
+    },
+    "text": {
+      "tr": "Hayali bir butik otel markasını sıfırdan kuruyorum: önce kimliğini tasarlıyorum, sonra sitesini kodluyorum, en son pazarlamasını otomatikleştiriyorum.",
+      "en": "I'm building a fictional boutique hotel brand from scratch: first its identity, then its website, then its marketing automation."
+    },
+    "soon": {
+      "tr": "Hazırlanıyor",
+      "en": "In progress"
+    },
+    "steps": [
+      {
+        "title": {
+          "tr": "Kimlik",
+          "en": "Identity"
+        },
+        "text": {
+          "tr": "İsim, logo, renkler ve sosyal medya dili.",
+          "en": "Name, logo, colors and social media voice."
+        }
+      },
+      {
+        "title": {
+          "tr": "Site",
+          "en": "Website"
+        },
+        "text": {
+          "tr": "Rezervasyona yönlendiren, hızlı ve tamamen kodlanmış bir web sitesi.",
+          "en": "A fast, fully coded website that drives bookings."
+        }
+      },
+      {
+        "title": {
+          "tr": "Otomasyon",
+          "en": "Automation"
+        },
+        "text": {
+          "tr": "Haftalık mailing'ler ve sosyal medya postları bir tablodan kendiliğinden üretilir.",
+          "en": "Weekly mailings and social posts generated automatically from a spreadsheet."
+        }
+      }
+    ]
+  },
+  "about": {
+    "title": {
+      "tr": "Merhaba,\nben Emir",
+      "en": "Hi,\nI'm Emir"
+    },
+    "text": {
+      "tr": "Creative generalist'im: tasarımı, kodu ve otomasyonu aynı masada buluşturuyorum. Mobil oyunlarda karakter, arayüz ve asset tasarladım; şimdi markalar için siteler kuruyor, pazarlama işlerini yapay zekâyla otomatikleştiriyorum.",
+      "en": "I'm a creative generalist bringing design, code and automation to the same table. I designed characters, interfaces and assets for mobile games; now I build websites for brands and automate marketing work with AI."
+    },
+    "photo": "",
+    "tools": [
+      {
+        "label": {
+          "tr": "Tasarım",
+          "en": "Design"
+        },
+        "items": [
+          "Figma",
+          "Photoshop",
+          "Illustrator",
+          "After Effects",
+          "Blender"
+        ]
+      },
+      {
+        "label": {
+          "tr": "Kod",
+          "en": "Code"
+        },
+        "items": [
+          "React",
+          "TypeScript",
+          "Next.js",
+          "Electron",
+          "Python"
+        ]
+      },
+      {
+        "label": {
+          "tr": "Otomasyon",
+          "en": "Automation"
+        },
+        "items": [
+          "Claude",
+          "Remotion",
+          "Playwright",
+          "Instagram API",
+          "MediaPipe"
+        ]
+      }
+    ]
+  },
+  "process": {
+    "title": {
+      "tr": "Nasıl\nçalışırım",
+      "en": "How\nI work"
+    },
+    "text": {
+      "tr": "Her işte aynı dört adım; hangisinden başlayacağımızı ihtiyacın belirler.",
+      "en": "The same four steps every time; your needs decide where we start."
+    },
+    "steps": [
+      {
+        "title": {
+          "tr": "Dinlerim",
+          "en": "Listen"
+        },
+        "text": {
+          "tr": "Hedefi, kitleyi ve elindeki malzemeyi birlikte netleştiririz.",
+          "en": "We clarify the goal, the audience and what you already have."
+        }
+      },
+      {
+        "title": {
+          "tr": "Tasarlarım",
+          "en": "Design"
+        },
+        "text": {
+          "tr": "Ekranları ve görselleri hazırlar, onayına sunarım.",
+          "en": "I prepare the screens and visuals for your approval."
+        }
+      },
+      {
+        "title": {
+          "tr": "Kurarım",
+          "en": "Build"
+        },
+        "text": {
+          "tr": "Onaylanan tasarımı kodlar, yayına alırım.",
+          "en": "I code the approved design and launch it."
+        }
+      },
+      {
+        "title": {
+          "tr": "Otomatikleştiririm",
+          "en": "Automate"
+        },
+        "text": {
+          "tr": "Tekrar eden işleri sisteme devreder, kullanımını anlatırım.",
+          "en": "I hand repetitive work to the system and show you how to use it."
+        }
+      }
+    ]
+  }
 }

@@ -61,7 +61,7 @@ function Intro({ project }: { project: ProjectType }) {
             <p data-intro-fade className="text-sm font-medium opacity-60">
               {t(project.discipline)} · {project.year}
             </p>
-            <h1 className="display mt-4 text-[clamp(3rem,5.4vw,7.25rem)] leading-[0.94]">
+            <h1 lang="en" className="display mt-4 text-[clamp(3.4rem,6.4vw,8.5rem)]">
               <span className="line-mask">
                 <span data-intro-line className="block">
                   {project.title}
@@ -82,7 +82,7 @@ function Intro({ project }: { project: ProjectType }) {
 
         <div
           data-intro-media
-          className="card relative mt-8 aspect-[4/5] bg-mist sm:aspect-[16/10] lg:absolute lg:inset-x-8 lg:bottom-4 lg:top-[96px] lg:mt-0 lg:aspect-auto"
+          className="card relative mt-8 aspect-[4/5] bg-coal-2 sm:aspect-[16/10] lg:absolute lg:inset-x-8 lg:bottom-4 lg:top-[96px] lg:mt-0 lg:aspect-auto"
         >
           {project.cover && (
             <img
@@ -112,7 +112,7 @@ function Lead({ project }: { project: ProjectType }) {
   if (!t(project.intro).trim()) return null;
   return (
     <section className="gutter grid pb-[10vh] pt-[14vh] lg:grid-cols-12 lg:gap-8">
-      <Words key={lang} text={t(project.intro)} className="display text-[clamp(1.65rem,2.7vw,3.4rem)] leading-[1.1] tracking-[-0.03em] lg:col-span-10 lg:col-start-3" />
+      <Words key={lang} text={t(project.intro)} className="text-[clamp(1.4rem,2.3vw,2.5rem)] font-medium leading-[1.22] tracking-[-0.015em] lg:col-span-10 lg:col-start-3" />
     </section>
   );
 }
@@ -125,14 +125,14 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
     { label: ui.result, text: data.result },
   ];
   return (
-    <section data-theme="dark" className="gutter my-[6vh] bg-ink py-[12vh] text-paper">
-      <div className="grid gap-10 border-b border-white/10 pb-[8vh] md:grid-cols-3 md:gap-8">
+    <section className="gutter my-[6vh] bg-coal-2 py-[12vh] text-cream">
+      <div className="grid gap-10 border-b border-seam pb-[8vh] md:grid-cols-3 md:gap-8">
         {steps.map((step, i) => (
           <FadeUp key={step.label.en} delay={i * 0.08}>
-            <p className="mb-4 text-sm font-medium text-accent-soft">
+            <p className="mb-4 text-sm font-medium text-wine-light">
               0{i + 1} — {t(step.label)}
             </p>
-            <p className="max-w-xl text-[clamp(1.05rem,1vw,1.4rem)] leading-relaxed text-paper/85">{t(step.text)}</p>
+            <p className="max-w-xl text-[clamp(1.05rem,1vw,1.4rem)] leading-relaxed text-cream/85">{t(step.text)}</p>
           </FadeUp>
         ))}
       </div>
@@ -140,7 +140,7 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
         {data.metrics.map((m, i) => (
           <FadeUp key={m.value} delay={i * 0.08}>
             <p className="display text-[clamp(3.5rem,6vw,8rem)]">{m.value}</p>
-            <p className="mt-3 text-sm text-mute">{t(m.label)}</p>
+            <p className="mt-3 text-sm text-stone">{t(m.label)}</p>
           </FadeUp>
         ))}
       </div>
@@ -166,7 +166,7 @@ function SectionHead({ index, title, text }: { index?: number; title: string; te
       <div className="mt-6 grid gap-4 lg:grid-cols-12 lg:gap-8">
         <p className="text-sm font-medium tabular-nums opacity-55 lg:col-span-3">{index ? String(index).padStart(2, '0') : ''}</p>
         <div className="lg:col-span-9">
-          {title.trim() && <Words key={`h-${lang}`} as="h2" text={title} className="display text-[clamp(2.4rem,4.4vw,5.75rem)] leading-[0.98]" />}
+          {title.trim() && <Words key={`h-${lang}`} as="h2" text={title} className="display text-[clamp(2.8rem,5vw,6rem)]" />}
           {text.trim() && <Words key={`p-${lang}`} text={text} className="mt-5 max-w-[46ch] text-[clamp(1.05rem,1.15vw,1.4rem)] leading-snug opacity-70" />}
         </div>
       </div>
@@ -213,7 +213,7 @@ function Rail({ title, text, items, alt, cutout, tone }: { title?: string; text?
     <section ref={wrapRef} className="overflow-hidden py-[4vh] lg:flex lg:h-[100svh] lg:flex-col lg:justify-center lg:py-0">
       {hasHead && (
         <div className="gutter mb-6 grid gap-3 lg:grid-cols-12 lg:items-end lg:gap-8">
-          {title?.trim() && <Words key={`rt-${lang}`} as="h3" text={title} className="display text-[clamp(1.9rem,2.8vw,3.6rem)] leading-[1] lg:col-span-5" />}
+          {title?.trim() && <Words key={`rt-${lang}`} as="h3" text={title} className="display text-[clamp(2.2rem,3.4vw,4rem)] lg:col-span-5" />}
           {text?.trim() && <p className="max-w-[44ch] text-[clamp(1rem,1.05vw,1.25rem)] leading-snug opacity-70 lg:col-span-5 lg:col-start-8">{text}</p>}
         </div>
       )}
@@ -232,7 +232,7 @@ function Rail({ title, text, items, alt, cutout, tone }: { title?: string; text?
               onLoad={refreshSoon}
               className={cutout ? 'h-full w-full select-none object-contain drop-shadow-[0_24px_30px_rgba(0,0,0,0.18)]' : 'h-full w-auto max-w-none select-none'}
             />
-            {item.label && <figcaption className="absolute left-3 top-3 rounded-full bg-paper/90 px-3 py-1 text-xs font-medium text-ink backdrop-blur">{item.label}</figcaption>}
+            {item.label && <figcaption className="absolute left-3 top-3 rounded-full bg-coal/80 px-3 py-1 text-xs font-medium text-cream backdrop-blur">{item.label}</figcaption>}
           </figure>
         ))}
       </div>
@@ -254,7 +254,7 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
           {block.image && <Wide src={block.image} alt={alt} tone={tone} />}
           {block.quote && t(block.quote).trim() && (
             <div className="gutter py-[8vh] text-center">
-              <Words key={lang} as="h2" text={t(block.quote)} className="display mx-auto max-w-[22ch] text-[clamp(2.2rem,3.6vw,5rem)] leading-[1.04]" />
+              <Words key={lang} as="h2" text={t(block.quote)} className="mx-auto max-w-[26ch] text-[clamp(1.6rem,2.6vw,3rem)] font-medium leading-[1.15] tracking-[-0.015em]" />
             </div>
           )}
         </>
@@ -272,7 +272,7 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
           ].map(([src, label], i) => (
             <div key={i} className="relative">
               <RevealImage natural capHeight={false} src={src} alt={alt} className={`card ${tone}`} />
-              {label && <span className="absolute left-3 top-3 rounded-full bg-paper/90 px-3 py-1 text-xs font-medium text-ink backdrop-blur">{label}</span>}
+              {label && <span className="absolute left-3 top-3 rounded-full bg-coal/80 px-3 py-1 text-xs font-medium text-cream backdrop-blur">{label}</span>}
             </div>
           ))}
         </div>
@@ -282,7 +282,7 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
       const right = block.side === 'right';
       return (
         <div className="gutter grid gap-8 py-[4vh] lg:grid-cols-12 lg:items-start lg:gap-8">
-          <Words key={lang} text={t(block.text)} className={`display max-w-xl text-[clamp(1.4rem,1.8vw,2.4rem)] leading-[1.15] lg:sticky lg:top-28 lg:col-span-4 ${right ? '' : 'lg:order-2'}`} />
+          <Words key={lang} text={t(block.text)} className={`max-w-xl text-[clamp(1.3rem,1.7vw,2rem)] font-medium leading-[1.25] lg:sticky lg:top-28 lg:col-span-4 ${right ? '' : 'lg:order-2'}`} />
           <div className={`lg:col-span-8 ${right ? '' : 'lg:order-1'}`}>
             <RevealImage natural capHeight={false} src={block.image} alt={alt} className={`card ${tone}`} />
           </div>
@@ -322,24 +322,24 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
 }
 
 // Sayfanın sonunda bir sonraki proje: başlık harf harf yuvarlanır, kapak kartı hafifçe yakınlaşır
-function NextProject({ project, dark }: { project: ProjectType; dark?: boolean }) {
+function NextProject({ project }: { project: ProjectType }) {
   const { t } = useLang();
   const { openProject } = useTransition();
   return (
     <section className="gutter pb-[10vh] pt-[12vh]">
       <button type="button" onClick={() => openProject(project.slug)} className="group block w-full text-left focus-visible:outline-none">
-        <div className={`flex flex-col gap-6 border-t pt-6 sm:flex-row sm:items-end sm:justify-between ${dark ? 'border-white/15' : 'border-ink/15'}`}>
+        <div className={`flex flex-col gap-6 border-t pt-6 sm:flex-row sm:items-end sm:justify-between border-seam`}>
           <div>
             <p className="text-sm font-medium opacity-60">{t(ui.next)}</p>
-            <p className="display mt-3 text-[clamp(3rem,8vw,10rem)] leading-[0.95]">
+            <p lang="en" className="display mt-3 text-[clamp(3rem,8vw,10rem)]">
               <Roll text={project.title} />
             </p>
           </div>
-          <span className={`pill min-h-12 self-start px-6 text-base transition-colors sm:self-auto ${dark ? 'border-paper/40 group-hover:bg-paper group-hover:text-ink' : 'border-ink/25 group-hover:border-accent group-hover:bg-accent group-hover:text-paper'}`}>
+          <span className={`pill min-h-12 self-start px-6 text-base transition-colors sm:self-auto border-seam group-hover:border-wine group-hover:bg-wine`}>
             {t(ui.openProject)} <span aria-hidden>→</span>
           </span>
         </div>
-        <div className="card mt-8 aspect-[16/10] bg-mist sm:aspect-[16/7]">
+        <div className="card mt-8 aspect-[16/10] bg-coal-2 sm:aspect-[16/7]">
           <img src={project.cover} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04] motion-reduce:transition-none" />
         </div>
       </button>
@@ -348,18 +348,18 @@ function NextProject({ project, dark }: { project: ProjectType; dark?: boolean }
 }
 
 // Vaka sayfasını bitiren ziyaretçi için iletişime çıkış
-function ContactStrip({ dark }: { dark?: boolean }) {
+function ContactStrip() {
   const { t, lang } = useLang();
   const { goTo } = useTransition();
   return (
-    <section className={`gutter border-t py-[10vh] ${dark ? 'border-white/10' : 'border-ink/10'}`}>
+    <section className={`gutter border-t py-[10vh] border-seam`}>
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
         <h2 className="display max-w-[14ch] text-[clamp(2.6rem,5.6vw,6.5rem)]">{t(ui.contactCta)}</h2>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <Magnetic>
             <button
               onClick={() => goTo('/', 'iletisim')}
-              className={`pill min-h-12 px-6 text-base ${dark ? 'border-paper bg-paper text-ink hover:bg-transparent hover:text-paper' : 'border-ink bg-ink text-paper hover:border-accent hover:bg-accent'}`}
+              className="btn btn-wine"
             >
               {t(ui.getInTouch)} <span aria-hidden>→</span>
             </button>
@@ -390,9 +390,8 @@ export default function Project() {
 function ProjectPage({ project, next }: { project: ProjectType; next: ProjectType }) {
   const { t } = useLang();
   usePageMeta(`${project.title} — ${t(project.discipline)} · ${site.name}`, t(project.summary));
-  const dark = !!project.dark;
   // Kartların zemini: açık sayfada soluk lila, koyu sayfada saydam beyaz
-  const tone = dark ? 'bg-white/[0.06]' : 'bg-mist';
+  const tone = 'bg-coal-2';
   let chapter = 0;
 
   return (
@@ -400,8 +399,7 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
       id="main"
       tabIndex={-1}
       key={project.slug}
-      data-theme={dark ? 'dark' : undefined}
-      className={`outline-none [--line:10_10_10_/_0.14] ${dark ? 'bg-ink text-paper [--line:255_255_255_/_0.14]' : 'bg-paper text-ink'}`}
+      className="bg-coal text-cream outline-none [--line:44_37_37]"
     >
       <Intro project={project} />
       <Lead project={project} />
@@ -412,8 +410,8 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
           return <Block key={i} block={block} chapter={chapter} tone={tone} />;
         })}
       </div>
-      <NextProject project={next} dark={dark} />
-      <ContactStrip dark={dark} />
+      <NextProject project={next} />
+      <ContactStrip />
     </main>
   );
 }

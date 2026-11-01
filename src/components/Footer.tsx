@@ -1,166 +1,53 @@
-import { ArrowUp, ArrowUpRight, Download } from 'lucide-react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ArrowUp } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
-import { cvUrl, site, ui } from '../content';
+import { site, ui } from '../content';
 import { useLang } from '../lib/i18n';
-import { navLinks as sitemap } from '../lib/nav';
-import { gsap, reducedMotion, scrollToTarget } from '../lib/scroll';
+import { navLinks } from '../lib/nav';
+import { scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 import SocialIcon from './SocialIcon';
 
-// Ad, alt bilginin genişliğini dolduracak kadar büyür; çok yüksek olmaması için ekran yüksekliğinin %22'siyle sınırlanır
-function useFitWidth(text: string) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const [size, setSize] = useState<number>();
-  useLayoutEffect(() => {
-    const el = ref.current;
-    const box = el?.parentElement;
-    if (!el || !box) return;
-    const probe = document.createElement('span');
-    probe.className = 'display';
-    Object.assign(probe.style, { position: 'absolute', left: '-9999px', top: '0', visibility: 'hidden', whiteSpace: 'nowrap', fontSize: '100px' });
-    probe.textContent = text;
-    document.body.appendChild(probe);
-    const fit = () => {
-      const byWidth = (box.clientWidth / Math.max(probe.offsetWidth, 1)) * 100 * 0.97;
-      setSize(Math.round(Math.max(24, Math.min(byWidth, window.innerHeight * 0.22))));
-    };
-    fit();
-    document.fonts?.ready.then(fit);
-    const observer = new ResizeObserver(fit);
-    observer.observe(box);
-    // Yazı tipi geç yüklenirse ölçüm metni genişler; o anda boyut yeniden hesaplanır
-    observer.observe(probe);
-    return () => {
-      observer.disconnect();
-      probe.remove();
-    };
-  }, [text]);
-  return { ref, size };
-}
-
-function Label({ children }: { children: string }) {
-  return <p className="mb-5 text-xs font-semibold uppercase tracking-[0.14em] text-mute">{children}</p>;
-}
-
+// Sade alt bilgi: telif, menü, sosyal bağlantılar ve yukarı dönüş
 export default function Footer() {
   const { t } = useLang();
   const { goTo } = useTransition();
   const { pathname } = useLocation();
-  const ref = useRef<HTMLElement>(null);
-  const name = useFitWidth(site.name);
-
-  // Alt bilginin yüksekliğini CSS değişkeni olarak yayınla; iletişim bölümü bununla birlikte tam bir ekranı doldurur
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const publish = () => document.documentElement.style.setProperty('--footer-h', `${el.offsetHeight}px`);
-    publish();
-    const observer = new ResizeObserver(publish);
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  // Ad, alt bilgi görünür olunca maskenin altından kayarak belirir
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    const ctx = gsap.context(() => {
-      gsap.from('[data-footer-name]', {
-        yPercent: 105,
-        duration: 1.3,
-        ease: 'expo.out',
-        scrollTrigger: { trigger: ref.current, start: 'top 75%' },
-      });
-    }, ref);
-    return () => ctx.revert();
-  }, []);
-
   const go = (id: string) => (pathname === '/' ? scrollToTarget(`#${id}`) : goTo('/', id));
 
   return (
-    <footer ref={ref} data-theme="dark" className="gutter overflow-hidden bg-ink pt-20 text-paper sm:pt-[4vh]">
-      <div className="grid gap-12 border-b border-white/10 pb-10 lg:grid-cols-12 lg:gap-8">
-        {/* Durum, e-posta ve CV */}
-        <div className="lg:col-span-5">
-          <p className="display max-w-2xl text-[clamp(2rem,3vw,3.25rem)] leading-[1.02]">{t(ui.available)}</p>
-          <p className="mt-3 max-w-sm text-sm leading-relaxed text-paper/60">{t(ui.availableNote)}</p>
-          <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-4">
-            <a
-              href={`mailto:${site.email}`}
-              className="display inline-block break-all py-2 text-[clamp(1.25rem,1.9vw,2rem)] underline decoration-white/30 decoration-1 underline-offset-[6px] transition-colors hover:text-accent-soft hover:decoration-accent-soft"
-            >
-              {site.email}
-            </a>
-            {cvUrl && (
-              <a
-                href={cvUrl}
-                download
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-paper transition hover:brightness-110"
-              >
-                <Download size={16} /> {t(ui.cv)}
-              </a>
-            )}
-          </div>
-        </div>
-
-        {/* Menü ve sosyal */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:col-span-7">
-          <div>
-            <Label>{t(ui.sitemap)}</Label>
-            <ul>
-              {sitemap.map((item, i) => (
-                <li key={item.id}>
-                  <button onClick={() => go(item.id)} className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent-soft">
-                    <span className="text-xs tabular-nums text-mute">0{i + 1}</span>
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">{t(item.label)}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <Label>{t(ui.follow)}</Label>
-            <ul>
-              {site.socials.map((s) => (
-                <li key={s.label}>
-                  <a href={s.href} target="_blank" rel="noreferrer" className="group flex min-h-11 items-center gap-3 text-[15px] transition-colors hover:text-accent-soft">
-                    <span className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-paper/80 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-paper">
-                      <SocialIcon href={s.href} label={s.label} className="h-[18px] w-[18px]" />
-                    </span>
-                    {s.label}
-                    <ArrowUpRight size={14} className="-translate-x-1 opacity-0 transition duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      {/* Ekran genişliğinde dev ad */}
-      <div className="pt-4">
-        <p ref={name.ref} className="line-mask display leading-[0.85]" style={name.size ? { fontSize: name.size } : undefined}>
-          <span data-footer-name className="block whitespace-nowrap">
-            {site.name}
-          </span>
-        </p>
-      </div>
-
-      <div className="flex items-center justify-between gap-4 border-t border-white/10 py-5 text-xs text-mute">
+    <footer className="border-t border-seam">
+      <div className="gutter flex flex-col gap-6 py-7 text-sm text-stone md:flex-row md:items-center md:justify-between">
         <p>
-          © {new Date().getFullYear()} {site.name}. {t(ui.rights)}
+          © {new Date().getFullYear()} {site.name} · <span lang="en">Design. Build. Automate.</span>
         </p>
-        <button
-          onClick={() => scrollToTarget(0)}
-          aria-label={t(ui.backToTop)}
-          className="group inline-flex min-h-11 items-center gap-2 font-semibold text-paper/70 transition-colors hover:text-paper"
-        >
-          <span className="hidden sm:inline">{t(ui.backToTop)}</span>
-          <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-paper">
+        <nav aria-label={t(ui.sitemap)} className="flex flex-wrap gap-x-6 gap-y-2">
+          {navLinks.map((item) => (
+            <button key={item.id} onClick={() => go(item.id)} className="min-h-11 transition-colors hover:text-cream">
+              {t(item.label)}
+            </button>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2">
+          {site.socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={s.label}
+              className="grid h-11 w-11 place-items-center rounded-full border border-seam text-cream transition-colors hover:border-wine hover:bg-wine"
+            >
+              <SocialIcon href={s.href} label={s.label} className="h-[18px] w-[18px]" />
+            </a>
+          ))}
+          <button
+            onClick={() => scrollToTarget(0)}
+            aria-label={t(ui.backToTop)}
+            className="ml-2 grid h-11 w-11 place-items-center rounded-full border border-seam text-cream transition-colors hover:border-cream"
+          >
             <ArrowUp size={16} />
-          </span>
-        </button>
+          </button>
+        </div>
       </div>
     </footer>
   );

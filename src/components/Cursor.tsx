@@ -21,7 +21,7 @@ export default function Cursor() {
 
   return (
     <div ref={ref} className="cursor-follower pointer-events-none fixed left-0 top-0 z-[80]" aria-hidden>
-      <div className="h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
+      <div className="h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-wine-light" />
     </div>
   );
 }

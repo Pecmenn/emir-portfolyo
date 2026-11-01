@@ -6,7 +6,9 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
   {
     title: 'Üst menü',
     items: [
+      ['nav.areas', 'Ne yapıyorum'],
       ['nav.work', 'İşler'],
+      ['nav.about', 'Hakkımda'],
       ['nav.services', 'Hizmetler'],
       ['nav.contact', 'İletişim'],
       ['cv', 'CV butonu'],

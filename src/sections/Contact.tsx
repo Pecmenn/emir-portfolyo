@@ -1,8 +1,8 @@
-import { useLayoutEffect, useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { contact, site } from '../content';
-import { FadeUp, Lines } from '../components/Reveal';
 import { useLang } from '../lib/i18n';
-import { gsap, reducedMotion } from '../lib/scroll';
+import { useSoftReveal } from '../lib/reveal';
+import SocialIcon from '../components/SocialIcon';
 
 // idle: bekliyor; sending: form servisine gönderiliyor; sent: servis kabul etti;
 // mailto: form adresi tanımlı değil, e-posta taslağı hazırlandı; error: gönderilemedi
@@ -16,46 +16,9 @@ export default function Contact() {
   const [status, setStatus] = useState<Status>('idle');
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const sectionRef = useRef<HTMLElement>(null);
-  const headRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-
-  // Başlık kendi yerinden başlar ve kaydırdıkça aşağı iner; sayfa sonunda alt kenarı
-  // formun alt kenarıyla hizalanır (geniş ekranlarda)
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 640px)', () => {
-      const head = headRef.current!;
-      // Başlığın o anki kaydırma payı çıkarılarak, yerindeyken formun altına ne kadar uzak olduğu ölçülür.
-      // Altbilgiye yapışmasın diye küçük bir pay (0.12em) bırakılır.
-      const endY = () => {
-        const title = head.querySelector('.display');
-        const form = head.nextElementSibling;
-        if (!title || !form) return 0;
-        const offset = Number(gsap.getProperty(head, 'y')) || 0;
-        const gap = parseFloat(getComputedStyle(title).fontSize) * 0.12;
-        return Math.max(0, form.getBoundingClientRect().bottom - (title.getBoundingClientRect().bottom - offset) - gap);
-      };
-      gsap.fromTo(
-        headRef.current,
-        { y: 0 },
-        {
-          y: endY,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            endTrigger: 'footer',
-            end: 'bottom bottom',
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        },
-      );
-    });
-    return () => mm.revert();
-  }, []);
+  useSoftReveal(sectionRef);
 
   const validate = (name: FieldName, value: string): string => {
     if (!value.trim()) return t(contact.form.required);
@@ -107,8 +70,8 @@ export default function Contact() {
   };
 
   const field =
-    'w-full border-b bg-transparent py-3 text-lg outline-none transition-colors placeholder:text-mute-ink focus:border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong';
-  const labelClass = 'mb-1 block text-sm font-medium text-mute-ink';
+    'w-full border-b bg-transparent py-2.5 text-[17px] text-cream outline-none transition-colors placeholder:text-stone/70 focus:border-wine-light focus-visible:outline-none';
+  const labelClass = 'block text-[13px] tracking-[0.04em] text-stone';
 
   const fieldProps = (name: FieldName) => ({
     id: name,
@@ -116,12 +79,12 @@ export default function Contact() {
     required: true,
     'aria-invalid': errors[name] ? true : undefined,
     'aria-describedby': errors[name] ? `${name}-error` : undefined,
-    className: `${field} ${errors[name] ? 'border-red-700' : 'border-ink/25'}`,
+    className: `${field} ${errors[name] ? 'border-wine-light' : 'border-seam'}`,
     onBlur: onBlur(name),
   });
   const error = (name: FieldName) =>
     errors[name] ? (
-      <p id={`${name}-error`} role="alert" className="mt-1.5 text-sm font-medium text-red-700">
+      <p id={`${name}-error`} role="alert" className="mt-1.5 text-sm font-medium text-wine-light">
         {errors[name]}
       </p>
     ) : null;
@@ -131,56 +94,64 @@ export default function Contact() {
       {site.email}
     </a>
   );
+  const lines = contact.title[lang];
 
   return (
-    <section
-      ref={sectionRef}
-      id="iletisim"
-      className="gutter bg-paper pb-20 pt-10 sm:flex sm:min-h-[calc(100svh-var(--footer-h,0px))] sm:flex-col sm:justify-center sm:pb-[3vh] sm:pt-20"
-    >
-      <div className="grid gap-16 lg:grid-cols-2">
-        <div ref={headRef}>
-          <Lines key={lang} lines={contact.title[lang]} className="display text-[clamp(3.2rem,min(9vw,11vh),8.5rem)]" />
-          <FadeUp className="mt-10 max-w-md">
-            <p className="text-lg leading-relaxed">{t(contact.text)}</p>
-          </FadeUp>
+    <section ref={sectionRef} id="iletisim" className="gutter pb-[clamp(80px,11vw,140px)]">
+      <h2 data-reveal className="display text-[clamp(4rem,14vw,13.5rem)]" aria-label={lines.join(' ')}>
+        {lines.map((line, i) => (
+          <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">
+            <span className={i === lines.length - 1 ? 'text-wine-light' : ''}>{line}</span>
+          </span>
+        ))}
+      </h2>
+      <div className="mt-[clamp(36px,5vw,64px)] grid gap-10 border-t border-seam pt-8 lg:grid-cols-[5fr_7fr]">
+        <div className="soft-rise">
+          {t(contact.text) && <p className="mb-8 max-w-md text-stone">{t(contact.text)}</p>}
+          <p className="eyebrow mb-3.5">{t(contact.form.email)}</p>
+          <a href={`mailto:${site.email}`} className="break-all border-b border-seam pb-1.5 text-[clamp(1.4rem,2.4vw,2.2rem)] transition-colors hover:border-cream">
+            {site.email}
+          </a>
+          <div className="mt-6 flex flex-wrap gap-2.5">
+            {site.socials.map((s) => (
+              <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="btn">
+                <SocialIcon href={s.href} label={s.label} className="h-4 w-4" /> {s.label} <span aria-hidden>↗</span>
+              </a>
+            ))}
+          </div>
         </div>
 
-        <FadeUp className="lg:pt-6">
+        <div className="soft-rise [transition-delay:.1s]">
           {status === 'sent' ? (
-            <div ref={resultRef} tabIndex={-1} role="status" className="rounded-xl border border-ink/15 bg-white/60 p-6 text-lg leading-relaxed outline-none">
+            <div ref={resultRef} tabIndex={-1} role="status" className="rounded-2xl border border-seam bg-coal-2 p-6 text-lg leading-relaxed outline-none">
               {t(contact.form.sent)}
             </div>
           ) : (
-            <form ref={formRef} onSubmit={submit} noValidate aria-busy={status === 'sending'} className="flex flex-col gap-6">
-              <div>
+            <form ref={formRef} onSubmit={submit} noValidate aria-busy={status === 'sending'} className="grid gap-5">
+              <div className="grid gap-2">
                 <label htmlFor="name" className={labelClass}>
                   {t(contact.form.name)}
                 </label>
                 <input {...fieldProps('name')} placeholder={t(contact.form.phName)} autoComplete="name" />
                 {error('name')}
               </div>
-              <div>
+              <div className="grid gap-2">
                 <label htmlFor="email" className={labelClass}>
                   {t(contact.form.email)}
                 </label>
                 <input {...fieldProps('email')} type="email" inputMode="email" placeholder={t(contact.form.phEmail)} autoComplete="email" />
                 {error('email')}
               </div>
-              <div>
+              <div className="grid gap-2">
                 <label htmlFor="message" className={labelClass}>
                   {t(contact.form.message)}
                 </label>
-                <textarea {...fieldProps('message')} rows={5} placeholder={t(contact.form.phMessage)} className={`${fieldProps('message').className} resize-none`} />
+                <textarea {...fieldProps('message')} rows={4} placeholder={t(contact.form.phMessage)} className={`${fieldProps('message').className} resize-y`} />
                 {error('message')}
               </div>
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="pill min-h-11 border-ink bg-ink px-6 py-3 text-base text-paper hover:border-accent hover:bg-accent hover:text-paper focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-strong disabled:opacity-50"
-                >
-                  {status === 'sending' ? t(contact.form.sending) : t(contact.form.send)} <span aria-hidden>→</span>
+              <div>
+                <button type="submit" disabled={status === 'sending'} className="btn btn-wine disabled:opacity-50">
+                  {status === 'sending' ? t(contact.form.sending) : t(contact.form.send)} <span aria-hidden className="arrow">→</span>
                 </button>
               </div>
               <div role="status" aria-live="polite" className="min-h-[1.5rem] text-sm leading-relaxed">
@@ -192,14 +163,14 @@ export default function Contact() {
                   </p>
                 )}
                 {status === 'error' && (
-                  <p className="font-medium text-red-700">
-                    {t(contact.form.error)} <span className="text-ink">{mailLink}</span>
+                  <p className="font-medium text-wine-light">
+                    {t(contact.form.error)} <span className="text-cream">{mailLink}</span>
                   </p>
                 )}
               </div>
             </form>
           )}
-        </FadeUp>
+        </div>
       </div>
     </section>
   );
