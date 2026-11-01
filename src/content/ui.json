@@ -45,6 +45,10 @@
     "tr": "Kapsam",
     "en": "Scope"
   },
+  "year": {
+    "tr": "Yıl",
+    "en": "Year"
+  },
   "credits": {
     "tr": "Proje Künyesi",
     "en": "Project credits"

@@ -1,21 +1,22 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType } from '../content';
+import { projects, site, ui, type CaseStudy, type GalleryBlock, type Project as ProjectType, type Step } from '../content';
 import AutoVideo from '../components/AutoVideo';
-import { FadeUp, RevealImage, Words } from '../components/Reveal';
+import { RevealImage } from '../components/Reveal';
 import { Magnetic, Roll } from '../components/Roll';
+import { AREA_LABEL } from '../components/WorkCard';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
-import { gsap, reducedMotion, refreshSoon } from '../lib/scroll';
+import { useSoftReveal } from '../lib/reveal';
+import { refreshSoon } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 import NotFound from './NotFound';
 
-// Proje sayfası (Lusion ve Dennis Snellenberg'den esinlenen sakin düzen): solda başlık ve künye, sağda kapak; kaydırdıkça
-// kapak tüm genişliğe açılır. Ardından giriş metni büyük bir cümle olarak gelir, galeri blokları köşeleri yuvarlatılmış
-// kartlar ve yatayda akan şeritler olarak dizilir, sayfa bir sonraki projeyle biter.
-// Eski "dünya", "yolculuk" ve "oyun" blokları bu düzende gösterilmez (kodları park/oyun-ve-dunyalar dalında).
-
-const RADIUS = 'round 20px';
+// Proje sayfası (Design. Build. Automate. kimliği). Tek şablon, iki kullanım:
+// - Tasarım işi: başlık ve künye, tam genişlikte kapak, giriş metni, bölüm başlıkları ve görseller.
+// - Otomasyon işi: aynı düzene "Sorun → Nasıl çalışıyor → Sonuç" bölümü (caseStudy) ve akış şeması bloğu (flow) eklenir.
+// Görsel dizileri (pan, strip, flock) sakin ızgaralar olarak dizilir. Eski "dünya", "yolculuk" ve "oyun" blokları
+// bu düzende gösterilmez (kodları park/oyun-ve-dunyalar dalında).
 
 function Intro({ project }: { project: ProjectType }) {
   const { t, lang } = useLang();
@@ -27,123 +28,116 @@ function Intro({ project }: { project: ProjectType }) {
     if (!project.cover) coverReady();
   }, [project.cover, coverReady]);
 
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    const mm = gsap.matchMedia();
-    const ctx = gsap.context(() => {
-      gsap.from('[data-intro-line]', { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.08, delay: 0.55 });
-      gsap.from('[data-intro-fade]', { y: 18, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.06, delay: 0.85 });
-      // Geniş ekranda bölüm sabitlenir: kapak sağdaki sütundan tüm genişliğe açılır, metin yukarı kayarak çekilir
-      mm.add('(min-width: 1024px)', () => {
-        const tl = gsap.timeline({ scrollTrigger: { trigger: ref.current, start: 'top top', end: 'bottom bottom', scrub: 0.6 } });
-        tl.fromTo('[data-intro-media]', { clipPath: `inset(0% 0% 0% 41% ${RADIUS})` }, { clipPath: `inset(0% 0% 0% 0% ${RADIUS})`, ease: 'none' }, 0)
-          .fromTo('[data-intro-img]', { scale: 1.14 }, { scale: 1, ease: 'none' }, 0)
-          .to('[data-intro-copy]', { yPercent: -12, opacity: 0, ease: 'none', duration: 0.55 }, 0);
-      });
-    }, ref);
-    return () => {
-      mm.revert();
-      ctx.revert();
-    };
+  // Geçiş perdesi kalktıktan sonra başlık ve kapak yumuşakça açılır
+  useEffect(() => {
+    const id = window.setTimeout(() => ref.current?.classList.add('is-in'), 450);
+    return () => window.clearTimeout(id);
   }, [project.slug]);
 
   const meta = [
     { label: ui.client, value: project.client },
     { label: ui.role, value: t(project.role) },
     { label: ui.services, value: t(project.services) },
-  ];
+    { label: ui.year, value: project.year },
+  ].filter((m) => m.value?.trim());
+  const areas = project.areas ?? ['design'];
 
   return (
-    <section ref={ref} className="relative lg:h-[185vh]">
-      <div className="gutter relative pb-4 pt-[84px] sm:pt-[96px] lg:sticky lg:top-0 lg:h-[100svh]">
-        <div data-intro-copy className="relative z-[1] flex flex-col gap-8 lg:h-full lg:w-[37%] lg:justify-between lg:pb-4">
-          <div>
-            <p data-intro-fade className="text-sm font-medium opacity-60">
-              {t(project.discipline)} · {project.year}
-            </p>
-            <h1 lang="en" className="display mt-4 text-[clamp(3.4rem,6.4vw,8.5rem)]">
-              <span className="line-mask">
-                <span data-intro-line className="block">
-                  {project.title}
-                </span>
-              </span>
-            </h1>
-            <Words key={lang} immediate delay={0.7} text={t(project.summary)} className="mt-6 max-w-[30ch] text-[clamp(1.15rem,1.35vw,1.6rem)] leading-[1.25] tracking-[-0.015em]" />
-          </div>
-          <dl className="grid gap-0 text-[15px]">
-            {meta.map((row) => (
-              <div key={row.label.en} data-intro-fade className="grid grid-cols-[7.5rem_1fr] gap-4 border-t py-3 [border-top-color:rgb(var(--line))]">
-                <dt className="opacity-55">{t(row.label)}</dt>
-                <dd className="font-medium">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <div
-          data-intro-media
-          className="card relative mt-8 aspect-[4/5] bg-coal-2 sm:aspect-[16/10] lg:absolute lg:inset-x-8 lg:bottom-4 lg:top-[96px] lg:mt-0 lg:aspect-auto"
-        >
-          {project.cover && (
-            <img
-              data-intro-img
-              src={project.cover}
-              alt=""
-              onLoad={coverReady}
-              onError={coverReady}
-              style={{ ['--fx' as string]: `${project.coverFocus ?? 50}%` }}
-              className="absolute inset-0 h-full w-full object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]"
-            />
-          )}
-          {project.coverVideo && (
-            <div data-intro-img className="absolute inset-0">
-              <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
+    <section ref={ref} className="gutter pt-[calc(68px+clamp(32px,6vw,80px))]">
+      <p className="soft-rise eyebrow flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span lang="en" className="text-wine-light">
+          {areas.map((a) => AREA_LABEL[a]).join(' · ')}
+        </span>
+        <span aria-hidden>·</span>
+        <span>{t(project.discipline)}</span>
+      </p>
+      <h1 lang="en" className="display mt-5 text-[clamp(3.6rem,11vw,11rem)]">
+        <span className="line-mask soft-line">
+          <span>{project.title}</span>
+        </span>
+      </h1>
+      <div className="soft-rise mt-8 grid gap-8 border-t border-seam pt-7 [transition-delay:.15s] lg:grid-cols-12 lg:gap-10">
+        <p className="max-w-[36ch] text-[clamp(1.15rem,1.5vw,1.45rem)] leading-[1.35] lg:col-span-5">
+          <span key={lang}>{t(project.summary)}</span>
+        </p>
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-5 text-[15px] sm:grid-cols-4 lg:col-span-7">
+          {meta.map((row) => (
+            <div key={row.label.en}>
+              <dt className="eyebrow">{t(row.label)}</dt>
+              <dd className="mt-2 font-medium leading-snug">{row.value}</dd>
             </div>
-          )}
-        </div>
+          ))}
+        </dl>
+      </div>
+      <div className="soft-cover card relative mt-[clamp(32px,5vw,64px)] aspect-[4/5] bg-coal-2 sm:aspect-[16/9]">
+        {project.cover && (
+          <img
+            src={project.cover}
+            alt=""
+            onLoad={coverReady}
+            onError={coverReady}
+            style={{ ['--fx' as string]: `${project.coverFocus ?? 50}%` }}
+            className="absolute inset-0 h-full w-full object-cover [object-position:var(--fx)_50%] md:[object-position:50%_50%]"
+          />
+        )}
+        {project.coverVideo && (
+          <div className="absolute inset-0">
+            <AutoVideo src={project.coverVideo} poster={project.cover || undefined} className="h-full w-full object-cover" />
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-// Giriş metni: kapaktan sonra büyük, normal kalınlıkta bir paragraf
+// Giriş metni: kapaktan sonra büyük ve sade bir paragraf
 function Lead({ project }: { project: ProjectType }) {
   const { t, lang } = useLang();
+  const ref = useRef<HTMLElement>(null);
+  useSoftReveal(ref, [lang]);
   if (!t(project.intro).trim()) return null;
   return (
-    <section className="gutter grid pb-[10vh] pt-[14vh] lg:grid-cols-12 lg:gap-8">
-      <Words key={lang} text={t(project.intro)} className="text-[clamp(1.4rem,2.3vw,2.5rem)] font-medium leading-[1.22] tracking-[-0.015em] lg:col-span-10 lg:col-start-3" />
+    <section ref={ref} className="gutter grid py-[clamp(72px,10vw,140px)] lg:grid-cols-12">
+      <p key={lang} className="soft-rise text-[clamp(1.4rem,2.3vw,2.4rem)] font-medium leading-[1.25] tracking-[-0.015em] lg:col-span-10 lg:col-start-3">
+        {t(project.intro)}
+      </p>
     </section>
   );
 }
 
+// Otomasyon işlerinde: sorun, nasıl çalışıyor, sonuç ve rakamlar
 function CaseStudySection({ data }: { data: CaseStudy }) {
   const { t } = useLang();
+  const ref = useRef<HTMLElement>(null);
+  useSoftReveal(ref);
   const steps = [
     { label: ui.challenge, text: data.challenge },
     { label: ui.process, text: data.process },
     { label: ui.result, text: data.result },
-  ];
+  ].filter((s) => t(s.text).trim());
   return (
-    <section className="gutter my-[6vh] bg-coal-2 py-[12vh] text-cream">
-      <div className="grid gap-10 border-b border-seam pb-[8vh] md:grid-cols-3 md:gap-8">
+    <section ref={ref} className="gutter pb-[clamp(72px,10vw,140px)]">
+      <div className="grid gap-px overflow-hidden rounded-[22px] border border-seam bg-seam md:grid-cols-3">
         {steps.map((step, i) => (
-          <FadeUp key={step.label.en} delay={i * 0.08}>
-            <p className="mb-4 text-sm font-medium text-wine-light">
-              0{i + 1} — {t(step.label)}
+          <div key={step.label.en} className={`soft-rise grid content-start gap-4 bg-coal-2 p-[clamp(22px,2.4vw,36px)] ${['', '[transition-delay:.1s]', '[transition-delay:.2s]'][i]}`}>
+            <p className="flex items-baseline gap-3">
+              <span className="text-sm tabular-nums text-wine-light">0{i + 1}</span>
+              <span className="display text-[clamp(1.8rem,2.4vw,2.4rem)]">{t(step.label)}</span>
             </p>
-            <p className="max-w-xl text-[clamp(1.05rem,1vw,1.4rem)] leading-relaxed text-cream/85">{t(step.text)}</p>
-          </FadeUp>
+            <p className="text-cream/85">{t(step.text)}</p>
+          </div>
         ))}
       </div>
-      <div className="grid gap-10 pt-[8vh] sm:grid-cols-3 sm:gap-8">
-        {data.metrics.map((m, i) => (
-          <FadeUp key={m.value} delay={i * 0.08}>
-            <p className="display text-[clamp(3.5rem,6vw,8rem)]">{m.value}</p>
-            <p className="mt-3 text-sm text-stone">{t(m.label)}</p>
-          </FadeUp>
-        ))}
-      </div>
+      {data.metrics.length > 0 && (
+        <div className="mt-[clamp(20px,2.4vw,32px)] grid gap-[clamp(14px,1.6vw,24px)] sm:grid-cols-3">
+          {data.metrics.map((m, i) => (
+            <div key={m.value + i} className={`soft-rise border-t border-seam pt-5 ${['', '[transition-delay:.1s]', '[transition-delay:.2s]'][i % 3]}`}>
+              <p className="display text-[clamp(3.6rem,7vw,7rem)] text-wine-light">{m.value}</p>
+              <p className="mt-2 max-w-[30ch] text-stone">{t(m.label)}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -152,95 +146,97 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
 function SectionHead({ index, title, text }: { index?: number; title: string; text: string }) {
   const { lang } = useLang();
   const ref = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    const ctx = gsap.context(() => {
-      gsap.from('[data-head-rule]', { scaleX: 0, duration: 1.3, ease: 'expo.inOut', scrollTrigger: { trigger: ref.current, start: 'top 85%' } });
-    }, ref);
-    return () => ctx.revert();
-  }, []);
+  useSoftReveal(ref, [lang]);
   if (!title.trim() && !text.trim()) return null;
   return (
-    <div ref={ref} className="gutter pb-[3vh] pt-[14vh]">
-      <div data-head-rule className="h-px origin-left bg-current opacity-15" />
-      <div className="mt-6 grid gap-4 lg:grid-cols-12 lg:gap-8">
-        <p className="text-sm font-medium tabular-nums opacity-55 lg:col-span-3">{index ? String(index).padStart(2, '0') : ''}</p>
+    <div ref={ref} data-reveal className="gutter pb-[clamp(20px,2.4vw,32px)] pt-[clamp(72px,10vw,140px)]">
+      <div className="grid gap-4 border-t border-seam pt-6 lg:grid-cols-12 lg:gap-8">
+        <p className="text-sm tabular-nums text-wine-light lg:col-span-3">{index ? String(index).padStart(2, '0') : ''}</p>
         <div className="lg:col-span-9">
-          {title.trim() && <Words key={`h-${lang}`} as="h2" text={title} className="display text-[clamp(2.8rem,5vw,6rem)]" />}
-          {text.trim() && <Words key={`p-${lang}`} text={text} className="mt-5 max-w-[46ch] text-[clamp(1.05rem,1.15vw,1.4rem)] leading-snug opacity-70" />}
+          {title.trim() && (
+            <h2 className="display text-[clamp(2.8rem,5.4vw,6rem)]">
+              {title.split('\n').map((l, i) => (
+                <span key={`${lang}-${i}`} className="line-mask soft-line">
+                  <span>{l}</span>
+                </span>
+              ))}
+            </h2>
+          )}
+          {text.trim() && <p className="soft-rise mt-5 max-w-[48ch] text-[clamp(1.05rem,1.15vw,1.3rem)] leading-snug text-stone">{text}</p>}
         </div>
       </div>
     </div>
   );
 }
 
-// Sayfa genişliğinde kart: görsel kendi oranında, köşeleri yuvarlak; alttan perde gibi açılır
-function Wide({ src, alt, tone }: { src: string; alt: string; tone: string }) {
+// Akış şeması: adımlar soldan sağa (telefonda yukarıdan aşağı) birbirine bağlı kutular
+function Flow({ title, text, steps }: { title: string; text: string; steps: Step[] }) {
+  const { t } = useLang();
+  const ref = useRef<HTMLDivElement>(null);
+  useSoftReveal(ref);
+  if (!steps.length) return null;
   return (
-    <div className="gutter">
-      <RevealImage natural capHeight={false} src={src} alt={alt} className={`card ${tone}`} />
-    </div>
+    <>
+      <SectionHead title={title} text={text} />
+      <div ref={ref} className="gutter">
+        <ol className="grid gap-3 lg:grid-flow-col lg:auto-cols-fr lg:gap-0">
+          {steps.map((step, i) => (
+            <li key={i} className="soft-rise relative flex lg:pr-10 lg:last:pr-0" style={{ transitionDelay: `${i * 90}ms` }}>
+              <div className="grid w-full content-start gap-3 rounded-[18px] border border-seam bg-coal-2 p-5">
+                <span className={`grid h-9 w-9 place-items-center rounded-full text-sm font-semibold tabular-nums ${i === 0 || i === steps.length - 1 ? 'bg-wine text-cream' : 'bg-coal-3 text-wine-light'}`}>
+                  {i + 1}
+                </span>
+                <h3 className="display text-[clamp(1.6rem,2vw,2.1rem)]">{t(step.title)}</h3>
+                <p className="text-[15px] leading-snug text-stone">{t(step.text)}</p>
+              </div>
+              {i < steps.length - 1 && (
+                <span aria-hidden className="absolute right-0 top-1/2 hidden h-px w-10 -translate-y-1/2 bg-stone/50 lg:block">
+                  <span className="absolute -right-0.5 -top-[3px] h-[7px] w-[7px] rotate-45 border-r border-t border-stone" />
+                </span>
+              )}
+              {i < steps.length - 1 && <span aria-hidden className="absolute -bottom-3 left-9 h-3 w-px bg-stone/50 lg:hidden" />}
+            </li>
+          ))}
+        </ol>
+      </div>
+    </>
   );
 }
 
-type RailItem = { src: string; label?: string };
-
-// Yatayda akan şerit: geniş ekranda bölüm sabitlenir ve aşağı kaydırdıkça kartlar sola akar; telefonda parmakla kaydırılır.
-// cutout: saydam zeminli parçalar (karakter, kaykay, obje) açık renkli bir kartın ortasında durur
-function Rail({ title, text, items, alt, cutout, tone }: { title?: string; text?: string; items: RailItem[]; alt: string; cutout?: boolean; tone: string }) {
-  const { lang } = useLang();
-  const wrapRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 1024px)', () => {
-      const track = trackRef.current!;
-      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      gsap.to(track, {
-        x: () => -dist(),
-        ease: 'none',
-        // Üst kap flex olduğu için GSAP boşluğu kendiliğinden eklemez (pinSpacing varsayılanı false olur); açıkça istenir
-        scrollTrigger: { trigger: wrapRef.current, start: 'top top', end: () => `+=${dist()}`, pin: true, pinSpacing: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1 },
-      });
-    });
-    return () => mm.revert();
-  }, [items.map((i) => i.src).join('|')]);
-
-  const hasHead = !!(title?.trim() || text?.trim());
+// Görsel ızgarası: ekranlar kendi oranlarıyla, saydam zeminli parçalar (cutout) kare kutularda ortalanır
+function Grid({ title, text, images, alt, cutout }: { title?: string; text?: string; images: string[]; alt: string; cutout?: boolean }) {
+  const ref = useRef<HTMLDivElement>(null);
+  useSoftReveal(ref, [images.join('|')]);
+  const cols = cutout ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4' : images.length > 4 ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-5' : 'grid-cols-2 lg:grid-cols-4';
   return (
-    <section ref={wrapRef} className="overflow-hidden py-[4vh] lg:flex lg:h-[100svh] lg:flex-col lg:justify-center lg:py-0">
-      {hasHead && (
-        <div className="gutter mb-6 grid gap-3 lg:grid-cols-12 lg:items-end lg:gap-8">
-          {title?.trim() && <Words key={`rt-${lang}`} as="h3" text={title} className="display text-[clamp(2.2rem,3.4vw,4rem)] lg:col-span-5" />}
-          {text?.trim() && <p className="max-w-[44ch] text-[clamp(1rem,1.05vw,1.25rem)] leading-snug opacity-70 lg:col-span-5 lg:col-start-8">{text}</p>}
-        </div>
-      )}
-      <div
-        ref={trackRef}
-        className="gutter flex gap-[var(--gap)] max-lg:snap-x max-lg:snap-mandatory max-lg:overflow-x-auto max-lg:[scrollbar-width:none] lg:w-max"
-      >
-        {items.map((item, i) => (
-          <figure key={`${item.src}-${i}`} className={`card relative shrink-0 snap-start ${cutout ? `h-[52vh] w-[40vh] p-[4vh] lg:h-[62vh] lg:w-[47vh] ${tone}` : 'h-[50vh] lg:h-[62vh]'}`}>
+    <>
+      {(title?.trim() || text?.trim()) && <SectionHead title={title ?? ''} text={text ?? ''} />}
+      <div ref={ref} className={`gutter grid items-start gap-[var(--gap)] ${cols}`}>
+        {images.map((src, i) => (
+          <figure key={`${src}-${i}`} className={`soft-rise card bg-coal-2 ${cutout ? 'grid aspect-square place-items-center p-[12%]' : ''}`} style={{ transitionDelay: `${Math.min(i, 8) * 50}ms` }}>
             <img
-              src={item.src}
+              src={src}
               alt={alt}
-              loading="eager"
-              decoding="async"
-              draggable={false}
+              loading="lazy"
               onLoad={refreshSoon}
-              className={cutout ? 'h-full w-full select-none object-contain drop-shadow-[0_24px_30px_rgba(0,0,0,0.18)]' : 'h-full w-auto max-w-none select-none'}
+              className={cutout ? 'h-full w-full object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]' : 'block h-auto w-full'}
             />
-            {item.label && <figcaption className="absolute left-3 top-3 rounded-full bg-coal/80 px-3 py-1 text-xs font-medium text-cream backdrop-blur">{item.label}</figcaption>}
           </figure>
         ))}
       </div>
-    </section>
+    </>
   );
 }
 
-function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number; tone: string }) {
+function Wide({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="gutter">
+      <RevealImage natural capHeight={false} src={src} alt={alt} className="card bg-coal-2" />
+    </div>
+  );
+}
+
+function Block({ block, chapter }: { block: GalleryBlock; chapter: number }) {
   const { t, lang } = useLang();
   const alt = 'alt' in block && block.alt ? t(block.alt) : '';
   switch (block.type) {
@@ -248,13 +244,17 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
       return <SectionHead index={chapter} title={t(block.title)} text={t(block.text)} />;
     case 'text':
       return <SectionHead title={t(block.title)} text={t(block.text)} />;
+    case 'flow':
+      return <Flow title={t(block.title)} text={t(block.text)} steps={block.steps} />;
     case 'full':
       return (
         <>
-          {block.image && <Wide src={block.image} alt={alt} tone={tone} />}
+          {block.image && <Wide src={block.image} alt={alt} />}
           {block.quote && t(block.quote).trim() && (
-            <div className="gutter py-[8vh] text-center">
-              <Words key={lang} as="h2" text={t(block.quote)} className="mx-auto max-w-[26ch] text-[clamp(1.6rem,2.6vw,3rem)] font-medium leading-[1.15] tracking-[-0.015em]" />
+            <div className="gutter py-[clamp(48px,7vw,96px)] text-center">
+              <p key={lang} className="mx-auto max-w-[26ch] text-[clamp(1.6rem,2.6vw,3rem)] font-medium leading-[1.15] tracking-[-0.015em]">
+                {t(block.quote)}
+              </p>
             </div>
           )}
         </>
@@ -271,7 +271,7 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
             [b, lb],
           ].map(([src, label], i) => (
             <div key={i} className="relative">
-              <RevealImage natural capHeight={false} src={src} alt={alt} className={`card ${tone}`} />
+              <RevealImage natural capHeight={false} src={src} alt={alt} className="card bg-coal-2" />
               {label && <span className="absolute left-3 top-3 rounded-full bg-coal/80 px-3 py-1 text-xs font-medium text-cream backdrop-blur">{label}</span>}
             </div>
           ))}
@@ -282,9 +282,11 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
       const right = block.side === 'right';
       return (
         <div className="gutter grid gap-8 py-[4vh] lg:grid-cols-12 lg:items-start lg:gap-8">
-          <Words key={lang} text={t(block.text)} className={`max-w-xl text-[clamp(1.3rem,1.7vw,2rem)] font-medium leading-[1.25] lg:sticky lg:top-28 lg:col-span-4 ${right ? '' : 'lg:order-2'}`} />
+          <p key={lang} className={`max-w-xl text-[clamp(1.3rem,1.7vw,2rem)] font-medium leading-[1.25] lg:sticky lg:top-28 lg:col-span-4 ${right ? '' : 'lg:order-2'}`}>
+            {t(block.text)}
+          </p>
           <div className={`lg:col-span-8 ${right ? '' : 'lg:order-1'}`}>
-            <RevealImage natural capHeight={false} src={block.image} alt={alt} className={`card ${tone}`} />
+            <RevealImage natural capHeight={false} src={block.image} alt={alt} className="card bg-coal-2" />
           </div>
         </div>
       );
@@ -293,18 +295,18 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
       if (!block.video) return null;
       return (
         <div className="gutter">
-          <FadeUp className={`card aspect-video ${tone} ${block.full ? '' : 'mx-auto max-w-[1100px]'}`}>
+          <div className={`card aspect-video bg-coal-2 ${block.full ? '' : 'mx-auto max-w-[1100px]'}`}>
             <AutoVideo src={block.video} className="h-full w-full object-cover" />
-          </FadeUp>
+          </div>
         </div>
       );
     case 'showcase':
       if (!block.image) return null;
       return (
         <div className="gutter">
-          <FadeUp className={`card grid place-items-center p-[5%] ${tone}`}>
-            <img src={block.image} alt={alt} loading="lazy" onLoad={refreshSoon} className="max-h-[80vh] w-auto max-w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.2)]" />
-          </FadeUp>
+          <div className="card grid place-items-center bg-coal-2 p-[5%]">
+            <img src={block.image} alt={alt} loading="lazy" onLoad={refreshSoon} className="max-h-[80vh] w-auto max-w-full drop-shadow-[0_30px_40px_rgba(0,0,0,0.4)]" />
+          </div>
         </div>
       );
     case 'pan':
@@ -313,7 +315,7 @@ function Block({ block, chapter, tone }: { block: GalleryBlock; chapter: number;
       const images = block.images.filter(Boolean);
       if (!images.length) return null;
       const head = block.type === 'strip' ? {} : { title: t(block.title), text: t(block.text) };
-      return <Rail {...head} items={images.map((src) => ({ src }))} alt={alt} cutout={block.type === 'flock'} tone={tone} />;
+      return <Grid {...head} images={images} alt={alt} cutout={block.type === 'flock'} />;
     }
     default:
       // journey ve game blokları bu düzende gösterilmez
@@ -326,21 +328,21 @@ function NextProject({ project }: { project: ProjectType }) {
   const { t } = useLang();
   const { openProject } = useTransition();
   return (
-    <section className="gutter pb-[10vh] pt-[12vh]">
+    <section className="gutter pb-[10vh] pt-[clamp(80px,11vw,160px)]">
       <button type="button" onClick={() => openProject(project.slug)} className="group block w-full text-left focus-visible:outline-none">
-        <div className={`flex flex-col gap-6 border-t pt-6 sm:flex-row sm:items-end sm:justify-between border-seam`}>
+        <div className="flex flex-col gap-6 border-t border-seam pt-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm font-medium opacity-60">{t(ui.next)}</p>
+            <p className="eyebrow">{t(ui.next)}</p>
             <p lang="en" className="display mt-3 text-[clamp(3rem,8vw,10rem)]">
               <Roll text={project.title} />
             </p>
           </div>
-          <span className={`pill min-h-12 self-start px-6 text-base transition-colors sm:self-auto border-seam group-hover:border-wine group-hover:bg-wine`}>
-            {t(ui.openProject)} <span aria-hidden>→</span>
+          <span className="btn self-start group-hover:border-wine group-hover:bg-wine sm:self-auto">
+            {t(ui.openProject)} <span aria-hidden className="arrow">→</span>
           </span>
         </div>
         <div className="card mt-8 aspect-[16/10] bg-coal-2 sm:aspect-[16/7]">
-          <img src={project.cover} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04] motion-reduce:transition-none" />
+          <img src={project.cover} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] motion-reduce:transition-none" />
         </div>
       </button>
     </section>
@@ -352,16 +354,13 @@ function ContactStrip() {
   const { t, lang } = useLang();
   const { goTo } = useTransition();
   return (
-    <section className={`gutter border-t py-[10vh] border-seam`}>
+    <section className="gutter border-t border-seam py-[10vh]">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-        <h2 className="display max-w-[14ch] text-[clamp(2.6rem,5.6vw,6.5rem)]">{t(ui.contactCta)}</h2>
+        <h2 className="display max-w-[14ch] text-[clamp(2.8rem,6vw,7rem)]">{t(ui.contactCta)}</h2>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <Magnetic>
-            <button
-              onClick={() => goTo('/', 'iletisim')}
-              className="btn btn-wine"
-            >
-              {t(ui.getInTouch)} <span aria-hidden>→</span>
+            <button onClick={() => goTo('/', 'iletisim')} className="btn btn-wine">
+              {t(ui.getInTouch)} <span aria-hidden className="arrow">→</span>
             </button>
           </Magnetic>
           <a key={lang} href={`mailto:${site.email}`} className="inline-block py-2 text-base font-medium underline underline-offset-4">
@@ -390,24 +389,17 @@ export default function Project() {
 function ProjectPage({ project, next }: { project: ProjectType; next: ProjectType }) {
   const { t } = useLang();
   usePageMeta(`${project.title} — ${t(project.discipline)} · ${site.name}`, t(project.summary));
-  // Kartların zemini: açık sayfada soluk lila, koyu sayfada saydam beyaz
-  const tone = 'bg-coal-2';
   let chapter = 0;
 
   return (
-    <main
-      id="main"
-      tabIndex={-1}
-      key={project.slug}
-      className="bg-coal text-cream outline-none [--line:44_37_37]"
-    >
+    <main id="main" tabIndex={-1} key={project.slug} className="outline-none">
       <Intro project={project} />
       <Lead project={project} />
       {project.caseStudy && <CaseStudySection data={project.caseStudy} />}
       <div className="flex flex-col gap-[var(--gap)] [--gap:clamp(0.75rem,1vw,1.25rem)]">
         {project.gallery.map((block, i) => {
           if (block.type === 'chapter') chapter += 1;
-          return <Block key={i} block={block} chapter={chapter} tone={tone} />;
+          return <Block key={i} block={block} chapter={chapter} />;
         })}
       </div>
       <NextProject project={next} />

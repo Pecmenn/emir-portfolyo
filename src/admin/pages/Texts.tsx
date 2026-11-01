@@ -27,6 +27,7 @@ const GROUPS: { title: string; items: [string, string][] }[] = [
       ['client', '“Müşteri” etiketi'],
       ['role', '“Rol” etiketi'],
       ['services', '“Kapsam” etiketi'],
+      ['year', 'Proje künyesi: Yıl'],
       ['credits', 'Künye butonu'],
       ['challenge', '“Problem” başlığı'],
       ['process', '“Süreç” başlığı'],

@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Gamepad2, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Route, Sparkles, SquareSplitHorizontal, Trash2, Type, X } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, ExternalLink, Eye, Film, Gamepad2, GalleryHorizontal, Hash, Image as ImageIcon, Images, MoveHorizontal, Plus, Quote, Rotate3d, Route, Sparkles, SquareSplitHorizontal, Trash2, Type, Workflow, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import type { Ambient, ChapterWorld, GalleryBlock, JourneyStop, Project } from '../../content';
 import { SITE_URL } from '../github';
@@ -51,10 +51,11 @@ const BLOCKS: { type: GalleryBlock['type']; label: string; description: string; 
   { type: 'full', label: 'Geniş görsel', description: 'Sayfa genişliğinde görsel, altında isteğe bağlı büyük cümle', icon: ImageIcon },
   { type: 'video', label: 'Video', description: 'Sessiz, döngüde oynayan video', icon: Film },
   { type: 'showcase', label: '3B vitrin', description: 'Fareyle 3 boyutlu eğilen tek görsel; saydam zeminli cihaz görselleri için ideal', icon: Rotate3d },
-  { type: 'strip', label: 'Sürüklenen şerit', description: 'Yatayda fareyle sürüklenerek gezilen görsel dizisi', icon: GalleryHorizontal },
-  { type: 'flock', label: 'Uçuşan parçalar', description: 'Kaydırdıkça saydam zeminli parçalar uçarak gelip dizilir (ör. kaykaylar, karakterler)', icon: Sparkles },
+  { type: 'flow', label: 'Akış şeması', description: 'Bir otomasyonun adımları birbirine bağlı kutular olarak (ör. tablo → yapay zekâ → mailing)', icon: Workflow },
+  { type: 'strip', label: 'Görsel ızgarası', description: 'Görseller kendi oranlarıyla bir ızgarada dizilir', icon: GalleryHorizontal },
+  { type: 'flock', label: 'Parça ızgarası', description: 'Saydam zeminli parçalar (ör. kaykaylar, karakterler) kare kutularda dizilir', icon: Sparkles },
   { type: 'compare', label: 'Taslaktan sonuca', description: 'Kaydırdıkça taslak görselin üstünden son hâli açılır (ör. wireframe → son ekran)', icon: SquareSplitHorizontal },
-  { type: 'pan', label: 'Kaydırınca akan şerit', description: 'Sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)', icon: MoveHorizontal },
+  { type: 'pan', label: 'Ekran ızgarası', description: 'Başlıklı bir ızgarada uygulama ekranları (ör. telefon ekranları)', icon: MoveHorizontal },
   { type: 'game', label: 'Oynanabilir bölüm', description: 'Ziyaretçinin sayfada oynadığı kodlanmış oyun bölümü (şimdilik Snack Pack)', icon: Gamepad2 },
   { type: 'journey', label: 'Yolculuk', description: 'Kaydırdıkça kamera açılış görselinde portala dalar, duraklar portaldan kendi renkleriyle açılır (ör. oyunun dünyaları)', icon: Route },
 ];
@@ -246,6 +247,7 @@ function blankBlock(type: GalleryBlock['type']): GalleryBlock {
   if (type === 'flock') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''], layout: 'fan' };
   if (type === 'compare') return { type, before: '', after: '', beforeLabel: { tr: 'Taslak', en: 'Wireframe' }, afterLabel: { tr: 'Son hâli', en: 'Final' } };
   if (type === 'pan') return { type, title: { ...empty }, text: { ...empty }, images: ['', '', ''] };
+  if (type === 'flow') return { type, title: { ...empty }, text: { ...empty }, steps: [0, 1, 2].map(() => ({ title: { ...empty }, text: { ...empty } })) };
   if (type === 'game') return { type, game: 'snack-pack', title: { ...empty }, text: { ...empty } };
   if (type === 'journey') return { type, title: { ...empty }, text: { ...empty }, image: '', from: 15, toX: 50, toY: 50, stages: [blankStop()] };
   return { type: 'full', image: '', quote: { ...empty } };
@@ -384,6 +386,30 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
                 <ImageList images={block.images} onChange={(images) => update(i, { ...block, images })} />
               </div>
             )}
+            {block.type === 'flow' && (
+              <div className="flex flex-col gap-4">
+                <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Sistem nasıl çalışıyor" />
+                <BiField label="Açıklama" long value={block.text} onChange={(v) => update(i, { ...block, text: v })} />
+                <p className="text-[13px] text-ink/55">Adımlar geniş ekranda soldan sağa, telefonda yukarıdan aşağı birbirine bağlanır. İlk ve son adım şarap renginde işaretlenir; 3-6 adım en iyi sonucu verir.</p>
+                {block.steps.map((step, k) => (
+                  <div key={k} className="grid gap-3 rounded-xl border border-black/[0.08] p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold">{k + 1}. adım</span>
+                      <div className="flex">
+                        <button type="button" aria-label="Yukarı taşı" disabled={k === 0} onClick={() => update(i, { ...block, steps: move(block.steps, k, k - 1) })} className="grid h-8 w-8 place-items-center rounded-lg text-ink/50 hover:bg-black/5 disabled:opacity-25"><ArrowUp size={15} /></button>
+                        <button type="button" aria-label="Aşağı taşı" disabled={k === block.steps.length - 1} onClick={() => update(i, { ...block, steps: move(block.steps, k, k + 1) })} className="grid h-8 w-8 place-items-center rounded-lg text-ink/50 hover:bg-black/5 disabled:opacity-25"><ArrowDown size={15} /></button>
+                        <button type="button" aria-label="Adımı sil" onClick={() => update(i, { ...block, steps: block.steps.filter((_, j) => j !== k) })} className="grid h-8 w-8 place-items-center rounded-lg text-ink/50 hover:bg-red-50 hover:text-red-600"><Trash2 size={15} /></button>
+                      </div>
+                    </div>
+                    <BiField label="Adım adı" value={step.title} onChange={(v) => update(i, { ...block, steps: block.steps.map((x, j) => (j === k ? { ...x, title: v } : x)) })} placeholder="Ör. Google E-Tablolar" />
+                    <BiField label="Ne yapıyor" long value={step.text} onChange={(v) => update(i, { ...block, steps: block.steps.map((x, j) => (j === k ? { ...x, text: v } : x)) })} />
+                  </div>
+                ))}
+                <button type="button" onClick={() => update(i, { ...block, steps: [...block.steps, { title: { ...empty }, text: { ...empty } }] })} className="flex items-center justify-center gap-2 rounded-xl border-2 border-dashed border-black/10 py-3 text-sm font-semibold text-ink/60 hover:border-accent hover:text-accent-strong">
+                  <Plus size={16} /> Adım ekle
+                </button>
+              </div>
+            )}
             {block.type === 'flock' && (
               <div className="flex flex-col gap-4">
                 <BiField label="Başlık" value={block.title} onChange={(v) => update(i, { ...block, title: v })} placeholder="Ör. Her dünyaya bir kaykay" />
@@ -500,7 +526,7 @@ function GalleryEditor({ blocks, onChange }: { blocks: GalleryBlock[]; onChange:
       })}
       {adding ? (
         <div className="grid gap-2 sm:grid-cols-2">
-          {BLOCKS.map((b) => (
+          {BLOCKS.filter((b) => b.type !== 'game' && b.type !== 'journey').map((b) => (
             <button
               key={b.type}
               type="button"

@@ -35,6 +35,69 @@
       }
     },
     {
+      "type": "flow",
+      "title": {
+        "tr": "Sesli asistan nasıl çalışıyor",
+        "en": "How the voice assistant works"
+      },
+      "text": {
+        "tr": "Her adım bilgisayarda çalışıyor; ses hiçbir yere gönderilmiyor.",
+        "en": "Every step runs on the computer; audio never leaves it."
+      },
+      "steps": [
+        {
+          "title": {
+            "tr": "Hey Akış",
+            "en": "Hey Akış"
+          },
+          "text": {
+            "tr": "Küçük bir model her konuşmanın ilk 2,5 saniyesini dinler, uyandırma sözünü arar.",
+            "en": "A small model listens to the first 2.5 seconds of speech and looks for the wake phrase."
+          }
+        },
+        {
+          "title": {
+            "tr": "Yazıya dökme",
+            "en": "Transcription"
+          },
+          "text": {
+            "tr": "whisper.cpp komutun tamamını yazıya döker.",
+            "en": "whisper.cpp transcribes the full command."
+          }
+        },
+        {
+          "title": {
+            "tr": "Claude",
+            "en": "Claude"
+          },
+          "text": {
+            "tr": "Asistan ne istendiğini anlar; emin olamazsa sorar.",
+            "en": "The assistant works out what was meant and asks when unsure."
+          }
+        },
+        {
+          "title": {
+            "tr": "Plan ve hatırlatma",
+            "en": "Plan and reminders"
+          },
+          "text": {
+            "tr": "Görev takvime yerleşir, zamanı gelince Windows bildirimi gelir.",
+            "en": "The task lands on the calendar and a Windows notification arrives on time."
+          }
+        },
+        {
+          "title": {
+            "tr": "Sesli yanıt",
+            "en": "Voice reply"
+          },
+          "text": {
+            "tr": "Piper yanıtı Türkçe sesle okur.",
+            "en": "Piper reads the reply aloud in Turkish."
+          }
+        }
+      ]
+    },
+    {
       "type": "full",
       "image": "/images/akis/ozet.webp",
       "alt": {
@@ -92,5 +155,42 @@
   "areas": [
     "build",
     "automate"
-  ]
+  ],
+  "caseStudy": {
+    "challenge": {
+      "tr": "Görevler, takvim, alışkanlıklar ve harcamalar ayrı uygulamalara dağılmıştı. Günü planlamak her sabah ayrı bir iş oluyordu.",
+      "en": "Tasks, calendar, habits and spending were spread across different apps. Planning the day was a chore of its own every morning."
+    },
+    "process": {
+      "tr": "Tek bir arayüzden üç çıktı alan bir yapı kurdum: Windows uygulaması, tarayıcı sürümü ve test sayfası. Asistan bilgisayardaki Claude Code'a bağlanıyor; sesli komutları whisper.cpp yazıya döküyor, yanıtları Piper Türkçe sesle okuyor.",
+      "en": "I built one interface that produces three outputs: a Windows app, a browser version and a test page. The assistant connects to Claude Code on the computer; whisper.cpp transcribes voice commands and Piper reads the replies aloud in Turkish."
+    },
+    "result": {
+      "tr": "\"Hey Akış\" demek yetiyor: asistan dinliyor, görevi ekliyor, günü planlıyor ve zamanı gelince Windows bildirimiyle hatırlatıyor. Veriler bilgisayarda kalıyor ve her gün yedekleniyor.",
+      "en": "Saying \"Hey Akış\" is enough: the assistant listens, adds the task, plans the day and sends a Windows notification when it is time. Data stays on the computer and is backed up every day."
+    },
+    "metrics": [
+      {
+        "value": "3",
+        "label": {
+          "tr": "Tek arayüzden çıktı: Windows, tarayıcı, test",
+          "en": "Outputs from one interface: Windows, browser, test"
+        }
+      },
+      {
+        "value": "3,7 sn",
+        "label": {
+          "tr": "Kısa bir sesli komutun yazıya dökülme süresi",
+          "en": "Time to transcribe a short voice command"
+        }
+      },
+      {
+        "value": "0",
+        "label": {
+          "tr": "Dışarı gönderilen ses kaydı; hepsi bilgisayarda çalışıyor",
+          "en": "Voice recordings sent out; everything runs on the computer"
+        }
+      }
+    ]
+  }
 }

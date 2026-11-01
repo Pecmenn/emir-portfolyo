@@ -125,6 +125,22 @@ body {
   transform: none;
 }
 
+/* Proje kapağı: alttan perde gibi açılır, görsel hafifçe küçülerek yerine oturur */
+.soft-cover {
+  clip-path: inset(100% 0 0 0 round 22px);
+  transition: clip-path 1.4s var(--ease-soft) 0.2s;
+}
+.soft-cover > * {
+  transform: scale(1.12);
+  transition: transform 1.8s var(--ease-soft) 0.2s;
+}
+.is-in .soft-cover {
+  clip-path: inset(0 0 0 0 round 22px);
+}
+.is-in .soft-cover > * {
+  transform: none;
+}
+
 /* Disiplin şeridinin yavaş akışı */
 @keyframes ticker {
   to {
@@ -151,9 +167,13 @@ body {
     transition: none !important;
   }
   .soft-line > span,
-  .soft-rise {
+  .soft-rise,
+  .soft-cover > * {
     transform: none !important;
     opacity: 1 !important;
+  }
+  .soft-cover {
+    clip-path: none !important;
   }
 }
 

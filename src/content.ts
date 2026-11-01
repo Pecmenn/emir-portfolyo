@@ -36,6 +36,8 @@ export type GalleryBlock =
   | { type: 'compare'; before: string; after: string; beforeLabel: Text; afterLabel: Text; alt?: Text }
   // Bölüm ekranda sabit kalır; sayfa aşağı kaydıkça görseller yatayda akar (ör. uygulama ekranları)
   | { type: 'pan'; title: Text; text: Text; images: string[]; alt?: Text }
+  // Akış şeması: bir otomasyonun adımları birbirine bağlı kutular olarak (ör. tablo → yapay zekâ → mailing)
+  | { type: 'flow'; title: Text; text: Text; steps: Step[] }
   // Sayfada oynanan bir oyun bölümü; game hangi oyunun kodlanmış bölümünün gösterileceğini seçer
   | { type: 'game'; game: 'snack-pack'; title: Text; text: Text }
   // Bölüm ekranda sabit kalır; kaydırdıkça geniş açılış görselinde kamera from noktasından (yatay %) portala
