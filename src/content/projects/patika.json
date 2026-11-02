@@ -1,0 +1,780 @@
+{
+  "order": 9,
+  "slug": "patika",
+  "title": "Patika",
+  "discipline": { "tr": "UI/UX", "en": "UI/UX" },
+  "year": "2026",
+  "cover": "/images/patika/cover.webp",
+  "coverFocus": 82,
+  "summary": {
+    "tr": "Evcil hayvanların aşı, veteriner ve kilo kayıtlarını tek yerde tutan, hayvan kaybolduğunda mahalleyi harekete geçiren bir iOS uygulaması.",
+    "en": "An iOS app that keeps pets' vaccines, vet visits and weight in one place, and rallies the neighbourhood when a pet goes missing."
+  },
+  "client": "Kişisel proje",
+  "role": { "tr": "Ürün ve marka tasarımcısı", "en": "Product & brand designer" },
+  "services": { "tr": "UI/UX, ürün tasarımı, marka kimliği", "en": "UI/UX, product design, brand identity" },
+  "intro": {
+    "tr": "Evcil hayvanların sağlığı kâğıtta, hafızada ve grup sohbetlerinde yaşıyor. Aşı karnesi veterinerde kalıyor, iki hayvanın tarihleri birbirine karışıyor, biri kaybolduğunda elde paylaşacak bir fotoğraf bile olmuyor. Patika bunları tek yerde topluyor: her kaydı, zamanında gelen hatırlatmaları ve en kötü gün için hazır bekleyen bir kayıp modunu.",
+    "en": "Pet health lives on paper, in memory and in group chats. The vaccine booklet stays at the vet, two pets' dates blur together, and when one goes missing there isn't even a photo ready to share. Patika keeps it all in one place: every record, reminders that arrive on time, and a lost mode waiting for the worst day."
+  },
+  "canvas": "#1D2452",
+  "areas": ["design"],
+  "sceneFont": "Unbounded:wght@500;600;700;800&family=Figtree:wght@500;600;700;800",
+  "gallery": [],
+  "scenes": [
+    {
+      "length": 240,
+      "mlength": 230,
+      "bg": "#1D2452",
+      "layers": [
+        { "kind": "glow", "box": [560, -160, 1100], "color": "#F7BACB2E", "m": { "box": [-140, 220, 680] } },
+        {
+          "kind": "text",
+          "box": [100, 190, 560],
+          "kicker": { "tr": "Ürün deneyimi", "en": "Product experience" },
+          "accent": "#D9F26B",
+          "title": { "tr": "Her aşı,\nher ziyaret,\ntek yerde.", "en": "Every vaccine,\nevery visit,\none place." },
+          "size": 92,
+          "text": {
+            "tr": "Patika, evcil hayvanların sağlık kaydını tutan ve biri kaybolduğunda mahalleyi harekete geçiren bir iOS uygulaması.",
+            "en": "Patika is an iOS app that keeps your pets' health record and rallies the neighbourhood if one goes missing."
+          },
+          "at": [-0.25],
+          "m": { "box": [24, 28, 352], "size": 48, "textSize": 15 }
+        },
+        {
+          "kind": "photo",
+          "box": [700, 96, 820],
+          "radius": 28,
+          "src": "/images/patika/foto/sahil.webp",
+          "width": 2400,
+          "height": 1610,
+          "motion": { "from": [80, 40, 0, 1.06, 0], "to": [0, 0, 0, 1, 1], "start": -0.4, "end": 0.1 },
+          "m": { "box": [16, 300, 368], "radius": 20, "motion": { "from": [0, 40, 0, 1.04, 0], "to": [0, 0, 0, 1, 1], "start": -0.4, "end": 0.1 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/home.webp",
+          "box": [706, 360, 240],
+          "z": 10,
+          "motion": { "from": [0, 600, -6, 1, 1], "to": [0, 0, -3, 1, 1], "start": 0.05, "end": 0.45 },
+          "m": { "box": [252, 392, 128], "motion": { "from": [0, 400, -6, 1, 1], "to": [0, 0, -3, 1, 1], "start": 0.05, "end": 0.45 } }
+        },
+        {
+          "kind": "toast",
+          "box": [1150, 690, 380],
+          "z": 11,
+          "font": "Figtree",
+          "svg": "<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' rx='23' fill='#1D2452'/><circle cx='50' cy='22' r='8.5' fill='none' stroke='#BDD0FF' stroke-width='4.5'/><circle cx='50' cy='57' r='28' fill='#D9F26B'/><circle cx='50' cy='34.5' r='3.6' fill='#1D2452'/><ellipse cx='50' cy='65' rx='9.5' ry='8' fill='#1D2452'/><circle cx='38.5' cy='53' r='4.3' fill='#1D2452'/><circle cx='45.5' cy='47' r='4.3' fill='#1D2452'/><circle cx='54.5' cy='47' r='4.3' fill='#1D2452'/><circle cx='61.5' cy='53' r='4.3' fill='#1D2452'/></svg>",
+          "name": "patika",
+          "label": { "tr": "şimdi", "en": "now" },
+          "title": { "tr": "Zeytin'in pire damlası", "en": "Flea and tick drops for Zeytin" },
+          "text": { "tr": "Saat 9:00'da. Pipetler banyo dolabında.", "en": "Due at 9:00. The pipettes are in the bathroom cabinet." },
+          "motion": { "from": [30, -24, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": 0.4, "end": 0.52 },
+          "m": { "box": [16, 580, 300] }
+        }
+      ]
+    },
+    {
+      "length": 150,
+      "mlength": 150,
+      "bg": "#1D2452",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [880, -120, 900],
+          "color": "#F7BACB55",
+          "motion": { "from": [0, 160, 0, 0.8, 0], "to": [0, 0, 0, 1, 1], "start": -0.5, "end": 0.4 },
+          "m": { "box": [-120, 295, 640] }
+        },
+        {
+          "kind": "para",
+          "box": [200, 190, 1200],
+          "size": 46,
+          "text": {
+            "tr": "Evcil hayvanların sağlığı kâğıtta, hafızada ve grup sohbetlerinde yaşıyor. Aşı karnesi veterinerde kalıyor, iki hayvanın tarihleri birbirine karışıyor, biri kaybolduğunda elde paylaşacak bir fotoğraf bile olmuyor. Patika bunları tek yerde topluyor: her kaydı, zamanında gelen hatırlatmaları ve en kötü gün için hazır bekleyen bir kayıp modunu.",
+            "en": "Pet health lives on paper, in memory and in group chats. The vaccine booklet stays at the vet, two pets' dates blur together, and when one goes missing there isn't even a photo ready to share. Patika keeps it all in one place: every record, reminders that arrive on time, and a lost mode waiting for the worst day."
+          },
+          "at": [-0.35, 0.7],
+          "color": "#F3F2FA",
+          "m": { "box": [24, 55, 352], "size": 25 }
+        }
+      ]
+    },
+    {
+      "length": 220,
+      "mlength": 210,
+      "bg": "#1D2452",
+      "layers": [
+        {
+          "kind": "photo",
+          "box": [620, 110, 820],
+          "radius": 28,
+          "src": "/images/patika/foto/muayene.webp",
+          "width": 1600,
+          "height": 1194,
+          "motion": { "from": [140, 40, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": -0.35, "end": 0.15 },
+          "m": { "box": [16, 286, 368], "radius": 20, "motion": { "from": [0, 60, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": -0.35, "end": 0.15 } }
+        },
+        {
+          "kind": "text",
+          "box": [90, 230, 480],
+          "kicker": { "tr": "Sorun", "en": "The problem" },
+          "accent": "#D9F26B",
+          "title": { "tr": "Kâğıtta,\nhafızada,\nsohbette", "en": "On paper,\nin memory,\nin chats" },
+          "size": 80,
+          "text": {
+            "tr": "Karne veterinerde kalıyor, iki hayvanın tarihleri karışıyor, biri kaybolunca elde paylaşacak fotoğraf bile olmuyor.",
+            "en": "The booklet stays at the vet, two pets' dates blur together, and when one goes missing there isn't even a photo to share."
+          },
+          "m": { "box": [24, 28, 352], "size": 44, "textSize": 15 }
+        },
+        {
+          "kind": "toast",
+          "box": [1160, 150, 400],
+          "z": 10,
+          "font": "Figtree",
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect width='64' height='64' rx='16' fill='#34C759'/><path d='M32 16c-9.4 0-17 6.3-17 14 0 4.3 2.4 8.2 6.2 10.8L20 48l8.3-4.3c1.2.2 2.4.3 3.7.3 9.4 0 17-6.3 17-14s-7.6-14-17-14z' fill='#fff'/></svg>",
+          "name": "Moda Veteriner",
+          "label": { "tr": "09:12", "en": "09:12" },
+          "title": { "tr": "Karneniz bizde kaldı", "en": "You left the booklet here" },
+          "text": { "tr": "Bir dahaki gelişinizde alırsınız.", "en": "Pick it up next time you're in." },
+          "motion": { "from": [30, -24, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": 0.22, "end": 0.34 },
+          "m": { "box": [24, 418, 352] }
+        },
+        {
+          "kind": "toast",
+          "box": [1160, 290, 400],
+          "z": 11,
+          "font": "Figtree",
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect width='64' height='64' rx='16' fill='#FFD43B'/><rect x='16' y='15' width='32' height='35' rx='5' fill='#fff'/><path d='M22 26h20M22 33h20M22 40h12' stroke='#C9A100' stroke-width='3' stroke-linecap='round'/></svg>",
+          "name": "Notlar",
+          "label": { "tr": "dün", "en": "yesterday" },
+          "title": { "tr": "Mia'nın aşısı ne zamandı?", "en": "When was Mia's shot due?" },
+          "text": { "tr": "Kasım gibi… galiba.", "en": "November-ish… I think." },
+          "motion": { "from": [30, -24, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": 0.38, "end": 0.5 },
+          "m": { "box": [24, 510, 352] }
+        },
+        {
+          "kind": "toast",
+          "box": [1160, 430, 400],
+          "z": 12,
+          "font": "Figtree",
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect width='64' height='64' rx='16' fill='#2D8CFF'/><circle cx='26' cy='26' r='7' fill='#fff'/><circle cx='41' cy='28' r='5.5' fill='#fff' opacity='.8'/><path d='M13 47c1-7 6.5-11 13-11s12 4 13 11z' fill='#fff'/><path d='M36 46c.5-5 3.5-8.5 8-8.5 4 0 7 3 7.5 8.5z' fill='#fff' opacity='.8'/></svg>",
+          "name": "Moda Mahallesi",
+          "label": { "tr": "18:52", "en": "18:52" },
+          "title": { "tr": "Köpeğimizi gören var mı?", "en": "Has anyone seen our dog?" },
+          "text": { "tr": "Kahverengi, mavi tasmalı. Fotoğrafı yok.", "en": "Brown, blue collar. No photo." },
+          "motion": { "from": [30, -24, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": 0.54, "end": 0.66 },
+          "m": { "box": [24, 602, 352] }
+        }
+      ]
+    },
+    {
+      "length": 200,
+      "mlength": 190,
+      "bg": "#1D2452",
+      "layers": [
+        { "kind": "glow", "box": [-200, 80, 900], "color": "#BDD0FF33", "m": { "box": [-160, 220, 600] } },
+        {
+          "kind": "photo",
+          "box": [110, 70, 520],
+          "radius": 28,
+          "src": "/images/patika/foto/elif.webp",
+          "width": 1450,
+          "height": 1800,
+          "motion": { "from": [-100, 40, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": -0.35, "end": 0.12 },
+          "m": { "box": [24, 284, 196], "radius": 18, "motion": { "from": [-40, 40, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": -0.35, "end": 0.12 } }
+        },
+        {
+          "kind": "text",
+          "box": [720, 120, 760],
+          "kicker": { "tr": "Kimin için", "en": "Who it's for" },
+          "accent": "#D9F26B",
+          "title": { "tr": "Elif, 29", "en": "Elif, 29" },
+          "size": 110,
+          "text": {
+            "tr": "Kadıköy'de, Mia adında bir British Shorthair ve üç yıl önce sahiplendiği Zeytin'le yaşıyor. İki hayvanın aşılarını, ilaçlarını ve veteriner randevularını aklında tutmaya çalışıyor.",
+            "en": "Lives in Kadıköy with Mia, a British Shorthair, and Zeytin, a mixed-breed dog adopted three years ago. Tries to keep two pets' vaccines, pills and vet visits in mind."
+          },
+          "m": { "box": [24, 28, 352], "size": 56, "textSize": 15 }
+        },
+        {
+          "kind": "para",
+          "box": [720, 520, 780],
+          "size": 40,
+          "color": "#F7BACB",
+          "text": {
+            "tr": "“Mia'nın aşısının kasımda bir ara olduğunu biliyorum. Sorun da bu.”",
+            "en": "“I know Mia's vaccine is due sometime in November. That's the problem.”"
+          },
+          "at": [-0.05, 0.55],
+          "m": { "box": [236, 300, 148], "size": 19 }
+        }
+      ]
+    },
+    {
+      "length": 230,
+      "mlength": 210,
+      "bg": "#1D2452",
+      "layers": [
+        { "kind": "glow", "box": [300, 280, 1000], "color": "#BDD0FF40", "m": { "box": [-100, 276, 600] } },
+        {
+          "kind": "text",
+          "box": [100, 70, 700],
+          "kicker": { "tr": "Günlük mod", "en": "Daily mode" },
+          "accent": "#D9F26B",
+          "title": { "tr": "Günlük bakım,\ntek akış", "en": "Everyday care,\none flow" },
+          "size": 96,
+          "m": { "box": [24, 28, 352], "size": 54 }
+        },
+        {
+          "kind": "text",
+          "box": [930, 96, 560],
+          "text": {
+            "tr": "Patika başta çok az şey istiyor. Hayvanı ekle, karneyi tara; ana sayfa ikisinin de bugün neyi beklediğini gösteriyor, hatırlatmalar da gününden önce geliyor.",
+            "en": "Patika asks for very little up front. Add a pet, scan the booklet, and the home screen shows what both pets need today, with reminders that arrive before anything is due."
+          },
+          "textSize": 22,
+          "m": { "box": [24, 175, 352], "textSize": 16 }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/welcome.webp",
+          "box": [189, 402, 190],
+          "z": 7,
+          "motion": { "from": [-90, 620, -30, 0.92, 0], "to": [0, 0, -10.5, 1, 1], "start": -0.1, "end": 0.3 },
+          "m": { "box": [16, 411, 128], "motion": { "from": [-36, 420, -42, 0.92, 0], "to": [0, 0, -18, 1, 1], "start": -0.1, "end": 0.3 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/add-pet.webp",
+          "box": [361, 362, 190],
+          "z": 8,
+          "motion": { "from": [-60, 620, -20, 0.92, 0], "to": [0, 0, -7, 1, 1], "start": -0.04, "end": 0.36 },
+          "m": { "box": [56, 392, 128], "motion": { "from": [-24, 420, -28, 0.92, 0], "to": [0, 0, -12, 1, 1], "start": -0.04, "end": 0.36 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/home.webp",
+          "box": [533, 338, 190],
+          "z": 9,
+          "motion": { "from": [-30, 620, -10, 0.92, 0], "to": [0, 0, -3.5, 1, 1], "start": 0.02, "end": 0.42 },
+          "m": { "box": [96, 381, 128], "motion": { "from": [-12, 420, -14, 0.92, 0], "to": [0, 0, -6, 1, 1], "start": 0.02, "end": 0.42 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/records.webp",
+          "box": [705, 330, 190],
+          "z": 10,
+          "motion": { "from": [0, 620, 0, 0.92, 0], "to": [0, 0, 0, 1, 1], "start": 0.08, "end": 0.48 },
+          "m": { "box": [136, 378, 128], "motion": { "from": [0, 420, 0, 0.92, 0], "to": [0, 0, 0, 1, 1], "start": 0.08, "end": 0.48 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/scan.webp",
+          "box": [877, 338, 190],
+          "z": 9,
+          "motion": { "from": [30, 620, 10, 0.92, 0], "to": [0, 0, 3.5, 1, 1], "start": 0.14, "end": 0.54 },
+          "m": { "box": [176, 381, 128], "motion": { "from": [12, 420, 14, 0.92, 0], "to": [0, 0, 6, 1, 1], "start": 0.14, "end": 0.54 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/weight.webp",
+          "box": [1049, 362, 190],
+          "z": 8,
+          "motion": { "from": [60, 620, 20, 0.92, 0], "to": [0, 0, 7, 1, 1], "start": 0.2, "end": 0.6 },
+          "m": { "box": [216, 392, 128], "motion": { "from": [24, 420, 28, 0.92, 0], "to": [0, 0, 12, 1, 1], "start": 0.2, "end": 0.6 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/book.webp",
+          "box": [1221, 402, 190],
+          "z": 7,
+          "motion": { "from": [90, 620, 30, 0.92, 0], "to": [0, 0, 10.5, 1, 1], "start": 0.26, "end": 0.66 },
+          "m": { "box": [256, 411, 128], "motion": { "from": [36, 420, 42, 0.92, 0], "to": [0, 0, 18, 1, 1], "start": 0.26, "end": 0.66 } }
+        }
+      ]
+    },
+    {
+      "length": 220,
+      "mlength": 210,
+      "bg": "#1D2452",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [100, 70, 700],
+          "kicker": { "tr": "Tasarım detayı", "en": "Design detail" },
+          "accent": "#D9F26B",
+          "title": { "tr": "Kâğıttan\nPatika'ya", "en": "From paper\nto Patika" },
+          "size": 96,
+          "m": { "box": [24, 28, 352], "size": 54 }
+        },
+        {
+          "kind": "text",
+          "box": [930, 96, 560],
+          "text": {
+            "tr": "Veterinerler her aşının etiketini karneye yapıştırıp mühürlüyor. Patika bu alışkanlığı koruyor: her aşı bir etiket, mühür de kaydın veterinerden geldiğini söylüyor. Kâğıttan taranan kayıtlar mühür taklidi yapmıyor, nereden geldiğini yazıyor.",
+            "en": "Vets stick each vaccine's label into the booklet and stamp it. Patika keeps that ritual: every vaccine is a sticker, and the stamp says the record came from the vet. Records scanned from paper don't fake a stamp; they say where they came from."
+          },
+          "textSize": 21,
+          "m": { "box": [24, 170, 352], "textSize": 15 }
+        },
+        {
+          "kind": "photo",
+          "box": [130, 330, 400],
+          "radius": 22,
+          "src": "/images/patika/foto/karne.webp",
+          "width": 1195,
+          "height": 1600,
+          "motion": { "from": [-60, 80, -10, 0.94, 0], "to": [0, 0, -4, 1, 1], "start": -0.25, "end": 0.2 },
+          "m": { "box": [16, 330, 170], "radius": 14, "motion": { "from": [-30, 60, -10, 0.94, 0], "to": [0, 0, -4, 1, 1], "start": -0.25, "end": 0.2 } }
+        },
+        {
+          "kind": "photo",
+          "box": [640, 280, 620],
+          "src": "/images/patika/parca/sticker-due.webp",
+          "width": 1347,
+          "height": 606,
+          "z": 6,
+          "motion": { "from": [360, 40, 8, 0.96, 0], "to": [0, 0, -2, 1, 1], "start": 0.18, "end": 0.34 },
+          "m": { "box": [132, 330, 260], "motion": { "from": [200, 30, 8, 0.96, 0], "to": [0, 0, -2, 1, 1], "start": 0.18, "end": 0.34 } }
+        },
+        {
+          "kind": "photo",
+          "box": [700, 440, 620],
+          "src": "/images/patika/parca/sticker-tricat.webp",
+          "width": 1347,
+          "height": 654,
+          "z": 7,
+          "motion": { "from": [360, 40, -6, 0.96, 0], "to": [0, 0, 2, 1, 1], "start": 0.3, "end": 0.46 },
+          "m": { "box": [124, 432, 260], "motion": { "from": [200, 30, -6, 0.96, 0], "to": [0, 0, 2, 1, 1], "start": 0.3, "end": 0.46 } }
+        },
+        {
+          "kind": "photo",
+          "box": [660, 600, 620],
+          "src": "/images/patika/parca/sticker-scanned.webp",
+          "width": 1347,
+          "height": 630,
+          "z": 8,
+          "motion": { "from": [360, 40, 6, 0.96, 0], "to": [0, 0, -1, 1, 1], "start": 0.42, "end": 0.58 },
+          "m": { "box": [132, 536, 260], "motion": { "from": [200, 30, 6, 0.96, 0], "to": [0, 0, -1, 1, 1], "start": 0.42, "end": 0.58 } }
+        }
+      ]
+    },
+    {
+      "length": 340,
+      "mlength": 320,
+      "bg": "#1D2452",
+      "layers": [
+        {
+          "kind": "svg",
+          "full": true,
+          "z": 0,
+          "svg": "<svg viewBox='0 0 10 10' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'><rect width='10' height='10' fill='#FF4F1A'/></svg>",
+          "motion": { "from": [0, 0, 0, 1, 0], "to": [0, 0, 0, 1, 1], "start": 0.14, "end": 0.24 }
+        },
+        {
+          "kind": "svg",
+          "box": [770, 35, 800, 800],
+          "z": 1,
+          "svg": "<svg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'><g fill='none' stroke='#1D2452' stroke-width='2.5' stroke-dasharray='10 12' opacity='.3'><circle cx='400' cy='400' r='150'/><circle cx='400' cy='400' r='250'/><circle cx='400' cy='400' r='350'/></g></svg>",
+          "motion": { "from": [0, 0, 0, 0.5, 0], "to": [0, 0, 0, 1.6, 1], "start": 0.18, "end": 0.95 },
+          "m": { "box": [0, 255, 400, 400] }
+        },
+        {
+          "kind": "text",
+          "box": [100, 250, 760],
+          "z": 5,
+          "kicker": { "tr": "Kayıp modu", "en": "Lost mode" },
+          "accent": "#FF4F1A",
+          "title": { "tr": "Bir gün\ntasma kayarsa", "en": "If the leash\never slips" },
+          "size": 100,
+          "text": {
+            "tr": "Patika sakin bir uygulama. Ama en kötü gün için hazır bekleyen bir modu var.",
+            "en": "Patika is a calm app. But it keeps a mode ready for the worst day."
+          },
+          "at": [-0.3, 0.15],
+          "m": { "box": [24, 28, 352], "size": 50, "textSize": 15 }
+        },
+        {
+          "kind": "text",
+          "box": [100, 250, 760],
+          "z": 5,
+          "kicker": { "tr": "Başlatmak", "en": "Starting" },
+          "accent": "#1D2452",
+          "title": { "tr": "Yanlış alarm\nyok", "en": "No false\nalarms" },
+          "color": "#1D2452",
+          "ink": "#1D2452",
+          "size": 100,
+          "text": {
+            "tr": "Kayıp modu yüzlerce kişiye haber veriyor. Bu yüzden bilinçli bir basılı tutma istiyor ve ne olacağını önceden söylüyor.",
+            "en": "Lost mode alerts hundreds of people, so it asks for a deliberate press-and-hold and says what will happen first."
+          },
+          "at": [0.24, 0.47],
+          "m": { "box": [24, 28, 352], "size": 50, "textSize": 15 }
+        },
+        {
+          "kind": "text",
+          "box": [100, 250, 760],
+          "z": 5,
+          "kicker": { "tr": "Arama", "en": "The search" },
+          "accent": "#1D2452",
+          "title": { "tr": "Bütün mahalle\narıyor", "en": "The whole\nstreet looks" },
+          "color": "#1D2452",
+          "ink": "#1D2452",
+          "size": 100,
+          "text": {
+            "tr": "2 km içindeki Patika kullanıcıları, veteriner ve barınaklar aynı anda haberdar oluyor. İhbarlar fotoğrafıyla haritaya düşüyor.",
+            "en": "Patika users within 2 km, the vet and nearby shelters hear at once. Sightings land on the map, with photos."
+          },
+          "at": [0.47, 0.71],
+          "m": { "box": [24, 28, 352], "size": 50, "textSize": 15 }
+        },
+        {
+          "kind": "text",
+          "box": [100, 250, 760],
+          "z": 5,
+          "kicker": { "tr": "İlan", "en": "The poster" },
+          "accent": "#1D2452",
+          "title": { "tr": "İlan hazır,\nnumara gizli", "en": "Poster ready,\nnumber private" },
+          "color": "#1D2452",
+          "ink": "#1D2452",
+          "size": 100,
+          "text": {
+            "tr": "Paylaşılabilir ilan saniyeler içinde hazır. Koparmalı şeritlerde telefon numarası değil, bir bağlantı var.",
+            "en": "A shareable poster is ready in seconds. The tear-off tabs carry a link, not a phone number."
+          },
+          "at": [0.71],
+          "m": { "box": [24, 28, 352], "size": 50, "textSize": 15 }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/home.webp",
+          "box": [1020, 110, 300],
+          "z": 6,
+          "motion": { "from": [0, 200, 0, 1, 0], "to": [0, 0, 0, 1, 1], "start": -0.4, "end": 0, "out": { "to": [0, -40, 0, 0.96, 0], "start": 0.2, "end": 0.27 } },
+          "m": { "box": [110, 262, 180] }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/start-lost.webp",
+          "box": [1020, 110, 300],
+          "z": 7,
+          "motion": { "from": [0, 50, 0, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.2, "end": 0.27, "out": { "to": [0, -40, 0, 0.96, 0], "start": 0.44, "end": 0.51 } },
+          "m": { "box": [110, 262, 180] }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/lost.webp",
+          "box": [1020, 110, 300],
+          "z": 8,
+          "motion": { "from": [0, 50, 0, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.44, "end": 0.51, "out": { "to": [0, -40, 0, 0.96, 0], "start": 0.68, "end": 0.75 } },
+          "m": { "box": [110, 262, 180] }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/poster.webp",
+          "box": [1020, 110, 300],
+          "z": 9,
+          "motion": { "from": [0, 50, 0, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.68, "end": 0.75 },
+          "m": { "box": [110, 262, 180] }
+        },
+        {
+          "kind": "toast",
+          "box": [1220, 560, 370],
+          "z": 10,
+          "font": "Figtree",
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><clipPath id='patika-sighting'><rect width='64' height='64' rx='14'/></clipPath><image href='/images/patika/foto/ihbar.webp' x='-22' width='108' height='64' preserveAspectRatio='xMidYMid slice' clip-path='url(#patika-sighting)'/></svg>",
+          "name": "patika",
+          "label": { "tr": "şimdi", "en": "now" },
+          "title": { "tr": "Bahariye Caddesi'nde görüldü", "en": "Spotted on Bahariye Street" },
+          "text": { "tr": "Can fırının önünde fotoğrafını çekti.", "en": "Can took a photo outside the bakery." },
+          "motion": { "from": [30, -24, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": 0.53, "end": 0.6, "out": { "to": [0, 0, 0, 1, 0], "start": 0.7, "end": 0.74 } },
+          "m": { "box": [24, 590, 352] }
+        },
+        {
+          "kind": "steps",
+          "box": [100, 800, 760],
+          "z": 5,
+          "labels": [
+            { "tr": "Başlat", "en": "Start" },
+            { "tr": "Haber ver", "en": "Alert" },
+            { "tr": "Paylaş", "en": "Share" }
+          ],
+          "at": [0.24, 0.47, 0.71],
+          "motion": { "from": [0, 30, 0, 1, 0], "to": [0, 0, 0, 1, 1], "start": 0.2, "end": 0.28 },
+          "m": { "hide": true }
+        }
+      ]
+    },
+    {
+      "length": 230,
+      "mlength": 210,
+      "bg": "#1D2452",
+      "layers": [
+        { "kind": "glow", "box": [300, 260, 1000], "color": "#FF4F1A3D", "m": { "box": [-100, 276, 600] } },
+        {
+          "kind": "text",
+          "box": [100, 70, 720],
+          "kicker": { "tr": "Uygulamanın dışında", "en": "Outside the app" },
+          "accent": "#FF4F1A",
+          "title": { "tr": "Arama kilit\nekranında sürüyor", "en": "The search\nleaves the app" },
+          "size": 90,
+          "m": { "box": [24, 28, 352], "size": 38 }
+        },
+        {
+          "kind": "text",
+          "box": [930, 96, 560],
+          "text": {
+            "tr": "Live Activity, ihbarları ve en son görüldüğü mesafeyi kilit ekranında tutuyor. Künyeyi okutan herkes uygulama indirmeden aileye ulaşabiliyor; numara gizli kalıyor.",
+            "en": "A Live Activity keeps sightings and the latest distance on the lock screen. Anyone who scans the tag reaches the family without an app, and the number stays private."
+          },
+          "textSize": 21,
+          "m": { "box": [24, 160, 352], "textSize": 15 }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/lock-lost.webp",
+          "box": [340, 330, 260],
+          "z": 8,
+          "motion": { "from": [-60, 620, -20, 0.92, 0], "to": [0, 0, -6, 1, 1], "start": -0.1, "end": 0.3 },
+          "m": { "box": [26, 318, 150], "motion": { "from": [-24, 420, -20, 0.92, 0], "to": [0, 0, -7, 1, 1], "start": -0.1, "end": 0.3 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/finder.webp",
+          "box": [670, 290, 260],
+          "z": 9,
+          "motion": { "from": [0, 620, 0, 0.92, 0], "to": [0, 0, 0, 1, 1], "start": 0, "end": 0.4 },
+          "m": { "box": [125, 292, 150], "motion": { "from": [0, 420, 0, 0.92, 0], "to": [0, 0, 0, 1, 1], "start": 0, "end": 0.4 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/found.webp",
+          "box": [1000, 330, 260],
+          "z": 8,
+          "motion": { "from": [60, 620, 20, 0.92, 0], "to": [0, 0, 6, 1, 1], "start": 0.1, "end": 0.5 },
+          "m": { "box": [224, 318, 150], "motion": { "from": [24, 420, 20, 0.92, 0], "to": [0, 0, 7, 1, 1], "start": 0.1, "end": 0.5 } }
+        },
+        {
+          "kind": "photo",
+          "box": [110, 610, 440],
+          "src": "/images/patika/parca/live-act.webp",
+          "width": 1395,
+          "height": 759,
+          "z": 12,
+          "motion": { "from": [-80, 40, -6, 0.96, 0], "to": [0, 0, -3, 1, 1], "start": 0.35, "end": 0.5 },
+          "m": { "box": [10, 548, 250], "motion": { "from": [-40, 30, -6, 0.96, 0], "to": [0, 0, -3, 1, 1], "start": 0.35, "end": 0.5 } }
+        }
+      ]
+    },
+    {
+      "length": 210,
+      "mlength": 200,
+      "bg": "#1D2452",
+      "layers": [
+        { "kind": "glow", "box": [500, -100, 1100], "color": "#D9F26B26", "m": { "box": [-120, 200, 640] } },
+        {
+          "kind": "photo",
+          "box": [660, 50, 640],
+          "radius": 28,
+          "src": "/images/patika/foto/kavusma.webp",
+          "width": 1450,
+          "height": 1800,
+          "motion": { "from": [60, 80, 2, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": -0.4, "end": 0.15 },
+          "m": { "box": [48, 268, 304], "radius": 20, "motion": { "from": [0, 60, 0, 0.94, 0], "to": [0, 0, 0, 1, 1], "start": -0.4, "end": 0.15 } }
+        },
+        {
+          "kind": "text",
+          "box": [100, 260, 500],
+          "kicker": { "tr": "Son", "en": "The ending" },
+          "accent": "#D9F26B",
+          "title": { "tr": "35 dakikada\nevdeydi", "en": "Home in\n35 minutes" },
+          "size": 100,
+          "text": {
+            "tr": "İki komşu Zeytin'i gördü ve fotoğraf gönderdi. Patika iki ihbarı aynı haritada birleştirdi; Elif hangi sokağa koşacağını biliyordu.",
+            "en": "Two neighbours saw Zeytin and sent photos. Patika put both sightings on one map, and Elif knew which street to run to."
+          },
+          "m": { "box": [24, 28, 352], "size": 52, "textSize": 15 }
+        }
+      ]
+    },
+    {
+      "length": 240,
+      "mlength": 220,
+      "bg": "#10153A",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [100, 60, 720],
+          "kicker": { "tr": "Marka sistemi", "en": "Brand system" },
+          "accent": "#D9F26B",
+          "title": { "tr": "Tasmadaki\nkünye", "en": "The tag on\nthe collar" },
+          "size": 96,
+          "m": { "box": [24, 22, 352], "size": 54 }
+        },
+        {
+          "kind": "text",
+          "box": [930, 86, 560],
+          "text": {
+            "tr": "Pati ve patika: günlük yürüyüş ve eve dönüş yolu. İkon, her hayvanın zaten taktığı künyeden geliyor. Tenis topu yeşili tamamlananları gösteriyor, fosforlu turuncu yalnızca kayıp modunda kullanılıyor.",
+            "en": "Pati means paw, patika means footpath: the daily walk and the way home. The icon is the tag every pet already wears. Tennis-ball green marks what's done, and hi-vis orange is kept for lost mode alone."
+          },
+          "textSize": 21,
+          "m": { "box": [24, 184, 352], "textSize": 15 }
+        },
+        {
+          "kind": "svg",
+          "box": [100, 330, 290, 290],
+          "svg": "<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect x='.5' y='.5' width='99' height='99' rx='23' fill='#1D2452' stroke='#3A4590'/><circle cx='50' cy='22' r='8.5' fill='none' stroke='#BDD0FF' stroke-width='4.5'/><circle cx='50' cy='57' r='28' fill='#D9F26B'/><circle cx='50' cy='34.5' r='3.6' fill='#1D2452'/><ellipse cx='50' cy='65' rx='9.5' ry='8' fill='#1D2452'/><circle cx='38.5' cy='53' r='4.3' fill='#1D2452'/><circle cx='45.5' cy='47' r='4.3' fill='#1D2452'/><circle cx='54.5' cy='47' r='4.3' fill='#1D2452'/><circle cx='61.5' cy='53' r='4.3' fill='#1D2452'/></svg>",
+          "motion": { "from": [560, 20, -16, 0.6, 0], "to": [0, 0, 0, 1, 1], "start": -0.05, "end": 0.3 },
+          "m": { "box": [24, 290, 92, 92], "motion": { "from": [130, 80, -16, 0.6, 0], "to": [0, 0, 0, 1, 1], "start": -0.05, "end": 0.3 } }
+        },
+        {
+          "kind": "word",
+          "box": [100, 690, 520],
+          "value": "patika",
+          "font": "Unbounded",
+          "size": 92,
+          "weight": 700,
+          "color": "#F3F2FA",
+          "at": [0.12],
+          "m": { "box": [130, 306, 250], "size": 46 }
+        },
+        {
+          "kind": "swatch",
+          "box": [520, 330, 150, 300],
+          "color": "#1D2452",
+          "label": { "tr": "Tasma laciverti", "en": "Collar navy" },
+          "ink": "#F3F2FA",
+          "value": "#1D2452",
+          "font": "Figtree",
+          "motion": { "from": [80, 60, 4, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.2, "end": 0.45 },
+          "m": { "box": [24, 400, 112, 81] }
+        },
+        {
+          "kind": "swatch",
+          "box": [685, 330, 150, 300],
+          "color": "#D9F26B",
+          "label": { "tr": "Tenis topu", "en": "Tennis ball" },
+          "ink": "#1D2452",
+          "value": "#D9F26B",
+          "font": "Figtree",
+          "motion": { "from": [110, 60, 4, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.24, "end": 0.49 },
+          "m": { "box": [144, 400, 112, 81] }
+        },
+        {
+          "kind": "swatch",
+          "box": [850, 330, 150, 300],
+          "color": "#F7BACB",
+          "label": { "tr": "Pati pembesi", "en": "Paw pink" },
+          "ink": "#1D2452",
+          "value": "#F7BACB",
+          "font": "Figtree",
+          "motion": { "from": [140, 60, 4, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.28, "end": 0.53 },
+          "m": { "box": [264, 400, 112, 81] }
+        },
+        {
+          "kind": "swatch",
+          "box": [1015, 330, 150, 300],
+          "color": "#BDD0FF",
+          "label": { "tr": "Lavanta", "en": "Periwinkle" },
+          "ink": "#1D2452",
+          "value": "#BDD0FF",
+          "font": "Figtree",
+          "motion": { "from": [170, 60, 4, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.32, "end": 0.57 },
+          "m": { "box": [24, 489, 112, 81] }
+        },
+        {
+          "kind": "swatch",
+          "box": [1180, 330, 150, 300],
+          "color": "#F3F2FA",
+          "label": { "tr": "Kâğıt", "en": "Paper" },
+          "ink": "#1D2452",
+          "value": "#F3F2FA",
+          "font": "Figtree",
+          "motion": { "from": [200, 60, 4, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.36, "end": 0.61 },
+          "m": { "box": [144, 489, 112, 81] }
+        },
+        {
+          "kind": "swatch",
+          "box": [1345, 330, 150, 300],
+          "color": "#FF4F1A",
+          "label": { "tr": "Fosforlu", "en": "Hi-vis" },
+          "ink": "#1D2452",
+          "value": "#FF4F1A",
+          "font": "Figtree",
+          "motion": { "from": [230, 60, 4, 0.96, 0], "to": [0, 0, 0, 1, 1], "start": 0.4, "end": 0.65 },
+          "m": { "box": [264, 489, 112, 81] }
+        },
+        {
+          "kind": "type",
+          "box": [660, 660, 835, 180],
+          "font": "Unbounded",
+          "name": "Unbounded",
+          "label": { "tr": "Başlıklar ve sayılar; arayüz metni Figtree", "en": "Headings and numbers; interface text in Figtree" },
+          "value": "18.4 kg, 5 days left",
+          "accent": "#D9F26B",
+          "size": 104,
+          "motion": { "from": [0, 50, 0, 1, 0], "to": [0, 0, 0, 1, 1], "start": 0.5, "end": 0.72 },
+          "m": { "hide": true }
+        }
+      ]
+    },
+    {
+      "length": 170,
+      "mlength": 160,
+      "bg": "#D9F26B",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [400, 64, 800],
+          "align": "center",
+          "text": { "tr": "Her aşı, her ziyaret, her tartı tek yerde.", "en": "Every vaccine, visit and weigh-in in one place." },
+          "textSize": 22,
+          "ink": "#1D2452",
+          "at": [-0.4],
+          "m": { "box": [24, 64, 352], "textSize": 17 }
+        },
+        {
+          "kind": "word",
+          "box": [0, 120, 1600],
+          "align": "center",
+          "value": "patika",
+          "font": "Unbounded",
+          "size": 300,
+          "weight": 700,
+          "color": "#1D2452",
+          "at": [-0.6],
+          "motion": { "from": [0, 160, 0, 0.92, 0], "to": [0, -30, 0, 1, 1], "start": -0.6, "end": 1 },
+          "m": { "box": [0, 120, 400], "size": 88, "motion": { "from": [0, 80, 0, 0.92, 0], "to": [0, -10, 0, 1, 1], "start": -0.6, "end": 1 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/home.webp",
+          "box": [395, 470, 250],
+          "z": 10,
+          "motion": { "from": [0, 560, -7, 1, 1], "to": [0, 0, -7, 1, 1], "start": -0.6, "end": 0.9 },
+          "m": { "box": [30, 304, 150], "motion": { "from": [0, 280, -7, 1, 1], "to": [0, 0, -7, 1, 1], "start": -0.6, "end": 0.9 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/lost.webp",
+          "box": [675, 430, 250],
+          "z": 11,
+          "motion": { "from": [0, 700, 0, 1, 1], "to": [0, 0, 0, 1, 1], "start": -0.6, "end": 0.9 },
+          "m": { "box": [125, 276, 150], "motion": { "from": [0, 350, 0, 1, 1], "to": [0, 0, 0, 1, 1], "start": -0.6, "end": 0.9 } }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/patika/ui/found.webp",
+          "box": [955, 470, 250],
+          "z": 12,
+          "motion": { "from": [0, 560, 7, 1, 1], "to": [0, 0, 7, 1, 1], "start": -0.6, "end": 0.9 },
+          "m": { "box": [220, 304, 150], "motion": { "from": [0, 280, 7, 1, 1], "to": [0, 0, 7, 1, 1], "start": -0.6, "end": 0.9 } }
+        }
+      ]
+    }
+  ]
+}
