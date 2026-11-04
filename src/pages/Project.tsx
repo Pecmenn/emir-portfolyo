@@ -50,7 +50,10 @@ function Intro({ project, bare }: { project: ProjectType; bare?: boolean }) {
         <span lang="en" className="text-wine-light">
           {areas.map((a) => AREA_LABEL[a]).join(' · ')}
         </span>
-        <span aria-hidden>·</span>
+        {/* Telefonda ikinci parça alt satıra inebilir; ayraç satır sonunda tek başına kalmasın */}
+        <span aria-hidden className="hidden sm:inline">
+          ·
+        </span>
         <span>{t(project.discipline)}</span>
       </p>
       <h1 lang="en" className="display mt-5 text-[clamp(3.6rem,11vw,11rem)]">
@@ -207,7 +210,8 @@ function Flow({ title, text, steps }: { title: string; text: string; steps: Step
   );
 }
 
-// Görsel ızgarası: ekranlar kendi oranlarıyla, saydam zeminli parçalar (cutout) kare kutularda ortalanır
+// Görsel ızgarası: ekranlar kendi oranlarıyla, saydam zeminli parçalar (cutout) kare kutularda ortalanır.
+// Parça kutuya mutlak yerleşir: ızgara satırı uzun görselle büyüyüp görselin altını kesmesin
 function Grid({ title, text, images, alt, cutout }: { title?: string; text?: string; images: string[]; alt: string; cutout?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   useSoftReveal(ref, [images.join('|')]);
@@ -217,13 +221,13 @@ function Grid({ title, text, images, alt, cutout }: { title?: string; text?: str
       {(title?.trim() || text?.trim()) && <SectionHead title={title ?? ''} text={text ?? ''} />}
       <div ref={ref} className={`gutter grid items-start gap-[var(--gap)] ${cols}`}>
         {images.map((src, i) => (
-          <figure key={`${src}-${i}`} className={`soft-rise card bg-coal-2 ${cutout ? 'grid aspect-square place-items-center p-[12%]' : ''}`} style={{ transitionDelay: `${Math.min(i, 8) * 50}ms` }}>
+          <figure key={`${src}-${i}`} className={`soft-rise card bg-coal-2 ${cutout ? 'relative aspect-square' : ''}`} style={{ transitionDelay: `${Math.min(i, 8) * 50}ms` }}>
             <img
               src={src}
               alt={alt}
               loading="lazy"
               onLoad={refreshSoon}
-              className={cutout ? 'h-full w-full object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]' : 'block h-auto w-full'}
+              className={cutout ? 'absolute inset-[12%] h-[76%] w-[76%] object-contain drop-shadow-[0_18px_24px_rgba(0,0,0,0.35)]' : 'block h-auto w-full'}
             />
           </figure>
         ))}

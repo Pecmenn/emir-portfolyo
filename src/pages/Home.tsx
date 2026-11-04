@@ -45,8 +45,9 @@ function Hero({ ready }: { ready: boolean }) {
     if (ready) ref.current?.classList.add('is-in');
   }, [ready, lang]);
   return (
-    <div ref={ref} className="gutter grid gap-10 pb-[clamp(40px,6vw,80px)] pt-[calc(68px+clamp(40px,8vw,110px))]">
-      <h1 lang="en" className="display text-[clamp(4.2rem,15.5vw,15.5rem)]" aria-label={play.hero.lines.join(' ')}>
+    <div ref={ref} className="gutter grid gap-10 pb-[clamp(40px,6vw,80px)] pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px]">
+      {/* İngilizce üç satır: noktalı harf yok, afiş sıkılığı her ekranda korunur. Yatay telefonda ekran yüksekliğine göre küçülür */}
+      <h1 lang="en" className="display text-[clamp(4.2rem,15.5vw,15.5rem)] leading-[0.9] [@media(max-height:520px)]:text-[24svh]" aria-label={play.hero.lines.join(' ')}>
         {play.hero.lines.map((line, i) => (
           <span key={line} aria-hidden className="line-mask soft-line">
             <span className={i === play.hero.accent ? 'text-wine-bright' : ''}>{line}</span>
@@ -54,21 +55,23 @@ function Hero({ ready }: { ready: boolean }) {
         ))}
       </h1>
       <div className="soft-rise grid gap-7 border-t border-seam pt-7 [transition-delay:.25s] lg:grid-cols-[1fr_auto] lg:items-end">
-        <div className="grid gap-5">
-          {/* Panelde boş bırakılan satırlar sayfada yer tutmaz */}
-          {t(play.hero.intro).trim() && (
-            <p key={lang} className="max-w-[34ch] text-[clamp(1.15rem,1.6vw,1.5rem)] leading-[1.35]">
-              {t(play.hero.intro)}
-            </p>
-          )}
-          {t(play.hero.status).trim() && (
-            <span className="inline-flex items-center gap-2.5 text-sm text-stone">
-              <i aria-hidden className="h-2 w-2 rounded-full bg-[#5ec27a] [animation:status-pulse_2.4s_infinite]" />
-              {t(play.hero.status)}
-            </span>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-3">
+        {/* Panelde boş bırakılan satırlar sayfada yer tutmaz; ikisi de boşsa kap da çizilmez, düğmelerin üstünde fazladan boşluk kalmaz */}
+        {(t(play.hero.intro).trim() || t(play.hero.status).trim()) && (
+          <div className="grid gap-5">
+            {t(play.hero.intro).trim() && (
+              <p key={lang} className="max-w-[34ch] text-[clamp(1.15rem,1.6vw,1.5rem)] leading-[1.35]">
+                {t(play.hero.intro)}
+              </p>
+            )}
+            {t(play.hero.status).trim() && (
+              <span className="inline-flex items-center gap-2.5 text-sm text-stone">
+                <i aria-hidden className="h-2 w-2 rounded-full bg-[#5ec27a] [animation:status-pulse_2.4s_infinite]" />
+                {t(play.hero.status)}
+              </span>
+            )}
+          </div>
+        )}
+        <div className="flex flex-wrap gap-3 lg:col-start-2">
           <button type="button" onClick={() => scrollToTarget('#isler')} className="btn btn-wine">
             {t(play.ctaWork)} <span aria-hidden className="arrow">↓</span>
           </button>
@@ -131,7 +134,7 @@ function Areas() {
   const ref = useRef<HTMLElement>(null);
   useSoftReveal(ref);
   return (
-    <section ref={ref} id="alanlar" className="gutter pb-[clamp(80px,11vw,160px)]">
+    <section ref={ref} id="alanlar" className="gutter scroll-mt-[92px] pb-[clamp(80px,11vw,160px)]">
       <Head title={play.areas.title} text={play.areas.text} />
       <div className="border-t border-seam">
         {play.areas.items.map((item, i) => (
@@ -187,7 +190,7 @@ function Work() {
   const list = play.work.featured.map((slug) => projects.find((p) => p.slug === slug)).filter((p): p is (typeof projects)[number] => !!p);
   useSoftReveal(ref, [list.length]);
   return (
-    <section ref={ref} id="isler" className="gutter pb-[clamp(80px,11vw,160px)]">
+    <section ref={ref} id="isler" className="gutter scroll-mt-[92px] pb-[clamp(80px,11vw,160px)]">
       <Head title={play.work.title} text={play.work.text} />
       <WorkStrips projects={list} />
       <div className="soft-rise mt-[clamp(32px,4vw,56px)] flex justify-center">
@@ -264,10 +267,11 @@ function About() {
     <section
       ref={ref}
       id="hakkimda"
-      className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] xl:grid-cols-[clamp(340px,29vw,520px)_minmax(0,4fr)_minmax(0,5fr)] xl:grid-rows-1"
+      className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] sm:grid-cols-[clamp(220px,36vw,340px)_minmax(0,1fr)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] xl:grid-cols-[clamp(340px,29vw,520px)_minmax(0,4fr)_minmax(0,5fr)] xl:grid-rows-1"
     >
       {/* Geniş ekranda üç sütun: fotoğraf, başlık ve metin, beceriler. Yüksekliği fotoğrafın oranı belirler (before boşluğu),
-          diğer sütunlar ona uzar; metin daha uzun olursa fotoğraf da birlikte uzar. Daha dar ekranda beceriler metnin altına iner */}
+          diğer sütunlar ona uzar; metin daha uzun olursa fotoğraf da birlikte uzar. Dizüstünde beceriler metnin altına iner,
+          tablette fotoğrafla metin yan yana, beceriler tam genişlikte altta; telefonda her şey alt alta dizilir */}
       <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)] lg:row-span-2 lg:aspect-auto xl:row-span-1 xl:before:block xl:before:pt-[114%] xl:before:content-['']">
         {play.about.photo ? (
           <img src={play.about.photo} alt={site.name} className="absolute inset-0 h-full w-full object-cover" />
@@ -291,7 +295,7 @@ function About() {
           )}
         </div>
       </div>
-      <div className="grid border-b border-seam lg:col-start-2 xl:col-start-3 xl:auto-rows-fr">
+      <div className="grid border-b border-seam sm:col-span-2 lg:col-span-1 lg:col-start-2 xl:col-start-3 xl:auto-rows-fr">
         {play.about.tools.map((group, i) => (
           <div
             key={group.label.en}

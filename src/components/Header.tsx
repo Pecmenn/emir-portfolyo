@@ -105,10 +105,10 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ${
-        scrolled && !menuOpen ? 'border-seam bg-coal/80 backdrop-blur-md' : 'border-transparent bg-transparent'
-      }`}
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500 ${scrolled && !menuOpen ? 'border-seam' : 'border-transparent'}`}
     >
+      {/* Bulanık zemin ayrı katmanda: üst öğedeki backdrop-filter, içindeki tam ekran menünün ölçüsünü başlık boyuna indirir */}
+      <div aria-hidden className={`absolute inset-0 -z-20 transition-colors duration-500 ${scrolled && !menuOpen ? 'bg-coal/80 backdrop-blur-md' : ''}`} />
       <div className="gutter flex h-[68px] items-center justify-between gap-4">
         <a
           href="#main"
@@ -122,7 +122,7 @@ export default function Header() {
           {t(ui.skip)}
         </a>
 
-        <button onClick={() => (onHome ? scrollToTarget(0) : goTo('/'))} className="font-display text-2xl uppercase tracking-[0.02em]" aria-label={site.name}>
+        <button onClick={() => (onHome ? scrollToTarget(0) : goTo('/'))} className="min-h-11 font-display text-2xl uppercase tracking-[0.02em]" aria-label={site.name}>
           {/* Son iki kelime: "Emir" krem, "Okutan" şarap; Türkçe büyük harf kuralı için lang="tr" */}
           <span lang="tr">{first}</span>
           <span lang="tr" className="text-wine-light">
@@ -184,12 +184,17 @@ export default function Header() {
         id="mobil-menu"
         ref={panelRef}
         {...panelState}
-        className={`gutter fixed inset-0 -z-10 flex flex-col justify-end bg-coal pb-10 duration-700 ease-[cubic-bezier(.77,0,.18,1)] min-[900px]:hidden ${
+        // Yatay telefonda menü ekrana sığmayabilir: kayar, içerik yine alta yaslanır (üstten kesilmez)
+        className={`gutter fixed inset-0 -z-10 flex flex-col overflow-y-auto overscroll-contain bg-coal pb-10 pt-[68px] duration-700 ease-[cubic-bezier(.77,0,.18,1)] min-[900px]:hidden ${
           menuOpen ? 'visible transition-[clip-path] [clip-path:inset(0_0_0_0)]' : 'invisible transition-[clip-path,visibility] [clip-path:inset(0_0_100%_0)]'
         }`}
       >
         {links.map((link, i) => (
-          <button key={link.id} onClick={() => go(link.id)} className="display flex items-baseline gap-4 py-1 text-left text-[clamp(3rem,14vw,5rem)]">
+          <button
+            key={link.id}
+            onClick={() => go(link.id)}
+            className={`display flex items-baseline gap-4 py-0.5 text-left text-[clamp(3rem,14vw,5rem)] [@media(max-height:520px)]:text-[2.6rem] ${i === 0 ? 'mt-auto' : ''}`}
+          >
             <span className="font-sans text-sm text-stone">0{i + 1}</span>
             {t(link.label)}
           </button>

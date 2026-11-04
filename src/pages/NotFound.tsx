@@ -6,10 +6,10 @@ export default function NotFound() {
   const { t } = useLang();
   const { goTo } = useTransition();
   return (
-    <main id="main" tabIndex={-1} data-theme="dark" className="outline-none gutter flex min-h-[100svh] flex-col items-start justify-end bg-ink pb-16 text-paper">
+    <main id="main" tabIndex={-1} className="gutter flex min-h-[100svh] flex-col items-start justify-end pb-16 outline-none">
       <p className="display text-[clamp(6rem,20vw,18rem)]">404</p>
       <p className="mb-8 text-lg">{t(ui.notFound)}</p>
-      <button onClick={() => goTo('/')} className="pill border-paper/60 hover:bg-paper hover:text-ink">
+      <button onClick={() => goTo('/')} className="btn">
         ← {t(ui.home)}
       </button>
     </main>

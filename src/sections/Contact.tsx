@@ -97,7 +97,7 @@ export default function Contact() {
   const lines = contact.title[lang];
 
   return (
-    <section ref={sectionRef} id="iletisim" className="gutter pb-[clamp(80px,11vw,140px)]">
+    <section ref={sectionRef} id="iletisim" className="gutter scroll-mt-[92px] pb-[clamp(80px,11vw,140px)]">
       <h2 data-reveal className="display text-[clamp(4rem,14vw,13.5rem)]" aria-label={lines.join(' ')}>
         {lines.map((line, i) => (
           <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">

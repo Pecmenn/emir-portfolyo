@@ -51,7 +51,8 @@ function photoFit(L: SceneLayer, geo: Geo) {
 }
 
 function useMobile() {
-  const query = '(max-width: 767px)';
+  // Yatay duran küçük telefonda dikey çalışma alanı çok küçülür; orada masaüstü düzeni kullanılır
+  const query = '(max-width: 767px) and (orientation: portrait)';
   const [mobile, setMobile] = useState(() => window.matchMedia(query).matches);
   useEffect(() => {
     const mq = window.matchMedia(query);

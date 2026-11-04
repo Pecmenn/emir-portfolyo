@@ -31,7 +31,8 @@ export default function Works() {
     <main id="main" tabIndex={-1} className="gutter min-h-[100svh] pb-[clamp(80px,10vw,140px)] pt-[calc(68px+clamp(40px,7vw,96px))] outline-none">
       <div className="mb-10 flex flex-col gap-8 border-b border-seam pb-8 lg:mb-14 lg:flex-row lg:items-end lg:justify-between">
         <h1 className="display text-[clamp(4rem,11vw,10rem)]">{t(play.work.all)}</h1>
-        <div className="flex flex-wrap gap-2" role="group" aria-label={t(play.work.all)}>
+        {/* Telefonda dört düğme tek satıra sığsın diye sayılar gizlenir, düğmeler sıkılaşır */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2" role="group" aria-label={t(play.work.all)}>
           {(['all', ...AREAS] as const).map((key) => {
             const active = filter === key;
             return (
@@ -40,12 +41,12 @@ export default function Works() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => setFilter(key)}
-                className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-5 text-[15px] font-medium transition-colors duration-300 ${
+                className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors duration-300 sm:px-5 sm:text-[15px] ${
                   active ? 'border-wine bg-wine text-cream' : 'border-seam text-stone hover:border-cream hover:text-cream'
                 }`}
               >
                 <span lang={key === 'all' ? undefined : 'en'}>{key === 'all' ? t(play.all) : AREA_LABEL[key]}</span>
-                <span className="text-xs tabular-nums opacity-70">{key === 'all' ? projects.length : count(key)}</span>
+                <span className="hidden text-xs tabular-nums opacity-70 sm:inline">{key === 'all' ? projects.length : count(key)}</span>
               </button>
             );
           })}

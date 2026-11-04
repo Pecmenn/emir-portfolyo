@@ -59,7 +59,8 @@ export default function WorkStrips({ projects }: { projects: Project[] }) {
                 }`}
               >
                 <span className="min-w-0">
-                  <span lang="en" className="display block whitespace-nowrap text-[clamp(2.4rem,4.4vw,4.6rem)]">
+                  {/* Dar telefonda uzun proje adı sağdaki ok düğmesine binmesin */}
+                  <span lang="en" className="display block whitespace-nowrap text-[clamp(1.9rem,10vw,2.4rem)] md:text-[clamp(2.4rem,4.4vw,4.6rem)]">
                     {p.title}
                   </span>
                   <span className="mt-2 block whitespace-nowrap text-sm text-cream/75">{t(p.discipline)}</span>
