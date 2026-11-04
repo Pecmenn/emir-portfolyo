@@ -101,7 +101,7 @@ export default function Contact() {
       <h2 data-reveal className="display text-[clamp(4rem,14vw,13.5rem)]" aria-label={lines.join(' ')}>
         {lines.map((line, i) => (
           <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">
-            <span className={i === lines.length - 1 ? 'text-wine-light' : ''}>{line}</span>
+            <span className={i === lines.length - 1 ? 'text-wine-bright' : ''}>{line}</span>
           </span>
         ))}
       </h2>

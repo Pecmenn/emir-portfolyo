@@ -25,7 +25,7 @@ function PageMap({ highlight }: { highlight: number }) {
   return (
     <div className="flex w-16 shrink-0 flex-col gap-0.5 rounded-lg border border-black/10 bg-[#0D0B0B] p-1">
       {blocks.map((h, i) => (
-        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#D26A72]' : i === 3 ? 'bg-[#6B0F17]' : 'bg-white/10'}`} />
+        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#B8202F]' : i === 3 ? 'bg-[#6B0F17]' : 'bg-white/10'}`} />
       ))}
     </div>
   );

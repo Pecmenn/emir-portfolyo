@@ -26,7 +26,10 @@ export default {
         stone: '#A99F95',
         wine: '#6B0F17',
         'wine-deep': '#4A0A10',
-        'wine-light': '#D26A72',
+        // Siyah zeminde büyük yazı ve küçük dolgular (kontrast 3:1)
+        'wine-bright': '#B8202F',
+        // Siyah zeminde küçük yazı ve hata mesajları (kontrast 5:1)
+        'wine-light': '#E0505F',
       },
       fontFamily: {
         // Başlıklar dar ve kalın (Anton), gövde sade (Hanken Grotesk)

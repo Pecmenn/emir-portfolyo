@@ -19,7 +19,7 @@ function SoftLines({ text, className = '', as: Tag = 'h2', accent = -1 }: { text
     <Tag className={`display ${className}`} aria-label={lines.join(' ')}>
       {lines.map((line, i) => (
         <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">
-          <span className={i === accent ? 'text-wine-light' : ''}>{line}</span>
+          <span className={i === accent ? 'text-wine-bright' : ''}>{line}</span>
         </span>
       ))}
     </Tag>
@@ -49,7 +49,7 @@ function Hero({ ready }: { ready: boolean }) {
       <h1 lang="en" className="display text-[clamp(4.2rem,15.5vw,15.5rem)]" aria-label={play.hero.lines.join(' ')}>
         {play.hero.lines.map((line, i) => (
           <span key={line} aria-hidden className="line-mask soft-line">
-            <span className={i === play.hero.accent ? 'text-wine-light' : ''}>{line}</span>
+            <span className={i === play.hero.accent ? 'text-wine-bright' : ''}>{line}</span>
           </span>
         ))}
       </h1>
@@ -86,7 +86,7 @@ function Ticker() {
         {items.map((item, i) => (
           <span key={i} className="display whitespace-nowrap text-[clamp(1.4rem,2.4vw,2.2rem)] text-stone">
             {t(item)}
-            <span className="pl-12 text-wine-light">/</span>
+            <span className="pl-12 text-wine-bright">/</span>
           </span>
         ))}
       </div>
@@ -113,8 +113,8 @@ function FlowArt() {
         </text>
         <path d="M64 28 C84 28 84 65 72 65" stroke="#A99F95" strokeWidth="1.4" />
         <path d="M128 65 C150 65 140 102 136 102" stroke="#A99F95" strokeWidth="1.4" />
-        <circle cx="64" cy="28" r="3" fill="#D26A72" />
-        <circle cx="128" cy="65" r="3" fill="#D26A72" />
+        <circle cx="64" cy="28" r="3" fill="#B8202F" />
+        <circle cx="128" cy="65" r="3" fill="#B8202F" />
       </svg>
     </div>
   );
@@ -198,7 +198,7 @@ function Work() {
 const STEP_ART: ReactNode[] = [
   <svg key="k" viewBox="0 0 160 100" className="w-[70%]" aria-hidden>
     <circle cx="50" cy="50" r="30" fill="#F1E9DE" />
-    <rect x="92" y="22" width="44" height="16" rx="4" fill="#D26A72" />
+    <rect x="92" y="22" width="44" height="16" rx="4" fill="#B8202F" />
     <rect x="92" y="44" width="44" height="16" rx="4" fill="#0D0B0B" />
     <rect x="92" y="66" width="44" height="16" rx="4" fill="#F1E9DE" opacity=".5" />
   </svg>,
@@ -207,11 +207,11 @@ const STEP_ART: ReactNode[] = [
     <rect x="20" y="22" width="60" height="8" rx="3" fill="#F1E9DE" />
     <rect x="20" y="36" width="40" height="5" rx="2" fill="#A99F95" />
     <rect x="90" y="22" width="50" height="56" rx="5" fill="#6B0F17" />
-    <rect x="20" y="62" width="30" height="12" rx="6" fill="#D26A72" />
+    <rect x="20" y="62" width="30" height="12" rx="6" fill="#B8202F" />
   </svg>,
   <svg key="o" viewBox="0 0 160 100" className="w-[80%]" aria-hidden>
     <rect x="6" y="38" width="38" height="24" rx="5" fill="#F1E9DE" />
-    <rect x="62" y="38" width="38" height="24" rx="5" fill="#D26A72" />
+    <rect x="62" y="38" width="38" height="24" rx="5" fill="#B8202F" />
     <rect x="118" y="14" width="36" height="22" rx="5" fill="#0D0B0B" />
     <rect x="118" y="64" width="36" height="22" rx="5" fill="#0D0B0B" />
     <path d="M44 50h18M100 50c8 0 8-25 18-25M100 50c8 0 8 25 18 25" stroke="#F1E9DE" strokeWidth="1.5" fill="none" />

@@ -136,7 +136,7 @@ function CaseStudySection({ data }: { data: CaseStudy }) {
         <div className="mt-[clamp(20px,2.4vw,32px)] grid gap-[clamp(14px,1.6vw,24px)] sm:grid-cols-3">
           {data.metrics.map((m, i) => (
             <div key={m.value + i} className={`soft-rise border-t border-seam pt-5 ${['', '[transition-delay:.1s]', '[transition-delay:.2s]'][i % 3]}`}>
-              <p className="display text-[clamp(3.6rem,7vw,7rem)] text-wine-light">{m.value}</p>
+              <p className="display text-[clamp(3.6rem,7vw,7rem)] text-wine-bright">{m.value}</p>
               <p className="mt-2 max-w-[30ch] text-stone">{t(m.label)}</p>
             </div>
           ))}
