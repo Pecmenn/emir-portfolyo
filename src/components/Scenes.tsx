@@ -403,7 +403,7 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
             fontSize: U(L.size ?? 120),
             fontWeight: L.weight ?? 800,
             lineHeight: 0.95,
-            letterSpacing: '-0.045em',
+            letterSpacing: `${L.tracking ?? -0.045}em`,
             color: L.color,
           }}
         >
@@ -429,7 +429,7 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
               fontSize: U(L.size ?? 112),
               fontWeight: 700,
               lineHeight: 1,
-              letterSpacing: '-0.04em',
+              letterSpacing: `${L.tracking ?? -0.04}em`,
             }}
           >
             Aa
@@ -439,19 +439,23 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
               style={{
                 fontSize: U(30),
                 fontWeight: 700,
-                letterSpacing: '-0.03em',
+                letterSpacing: `${L.tracking ?? -0.03}em`,
               }}
             >
               {L.name}
             </p>
-            {L.label && <p style={{ fontSize: U(15), opacity: 0.65, marginTop: U(6) }}>{t(L.label)}</p>}
+            {L.label && (
+              <p style={{ fontSize: U(15), opacity: 0.65, marginTop: U(6), fontFamily: L.labelFont ? `"${L.labelFont}", system-ui, sans-serif` : undefined }}>
+                {t(L.label)}
+              </p>
+            )}
             {L.value && (
               <p
                 style={{
                   fontSize: U(26),
                   fontWeight: 600,
                   marginTop: U(14),
-                  letterSpacing: '-0.02em',
+                  letterSpacing: `${L.tracking ?? -0.02}em`,
                   color: L.accent,
                 }}
               >

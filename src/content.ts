@@ -164,6 +164,10 @@ export type SceneLayer = {
   accent?: string;
   font?: string;
   weight?: number;
+  // word ve type katmanlarında harf aralığı (em); verilmezse motorun sıkı varsayılanı
+  tracking?: number;
+  // type katmanında açıklama satırının yazı tipi; verilmezse font
+  labelFont?: string;
   name?: string;
   value?: string;
   svg?: string;

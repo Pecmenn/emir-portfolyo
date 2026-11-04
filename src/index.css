@@ -142,6 +142,19 @@ body {
 }
 .scene-text:not(.is-in) .soft-line > span {
   opacity: 0;
+  transform: translateY(125%);
+}
+/* Türkçe büyük harflerde şapka, nokta ve çengel satır yüksekliğinin dışına taşar: satırlar birbirine değmesin,
+   maske de kutunun dışındaki bu parçaları kesmesin (clip-path düzeni etkilemeden maskeyi genişletir) */
+.scene-text .display {
+  line-height: 1.13;
+  letter-spacing: 0.012em;
+}
+.scene-text .line-mask {
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  clip-path: inset(-0.2em -0.2em -0.34em -0.2em);
 }
 
 /* Proje kapağı: alttan perde gibi açılır, görsel hafifçe küçülerek yerine oturur */
