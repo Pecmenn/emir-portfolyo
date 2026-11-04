@@ -250,7 +250,6 @@ function About() {
   const { t, lang } = useLang();
   const ref = useRef<HTMLElement>(null);
   useSoftReveal(ref);
-  const linkedin = site.socials.find((s) => /linkedin/i.test(s.href));
   const initials = site.name
     .split(' ')
     .slice(-2)
@@ -273,20 +272,17 @@ function About() {
           </span>
         )}
       </div>
-      {/* Üç sütunda yazı ölçüleri sütun genişliğine bağlı (cqw): başlık ve metin fotoğrafın yüksekliğini doldurur */}
-      <div data-reveal className="flex flex-col xl:[container-type:inline-size]">
-        <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[length:min(25cqw,168px)]" />
-        <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)] xl:max-w-none xl:text-[length:min(5.3cqw,26px)] xl:leading-[1.38]">{t(play.about.text)}</p>
-        <div className="soft-rise mt-8 flex flex-wrap gap-3 pt-0 [transition-delay:.1s] xl:mt-auto xl:pt-8">
+      {/* Üç sütunda yazı ölçüleri sütun genişliğine bağlı (cqw); başlık fotoğrafın üstüyle, metin altıyla hizalanır */}
+      <div data-reveal className="flex flex-col xl:justify-between xl:[container-type:inline-size]">
+        <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[length:min(25cqw,190px)]" />
+        <div>
+          <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)] xl:max-w-none xl:text-[length:min(6.4cqw,30px)] xl:leading-[1.38]">{t(play.about.text)}</p>
           {cvUrl && (
-            <a href={cvUrl} download className="btn btn-wine">
-              {t(ui.cv)} <span aria-hidden className="arrow">↓</span>
-            </a>
-          )}
-          {linkedin && (
-            <a href={linkedin.href} target="_blank" rel="noreferrer" className="btn">
-              LinkedIn <span aria-hidden className="arrow">↗</span>
-            </a>
+            <div className="soft-rise mt-8 [transition-delay:.1s]">
+              <a href={cvUrl} download className="btn btn-wine">
+                {t(ui.cv)} <span aria-hidden className="arrow">↓</span>
+              </a>
+            </div>
           )}
         </div>
       </div>
