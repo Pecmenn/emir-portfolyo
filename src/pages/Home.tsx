@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { cvUrl, play, projects, site, ui, type Text } from '../content';
-import WorkCard from '../components/WorkCard';
+import WorkStrips from '../components/WorkStrips';
 import Contact from '../sections/Contact';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
@@ -174,22 +174,17 @@ function Areas() {
   );
 }
 
-// Seçili işler: iki sütunda dönüşümlü genişlikte büyük kartlar
+// Seçili işler: üzerine gelince genişleyen kapak şeritleri (bkz. WorkStrips)
 function Work() {
   const { t } = useLang();
   const { goTo } = useTransition();
   const ref = useRef<HTMLElement>(null);
   const list = play.work.featured.map((slug) => projects.find((p) => p.slug === slug)).filter((p): p is (typeof projects)[number] => !!p);
   useSoftReveal(ref, [list.length]);
-  const spans = ['lg:col-span-7', 'lg:col-span-5', 'lg:col-span-5', 'lg:col-span-7', 'lg:col-span-6', 'lg:col-span-6'];
   return (
     <section ref={ref} id="isler" className="gutter pb-[clamp(80px,11vw,160px)]">
       <Head title={play.work.title} text={play.work.text} />
-      <div className="grid gap-x-[clamp(14px,1.6vw,24px)] gap-y-[clamp(28px,3vw,44px)] lg:grid-cols-12">
-        {list.map((p, i) => (
-          <WorkCard key={p.slug} project={p} className={`soft-rise ${spans[i % spans.length]} ${i % 2 ? '[transition-delay:.1s]' : ''}`} />
-        ))}
-      </div>
+      <WorkStrips projects={list} />
       <div className="soft-rise mt-[clamp(32px,4vw,56px)] flex justify-center">
         <button type="button" onClick={() => goTo('/isler')} className="btn">
           {t(play.work.all)} <span aria-hidden className="arrow">→</span>
@@ -262,10 +257,11 @@ function About() {
     .map((w) => w[0])
     .join('');
   return (
-    <section ref={ref} id="hakkimda" className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] lg:grid-cols-[5fr_7fr]">
-      <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)]">
+    <section ref={ref} id="hakkimda" className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)]">
+      {/* Geniş ekranda fotoğrafın yüksekliği sağdaki metin sütunundan gelir; sütun genişliği yüzü kırpmayacak oranda tutulur */}
+      <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)] lg:aspect-auto">
         {play.about.photo ? (
-          <img src={play.about.photo} alt={site.name} className="h-full w-full object-cover" />
+          <img src={play.about.photo} alt={site.name} className="absolute inset-0 h-full w-full object-cover" />
         ) : (
           <span aria-hidden className="display absolute inset-0 grid place-items-center text-[clamp(6rem,14vw,12rem)] text-cream/10">
             {initials}
