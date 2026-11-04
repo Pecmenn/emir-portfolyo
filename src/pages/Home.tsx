@@ -55,13 +55,18 @@ function Hero({ ready }: { ready: boolean }) {
       </h1>
       <div className="soft-rise grid gap-7 border-t border-seam pt-7 [transition-delay:.25s] lg:grid-cols-[1fr_auto] lg:items-end">
         <div className="grid gap-5">
-          <p key={lang} className="max-w-[34ch] text-[clamp(1.15rem,1.6vw,1.5rem)] leading-[1.35]">
-            {t(play.hero.intro)}
-          </p>
-          <span className="inline-flex items-center gap-2.5 text-sm text-stone">
-            <i aria-hidden className="h-2 w-2 rounded-full bg-[#5ec27a] [animation:status-pulse_2.4s_infinite]" />
-            {t(play.hero.status)}
-          </span>
+          {/* Panelde boş bırakılan satırlar sayfada yer tutmaz */}
+          {t(play.hero.intro).trim() && (
+            <p key={lang} className="max-w-[34ch] text-[clamp(1.15rem,1.6vw,1.5rem)] leading-[1.35]">
+              {t(play.hero.intro)}
+            </p>
+          )}
+          {t(play.hero.status).trim() && (
+            <span className="inline-flex items-center gap-2.5 text-sm text-stone">
+              <i aria-hidden className="h-2 w-2 rounded-full bg-[#5ec27a] [animation:status-pulse_2.4s_infinite]" />
+              {t(play.hero.status)}
+            </span>
+          )}
         </div>
         <div className="flex flex-wrap gap-3">
           <button type="button" onClick={() => scrollToTarget('#isler')} className="btn btn-wine">

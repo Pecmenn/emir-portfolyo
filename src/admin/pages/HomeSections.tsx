@@ -293,7 +293,7 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
               <BiField label="Açıklama" long value={d.work.text} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, text: v } }))} />
               <BiField label="“Bütün işler” düğmesi ve sayfa başlığı" value={d.work.all} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, all: v } }))} />
             </Card>
-            <Card title="Ana sayfadaki projeler" description="Büyük kartlarla bu sırayla görünürler; 6 proje en iyi sonucu verir. Bütün projeler “Bütün işler” sayfasında.">
+            <Card title="Ana sayfadaki projeler" description="Genişleyen şeritler olarak bu sırayla görünürler; 6 proje en iyi sonucu verir. Projeler sayfasındaki sıra burayı değiştirmez, o sıra “Bütün işler” sayfası içindir.">
               {d.work.featured.map((slug, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <select

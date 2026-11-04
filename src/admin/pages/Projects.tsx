@@ -23,10 +23,6 @@ function SortableCard({
   const { src } = useAdmin();
   const passive = !!project.hidden;
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: project.slug });
-  const row = Math.floor(index / 2) + 1;
-  // Sitede her satırın düzeni değişir: tek satırlarda ilk proje büyük ve solda, çift satırlarda büyük ve sağda
-  const big = index % 2 === 0;
-  const side = (row % 2 === 1) === big ? 'solda' : 'sağda';
 
   return (
     <div
@@ -52,7 +48,7 @@ function SortableCard({
           </div>
           <p className="truncate text-sm text-ink/55">{project.discipline?.tr}</p>
           <p className="mt-2 inline-block rounded-md bg-paper px-2 py-1 text-[11px] font-semibold text-ink/60">
-            {passive ? 'Pasif · sitede görünmüyor' : `Satır ${row} · ${big ? 'büyük' : 'küçük'} · ${side}`}
+            {passive ? 'Pasif · sitede görünmüyor' : `İşler sayfasında ${index + 1}. sırada`}
           </p>
         </div>
       </a>
@@ -122,7 +118,7 @@ export default function Projects() {
     <div>
       <PageHeader
         title="Projeler"
-        description="Ana sayfada ikişer ikişer satırlara dizilir. Sırayı değiştirmek için kartı sağ üstteki tutamaçtan sürükleyin. Pasif projeler sitede görünmez."
+        description="Bu sıra İşler sayfası içindir; ana sayfadaki şeritler Ana sayfa > Seçili işler bölümünden seçilir. Sırayı değiştirmek için kartı sağ üstteki tutamaçtan sürükleyin. Pasif projeler sitede görünmez."
         actions={
           <Button onClick={() => go('projeler', 'yeni')}>
             <Plus size={18} /> Yeni proje
