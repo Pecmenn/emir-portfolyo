@@ -257,9 +257,14 @@ function About() {
     .map((w) => w[0])
     .join('');
   return (
-    <section ref={ref} id="hakkimda" className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)]">
-      {/* Geniş ekranda fotoğrafın yüksekliği sağdaki metin sütunundan gelir; sütun genişliği yüzü kırpmayacak oranda tutulur */}
-      <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)] lg:aspect-auto">
+    <section
+      ref={ref}
+      id="hakkimda"
+      className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] xl:grid-cols-[clamp(340px,29vw,520px)_minmax(0,4fr)_minmax(0,5fr)] xl:grid-rows-1"
+    >
+      {/* Geniş ekranda üç sütun: fotoğraf, başlık ve metin, beceriler. Yüksekliği fotoğrafın oranı belirler (before boşluğu),
+          diğer sütunlar ona uzar; metin daha uzun olursa fotoğraf da birlikte uzar. Daha dar ekranda beceriler metnin altına iner */}
+      <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)] lg:row-span-2 lg:aspect-auto xl:row-span-1 xl:before:block xl:before:pt-[114%] xl:before:content-['']">
         {play.about.photo ? (
           <img src={play.about.photo} alt={site.name} className="absolute inset-0 h-full w-full object-cover" />
         ) : (
@@ -268,24 +273,10 @@ function About() {
           </span>
         )}
       </div>
-      <div data-reveal>
-        <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)]" />
+      <div data-reveal className="flex flex-col">
+        <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[clamp(3rem,5.6vw,6rem)]" />
         <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)]">{t(play.about.text)}</p>
-        <div className="soft-rise mt-8 grid gap-[18px] border-t border-seam pt-6 [transition-delay:.1s]">
-          {play.about.tools.map((group) => (
-            <div key={group.label.en} className="grid gap-2.5 sm:grid-cols-[140px_1fr] sm:items-start">
-              <h4 className="eyebrow mt-1">{t(group.label)}</h4>
-              <div className="flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <span key={item} className="tag">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="soft-rise mt-8 flex flex-wrap gap-3 [transition-delay:.2s]">
+        <div className="soft-rise mt-8 flex flex-wrap gap-3 pt-0 [transition-delay:.1s] xl:mt-auto xl:pt-8">
           {cvUrl && (
             <a href={cvUrl} download className="btn btn-wine">
               {t(ui.cv)} <span aria-hidden className="arrow">↓</span>
@@ -297,6 +288,24 @@ function About() {
             </a>
           )}
         </div>
+      </div>
+      <div className="grid border-b border-seam lg:col-start-2 xl:col-start-3 xl:auto-rows-fr">
+        {play.about.tools.map((group, i) => (
+          <div
+            key={group.label.en}
+            style={{ transitionDelay: `${(i + 1) * 90}ms` }}
+            className="soft-rise grid content-start gap-2.5 border-t border-seam py-5 sm:grid-cols-[140px_1fr] sm:items-start"
+          >
+            <h4 className="eyebrow mt-1">{t(group.label)}</h4>
+            <div className="flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span key={item} className="tag">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
