@@ -273,9 +273,10 @@ function About() {
           </span>
         )}
       </div>
-      <div data-reveal className="flex flex-col">
-        <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[clamp(3rem,5.6vw,6rem)]" />
-        <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)]">{t(play.about.text)}</p>
+      {/* Üç sütunda yazı ölçüleri sütun genişliğine bağlı (cqw): başlık ve metin fotoğrafın yüksekliğini doldurur */}
+      <div data-reveal className="flex flex-col xl:[container-type:inline-size]">
+        <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[length:min(25cqw,168px)]" />
+        <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)] xl:max-w-none xl:text-[length:min(5.3cqw,26px)] xl:leading-[1.38]">{t(play.about.text)}</p>
         <div className="soft-rise mt-8 flex flex-wrap gap-3 pt-0 [transition-delay:.1s] xl:mt-auto xl:pt-8">
           {cvUrl && (
             <a href={cvUrl} download className="btn btn-wine">
