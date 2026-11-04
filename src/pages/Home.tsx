@@ -8,8 +8,8 @@ import { useSoftReveal } from '../lib/reveal';
 import { refreshSoon, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
-// Ana sayfa (Design. Build. Automate.): açılış, disiplin şeridi, üç alan, seçili işler, uçtan uca vaka (şarap bandı),
-// hakkımda, nasıl çalışırım ve iletişim. Metinler src/content/play.json'da, panelde "Ana sayfa" altında.
+// Ana sayfa (Design. Build. Automate.): açılış, disiplin şeridi, hakkımda, üç alan, seçili işler, uçtan uca vaka (şarap bandı),
+// nasıl çalışırım ve iletişim. Metinler src/content/play.json'da, panelde "Ana sayfa" altında.
 // Hareketler yumuşaktır: satırlar maskenin altından kayar, bloklar hafifçe yükselir (bkz. src/lib/reveal.ts).
 
 // Çok satırlı başlık: satırlar "\n" ile ayrılır, her biri ayrı kayar
@@ -126,7 +126,7 @@ function Areas() {
   const ref = useRef<HTMLElement>(null);
   useSoftReveal(ref);
   return (
-    <section ref={ref} id="alanlar" className="gutter py-[clamp(80px,11vw,160px)]">
+    <section ref={ref} id="alanlar" className="gutter pb-[clamp(80px,11vw,160px)]">
       <Head title={play.areas.title} text={play.areas.text} />
       <div className="border-t border-seam">
         {play.areas.items.map((item, i) => (
@@ -313,7 +313,7 @@ function Process() {
   const ref = useRef<HTMLElement>(null);
   useSoftReveal(ref);
   return (
-    <section ref={ref} id="surec" className="gutter pb-[clamp(80px,11vw,160px)]">
+    <section ref={ref} id="surec" className="gutter py-[clamp(80px,11vw,160px)]">
       <Head title={play.process.title} text={play.process.text} />
       <div className="grid gap-px border-y border-seam bg-seam lg:grid-cols-4">
         {play.process.steps.map((step, i) => (
@@ -337,10 +337,10 @@ export default function Home({ ready }: { ready: boolean }) {
     <main id="main" tabIndex={-1} className="outline-none">
       <Hero ready={ready} />
       <Ticker />
+      <About />
       <Areas />
       <Work />
       <CaseBand />
-      <About />
       <Process />
       <Contact />
     </main>

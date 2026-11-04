@@ -11,21 +11,21 @@ type SectionKey = 'acilis' | 'alanlar' | 'isler' | 'vaka' | 'hakkimda' | 'surec'
 
 const SECTIONS: { key: SectionKey; title: string; description: string }[] = [
   { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi, durum ve kayan disiplin şeridi.' },
-  { key: 'alanlar', title: 'Üç alan', description: 'Design, Build ve Automate satırları: açıklama, etiketler ve küçük görseller.' },
-  { key: 'isler', title: 'Seçili işler', description: 'Ana sayfada büyük kartlarla gösterilen projeler ve sırası.' },
-  { key: 'vaka', title: 'Uçtan uca vaka', description: 'Şarap renkli bant: bir markanın kimlik, site ve otomasyon adımları.' },
   { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve kullandığın araçlar.' },
+  { key: 'alanlar', title: 'Üç alan', description: 'Design, Build ve Automate satırları: açıklama, etiketler ve küçük görseller.' },
+  { key: 'isler', title: 'Seçili işler', description: 'Ana sayfada genişleyen şeritlerle gösterilen projeler ve sırası.' },
+  { key: 'vaka', title: 'Uçtan uca vaka', description: 'Şarap renkli bant: bir markanın kimlik, site ve otomasyon adımları.' },
   { key: 'surec', title: 'Nasıl çalışırım', description: 'Dört adımlık çalışma süreci.' },
   { key: 'iletisim', title: 'İletişim', description: '“Birlikte çalışalım” başlığı, paragraf ve form yazıları.' },
 ];
 
 // Sayfanın küçük şeması: düzenlenen bölümün sitede nerede olduğunu gösterir
 function PageMap({ highlight }: { highlight: number }) {
-  const blocks = ['h-7', 'h-5', 'h-6', 'h-4', 'h-5', 'h-3', 'h-4'];
+  const blocks = ['h-7', 'h-5', 'h-5', 'h-6', 'h-4', 'h-3', 'h-4'];
   return (
     <div className="flex w-16 shrink-0 flex-col gap-0.5 rounded-lg border border-black/10 bg-[#0D0B0B] p-1">
       {blocks.map((h, i) => (
-        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#B8202F]' : i === 3 ? 'bg-[#6B0F17]' : 'bg-white/10'}`} />
+        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#B8202F]' : i === 4 ? 'bg-[#6B0F17]' : 'bg-white/10'}`} />
       ))}
     </div>
   );
