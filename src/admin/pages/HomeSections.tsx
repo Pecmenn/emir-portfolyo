@@ -1,8 +1,9 @@
 import { ArrowDown, ArrowLeft, ArrowUp, ChevronRight, Plus, Trash2 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { Step } from '../../content';
+import { HOME_WORK_COUNT } from '../../lib/homeWork';
 import { href } from '../router';
-import { PATHS, toJSON, useAdmin, type ContactData, type Content, type PlayData } from '../store';
+import { PATHS, sortProjects, toJSON, useAdmin, type ContactData, type Content, type PlayData } from '../store';
 import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, TextInput, Toggle, useDraft, useEditLang } from '../ui';
 
 // Ana sayfa (Design. Build. Automate.) bölümleri; sitede yukarıdan aşağı bu sırayla görünür.
@@ -13,7 +14,7 @@ const SECTIONS: { key: SectionKey; title: string; description: string }[] = [
   { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi, durum ve kayan disiplin şeridi.' },
   { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve kullandığın araçlar.' },
   { key: 'alanlar', title: 'Üç alan', description: 'Design, Build ve Automate satırları: açıklama, etiketler ve küçük görseller.' },
-  { key: 'isler', title: 'Seçili işler', description: 'Ana sayfada genişleyen şeritlerle gösterilen projeler ve sırası.' },
+  { key: 'isler', title: 'Seçili işler', description: 'Genişleyen şeritlerin başlığı ve açıklaması. Şeritler Projeler sayfasındaki sıradan gelir.' },
   { key: 'vaka', title: 'Uçtan uca vaka', description: 'Şarap renkli bant: bir markanın kimlik, site ve otomasyon adımları.' },
   { key: 'surec', title: 'Nasıl çalışırım', description: 'Dört adımlık çalışma süreci.' },
   { key: 'iletisim', title: 'İletişim', description: '“Birlikte çalışalım” başlığı, paragraf ve form yazıları.' },
@@ -190,7 +191,7 @@ function StepList({ value, onChange, what }: { value: Step[]; onChange: (v: Step
 function Section({ sectionKey }: { sectionKey: SectionKey }) {
   const { content } = useAdmin();
   const { lang } = useEditLang();
-  const visible = content.projects.filter((p) => !p.hidden);
+  const homeProjects = sortProjects(content.projects.filter((p) => !p.hidden)).slice(0, HOME_WORK_COUNT);
   const shell = { sectionKey, original: content.play, file: PATHS.play, contentKey: 'play' as const };
 
   if (sectionKey === 'acilis') {
@@ -285,7 +286,7 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
 
   if (sectionKey === 'isler') {
     return (
-      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.work.title?.[lang]} text={d.work.featured.map((s) => visible.find((p) => p.slug === s)?.title ?? s).join(' · ')} />}>
+      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.work.title?.[lang]} text={homeProjects.map((p) => p.title).join(' · ')} />}>
         {(d, set) => (
           <>
             <Card>
@@ -293,30 +294,18 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
               <BiField label="Açıklama" long value={d.work.text} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, text: v } }))} />
               <BiField label="“Bütün işler” düğmesi ve sayfa başlığı" value={d.work.all} onChange={(v) => set((x) => ({ ...x, work: { ...x.work, all: v } }))} />
             </Card>
-            <Card title="Ana sayfadaki projeler" description="Genişleyen şeritler olarak bu sırayla görünürler; 6 proje en iyi sonucu verir. Projeler sayfasındaki sıra burayı değiştirmez, o sıra “Bütün işler” sayfası içindir.">
-              {d.work.featured.map((slug, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <select
-                    value={slug}
-                    onChange={(e) => set((x) => ({ ...x, work: { ...x.work, featured: x.work.featured.map((s, j) => (j === i ? e.target.value : s)) } }))}
-                    className={selectClass}
-                  >
-                    {visible.map((p) => (
-                      <option key={p.slug} value={p.slug}>
-                        {p.title}
-                      </option>
-                    ))}
-                  </select>
-                  <ListTools
-                    i={i}
-                    length={d.work.featured.length}
-                    what="Projeyi"
-                    onMove={(to) => set((x) => ({ ...x, work: { ...x.work, featured: move(x.work.featured, i, to) } }))}
-                    onRemove={() => set((x) => ({ ...x, work: { ...x.work, featured: x.work.featured.filter((_, j) => j !== i) } }))}
-                  />
-                </div>
-              ))}
-              <AddButton onClick={() => set((x) => ({ ...x, work: { ...x.work, featured: [...x.work.featured, visible[0]?.slug ?? ''] } }))}>Proje ekle</AddButton>
+            <Card title="Ana sayfadaki projeler" description={`Projeler sayfasındaki sıranın ilk ${HOME_WORK_COUNT} aktif projesi, genişleyen şeritler olarak bu sırayla görünür. Değiştirmek için Projeler sayfasında kartları sürükleyin.`}>
+              <ol className="grid gap-2">
+                {homeProjects.map((p, i) => (
+                  <li key={p.slug} className="flex items-center gap-3 rounded-xl bg-paper px-3 py-2.5 text-sm font-medium">
+                    <span className="tabular-nums text-ink/40">{i + 1}</span>
+                    {p.title}
+                  </li>
+                ))}
+              </ol>
+              <a href={href('projeler')} className="text-sm font-semibold text-accent-strong">
+                Projeler sayfasına git
+              </a>
             </Card>
           </>
         )}

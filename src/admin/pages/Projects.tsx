@@ -4,6 +4,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { Eye, EyeOff, GripVertical, Plus } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import type { Project } from '../../content';
+import { HOME_WORK_COUNT } from '../../lib/homeWork';
 import { href, go } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin } from '../store';
 import { Button, PageHeader, SaveBar } from '../ui';
@@ -48,7 +49,7 @@ function SortableCard({
           </div>
           <p className="truncate text-sm text-ink/55">{project.discipline?.tr}</p>
           <p className="mt-2 inline-block rounded-md bg-paper px-2 py-1 text-[11px] font-semibold text-ink/60">
-            {passive ? 'Pasif · sitede görünmüyor' : `İşler sayfasında ${index + 1}. sırada`}
+            {passive ? 'Pasif · sitede görünmüyor' : `${index + 1}. sırada · ${index < HOME_WORK_COUNT ? 'Ana sayfada ve İşler sayfasında' : 'Yalnızca İşler sayfasında'}`}
           </p>
         </div>
       </a>
@@ -118,7 +119,7 @@ export default function Projects() {
     <div>
       <PageHeader
         title="Projeler"
-        description="Bu sıra İşler sayfası içindir; ana sayfadaki şeritler Ana sayfa > Seçili işler bölümünden seçilir. Sırayı değiştirmek için kartı sağ üstteki tutamaçtan sürükleyin. Pasif projeler sitede görünmez."
+        description={`Projeler sitede bu sırayla görünür: ilk ${HOME_WORK_COUNT} aktif proje ana sayfadaki şeritlerde, hepsi İşler sayfasında. Sırayı değiştirmek için kartı sağ üstteki tutamaçtan sürükleyin. Pasif projeler sitede görünmez.`}
         actions={
           <Button onClick={() => go('projeler', 'yeni')}>
             <Plus size={18} /> Yeni proje

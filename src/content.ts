@@ -234,7 +234,7 @@ export type Play = {
   hero: { lines: string[]; accent: number; intro: Text; status: Text };
   ticker: Text[];
   areas: { title: Text; text: Text; items: AreaItem[] };
-  work: { title: Text; text: Text; featured: string[]; all: Text };
+  work: { title: Text; text: Text; all: Text };
   case: { title: Text; text: Text; soon: Text; steps: Step[] };
   about: { title: Text; text: Text; photo: string; tools: { label: Text; items: string[] }[] };
   process: { title: Text; text: Text; steps: Step[] };

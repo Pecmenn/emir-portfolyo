@@ -2,6 +2,7 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import { cvUrl, play, projects, site, ui, type Text } from '../content';
 import WorkStrips from '../components/WorkStrips';
 import Contact from '../sections/Contact';
+import { HOME_WORK_COUNT } from '../lib/homeWork';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
 import { useSoftReveal } from '../lib/reveal';
@@ -182,12 +183,13 @@ function Areas() {
   );
 }
 
-// Seçili işler: üzerine gelince genişleyen kapak şeritleri (bkz. WorkStrips)
+// Seçili işler: üzerine gelince genişleyen kapak şeritleri (bkz. WorkStrips).
+// Paneldeki Projeler sırasının ilk aktif projeleri gösterilir
 function Work() {
   const { t } = useLang();
   const { goTo } = useTransition();
   const ref = useRef<HTMLElement>(null);
-  const list = play.work.featured.map((slug) => projects.find((p) => p.slug === slug)).filter((p): p is (typeof projects)[number] => !!p);
+  const list = projects.slice(0, HOME_WORK_COUNT);
   useSoftReveal(ref, [list.length]);
   return (
     <section ref={ref} id="isler" className="gutter scroll-mt-[92px] pb-[clamp(80px,11vw,160px)]">
