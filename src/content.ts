@@ -143,6 +143,7 @@ export type SceneLayer = {
   origin?: number[];
   // Metin, paragraf ve adım katmanları: [giriş, çıkış?] sahne ilerlemesinde
   at?: number[];
+  // Yoldaki {lang}, sitenin diline çevrilir (ör. /images/iz/ui/{lang}/kesfet.webp)
   src?: string;
   width?: number;
   height?: number;

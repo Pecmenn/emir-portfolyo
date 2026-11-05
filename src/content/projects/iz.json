@@ -1,0 +1,3026 @@
+{
+  "order": 16,
+  "slug": "iz",
+  "title": "İz",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "/images/iz/cover.webp",
+  "coverFocus": 40,
+  "summary": {
+    "tr": "Kamp noktalarını, yürüyüş rotalarını ve tırmanış noktalarını tek haritada toplayan, her bilginin ne kadar taze olduğunu gösteren bir iOS uygulaması.",
+    "en": "An iOS app that puts camp spots, hiking routes and climbing crags on one map, and shows how fresh each fact is."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "Ürün ve marka tasarımcısı",
+    "en": "Product & brand designer"
+  },
+  "services": {
+    "tr": "UI/UX, ürün tasarımı, marka kimliği",
+    "en": "UI/UX, product design, brand identity"
+  },
+  "intro": {
+    "tr": "Türkiye'de iyi bir kamp yeri bulmak için çoğu zaman bir tanıdık gerekiyor. Konum DM'den geliyor, su bilgisi beş yıllık bir forum yazısından, yasak haberi valiliğin sitesinden. iz bunları tek haritada topluyor: kamp noktalarını, yürüyüş rotalarını, tırmanış noktalarını. Her bilginin yanında da onu son gören kişinin tarihi duruyor.",
+    "en": "Finding a good camp spot in Türkiye usually takes knowing someone. The pin comes from a DM, the water info from a five-year-old forum post, the ban from the governor's website. iz puts it all on one map: camp spots, hiking routes, climbing crags. And next to each fact, the date of the last person who saw it."
+  },
+  "canvas": "#17352A",
+  "areas": [
+    "design"
+  ],
+  "sceneFont": "Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Instrument+Sans:wght@500;600;700",
+  "gallery": [],
+  "scenes": [
+    {
+      "length": 240,
+      "mlength": 230,
+      "bg": "#EFE9DC",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            560,
+            -160,
+            1100
+          ],
+          "color": "#E9A23B38",
+          "m": {
+            "box": [
+              -140,
+              220,
+              680
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            196,
+            520
+          ],
+          "kicker": {
+            "tr": "Ürün deneyimi",
+            "en": "Product experience"
+          },
+          "accent": "#8A5A0B",
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.84)",
+          "title": {
+            "tr": "Kamp,\nrota,\nkaya.",
+            "en": "Camp,\nroute,\ncrag."
+          },
+          "size": 104,
+          "text": {
+            "tr": "iz, kamp noktalarını, yürüyüş rotalarını ve tırmanış noktalarını tek haritada topluyor. Her bilginin yanında onu son görenin tarihi duruyor.",
+            "en": "iz brings camp spots, hiking routes and climbing crags onto one map, with the date of the last person who saw it beside every fact."
+          },
+          "at": [
+            -0.25
+          ],
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 46,
+            "textSize": 15,
+            "title": {
+              "tr": "Kamp, rota,\nkaya.",
+              "en": "Camp, route,\ncrag."
+            }
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            680,
+            70,
+            820
+          ],
+          "radius": 28,
+          "src": "/images/iz/foto/sabah.webp",
+          "width": 2400,
+          "height": 1610,
+          "motion": {
+            "from": [
+              80,
+              40,
+              0,
+              1.06,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.4,
+            "end": 0.1
+          },
+          "m": {
+            "box": [
+              16,
+              300,
+              368
+            ],
+            "radius": 20,
+            "motion": {
+              "from": [
+                0,
+                40,
+                0,
+                1.04,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.4,
+              "end": 0.1
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/kesfet.webp",
+          "box": [
+            640,
+            330,
+            240
+          ],
+          "z": 10,
+          "motion": {
+            "from": [
+              0,
+              600,
+              -6,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              -3,
+              1,
+              1
+            ],
+            "start": 0.05,
+            "end": 0.45
+          },
+          "m": {
+            "box": [
+              24,
+              332,
+              118
+            ],
+            "motion": {
+              "from": [
+                0,
+                400,
+                -6,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                -3,
+                1,
+                1
+              ],
+              "start": 0.05,
+              "end": 0.45
+            }
+          }
+        },
+        {
+          "kind": "toast",
+          "font": "Instrument Sans",
+          "color": "#FBF8F1",
+          "ink": "#17352A",
+          "box": [
+            1120,
+            650,
+            380
+          ],
+          "z": 11,
+          "svg": "<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect width='100' height='100' rx='23' fill='#17352A'/><circle cx='50' cy='26' r='10.5' fill='#E9A23B'/><path d='M27.5 46.5 72.5 45.5 73 60H27Z' fill='#FFFDF8'/><path d='M27 60h46l-.8 15.5-44.4-.7Z' fill='#E03A2A'/></svg>",
+          "name": "iz",
+          "label": {
+            "tr": "şimdi",
+            "en": "now"
+          },
+          "title": {
+            "tr": "Çamaltı Düzü: su doğrulandı",
+            "en": "Çamaltı Düzü: water confirmed"
+          },
+          "text": {
+            "tr": "Ekin 3 gün önce baktı, çeşme akıyor.",
+            "en": "Ekin checked 3 days ago, the fountain runs."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.4,
+            "end": 0.52
+          },
+          "m": {
+            "box": [
+              16,
+              600,
+              368
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "length": 150,
+      "mlength": 150,
+      "bg": "#EFE9DC",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            880,
+            -120,
+            900
+          ],
+          "color": "#E9A23B55",
+          "motion": {
+            "from": [
+              0,
+              160,
+              0,
+              0.8,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.5,
+            "end": 0.4
+          },
+          "m": {
+            "box": [
+              -120,
+              295,
+              640
+            ]
+          }
+        },
+        {
+          "kind": "para",
+          "box": [
+            200,
+            280,
+            1200
+          ],
+          "size": 46,
+          "color": "#17352A",
+          "at": [
+            -0.35,
+            0.7
+          ],
+          "text": {
+            "tr": "Türkiye'de iyi bir kamp yeri bulmak için çoğu zaman bir tanıdık gerekiyor. Konum DM'den geliyor, su bilgisi beş yıllık bir forum yazısından, yasak haberi valiliğin sitesinden. iz bunları tek haritada topluyor: kamp noktalarını, yürüyüş rotalarını, tırmanış noktalarını. Her bilginin yanında da onu son gören kişinin tarihi duruyor.",
+            "en": "Finding a good camp spot in Türkiye usually takes knowing someone. The pin comes from a DM, the water info from a five-year-old forum post, the ban from the governor's website. iz puts it all on one map: camp spots, hiking routes, climbing crags. And next to each fact, the date of the last person who saw it."
+          },
+          "m": {
+            "box": [
+              24,
+              160,
+              352
+            ],
+            "size": 25
+          }
+        }
+      ]
+    },
+    {
+      "length": 220,
+      "mlength": 210,
+      "bg": "#E7DFC9",
+      "layers": [
+        {
+          "kind": "photo",
+          "box": [
+            600,
+            166,
+            760
+          ],
+          "radius": 28,
+          "src": "/images/iz/foto/masa.webp",
+          "width": 1600,
+          "height": 1195,
+          "motion": {
+            "from": [
+              140,
+              40,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.35,
+            "end": 0.15
+          },
+          "m": {
+            "box": [
+              16,
+              328,
+              368
+            ],
+            "radius": 20,
+            "motion": {
+              "from": [
+                0,
+                60,
+                0,
+                0.94,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.35,
+              "end": 0.15
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            210,
+            440
+          ],
+          "kicker": {
+            "tr": "Sorun",
+            "en": "The problem"
+          },
+          "accent": "#8A5A0B",
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.84)",
+          "title": {
+            "tr": "Konum\natar\nmısın?",
+            "en": "Can you\nsend the\npin?"
+          },
+          "size": 88,
+          "text": {
+            "tr": "Su var mı, çadır kurulur mu, yol arabayla çıkar mı? Cevaplar DM'lerde, eski forumlarda ve birinin hafızasında kalıyor.",
+            "en": "Is there water, can you pitch a tent, does the road go through? The answers live in DMs, old forums and someone's memory."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 44,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "toast",
+          "font": "Instrument Sans",
+          "color": "#FBF8F1",
+          "ink": "#17352A",
+          "box": [
+            1100,
+            261,
+            400
+          ],
+          "z": 10,
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect width='64' height='64' rx='16' fill='#34C759'/><path d='M32 16c-9.4 0-17 6.3-17 14 0 4.3 2.4 8.2 6.2 10.8L20 48l8.3-4.3c1.2.2 2.4.3 3.7.3 9.4 0 17-6.3 17-14s-7.6-14-17-14z' fill='#fff'/></svg>",
+          "name": "Kamp Grubu",
+          "label": {
+            "tr": "21:47",
+            "en": "21:47"
+          },
+          "title": {
+            "tr": "Konum atar mısın?",
+            "en": "Can you send the pin?"
+          },
+          "text": {
+            "tr": "Geçen yıl gittiğiniz yer.",
+            "en": "The place you went last year."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.22,
+            "end": 0.34
+          },
+          "m": {
+            "box": [
+              24,
+              566,
+              352
+            ],
+            "motion": {
+              "from": [
+                0,
+                24,
+                0,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.22,
+              "end": 0.3,
+              "out": {
+                "to": [
+                  0,
+                  -14,
+                  0,
+                  0.97,
+                  0
+                ],
+                "start": 0.38,
+                "end": 0.44
+              }
+            }
+          }
+        },
+        {
+          "kind": "toast",
+          "font": "Instrument Sans",
+          "color": "#FBF8F1",
+          "ink": "#17352A",
+          "box": [
+            1100,
+            395,
+            400
+          ],
+          "z": 11,
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect width='64' height='64' rx='16' fill='#8A5CF6'/><path d='M14 32 50 16 40 50 31 36Z' fill='none' stroke='#fff' stroke-width='4' stroke-linejoin='round'/><path d='M31 36 50 16' stroke='#fff' stroke-width='4'/></svg>",
+          "name": "Mert",
+          "label": {
+            "tr": "21:52",
+            "en": "21:52"
+          },
+          "title": {
+            "tr": "Suyu var mıydı ya?",
+            "en": "Was there water?"
+          },
+          "text": {
+            "tr": "Hatırlamıyorum, galiba çeşme vardı.",
+            "en": "Can't remember, maybe a fountain."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.38,
+            "end": 0.5
+          },
+          "m": {
+            "box": [
+              24,
+              566,
+              352
+            ],
+            "motion": {
+              "from": [
+                0,
+                24,
+                0,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.38,
+              "end": 0.46,
+              "out": {
+                "to": [
+                  0,
+                  -14,
+                  0,
+                  0.97,
+                  0
+                ],
+                "start": 0.54,
+                "end": 0.6
+              }
+            }
+          }
+        },
+        {
+          "kind": "toast",
+          "font": "Instrument Sans",
+          "color": "#FBF8F1",
+          "ink": "#17352A",
+          "box": [
+            1100,
+            529,
+            400
+          ],
+          "z": 12,
+          "svg": "<svg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'><rect width='64' height='64' rx='16' fill='#6B7280'/><circle cx='32' cy='32' r='17' fill='none' stroke='#fff' stroke-width='3.5'/><ellipse cx='32' cy='32' rx='7.5' ry='17' fill='none' stroke='#fff' stroke-width='3'/><path d='M15 32h34' stroke='#fff' stroke-width='3'/></svg>",
+          "name": "Forum",
+          "label": {
+            "tr": "2019",
+            "en": "2019"
+          },
+          "title": {
+            "tr": "Çadır kurulabiliyor, çeşme akıyor.",
+            "en": "Tents are fine, the fountain runs."
+          },
+          "text": {
+            "tr": "Son yanıt 2019'da yazılmış.",
+            "en": "Last reply was written in 2019."
+          },
+          "motion": {
+            "from": [
+              30,
+              -24,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.54,
+            "end": 0.66
+          },
+          "m": {
+            "box": [
+              24,
+              566,
+              352
+            ],
+            "motion": {
+              "from": [
+                0,
+                24,
+                0,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.54,
+              "end": 0.62
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 200,
+      "mlength": 190,
+      "bg": "#DDE3D2",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            -200,
+            80,
+            900
+          ],
+          "color": "#E9A23B33",
+          "m": {
+            "box": [
+              -160,
+              220,
+              600
+            ]
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            100,
+            128,
+            520
+          ],
+          "radius": 28,
+          "src": "/images/iz/foto/defne.webp",
+          "width": 1450,
+          "height": 1800,
+          "motion": {
+            "from": [
+              -100,
+              40,
+              0,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.35,
+            "end": 0.12
+          },
+          "m": {
+            "box": [
+              24,
+              300,
+              196
+            ],
+            "radius": 18,
+            "motion": {
+              "from": [
+                -40,
+                40,
+                0,
+                0.94,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.35,
+              "end": 0.12
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            720,
+            212,
+            780
+          ],
+          "kicker": {
+            "tr": "Kimin için",
+            "en": "Who it's for"
+          },
+          "accent": "#8A5A0B",
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.84)",
+          "title": {
+            "tr": "Defne, 32",
+            "en": "Defne, 32"
+          },
+          "size": 110,
+          "text": {
+            "tr": "Ankara'da mimar. Yılda altı kez çadırını alıp yola çıkıyor, hafta sonlarını kayada geçiriyor. Konumları DM'lerde, suyu eski blog yazılarında arıyor.",
+            "en": "An architect in Ankara. Six times a year she packs the tent and goes, and her weekends are for rock. She hunts for pins in DMs and for water in old blog posts."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 56,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "para",
+          "box": [
+            720,
+            566,
+            780
+          ],
+          "size": 40,
+          "color": "#8E3517",
+          "at": [
+            -0.05,
+            0.55
+          ],
+          "text": {
+            "tr": "“Yerini buldum. Suyu var mı, çadır kurulur mu, onu kimse yazmamış.”",
+            "en": "“I found the place. Whether there's water, whether you can pitch a tent, nobody wrote that.”"
+          },
+          "m": {
+            "box": [
+              236,
+              320,
+              140
+            ],
+            "size": 19
+          }
+        }
+      ]
+    },
+    {
+      "length": 230,
+      "mlength": 210,
+      "bg": "#CFE2DA",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            300,
+            280,
+            1000
+          ],
+          "color": "#FFFFFF66",
+          "m": {
+            "box": [
+              -100,
+              276,
+              600
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            56,
+            720
+          ],
+          "kicker": {
+            "tr": "Plan",
+            "en": "Planning"
+          },
+          "accent": "#1F5B4A",
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.84)",
+          "title": {
+            "tr": "Üç içerik,\ntek harita",
+            "en": "Three kinds,\none map"
+          },
+          "size": 96,
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 54
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            930,
+            100,
+            570
+          ],
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.84)",
+          "textSize": 22,
+          "text": {
+            "tr": "Kamp noktası, yürüyüş rotası ve tırmanış noktası aynı haritada duruyor; her biri kendi sorusunu yanıtlıyor: suyu var mı, kaçış yolu nerede, kaya ne zaman gölgede.",
+            "en": "Camp spots, hiking routes and climbing crags share a map, and each answers its own question: is there water, where's the way out, when does the rock go into shade."
+          },
+          "m": {
+            "box": [
+              24,
+              205,
+              352
+            ],
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/karsilama.webp",
+          "box": [
+            189,
+            402,
+            190
+          ],
+          "z": 7,
+          "motion": {
+            "from": [
+              -90,
+              620,
+              -31.5,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -10.5,
+              1,
+              1
+            ],
+            "start": -0.1,
+            "end": 0.30000000000000004
+          },
+          "m": {
+            "box": [
+              16,
+              411,
+              128
+            ],
+            "motion": {
+              "from": [
+                -36,
+                420,
+                -42,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -17.849999999999998,
+                1,
+                1
+              ],
+              "start": -0.1,
+              "end": 0.30000000000000004
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/gezi.webp",
+          "box": [
+            361,
+            362,
+            190
+          ],
+          "z": 8,
+          "motion": {
+            "from": [
+              -60,
+              620,
+              -21,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -7,
+              1,
+              1
+            ],
+            "start": -0.04000000000000001,
+            "end": 0.36
+          },
+          "m": {
+            "box": [
+              56,
+              392,
+              128
+            ],
+            "motion": {
+              "from": [
+                -24,
+                420,
+                -28,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -11.9,
+                1,
+                1
+              ],
+              "start": -0.04000000000000001,
+              "end": 0.36
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/kamp.webp",
+          "box": [
+            533,
+            338,
+            190
+          ],
+          "z": 9,
+          "motion": {
+            "from": [
+              -30,
+              620,
+              -10.5,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -3.5,
+              1,
+              1
+            ],
+            "start": 0.01999999999999999,
+            "end": 0.42000000000000004
+          },
+          "m": {
+            "box": [
+              96,
+              381,
+              128
+            ],
+            "motion": {
+              "from": [
+                -12,
+                420,
+                -14,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -5.95,
+                1,
+                1
+              ],
+              "start": 0.01999999999999999,
+              "end": 0.42000000000000004
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/kesfet.webp",
+          "box": [
+            705,
+            330,
+            190
+          ],
+          "z": 10,
+          "motion": {
+            "from": [
+              0,
+              620,
+              0,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.07999999999999999,
+            "end": 0.48
+          },
+          "m": {
+            "box": [
+              136,
+              378,
+              128
+            ],
+            "motion": {
+              "from": [
+                0,
+                420,
+                0,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.07999999999999999,
+              "end": 0.48
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/rota.webp",
+          "box": [
+            877,
+            338,
+            190
+          ],
+          "z": 9,
+          "motion": {
+            "from": [
+              30,
+              620,
+              10.5,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              3.5,
+              1,
+              1
+            ],
+            "start": 0.13999999999999999,
+            "end": 0.54
+          },
+          "m": {
+            "box": [
+              176,
+              381,
+              128
+            ],
+            "motion": {
+              "from": [
+                12,
+                420,
+                14,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                5.95,
+                1,
+                1
+              ],
+              "start": 0.13999999999999999,
+              "end": 0.54
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/kaya.webp",
+          "box": [
+            1049,
+            362,
+            190
+          ],
+          "z": 8,
+          "motion": {
+            "from": [
+              60,
+              620,
+              21,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              7,
+              1,
+              1
+            ],
+            "start": 0.19999999999999998,
+            "end": 0.6
+          },
+          "m": {
+            "box": [
+              216,
+              392,
+              128
+            ],
+            "motion": {
+              "from": [
+                24,
+                420,
+                28,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                11.9,
+                1,
+                1
+              ],
+              "start": 0.19999999999999998,
+              "end": 0.6
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/canta.webp",
+          "box": [
+            1221,
+            402,
+            190
+          ],
+          "z": 7,
+          "motion": {
+            "from": [
+              90,
+              620,
+              31.5,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              10.5,
+              1,
+              1
+            ],
+            "start": 0.26,
+            "end": 0.66
+          },
+          "m": {
+            "box": [
+              256,
+              411,
+              128
+            ],
+            "motion": {
+              "from": [
+                36,
+                420,
+                42,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                17.849999999999998,
+                1,
+                1
+              ],
+              "start": 0.26,
+              "end": 0.66
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 220,
+      "mlength": 210,
+      "bg": "#F3E3C3",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [
+            100,
+            170,
+            500
+          ],
+          "kicker": {
+            "tr": "Tasarım detayı",
+            "en": "Design detail"
+          },
+          "accent": "#8A5A0B",
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.84)",
+          "title": {
+            "tr": "Bilgi boya\ngibi solar",
+            "en": "Facts fade\nlike paint"
+          },
+          "size": 96,
+          "text": {
+            "tr": "Yoldaki kırmızı-beyaz işaretler zamanla solar; kimse tazelemezse yol zor bulunur. iz'deki her bilgi de öyle davranıyor: yeni doğrulanan canlı, eskiyen soluk, kimsenin görmediği yalnızca çerçeve.",
+            "en": "The red and white marks on a trail fade with time. Every fact in iz behaves the same: freshly confirmed is vivid, ageing is faded, and what nobody has seen is just an outline."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 54,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            660,
+            115,
+            500
+          ],
+          "radius": 22,
+          "src": "/images/iz/foto/isaret.webp",
+          "width": 1195,
+          "height": 1600,
+          "motion": {
+            "from": [
+              -60,
+              80,
+              -10,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -4,
+              1,
+              1
+            ],
+            "start": -0.25,
+            "end": 0.2
+          },
+          "m": {
+            "box": [
+              24,
+              360,
+              170
+            ],
+            "radius": 14,
+            "motion": {
+              "from": [
+                -30,
+                60,
+                -10,
+                0.94,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -4,
+                1,
+                1
+              ],
+              "start": -0.25,
+              "end": 0.2
+            }
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            930,
+            108,
+            640
+          ],
+          "src": "/images/iz/parca/{lang}/boya-taze.webp",
+          "width": 1464,
+          "height": 618,
+          "z": 6,
+          "motion": {
+            "from": [
+              360,
+              40,
+              8,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -2,
+              1,
+              1
+            ],
+            "start": 0.18,
+            "end": 0.33999999999999997
+          },
+          "m": {
+            "box": [
+              108,
+              338,
+              300
+            ],
+            "motion": {
+              "from": [
+                200,
+                30,
+                8,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -2,
+                1,
+                1
+              ],
+              "start": 0.18,
+              "end": 0.33999999999999997
+            }
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            930,
+            288,
+            640
+          ],
+          "src": "/images/iz/parca/{lang}/boya-soluk.webp",
+          "width": 1464,
+          "height": 618,
+          "z": 7,
+          "motion": {
+            "from": [
+              360,
+              40,
+              -6,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              2,
+              1,
+              1
+            ],
+            "start": 0.3,
+            "end": 0.45999999999999996
+          },
+          "m": {
+            "box": [
+              108,
+              428,
+              300
+            ],
+            "motion": {
+              "from": [
+                200,
+                30,
+                -6,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                2,
+                1,
+                1
+              ],
+              "start": 0.3,
+              "end": 0.45999999999999996
+            }
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            930,
+            468,
+            640
+          ],
+          "src": "/images/iz/parca/{lang}/boya-yok.webp",
+          "width": 1464,
+          "height": 618,
+          "z": 8,
+          "motion": {
+            "from": [
+              360,
+              40,
+              6,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -1,
+              1,
+              1
+            ],
+            "start": 0.42,
+            "end": 0.58
+          },
+          "m": {
+            "box": [
+              108,
+              518,
+              300
+            ],
+            "motion": {
+              "from": [
+                200,
+                30,
+                6,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -1,
+                1,
+                1
+              ],
+              "start": 0.42,
+              "end": 0.58
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 220,
+      "mlength": 210,
+      "bg": "#E9A23B",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            560,
+            -200,
+            1200
+          ],
+          "color": "#FFF3D066",
+          "m": {
+            "box": [
+              -120,
+              200,
+              640
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            205,
+            540
+          ],
+          "kicker": {
+            "tr": "Kurallar",
+            "en": "Rules"
+          },
+          "accent": "#17352A",
+          "color": "#17352A",
+          "ink": "rgba(23,53,42,.92)",
+          "title": {
+            "tr": "Bugün\nkurulur mu?",
+            "en": "Can I pitch\ntoday?"
+          },
+          "size": 100,
+          "text": {
+            "tr": "Orman ve ateş yasaklarını valilikler il il ilan ediyor, tarih ve kapsam değişiyor. iz çadırı ve ateşi ayrı gösteriyor; kesin hüküm vermiyor, son bilinen durumu kaynağı ve tarihiyle yazıyor.",
+            "en": "Governors announce forest and fire bans province by province, and dates and scope change. iz shows tents and fire separately and makes no ruling: it states the last known status with its source and date."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 46,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/izin.webp",
+          "box": [
+            690,
+            100,
+            325
+          ],
+          "z": 8,
+          "motion": {
+            "from": [
+              0,
+              620,
+              -6,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -2,
+              1,
+              1
+            ],
+            "start": -0.1,
+            "end": 0.32
+          },
+          "m": {
+            "box": [
+              20,
+              318,
+              168
+            ],
+            "motion": {
+              "from": [
+                0,
+                420,
+                -6,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -2,
+                1,
+                1
+              ],
+              "start": -0.1,
+              "end": 0.32
+            }
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            955,
+            170,
+            590
+          ],
+          "src": "/images/iz/parca/{lang}/durum.webp",
+          "width": 1464,
+          "height": 690,
+          "z": 10,
+          "motion": {
+            "from": [
+              360,
+              40,
+              6,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              1.5,
+              1,
+              1
+            ],
+            "start": 0.2,
+            "end": 0.36
+          },
+          "m": {
+            "box": [
+              150,
+              356,
+              262
+            ],
+            "motion": {
+              "from": [
+                200,
+                30,
+                6,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                1.5,
+                1,
+                1
+              ],
+              "start": 0.2,
+              "end": 0.36
+            }
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            955,
+            420,
+            590
+          ],
+          "src": "/images/iz/parca/{lang}/yil.webp",
+          "width": 1464,
+          "height": 768,
+          "z": 11,
+          "motion": {
+            "from": [
+              360,
+              40,
+              -5,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -1.5,
+              1,
+              1
+            ],
+            "start": 0.32,
+            "end": 0.48
+          },
+          "m": {
+            "box": [
+              150,
+              490,
+              262
+            ],
+            "motion": {
+              "from": [
+                200,
+                30,
+                -5,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -1.5,
+                1,
+                1
+              ],
+              "start": 0.32,
+              "end": 0.48
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 340,
+      "mlength": 320,
+      "bg": "#C4532A",
+      "bgShift": {
+        "color": "#0E0908",
+        "start": 0.14,
+        "end": 0.24
+      },
+      "layers": [
+        {
+          "kind": "svg",
+          "box": [
+            730,
+            50,
+            800,
+            800
+          ],
+          "z": 1,
+          "svg": "<svg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'><g fill='none' stroke='#FF4A38' stroke-width='2.5' stroke-dasharray='10 12' opacity='.34'><circle cx='400' cy='400' r='150'/><circle cx='400' cy='400' r='250'/><circle cx='400' cy='400' r='350'/></g></svg>",
+          "motion": {
+            "from": [
+              0,
+              0,
+              0,
+              0.5,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1.08,
+              1
+            ],
+            "start": 0.18,
+            "end": 0.95
+          },
+          "m": {
+            "box": [
+              0,
+              285,
+              400,
+              400
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            262,
+            660
+          ],
+          "z": 5,
+          "kicker": {
+            "tr": "Gün batımı",
+            "en": "Sunset"
+          },
+          "accent": "#FFE1B0",
+          "color": "#FFF4E3",
+          "ink": "rgba(255,244,227,.92)",
+          "title": {
+            "tr": "Hava\nkararıyor",
+            "en": "It's getting\ndark"
+          },
+          "size": 100,
+          "text": {
+            "tr": "Tırmanış uzadı, plandaki kampa bir saatten fazla yol var. Çekim de az önce gitti.",
+            "en": "The climb ran long and the planned camp is over an hour away. The signal has just gone."
+          },
+          "at": [
+            -0.3,
+            0.15
+          ],
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 46,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            262,
+            660
+          ],
+          "z": 5,
+          "kicker": {
+            "tr": "Gece modu",
+            "en": "Night mode"
+          },
+          "accent": "#FF4A38",
+          "color": "#FF4A38",
+          "ink": "#FF8E80",
+          "title": {
+            "tr": "Çekim yok.\nSu da yok.",
+            "en": "No signal.\nNo water."
+          },
+          "size": 100,
+          "text": {
+            "tr": "Arayüz kendiliğinden kırmızıya dönüyor, gözün karanlığa alışması bozulmuyor. En yakın nokta Karaçay Düzü, çeşmesi kurumuş.",
+            "en": "The interface turns red by itself, so eyes stay used to the dark. The nearest spot is Karaçay Düzü, and its fountain is dry."
+          },
+          "at": [
+            0.24,
+            0.47
+          ],
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 46,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            262,
+            660
+          ],
+          "z": 5,
+          "kicker": {
+            "tr": "Son not",
+            "en": "Last note"
+          },
+          "accent": "#FF4A38",
+          "color": "#FF4A38",
+          "ink": "#FF8E80",
+          "title": {
+            "tr": "Üç gün önce\nbiri yazmış",
+            "en": "Someone wrote\nthree days ago"
+          },
+          "size": 100,
+          "text": {
+            "tr": "Can üç gün önce buradaydı. Notu, bölgeyle birlikte telefona inmişti: 400 m yukarıda dere akıyor.",
+            "en": "Can was here three days ago. The note came down with the region: a stream runs 400 m up."
+          },
+          "at": [
+            0.47,
+            0.71
+          ],
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 46,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            262,
+            660
+          ],
+          "z": 5,
+          "kicker": {
+            "tr": "Dere",
+            "en": "The stream"
+          },
+          "accent": "#FF4A38",
+          "color": "#FF4A38",
+          "ink": "#FF8E80",
+          "title": {
+            "tr": "Çekim yok,\nyol var",
+            "en": "No signal,\nstill a way"
+          },
+          "size": 100,
+          "text": {
+            "tr": "Not pusulaya dönüşüyor. Ağaçtaki turuncu kurdeleyi bulmak için gereken her şey telefonda.",
+            "en": "The note becomes a compass. Everything needed to find the orange ribbon on the tree is on the phone."
+          },
+          "at": [
+            0.71
+          ],
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 46,
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/kilit.webp",
+          "box": [
+            980,
+            125,
+            300
+          ],
+          "z": 6,
+          "motion": {
+            "from": [
+              0,
+              200,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.4,
+            "end": 0,
+            "out": {
+              "to": [
+                0,
+                -40,
+                0,
+                0.96,
+                0
+              ],
+              "start": 0.2,
+              "end": 0.27
+            }
+          },
+          "m": {
+            "box": [
+              110,
+              292,
+              176
+            ]
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/gece-nokta.webp",
+          "box": [
+            980,
+            125,
+            300
+          ],
+          "z": 7,
+          "motion": {
+            "from": [
+              0,
+              50,
+              0,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.2,
+            "end": 0.27,
+            "out": {
+              "to": [
+                0,
+                -40,
+                0,
+                0.96,
+                0
+              ],
+              "start": 0.44,
+              "end": 0.51
+            }
+          },
+          "m": {
+            "box": [
+              110,
+              292,
+              176
+            ]
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/gece-not.webp",
+          "box": [
+            980,
+            125,
+            300
+          ],
+          "z": 8,
+          "motion": {
+            "from": [
+              0,
+              50,
+              0,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.44,
+            "end": 0.51,
+            "out": {
+              "to": [
+                0,
+                -40,
+                0,
+                0.96,
+                0
+              ],
+              "start": 0.68,
+              "end": 0.75
+            }
+          },
+          "m": {
+            "box": [
+              110,
+              292,
+              176
+            ]
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/gece-yol.webp",
+          "box": [
+            980,
+            125,
+            300
+          ],
+          "z": 9,
+          "motion": {
+            "from": [
+              0,
+              50,
+              0,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.68,
+            "end": 0.75
+          },
+          "m": {
+            "box": [
+              110,
+              292,
+              176
+            ]
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            1305,
+            190,
+            240
+          ],
+          "radius": 16,
+          "src": "/images/iz/foto/cesme.webp",
+          "width": 1600,
+          "height": 1195,
+          "z": 10,
+          "motion": {
+            "from": [
+              30,
+              -24,
+              3,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              3,
+              1,
+              1
+            ],
+            "start": 0.27,
+            "end": 0.34,
+            "out": {
+              "to": [
+                0,
+                0,
+                3,
+                1,
+                0
+              ],
+              "start": 0.44,
+              "end": 0.48
+            }
+          },
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "steps",
+          "box": [
+            100,
+            800,
+            760
+          ],
+          "z": 5,
+          "at": [
+            0.24,
+            0.47,
+            0.71
+          ],
+          "labels": [
+            {
+              "tr": "Çekim gitti",
+              "en": "Signal gone"
+            },
+            {
+              "tr": "Not bulundu",
+              "en": "Note found"
+            },
+            {
+              "tr": "Su bulundu",
+              "en": "Water found"
+            }
+          ],
+          "motion": {
+            "from": [
+              0,
+              30,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.2,
+            "end": 0.28
+          },
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 210,
+      "mlength": 200,
+      "bg": "#26324C",
+      "layers": [
+        {
+          "kind": "glow",
+          "box": [
+            500,
+            -100,
+            1100
+          ],
+          "color": "#F2B88A33",
+          "m": {
+            "box": [
+              -120,
+              200,
+              640
+            ]
+          }
+        },
+        {
+          "kind": "photo",
+          "box": [
+            860,
+            53,
+            640
+          ],
+          "radius": 28,
+          "src": "/images/iz/foto/safak.webp",
+          "width": 1450,
+          "height": 1800,
+          "motion": {
+            "from": [
+              60,
+              80,
+              2,
+              0.94,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.4,
+            "end": 0.15
+          },
+          "m": {
+            "box": [
+              52,
+              296,
+              308
+            ],
+            "radius": 20,
+            "motion": {
+              "from": [
+                0,
+                60,
+                0,
+                0.94,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.4,
+              "end": 0.15
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/not.webp",
+          "box": [
+            690,
+            330,
+            225
+          ],
+          "z": 10,
+          "motion": {
+            "from": [
+              -30,
+              300,
+              -6,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -3,
+              1,
+              1
+            ],
+            "start": 0.05,
+            "end": 0.42
+          },
+          "m": {
+            "box": [
+              20,
+              404,
+              124
+            ],
+            "motion": {
+              "from": [
+                -20,
+                200,
+                -6,
+                0.96,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -3,
+                1,
+                1
+              ],
+              "start": 0.05,
+              "end": 0.42
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            100,
+            235,
+            540
+          ],
+          "kicker": {
+            "tr": "Son",
+            "en": "The ending"
+          },
+          "accent": "#E9A23B",
+          "color": "#F7F1E4",
+          "ink": "rgba(247,241,228,.86)",
+          "title": {
+            "tr": "Sonraki\nkampçıya",
+            "en": "To the next\ncamper"
+          },
+          "size": 110,
+          "text": {
+            "tr": "Sabah dere hâlâ akıyordu. Defne yola çıkmadan üç bilgiyi tazeledi, bir not bıraktı. Çekim gelince gidecek; sonraki gelen yeri daha kolay bulacak.",
+            "en": "By morning the stream still ran. Defne refreshed three facts and left a note for the next person. It goes when there's signal."
+          },
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 44,
+            "textSize": 15
+          }
+        }
+      ]
+    },
+    {
+      "length": 240,
+      "mlength": 220,
+      "bg": "#0F261E",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [
+            100,
+            56,
+            720
+          ],
+          "kicker": {
+            "tr": "Marka sistemi",
+            "en": "Brand system"
+          },
+          "accent": "#E9A23B",
+          "color": "#F1ECE0",
+          "title": {
+            "tr": "Kayadaki\nişaret",
+            "en": "The mark\non the rock"
+          },
+          "size": 90,
+          "m": {
+            "box": [
+              24,
+              28,
+              352
+            ],
+            "size": 50
+          }
+        },
+        {
+          "kind": "text",
+          "box": [
+            855,
+            100,
+            645
+          ],
+          "textSize": 21,
+          "ink": "rgba(241,236,224,.84)",
+          "text": {
+            "tr": "İz, hem yoldaki işaret hem de geride bırakılan şey demek. İkon, patikalardaki kırmızı-beyaz boyadan geliyor; i'nin noktası güneş. Kırmızı gündüz yalnızca işaretlerde duruyor, gece bütün arayüze yayılıyor.",
+            "en": "İz means both a trail and a trace left behind. The icon comes from the red and white paint on footpaths, with the dot of the i as the sun. By day red stays on the marks; at night it takes over the whole interface."
+          },
+          "m": {
+            "box": [
+              24,
+              206,
+              352
+            ],
+            "textSize": 15
+          }
+        },
+        {
+          "kind": "svg",
+          "box": [
+            100,
+            330,
+            300,
+            300
+          ],
+          "svg": "<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><rect x='.5' y='.5' width='99' height='99' rx='23' fill='#17352A' stroke='#3C5E50'/><circle cx='50' cy='26' r='10.5' fill='#E9A23B'/><path d='M27.5 46.5 72.5 45.5 73 60H27Z' fill='#FFFDF8'/><path d='M27 60h46l-.8 15.5-44.4-.7Z' fill='#E03A2A'/></svg>",
+          "motion": {
+            "from": [
+              560,
+              20,
+              -16,
+              0.6,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.05,
+            "end": 0.3
+          },
+          "m": {
+            "box": [
+              24,
+              328,
+              92,
+              92
+            ],
+            "motion": {
+              "from": [
+                130,
+                80,
+                -16,
+                0.6,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.05,
+              "end": 0.3
+            }
+          }
+        },
+        {
+          "kind": "svg",
+          "box": [
+            120,
+            650,
+            130,
+            210
+          ],
+          "svg": "<svg viewBox='0 0 62 100' xmlns='http://www.w3.org/2000/svg'><text x='0' y='86' font-family='Fraunces' font-weight='600' font-size='100' letter-spacing='-3' fill='#F1ECE0'>ız</text><circle cx='14.2' cy='22' r='9' fill='#E9A23B'/></svg>",
+          "at": [
+            0.12
+          ],
+          "m": {
+            "box": [
+              140,
+              318,
+              62,
+              100
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            525,
+            330,
+            150,
+            300
+          ],
+          "color": "#17352A",
+          "label": {
+            "tr": "Çam",
+            "en": "Pine"
+          },
+          "ink": "#F1ECE0",
+          "value": "#17352A",
+          "font": "Instrument Sans",
+          "motion": {
+            "from": [
+              80,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.2,
+            "end": 0.45
+          },
+          "m": {
+            "box": [
+              24,
+              430,
+              112,
+              114
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            690,
+            330,
+            150,
+            300
+          ],
+          "color": "#F1ECE0",
+          "label": {
+            "tr": "Kireçtaşı",
+            "en": "Limestone"
+          },
+          "ink": "#17352A",
+          "value": "#F1ECE0",
+          "font": "Instrument Sans",
+          "motion": {
+            "from": [
+              110,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.24,
+            "end": 0.49
+          },
+          "m": {
+            "box": [
+              144,
+              430,
+              112,
+              114
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            855,
+            330,
+            150,
+            300
+          ],
+          "color": "#E9A23B",
+          "label": {
+            "tr": "Kehribar",
+            "en": "Amber"
+          },
+          "ink": "#17352A",
+          "value": "#E9A23B",
+          "font": "Instrument Sans",
+          "motion": {
+            "from": [
+              140,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.28,
+            "end": 0.53
+          },
+          "m": {
+            "box": [
+              264,
+              430,
+              112,
+              114
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            1020,
+            330,
+            150,
+            300
+          ],
+          "color": "#2E8FA3",
+          "label": {
+            "tr": "Kaynak",
+            "en": "Spring"
+          },
+          "ink": "#FBF8F1",
+          "value": "#2E8FA3",
+          "font": "Instrument Sans",
+          "motion": {
+            "from": [
+              170,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.32,
+            "end": 0.5700000000000001
+          },
+          "m": {
+            "box": [
+              24,
+              552,
+              112,
+              114
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            1185,
+            330,
+            150,
+            300
+          ],
+          "color": "#E03A2A",
+          "label": {
+            "tr": "Yol boyası",
+            "en": "Trail paint"
+          },
+          "ink": "#FBF8F1",
+          "value": "#E03A2A",
+          "font": "Instrument Sans",
+          "motion": {
+            "from": [
+              200,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.36,
+            "end": 0.61
+          },
+          "m": {
+            "box": [
+              144,
+              552,
+              112,
+              114
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "box": [
+            1350,
+            330,
+            150,
+            300
+          ],
+          "color": "#0E0908",
+          "label": {
+            "tr": "Gece",
+            "en": "Night"
+          },
+          "ink": "#FF4A38",
+          "value": "#0E0908",
+          "font": "Instrument Sans",
+          "motion": {
+            "from": [
+              230,
+              60,
+              4,
+              0.96,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.4,
+            "end": 0.65
+          },
+          "m": {
+            "box": [
+              264,
+              552,
+              112,
+              114
+            ]
+          }
+        },
+        {
+          "kind": "type",
+          "box": [
+            525,
+            660,
+            975,
+            180
+          ],
+          "font": "Fraunces",
+          "labelFont": "Instrument Sans",
+          "tracking": -0.02,
+          "name": "Fraunces",
+          "size": 104,
+          "value": "36°24′  +780 m",
+          "accent": "#E9A23B",
+          "label": {
+            "tr": "Başlıklar ve sayılar; arayüz Instrument Sans, koordinatlar DM Mono",
+            "en": "Headings and numbers; interface in Instrument Sans, coordinates in DM Mono"
+          },
+          "motion": {
+            "from": [
+              0,
+              50,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.5,
+            "end": 0.72
+          },
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 170,
+      "mlength": 160,
+      "bg": "#EFE9DC",
+      "layers": [
+        {
+          "kind": "text",
+          "box": [
+            400,
+            60,
+            800
+          ],
+          "align": "center",
+          "textSize": 22,
+          "ink": "#17352A",
+          "at": [
+            -0.4
+          ],
+          "text": {
+            "tr": "Kamp noktaları, rotalar ve kayalar, son görenin notuyla. Bu bir konsept; nokta adları ve notlar kurgudur.",
+            "en": "Camp spots, routes and crags, with a note from the last person there. A concept: spot names and notes are fictional."
+          },
+          "m": {
+            "box": [
+              24,
+              60,
+              352
+            ],
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "svg",
+          "box": [
+            705,
+            118,
+            190,
+            306
+          ],
+          "svg": "<svg viewBox='0 0 62 100' xmlns='http://www.w3.org/2000/svg'><text x='0' y='86' font-family='Fraunces' font-weight='600' font-size='100' letter-spacing='-3' fill='#17352A'>ız</text><circle cx='14.2' cy='22' r='9' fill='#E9A23B'/></svg>",
+          "at": [
+            -0.6
+          ],
+          "motion": {
+            "from": [
+              0,
+              120,
+              0,
+              0.92,
+              0
+            ],
+            "to": [
+              0,
+              -10,
+              0,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 1
+          },
+          "m": {
+            "box": [
+              150,
+              142,
+              100,
+              161
+            ],
+            "motion": {
+              "from": [
+                0,
+                80,
+                0,
+                0.92,
+                0
+              ],
+              "to": [
+                0,
+                -10,
+                0,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 1
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/kesfet.webp",
+          "box": [
+            415,
+            450,
+            210
+          ],
+          "z": 10,
+          "motion": {
+            "from": [
+              0,
+              560,
+              -7,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              -7,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 0.9
+          },
+          "m": {
+            "box": [
+              30,
+              340,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                280,
+                -7,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                -7,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 0.9
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/gece-not.webp",
+          "box": [
+            695,
+            425,
+            210
+          ],
+          "z": 11,
+          "motion": {
+            "from": [
+              0,
+              700,
+              0,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 0.9
+          },
+          "m": {
+            "box": [
+              125,
+              312,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                350,
+                0,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 0.9
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/iz/ui/{lang}/not.webp",
+          "box": [
+            975,
+            450,
+            210
+          ],
+          "z": 12,
+          "motion": {
+            "from": [
+              0,
+              560,
+              7,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              7,
+              1,
+              1
+            ],
+            "start": -0.6,
+            "end": 0.9
+          },
+          "m": {
+            "box": [
+              220,
+              340,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                280,
+                7,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                0,
+                7,
+                1,
+                1
+              ],
+              "start": -0.6,
+              "end": 0.9
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

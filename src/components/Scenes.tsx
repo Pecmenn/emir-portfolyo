@@ -302,6 +302,8 @@ const glass = 'linear-gradient(115deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,
 function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
   const { t, lang } = useLang();
   const font: CSSProperties = L.font ? { fontFamily: `"${L.font}", system-ui, sans-serif` } : {};
+  // Görsel yolundaki {lang}, sitenin diline göre değişir (arayüz ekranları iki dilde olan projeler için)
+  const src = L.src?.replace('{lang}', lang);
 
   switch (L.kind) {
     case 'photo': {
@@ -315,7 +317,7 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
             transform: `translate(${left}px, ${top}px) scale(${k})`,
           }}
         >
-          <img src={L.src} alt="" draggable={false} className="absolute inset-0 h-full w-full" />
+          <img src={src} alt="" draggable={false} className="absolute inset-0 h-full w-full" />
           {L.screens?.map((s, i) => {
             const mask = `url(${s.mask}) 0 0 / 100% 100% no-repeat`;
             return (
@@ -337,7 +339,7 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
     case 'screen':
       return (
         <img
-          src={L.src}
+          src={src}
           alt=""
           draggable={false}
           className="block h-full w-full"
