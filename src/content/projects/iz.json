@@ -1,5 +1,5 @@
 {
-  "order": 16,
+  "order": 2,
   "slug": "iz",
   "title": "İz",
   "discipline": {
@@ -8,7 +8,7 @@
   },
   "year": "2026",
   "cover": "/images/iz/cover.webp",
-  "coverFocus": 40,
+  "coverFocus": 56,
   "summary": {
     "tr": "Kamp noktalarını, yürüyüş rotalarını ve tırmanış noktalarını tek haritada toplayan, her bilginin ne kadar taze olduğunu gösteren bir iOS uygulaması.",
     "en": "An iOS app that puts camp spots, hiking routes and climbing crags on one map, and shows how fresh each fact is."
