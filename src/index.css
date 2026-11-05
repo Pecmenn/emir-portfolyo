@@ -193,6 +193,198 @@ body {
   }
 }
 
+/* Yürüyüş sayfası (src/components/Trail.tsx): başlıklar Fraunces, küçük yazılar DM Mono, metin Instrument Sans.
+   Sitenin dar başlık yazısı burada kullanılmaz; proje kendi kimliğiyle konuşur */
+.trail-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.024em;
+  white-space: nowrap;
+}
+.trail-title .tl {
+  display: block;
+  clip-path: inset(-0.14em -0.3em -0.26em -0.3em);
+}
+.trail-title .tl > span {
+  display: block;
+  transform: translateY(125%);
+  transition: transform 1s var(--ease-soft);
+}
+.trail-title .tl:nth-child(2) > span {
+  transition-delay: 0.07s;
+}
+.trail-title .tl:nth-child(3) > span {
+  transition-delay: 0.14s;
+}
+.trail-kicker {
+  font-family: 'DM Mono', ui-monospace, monospace;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-soft);
+}
+.trail-body {
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-weight: 500;
+  line-height: 1.42;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.8s var(--ease-soft) 0.12s,
+    transform 0.8s var(--ease-soft) 0.12s;
+}
+.trail-layer.is-in .trail-title .tl > span {
+  transform: none;
+}
+.trail-layer.is-in .trail-kicker,
+.trail-layer.is-in .trail-body {
+  opacity: 1;
+  transform: none;
+}
+/* at verilmiş küçük yazı ve vektörler de aynı anda belirir */
+.trail-soft {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-soft);
+}
+.trail-soft.is-in {
+  opacity: 1;
+}
+.trail-note {
+  background: #fbf8f1;
+  color: #17352a;
+  box-shadow: 0 24px 40px -26px rgba(10, 20, 14, 0.6);
+}
+.trail-typed span.is-caret {
+  box-shadow: 2px 0 0 currentColor;
+}
+.trail-tick {
+  position: absolute;
+  inset: 0 auto auto 0;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(0.22em);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+.trail-tick.is-on {
+  opacity: 1;
+  transform: none;
+}
+.trail-tag {
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #fbf8f1;
+  color: #17352a;
+  box-shadow: 0 6px 14px -8px rgba(10, 20, 14, 0.7);
+  white-space: nowrap;
+}
+.trail-flag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Mono', ui-monospace, monospace;
+  font-size: 11.5px;
+  line-height: 1;
+  color: #17352a;
+  white-space: nowrap;
+  will-change: transform;
+}
+.trail-flag-dot {
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 999px;
+  background: #e03a2a;
+  box-shadow: 0 0 0 2px #fbf8f1;
+  flex: none;
+}
+.trail-flag-text {
+  margin-top: -4.5px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(251, 248, 241, 0.9);
+}
+.trail-hud {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.4vw, 40px);
+  padding: 0 clamp(16px, 3vw, 48px);
+  border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  font-family: 'DM Mono', ui-monospace, monospace;
+}
+.trail-hud-cell {
+  display: grid;
+  gap: 3px;
+  flex: none;
+}
+.trail-hud-label {
+  font-size: 10.5px;
+  line-height: 1;
+  opacity: 0.62;
+}
+.trail-hud-value {
+  font-size: clamp(14px, 1.25vw, 18px);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+  white-space: nowrap;
+}
+.trail-hud-profile {
+  position: relative;
+  flex: 1;
+  height: 62%;
+  min-width: 0;
+}
+.trail-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: clamp(14px, 1.25vw, 18px);
+}
+.trail-bars > span {
+  width: 4px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: opacity 0.35s ease;
+}
+.trail-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: trail-pulse 2s ease-out infinite;
+}
+@keyframes trail-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+@media (max-width: 767px) and (orientation: portrait) {
+  /* Telefonda profil ince bir çizgi olarak şeridin üstüne çıkar */
+  .trail-hud {
+    gap: 0;
+    justify-content: space-between;
+  }
+  .trail-hud-profile {
+    position: absolute;
+    inset: -1px 0 auto 0;
+    height: 14px;
+    transform: translateY(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trail-pulse {
+    animation: none;
+  }
+}
+
 /* Sahne ışıkları sahnenin üst ve alt kenarına gelmeden silinir */
 .scene-glow {
   --fade: linear-gradient(

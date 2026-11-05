@@ -109,6 +109,8 @@ export type Project = {
   // (Google Fonts biçiminde, ör. "Sora:wght@400;600;800")
   scenes?: Scene[];
   sceneFont?: string;
+  // Varsa sayfa, sahneler yerine tek bir haritada kaydırmalı yürüyüş olarak gösterilir (bkz. TrailData)
+  trail?: TrailData;
 };
 
 export type Area = 'design' | 'build' | 'automate';
@@ -184,6 +186,93 @@ export type Scene = {
   bg?: string;
   bgShift?: { color: string; start: number; end: number };
   layers: SceneLayer[];
+};
+
+// Yürüyüş motoru (src/components/Trail.tsx): sayfa tek bir harita, kaydırmak o haritada yürümek.
+// ease: out (varsayılan) | inout | linear | back (yerine otururken taşar) | stamp (mühür gibi iner)
+// scrub: hareket azaltma açıkken de oynar (yalnızca saydamlık ya da zamanı anlatan hareketler için)
+export type TrailMotion = SceneMotion & { ease?: 'out' | 'inout' | 'linear' | 'back' | 'stamp'; scrub?: boolean };
+
+export type TrailLayer = {
+  // photo · screen · text (başlık ve metin) · svg · note (pinlenmiş kâğıt) · label (küçük yazı) · fact (boya durumlu bilgi) ·
+  // stamp (mühür) · sign (yol tabelası) · font (yazı tipi örneği) · frame (harita bölgesi çerçevesi) · shade (geçen gölge) ·
+  // scrim (tam ekran örtü) · typed (harf harf yazılan metin) · ticker (sırayla değişen yazı) · count (sayaç) · bar (ilerleme)
+  kind: 'photo' | 'screen' | 'text' | 'svg' | 'note' | 'label' | 'fact' | 'stamp' | 'sign' | 'font' | 'frame' | 'shade' | 'scrim' | 'typed' | 'ticker' | 'count' | 'bar';
+  // [x, y, genişlik, yükseklik?] durağın çalışma alanında
+  box?: number[];
+  full?: boolean;
+  z?: number;
+  // top: gece örtüsünün üstünde kalır · fixed: kameradan bağımsız, ekrana sabit. Verilmezse haritanın üstünde durur
+  plane?: 'top' | 'fixed';
+  // Son durakta rotanın tamamı görünürken yerinde kalır
+  keep?: boolean;
+  // Açılış: hareketin başlangıcı bütün ekranı kaplayacak şekilde hesaplanır
+  cover?: boolean;
+  motion?: TrailMotion;
+  // x: soldan sağa açılır · xr: soldan sağa silinir · circle: at noktasından dairesel açılır (değerler yüzde)
+  clip?: { type: 'x' | 'xr' | 'circle'; from?: number; to?: number; start: number; end: number; at?: number[] };
+  // Hareketin merkezi, katmanın yüzdesi
+  origin?: number[];
+  // text, label: [giriş, çıkış?] · typed, count, bar: [başlangıç, bitiş] · ticker: her değerin giriş anı
+  at?: number[];
+  // Yoldaki {lang}, sitenin diline çevrilir
+  src?: string;
+  width?: number;
+  height?: number;
+  radius?: number;
+  filter?: string;
+  print?: boolean;
+  glow?: string;
+  kicker?: Text;
+  title?: Text;
+  text?: Text;
+  label?: Text;
+  values?: Text[];
+  name?: string;
+  value?: string;
+  size?: number;
+  textSize?: number;
+  kickerSize?: number;
+  weight?: number;
+  align?: 'left' | 'center' | 'right';
+  color?: string;
+  ink?: string;
+  accent?: string;
+  font?: string;
+  dot?: string;
+  state?: 'fresh' | 'faded' | 'none';
+  svg?: string;
+  from?: number;
+  to?: number;
+  unit?: string;
+  m?: Partial<Omit<TrailLayer, 'm' | 'kind'>> & { hide?: boolean };
+};
+
+export type TrailStop = {
+  // Genel bakıştaki etiket
+  flag?: Text;
+  // Dünya koordinatı; fit verilen durakta kamera rotanın tamamını sığdırır (fitTop: üstte yazıya bırakılan alan)
+  at?: number[];
+  fit?: boolean;
+  fitTop?: number;
+  // Kaydırma uzunlukları (vh): durakta kalış ve bir önceki duraktan yol
+  length: number;
+  transit?: number;
+  zoom?: number;
+  // Yolda kameranın yatması (derece)
+  turn?: number;
+  // Yolun durak içindeki noktaları: [x, y, q?]
+  way?: number[][];
+  // Zaman çizgileri: clock, km, alt, sig, tone, ink, trail, night, beam, iris, fade, hud, tag → [q, değer] listesi
+  tracks?: Record<string, (number | string)[][]>;
+  layers: TrailLayer[];
+  m?: Partial<Omit<TrailStop, 'm' | 'layers'>>;
+};
+
+export type TrailData = {
+  label: Text;
+  hud: { clock: Text; dist: Text; alt: Text; signal: Text; hiker: string };
+  stops: TrailStop[];
 };
 
 type Site = {

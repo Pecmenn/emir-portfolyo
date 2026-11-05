@@ -5,6 +5,7 @@ import AutoVideo from '../components/AutoVideo';
 import { RevealImage } from '../components/Reveal';
 import { Magnetic, Roll } from '../components/Roll';
 import Scenes from '../components/Scenes';
+import Trail from '../components/Trail';
 import { AREA_LABEL } from '../components/WorkCard';
 import { useLang } from '../lib/i18n';
 import { usePageMeta } from '../lib/meta';
@@ -398,6 +399,16 @@ function ProjectPage({ project, next }: { project: ProjectType; next: ProjectTyp
   const { t } = useLang();
   usePageMeta(`${project.title} — ${t(project.discipline)} · ${site.name}`, t(project.summary));
   let chapter = 0;
+
+  if (project.trail)
+    return (
+      <main id="main" tabIndex={-1} key={project.slug} className="outline-none">
+        <Intro project={project} bare />
+        <Trail data={project.trail} font={project.sceneFont} />
+        <NextProject project={next} />
+        <ContactStrip />
+      </main>
+    );
 
   if (project.scenes?.length)
     return (

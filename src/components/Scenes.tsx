@@ -96,7 +96,7 @@ function photoFit(L: SceneLayer, geo: Geo) {
   return { k, left: (geo.sw - W * k) * fx, top: (geo.sh - H * k) * fy };
 }
 
-function useMobile() {
+export function useMobile() {
   // Yatay duran küçük telefonda dikey çalışma alanı çok küçülür; orada masaüstü düzeni kullanılır
   const query = '(max-width: 767px) and (orientation: portrait)';
   const [mobile, setMobile] = useState(() => window.matchMedia(query).matches);
@@ -109,12 +109,8 @@ function useMobile() {
   return mobile;
 }
 
-export default function Scenes({ scenes, font }: { scenes: Scene[]; font?: string }) {
-  const mobile = useMobile();
-  const wrap = useRef<HTMLDivElement>(null);
-  usePageTone(wrap, scenes);
-
-  // Marka yazısı yalnızca sahneli sayfada yüklenir
+// Marka yazısı yalnızca sahneli sayfada yüklenir
+export function useSceneFont(font?: string) {
   useEffect(() => {
     if (!font) return;
     const href = `https://fonts.googleapis.com/css2?family=${font}&display=swap`;
@@ -124,6 +120,13 @@ export default function Scenes({ scenes, font }: { scenes: Scene[]; font?: strin
     link.href = href;
     document.head.appendChild(link);
   }, [font]);
+}
+
+export default function Scenes({ scenes, font }: { scenes: Scene[]; font?: string }) {
+  const mobile = useMobile();
+  const wrap = useRef<HTMLDivElement>(null);
+  usePageTone(wrap, scenes);
+  useSceneFont(font);
 
   useEffect(() => {
     refreshSoon();
