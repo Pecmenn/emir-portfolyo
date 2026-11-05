@@ -144,7 +144,9 @@ function makeTerrain(host: HTMLElement, u: number, ink: Ink, limit: number) {
     const px = Math.ceil(TILE * u * dpr);
     el.width = px;
     el.height = px;
-    el.style.cssText = `position:absolute;left:${ix * TILE * u}px;top:${iy * TILE * u}px;width:${TILE * u}px;height:${TILE * u}px`;
+    // Tuval pikseli ekrana birebir oturur; parça sınırlarında çizgiler kırılmaz
+    el.className = 'trail-tile';
+    el.style.cssText = `position:absolute;left:${ix * TILE * u}px;top:${iy * TILE * u}px;width:${px / dpr}px;height:${px / dpr}px`;
     const ctx = el.getContext('2d');
     if (ctx) {
       const { thin, bold } = contours(ix * TILE, iy * TILE, TILE, CELL, LEVEL, u * dpr);
@@ -471,10 +473,10 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
   // Harita: ölçü değişince baştan çizilir. Genel bakış için rotanın tamamını gösteren tek parça boşta hazırlanır
   useEffect(() => {
     if (!geo || !route || !dayMap.current || !nightMap.current) return;
-    const limit = mobile ? 36 : 72;
+    const limit = mobile ? 24 : 56;
     terrain.current = {
       day: makeTerrain(dayMap.current, geo.u, DAY_INK, limit),
-      night: makeTerrain(nightMap.current, geo.u, NIGHT_INK, Math.round(limit / 2)),
+      night: makeTerrain(nightMap.current, geo.u, NIGHT_INK, limit),
     };
     const cv = overview.current;
     const { minX, maxX, minY, maxY } = route.bounds;
@@ -519,6 +521,8 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
     const { body } = document;
     const base = (getComputedStyle(body).backgroundColor.match(/\d+/g) ?? []).slice(0, 3).map(Number);
     const last = stops.length - 1;
+    const clearR = (mobile ? 215 : 400) * u;
+    const softR = (mobile ? 370 : 660) * u;
 
     const items: Item[][] = stops.map((s, si) =>
       s.layers.map((L, li) => {
@@ -625,12 +629,20 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
 
       // Harita parçaları kamera dursa da bitene kadar çizilir
       const night = trackAt(tracks.night, cl)[0];
+      const nightBefore = trackAt(tracks.night, cl - 60)[0];
+      const nightAfter = trackAt(tracks.night, cl + 60)[0];
+      const needDay = Math.min(night, nightBefore, nightAfter) < 1;
+      const needNight = Math.max(night, nightBefore, nightAfter) > 0;
       const halfW = (sw / 2 / (u * cam.z)) * 1.2 + TILE * 0.35;
       const halfH = (sh / 2 / (u * cam.z)) * 1.2 + TILE * 0.35;
-      if (terrain.current && cam.z > 0.42) {
-        if (night < 1) terrain.current.day.update(cam.x / u, cam.y / u, halfW, halfH, budget);
-        if (night > 0) terrain.current.night.update(cam.x / u, cam.y / u, halfW, halfH, Math.max(1, budget / 2));
-        budget = mobile ? 1 : 2;
+      if (terrain.current) {
+        if (!needDay) terrain.current.day.clear();
+        if (!needNight) terrain.current.night.clear();
+        if (cam.z > 0.55) {
+          if (needDay) terrain.current.day.update(cam.x / u, cam.y / u, halfW, halfH, budget);
+          if (needNight) terrain.current.night.update(cam.x / u, cam.y / u, halfW, halfH, budget);
+          budget = mobile ? 1 : 2;
+        }
       }
 
       const beamOn = trackAt(tracks.beam, cl)[0];
@@ -657,9 +669,9 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
         body.style.backgroundColor = toneCss = nextTone;
         if (hud.current) hud.current.style.backgroundColor = css(tone, 0.9);
       }
-      if (dayMap.current) dayMap.current.style.opacity = String((1 - night) * clamp01((cam.z - 0.42) / 0.16));
+      if (dayMap.current) dayMap.current.style.opacity = String((1 - night) * clamp01((cam.z - 0.55) / 0.15));
       if (nightMap.current) nightMap.current.style.opacity = String(night);
-      if (overview.current) overview.current.style.opacity = String(1 - clamp01((cam.z - 0.4) / 0.25));
+      if (overview.current) overview.current.style.opacity = String(1 - clamp01((cam.z - 0.5) / 0.25));
 
       // Yol ve yürüyen nokta
       const h = route.hiker(cl);
@@ -681,14 +693,17 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
         tag.current.style.opacity = String(trackAt(tracks.tag, cl)[0]);
       }
 
-      // Kafa lambası: karanlık bir örtü, ortasındaki delik yürüyenin üstünde (fareyle biraz oynar)
+      // Kafa lambası: karanlık örtünün deliği yürüyenin üstünde (fareyle biraz oynar). Örtü ekran boyundadır ve her karede
+      // yeniden çizilir; büyük bir katmanı ölçeklemek ekran kartı belleğini bitirir, diğer katmanlar yarım çizilir
       if (beam.current) {
         if (beamOn <= 0.001) beam.current.style.display = 'none';
         else {
-          const size = Math.max(sw, sh) * 3.4;
+          const iris = trackAt(tracks.iris, cl)[0];
+          const c = clearR * iris;
+          const f = softR * iris;
           beam.current.style.display = '';
           beam.current.style.opacity = String(beamOn);
-          beam.current.style.transform = `translate3d(${hx + p.ox - size / 2}px, ${hy + p.oy - size / 2}px, 0) scale(${trackAt(tracks.iris, cl)[0]})`;
+          beam.current.style.background = `radial-gradient(circle at ${(hx + p.ox).toFixed(1)}px ${(hy + p.oy).toFixed(1)}px, rgba(255,74,56,.05) 0, rgba(14,9,8,0) ${c.toFixed(1)}px, rgba(14,9,8,.8) ${((c + f) / 2).toFixed(1)}px, #0E0908 ${f.toFixed(1)}px)`;
         }
       }
 
@@ -772,10 +787,6 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geo, route, stops, timing, lang, mobile]);
 
-  const beamSize = geo ? Math.max(geo.sw, geo.sh) * 3.4 : 0;
-  const clear = geo ? (mobile ? 215 : 400) * geo.u : 0;
-  const soft = geo ? (mobile ? 370 : 660) * geo.u : 0;
-
   const onPointer = (e: ReactPointerEvent) => {
     if (e.pointerType !== 'mouse' || !stage.current) return;
     const rect = stage.current.getBoundingClientRect();
@@ -820,17 +831,7 @@ export default function Trail({ data, font }: { data: TrailData; font?: string }
             </div>
 
             {/* Kafa lambası örtüsü */}
-            <div
-              ref={beam}
-              className="pointer-events-none absolute left-0 top-0 will-change-transform"
-              style={{
-                zIndex: 4,
-                width: beamSize,
-                height: beamSize,
-                display: 'none',
-                background: `radial-gradient(circle at center, rgba(255,74,56,.05) 0, rgba(14,9,8,0) ${clear}px, rgba(14,9,8,.8) ${(clear + soft) / 2}px, #0E0908 ${soft}px)`,
-              }}
-            />
+            <div ref={beam} className="pointer-events-none absolute inset-0" style={{ zIndex: 4, display: 'none' }} />
 
             {/* Lambanın üstünde kalanlar: gece yazıları karanlıkta da okunur */}
             <div ref={topPlane} className="absolute left-0 top-0 origin-top-left will-change-transform" style={{ zIndex: 5 }}>
@@ -978,7 +979,7 @@ function Body({ L, w }: { L: TrailLayer; w: number }) {
           draggable={false}
           loading="lazy"
           className="block h-full w-full"
-          style={{ borderRadius: U(w * 0.135), boxShadow: L.glow ? `0 0 ${w * 0.5}px -${w * 0.12}px ${L.glow}, 0 0 0 1px rgba(255,74,56,.28)` : '0 40px 70px -32px rgba(10,20,14,.6), 0 0 0 1px rgba(23,53,42,.12)' }}
+          style={{ borderRadius: U(w * 0.135), boxShadow: L.glow ? `0 0 ${U(w * 0.5)} ${U(-w * 0.12)} ${L.glow}, 0 0 0 1px rgba(255,74,56,.28)` : '0 40px 70px -32px rgba(10,20,14,.6), 0 0 0 1px rgba(23,53,42,.12)' }}
         />
       );
     case 'text':

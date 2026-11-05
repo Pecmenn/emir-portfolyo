@@ -351,6 +351,14 @@ body {
   border-radius: 1px;
   transition: opacity 0.35s ease;
 }
+.trail-tile {
+  animation: trail-tile 0.45s ease-out;
+}
+@keyframes trail-tile {
+  from {
+    opacity: 0;
+  }
+}
 .trail-pulse {
   transform-box: fill-box;
   transform-origin: center;
@@ -380,7 +388,8 @@ body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .trail-pulse {
+  .trail-pulse,
+  .trail-tile {
     animation: none;
   }
 }
