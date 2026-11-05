@@ -1476,31 +1476,12 @@
       "length": 340,
       "mlength": 320,
       "bg": "#1D2452",
+      "bgShift": {
+        "color": "#FF4F1A",
+        "start": 0.14,
+        "end": 0.24
+      },
       "layers": [
-        {
-          "kind": "svg",
-          "full": true,
-          "z": 0,
-          "svg": "<svg viewBox='0 0 10 10' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'><rect width='10' height='10' fill='#FF4F1A'/></svg>",
-          "motion": {
-            "from": [
-              0,
-              0,
-              0,
-              1,
-              0
-            ],
-            "to": [
-              0,
-              0,
-              0,
-              1,
-              1
-            ],
-            "start": 0.14,
-            "end": 0.24
-          }
-        },
         {
           "kind": "svg",
           "box": [
@@ -2895,9 +2876,9 @@
           "kind": "screen",
           "src": "/images/patika/ui/home.webp",
           "box": [
-            395,
-            470,
-            250
+            415,
+            425,
+            210
           ],
           "z": 10,
           "motion": {
@@ -2948,9 +2929,9 @@
           "kind": "screen",
           "src": "/images/patika/ui/lost.webp",
           "box": [
-            675,
-            430,
-            250
+            695,
+            390,
+            210
           ],
           "z": 11,
           "motion": {
@@ -3001,9 +2982,9 @@
           "kind": "screen",
           "src": "/images/patika/ui/found.webp",
           "box": [
-            955,
-            470,
-            250
+            975,
+            425,
+            210
           ],
           "z": 12,
           "motion": {

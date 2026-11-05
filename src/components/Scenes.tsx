@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import type { Scene, SceneLayer, SceneMotion } from '../content';
 import { useLang } from '../lib/i18n';
 import { reducedMotion, refreshSoon } from '../lib/scroll';
@@ -8,6 +8,8 @@ import { reducedMotion, refreshSoon } from '../lib/scroll';
 // hareket eder, metinler belirlenen anda yumuşakça girer. Geri kaydırınca aynı yol tersine oynar.
 // Katmanlar 1600×900'lük çalışma alanına (telefonda 400×700) yerleşir; alan üst menünün altına sığacak şekilde ölçeklenir.
 // Fotoğraf katmanında telefon ekranları perspektif matrisiyle fotoğrafın içine oturur ve kaydırdıkça kayarak değişir.
+// Sahnelerin kendi zemini yok: renk sayfanın (body) zeminindedir ve kaydırdıkça bir sahneninkinden diğerininkine geçer,
+// böylece sahne sınırlarında çizgi oluşmaz (bkz. usePageTone).
 
 const BOARD = { desk: [1600, 900], mobile: [400, 700] };
 const HEADER = 68;
@@ -33,9 +35,53 @@ function sample(m: SceneMotion | undefined, p: number) {
   return v;
 }
 
-function rgba(hex: string, a: number) {
+function channels(hex: string) {
   const n = parseInt(hex.replace('#', '').slice(0, 6), 16);
-  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function rgba(hex: string, a: number) {
+  return `rgba(${channels(hex).join(',')},${a})`;
+}
+
+// Sayfanın zemin rengi: üst kenarı ekrana giren sahnenin rengine o sahne yerine oturana kadar geçer.
+// İlk sahneden önce ve son sahneden sonra sitenin kendi zeminine döner.
+function usePageTone(wrap: RefObject<HTMLDivElement>, scenes: Scene[]) {
+  useEffect(() => {
+    const list = wrap.current;
+    if (!list) return;
+    const { body } = document;
+    const base = (getComputedStyle(body).backgroundColor.match(/\d+/g) ?? []).slice(0, 3).map(Number);
+    const tones = scenes.map((s) => ({
+      from: s.bg ? channels(s.bg) : base,
+      shift: s.bgShift && { ...s.bgShift, to: channels(s.bgShift.color) },
+    }));
+    const toneAt = (i: number, p: number) => {
+      const { from, shift } = tones[i];
+      return shift ? mix(from, shift.to, ease(local(p, shift.start, shift.end))) : from;
+    };
+    let raf = 0;
+    let last = '';
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      const sh = window.innerHeight;
+      let i = -1;
+      for (let n = 0; n < list.children.length && list.children[n].getBoundingClientRect().top < sh; n++) i = n;
+      let tone = base;
+      if (i >= 0) {
+        const r = list.children[i].getBoundingClientRect();
+        tone = mix(i ? toneAt(i - 1, 1) : base, toneAt(i, -r.top / Math.max(1, r.height - sh)), smooth(clamp01(1 - r.top / sh)));
+        if (i === list.children.length - 1) tone = mix(tone, base, smooth(clamp01(1 - r.bottom / sh)));
+      }
+      const css = `rgb(${tone.map(Math.round).join(',')})`;
+      if (css !== last) body.style.backgroundColor = last = css;
+    };
+    raf = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(raf);
+      body.style.backgroundColor = '';
+    };
+  }, [wrap, scenes]);
 }
 
 type Geo = { sw: number; sh: number; u: number; bl: number; bt: number };
@@ -65,6 +111,8 @@ function useMobile() {
 
 export default function Scenes({ scenes, font }: { scenes: Scene[]; font?: string }) {
   const mobile = useMobile();
+  const wrap = useRef<HTMLDivElement>(null);
+  usePageTone(wrap, scenes);
 
   // Marka yazısı yalnızca sahneli sayfada yüklenir
   useEffect(() => {
@@ -82,7 +130,7 @@ export default function Scenes({ scenes, font }: { scenes: Scene[]; font?: strin
   }, [mobile]);
 
   return (
-    <div>
+    <div ref={wrap}>
       {scenes.map((scene, i) => (
         <SceneView key={i} scene={scene} mobile={mobile} />
       ))}
@@ -188,8 +236,8 @@ function SceneView({ scene, mobile }: { scene: Scene; mobile: boolean }) {
 
   const length = (mobile && scene.mlength) || scene.length;
   return (
-    <section ref={root} className="relative" style={{ height: `${length}vh`, background: scene.bg }}>
-      <div ref={stage} className="sticky top-0 h-[100svh] overflow-hidden" style={{ background: scene.bg }}>
+    <section ref={root} className="relative" style={{ height: `${length}vh` }}>
+      <div ref={stage} className="scene-stage sticky top-0 h-[100svh]">
         {geo && (
           <div style={{ ['--u' as string]: `${geo.u}px` } as CSSProperties} className="absolute inset-0">
             {layers.map((L, i) => (
@@ -234,9 +282,17 @@ function Layer({ L, geo, index, setRef }: { L: SceneLayer; geo: Geo; index: numb
     style.overflow = 'hidden';
   }
 
-  return (
+  const layer = (
     <div ref={setRef} style={style} className={`${L.kind === 'text' ? 'scene-text' : ''} ${L.align === 'center' ? 'text-center' : ''}`}>
       <LayerBody L={L} geo={geo} w={w} />
+    </div>
+  );
+  // Sahne dikeyde kırpmaz (bkz. .scene-stage). Tam ekran katman yakınlaşınca komşu sahneye taşmasın;
+  // ışık da sahnenin üst ve alt kenarına gelmeden silinsin, kenarda çizgi bırakmasın
+  if (!full && L.kind !== 'glow') return layer;
+  return (
+    <div className={`absolute inset-0 overflow-hidden ${L.kind === 'glow' ? 'scene-glow' : ''}`} style={{ zIndex: style.zIndex }}>
+      {layer}
     </div>
   );
 }

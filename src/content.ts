@@ -176,7 +176,14 @@ export type SceneLayer = {
 };
 
 // length: sahnenin kaydırma uzunluğu (vh, telefonda mlength); sahne bu süre boyunca ekranda sabit kalır
-export type Scene = { length: number; mlength?: number; bg?: string; layers: SceneLayer[] };
+// bg: sayfanın bu sahnedeki zemin rengi; bgShift: sahne ilerlerken (start-end arası) geçilen ikinci renk
+export type Scene = {
+  length: number;
+  mlength?: number;
+  bg?: string;
+  bgShift?: { color: string; start: number; end: number };
+  layers: SceneLayer[];
+};
 
 type Site = {
   name: string;
