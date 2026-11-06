@@ -1,0 +1,2562 @@
+{
+  "order": 0,
+  "slug": "kusur",
+  "title": "Kusur",
+  "discipline": {
+    "tr": "UI/UX",
+    "en": "UI/UX"
+  },
+  "year": "2026",
+  "cover": "/images/kusur/cover.webp",
+  "coverFocus": 40,
+  "summary": {
+    "tr": "Hafif trafik kazalarında iki sürücüyü aynı tutanakta buluşturan, elleri titreyen biri için tasarlanmış bir uygulama.",
+    "en": "An app that brings two drivers onto one report after a minor collision, designed for someone whose hands are shaking."
+  },
+  "client": "Kişisel proje",
+  "role": {
+    "tr": "Ürün ve marka tasarımcısı",
+    "en": "Product & brand designer"
+  },
+  "services": {
+    "tr": "UI/UX, ürün tasarımı, marka kimliği, etkileşim",
+    "en": "UI/UX, product design, brand identity, interaction"
+  },
+  "intro": {
+    "tr": "Kazadan sonraki ilk dakikalarda kimse iyi düşünemez, ama tam o sırada şasi numarası soran bir form doldurulur. Kusur bunu tek soruluk ekranlara böler, iki telefonu karbon kâğıdı gibi birbirine bağlar ve kusur tartışmasını krokinin üstüne taşır.",
+    "en": "Nobody thinks clearly in the first minutes after a crash, yet that’s exactly when a form asks for your chassis number. Kusur breaks it into one-question screens, links two phones like carbon paper, and moves the fault argument onto the sketch."
+  },
+  "canvas": "#2318D6",
+  "areas": [
+    "design",
+    "build"
+  ],
+  "gallery": [],
+  "sceneFont": "Atkinson+Hyperlegible+Next:wght@400;500;700;800&family=Mansalva",
+  "scenes": [
+    {
+      "length": 230,
+      "mlength": 210,
+      "bg": "#2318D6",
+      "layers": [
+        {
+          "kind": "live",
+          "live": "crash",
+          "box": [
+            0,
+            0,
+            1600,
+            900
+          ],
+          "z": 3,
+          "m": {
+            "box": [
+              0,
+              0,
+              400,
+              700
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            360,
+            586,
+            1160
+          ],
+          "z": 4,
+          "at": [
+            0.36
+          ],
+          "size": 92,
+          "color": "#F3F4F8",
+          "title": {
+            "tr": "Küçük bir tık.\nSonra uzun bir form.",
+            "en": "A small bump.\nThen a long form."
+          },
+          "text": {
+            "tr": "",
+            "en": ""
+          },
+          "m": {
+            "box": [
+              24,
+              280,
+              352
+            ],
+            "size": 43
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            1000,
+            590,
+            520
+          ],
+          "z": 4,
+          "at": [
+            0.42
+          ],
+          "textSize": 25,
+          "ink": "rgba(243,244,248,.92)",
+          "text": {
+            "tr": "Kusur, hafif trafik kazalarında iki sürücüyü aynı tutanakta buluşturan bir uygulama. Ürün ve marka tasarımı, konsept çalışma.",
+            "en": "Kusur brings two drivers onto one report after a minor collision. Product and brand design, a concept project."
+          },
+          "m": {
+            "box": [
+              24,
+              400,
+              352
+            ],
+            "textSize": 19
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Mansalva",
+          "box": [
+            360,
+            520,
+            400
+          ],
+          "z": 4,
+          "at": [
+            -1,
+            0.06
+          ],
+          "textSize": 38,
+          "ink": "#FFC7D4",
+          "text": {
+            "tr": "kaydır",
+            "en": "scroll"
+          },
+          "m": {
+            "box": [
+              34,
+              270,
+              300
+            ],
+            "textSize": 30
+          }
+        }
+      ]
+    },
+    {
+      "length": 170,
+      "mlength": 170,
+      "bg": "#2318D6",
+      "layers": [
+        {
+          "kind": "para",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            170,
+            200,
+            1260
+          ],
+          "size": 62,
+          "color": "#F3F4F8",
+          "at": [
+            -0.05,
+            0.72
+          ],
+          "text": {
+            "tr": "Türkiye’de 2024’te 1.177.172 maddi hasarlı kaza oldu. Günde üç binden fazla kez iki sürücü yol kenarında aynı kâğıdın başına geçti. Birinin eli titriyordu, öteki haklı olduğundan emindi, arkadan da korna geliyordu.",
+            "en": "Turkey saw 1,177,172 damage-only crashes in 2024. More than three thousand times a day, two drivers stood at the roadside over the same sheet of paper. One had shaking hands, the other was sure they were right, and the cars behind kept honking."
+          },
+          "m": {
+            "box": [
+              24,
+              90,
+              352
+            ],
+            "size": 33
+          }
+        }
+      ]
+    },
+    {
+      "length": 300,
+      "mlength": 300,
+      "bg": "#F3F4F8",
+      "layers": [
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            80,
+            120,
+            660
+          ],
+          "z": 3,
+          "at": [
+            -0.15
+          ],
+          "size": 92,
+          "color": "#2318D6",
+          "ink": "#14107A",
+          "textSize": 26,
+          "title": {
+            "tr": "En önemli formu en kötü anında doldurursun.",
+            "en": "You fill in the most important form at your worst moment."
+          },
+          "text": {
+            "tr": "On iki alan, iki sürücü, tek kalem. Şasi numarası, poliçe numarası, bir de kroki. Yağmurda, yol kenarında, elin titrerken.",
+            "en": "Twelve fields, two drivers, one pen. Chassis number, policy number, and a sketch. In the rain, at the roadside, with shaking hands."
+          },
+          "m": {
+            "box": [
+              24,
+              2,
+              352
+            ],
+            "size": 42,
+            "textSize": 16,
+            "text": {
+              "tr": "On iki alan, iki sürücü, tek kalem. Yağmurda, elin titrerken.",
+              "en": "Twelve fields, two drivers, one pen. In the rain, with shaking hands."
+            }
+          }
+        },
+        {
+          "kind": "live",
+          "live": "form",
+          "box": [
+            860,
+            34,
+            600,
+            830
+          ],
+          "props": {
+            "scale": 1
+          },
+          "z": 4,
+          "motion": {
+            "from": [
+              150,
+              30,
+              5,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.2,
+            "end": 0.05
+          },
+          "m": {
+            "box": [
+              36,
+              226,
+              330,
+              456
+            ],
+            "props": {
+              "scale": 0.55
+            },
+            "motion": {
+              "from": [
+                40,
+                30,
+                4,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.2,
+              "end": 0.05
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 230,
+      "mlength": 220,
+      "bg": "#0A0836",
+      "layers": [
+        {
+          "kind": "photo",
+          "src": "/images/kusur/foto/burcu.webp",
+          "width": 2200,
+          "height": 1228,
+          "full": true,
+          "focus": [
+            0.74,
+            0.5
+          ],
+          "z": 1,
+          "origin": [
+            1500,
+            500
+          ],
+          "motion": {
+            "from": [
+              0,
+              0,
+              0,
+              1.12,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.3,
+            "end": 0.9
+          },
+          "m": {
+            "focus": [
+              0.72,
+              0.5
+            ]
+          }
+        },
+        {
+          "kind": "scrim",
+          "color": "#0A0836",
+          "side": "left",
+          "z": 2,
+          "m": {
+            "side": "bottom"
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            90,
+            330,
+            660
+          ],
+          "z": 3,
+          "at": [
+            0.05
+          ],
+          "size": 104,
+          "color": "#F3F4F8",
+          "ink": "rgba(243,244,248,.94)",
+          "textSize": 27,
+          "title": {
+            "tr": "Burcu, 34.\nIşıkta duruyordu.",
+            "en": "Burcu, 34.\nStopped at the light."
+          },
+          "text": {
+            "tr": "3 Kasım, Salı, 18.12. Kozyatağı, yağmur. Arkadan bir tık geliyor. Hasar küçük, ama ilk kazası. Arkadaki sürücü camını indiriyor: “Ani fren yaptınız.”",
+            "en": "Tuesday 3 November, 18:12. Kozyatağı, rain. A bump from behind. The damage is small, but it’s her first crash. The other driver winds down his window: “You braked too hard.”"
+          },
+          "m": {
+            "box": [
+              24,
+              382,
+              352
+            ],
+            "size": 48,
+            "textSize": 18
+          }
+        },
+        {
+          "kind": "live",
+          "live": "clock",
+          "box": [
+            1300,
+            84,
+            240
+          ],
+          "props": {
+            "from": 0,
+            "to": 40,
+            "start": 0.05,
+            "end": 1,
+            "color": "#FF9500",
+            "size": 46,
+            "label": {
+              "tr": "kazadan sonra",
+              "en": "since the crash"
+            }
+          },
+          "z": 30,
+          "m": {
+            "box": [
+              260,
+              -4,
+              120
+            ],
+            "props": {
+              "from": 0,
+              "to": 40,
+              "start": 0.05,
+              "end": 1,
+              "color": "#FF9500",
+              "size": 26
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 400,
+      "mlength": 380,
+      "bg": "#0A0836",
+      "layers": [
+        {
+          "kind": "photo",
+          "src": "/images/kusur/foto/el.webp",
+          "width": 1800,
+          "height": 1344,
+          "full": true,
+          "focus": [
+            0.5,
+            0.5
+          ],
+          "z": 1,
+          "origin": [
+            958,
+            647.5
+          ],
+          "screens": [
+            {
+              "mask": "/images/kusur/foto/el-maske.png",
+              "matrix": "matrix3d(0.37961257,-0.00059239,0,-0.00000187,-0.01661671,0.37063513,0,-0.00001708,0,0,1,0,806,317,0,1)",
+              "w": 786,
+              "h": 1704,
+              "images": [
+                "/images/kusur/ui/{lang}/kilit.webp"
+              ]
+            }
+          ],
+          "motion": {
+            "from": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              2.3,
+              1
+            ],
+            "start": 0,
+            "end": 0.16,
+            "out": {
+              "to": [
+                0,
+                0,
+                0,
+                2.3,
+                0
+              ],
+              "start": 0.135,
+              "end": 0.17
+            }
+          }
+        },
+        {
+          "kind": "live",
+          "live": "hazard",
+          "full": true,
+          "props": {
+            "start": 0.17,
+            "end": 0.26
+          },
+          "z": 2
+        },
+        {
+          "kind": "live",
+          "live": "phone",
+          "box": [
+            190,
+            76,
+            340
+          ],
+          "props": {
+            "flow": [
+              "kilit",
+              "yaralanan",
+              "guvenlik"
+            ],
+            "at": [
+              0.28,
+              0.56
+            ],
+            "time": [
+              4,
+              180,
+              0.17,
+              1
+            ]
+          },
+          "z": 6,
+          "motion": {
+            "from": [
+              0,
+              26,
+              0,
+              0.965,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.15,
+            "end": 0.18
+          },
+          "m": {
+            "box": [
+              90,
+              226,
+              220
+            ],
+            "motion": {
+              "from": [
+                0,
+                20,
+                0,
+                0.965,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.15,
+              "end": 0.18
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            640,
+            190,
+            860
+          ],
+          "z": 7,
+          "at": [
+            0.2,
+            0.39
+          ],
+          "size": 124,
+          "color": "#FF9500",
+          "ink": "#F3F4F8",
+          "textSize": 28,
+          "title": {
+            "tr": "Tek ekran,\ntek soru.",
+            "en": "One screen,\none question."
+          },
+          "text": {
+            "tr": "Telefon sert duruşu fark edip kilit ekranından sorar. Sonra her ekran tek şey ister. En küçük dokunma alanı 88 pt, normal önerinin iki katı: titreyen parmak da bulur.",
+            "en": "The phone notices the hard stop and asks from the lock screen. After that, each screen wants one thing. The smallest tap target is 88 pt, double the usual advice, so a shaking finger can find it."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 50,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            640,
+            190,
+            500
+          ],
+          "z": 7,
+          "at": [
+            0.39,
+            0.55
+          ],
+          "size": 84,
+          "color": "#FF9500",
+          "ink": "#F3F4F8",
+          "textSize": 26,
+          "title": {
+            "tr": "Yaralanan varsa form durur.",
+            "en": "If someone’s hurt, the form stops."
+          },
+          "text": {
+            "tr": "“Var” dersen uygulama tutanağı bırakır, 112’yi arar ve söylemen gereken adresi ekrana yazar.",
+            "en": "Tap “Yes” and the app drops the report, calls 112 and puts the address on screen for you to read out."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 42,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/acil.webp",
+          "bezel": "#06052A",
+          "box": [
+            1200,
+            210,
+            280
+          ],
+          "z": 6,
+          "motion": {
+            "from": [
+              70,
+              40,
+              2,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.39,
+            "end": 0.45,
+            "out": {
+              "to": [
+                70,
+                -40,
+                2,
+                1,
+                0
+              ],
+              "start": 0.52,
+              "end": 0.56
+            }
+          },
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            640,
+            190,
+            500
+          ],
+          "z": 7,
+          "at": [
+            0.56,
+            0.98
+          ],
+          "size": 84,
+          "color": "#FF9500",
+          "ink": "#F3F4F8",
+          "textSize": 26,
+          "title": {
+            "tr": "Önce güvenlik, sonra kâğıt işi.",
+            "en": "Safety first, paperwork later."
+          },
+          "text": {
+            "tr": "Dörtlüler, reflektör, trafikten uzaklaşmak. Burcu’nun aklı başına gelene kadar sıra uygulamada.",
+            "en": "Hazards, warning triangle, away from the traffic. The app keeps the order until Burcu’s head clears."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 42,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "photo",
+          "src": "/images/kusur/foto/reflektor.webp",
+          "width": 2000,
+          "height": 1116,
+          "box": [
+            1160,
+            240,
+            390
+          ],
+          "radius": 16,
+          "z": 6,
+          "motion": {
+            "from": [
+              70,
+              30,
+              2,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.58,
+            "end": 0.64
+          },
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "live",
+          "live": "clock",
+          "box": [
+            1300,
+            84,
+            240
+          ],
+          "props": {
+            "from": 40,
+            "to": 190,
+            "start": 0.17,
+            "end": 1,
+            "color": "#FF9500",
+            "size": 46,
+            "label": {
+              "tr": "kazadan sonra",
+              "en": "since the crash"
+            }
+          },
+          "z": 30,
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 250,
+      "mlength": 230,
+      "bg": "#0A0836",
+      "layers": [
+        {
+          "kind": "photo",
+          "src": "/images/kusur/foto/tampon.webp",
+          "width": 1100,
+          "height": 1971,
+          "box": [
+            1060,
+            -60,
+            480
+          ],
+          "radius": 18,
+          "z": 2,
+          "motion": {
+            "from": [
+              120,
+              0,
+              3,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.2,
+            "end": 0.1
+          },
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "live",
+          "live": "phone",
+          "box": [
+            660,
+            76,
+            340
+          ],
+          "props": {
+            "flow": [
+              "foto"
+            ],
+            "time": [
+              190,
+              330,
+              0,
+              1
+            ]
+          },
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              60,
+              -3,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.2,
+            "end": 0.08
+          },
+          "m": {
+            "box": [
+              90,
+              212,
+              220
+            ],
+            "motion": {
+              "from": [
+                0,
+                60,
+                -3,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.2,
+              "end": 0.08
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            80,
+            150,
+            520
+          ],
+          "z": 6,
+          "at": [
+            -0.1
+          ],
+          "size": 84,
+          "color": "#FF9500",
+          "ink": "#F3F4F8",
+          "textSize": 25,
+          "title": {
+            "tr": "Arabayı çekmeden dört kare.",
+            "en": "Four shots before the cars move."
+          },
+          "text": {
+            "tr": "Fotoğraf kusur tartışmasının en güçlü delili, ama arabalar çekilince kaybolur. Kusur sırayı söyler: konum, temas noktası, iki plaka. Dördü bitmeden “Arabayı çekebilirsin” demez.",
+            "en": "Photos are the strongest evidence in a fault dispute, and they’re gone once the cars move. Kusur calls the order: position, point of contact, both plates. It won’t say “You can move the car” until all four are done."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 38,
+            "textSize": 15,
+            "text": {
+              "tr": "Fotoğraf en güçlü delil, ama arabalar çekilince kaybolur. Dört kare bitmeden Kusur “Arabayı çekebilirsin” demez.",
+              "en": "Photos are the strongest evidence, and they’re gone once the cars move. Kusur won’t say “You can move the car” until all four are done."
+            }
+          }
+        },
+        {
+          "kind": "steps",
+          "font": "Atkinson Hyperlegible Next",
+          "box": [
+            80,
+            770,
+            520
+          ],
+          "z": 6,
+          "labels": [
+            {
+              "tr": "Konum",
+              "en": "Position"
+            },
+            {
+              "tr": "Temas",
+              "en": "Contact"
+            },
+            {
+              "tr": "A plakası",
+              "en": "Plate A"
+            },
+            {
+              "tr": "B plakası",
+              "en": "Plate B"
+            }
+          ],
+          "at": [
+            0.08,
+            0.32,
+            0.56,
+            0.78
+          ],
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 320,
+      "mlength": 320,
+      "bg": "#2318D6",
+      "layers": [
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            80,
+            150,
+            590
+          ],
+          "z": 8,
+          "at": [
+            -0.05
+          ],
+          "size": 104,
+          "color": "#F3F4F8",
+          "ink": "rgba(243,244,248,.94)",
+          "textSize": 25,
+          "title": {
+            "tr": "Biri yazar, ikisinde de çıkar.",
+            "en": "One writes, both copies show it."
+          },
+          "text": {
+            "tr": "Kâğıt tutanağın karbonu telefona geçti. Karekodla eşleşen iki telefon aynı yaprağı gösterir. Ruhsat ve poliçeden gelen bilgiyle on iki alanın sekizi hallolur. Sürücülere darbe noktası, kroki, görüş ve imza kalır.",
+            "en": "The paper form’s carbon copy moved to the phone. Paired by QR code, two phones show the same sheet. Registration and policy data sort out eight of the twelve fields. The drivers are left with impact point, sketch, their view and a signature."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 42,
+            "textSize": 15.5
+          }
+        },
+        {
+          "kind": "live",
+          "live": "phone",
+          "box": [
+            1080,
+            92,
+            320
+          ],
+          "props": {
+            "flow": [
+              "tutanak-b"
+            ],
+            "typing": [
+              [
+                "a",
+                "name",
+                0.42,
+                0.47
+              ],
+              [
+                "b",
+                "name",
+                0.47,
+                0.52
+              ],
+              [
+                "a",
+                "plate",
+                0.53,
+                0.58
+              ],
+              [
+                "b",
+                "plate",
+                0.58,
+                0.63
+              ],
+              [
+                "a",
+                "policy",
+                0.64,
+                0.69
+              ],
+              [
+                "b",
+                "policy",
+                0.69,
+                0.74
+              ]
+            ],
+            "bezel": "#6d0a2c"
+          },
+          "z": 4,
+          "motion": {
+            "from": [
+              -370,
+              0,
+              -2,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              18,
+              4,
+              1,
+              1
+            ],
+            "start": 0.26,
+            "end": 0.42
+          },
+          "m": {
+            "box": [
+              186,
+              262,
+              186
+            ],
+            "motion": {
+              "from": [
+                -158,
+                0,
+                -2,
+                1,
+                1
+              ],
+              "to": [
+                0,
+                8,
+                4,
+                1,
+                1
+              ],
+              "start": 0.26,
+              "end": 0.42
+            }
+          }
+        },
+        {
+          "kind": "live",
+          "live": "phone",
+          "box": [
+            710,
+            92,
+            320
+          ],
+          "props": {
+            "flow": [
+              "esles",
+              "tutanak"
+            ],
+            "at": [
+              0.24
+            ],
+            "typing": [
+              [
+                "a",
+                "name",
+                0.42,
+                0.47
+              ],
+              [
+                "b",
+                "name",
+                0.47,
+                0.52
+              ],
+              [
+                "a",
+                "plate",
+                0.53,
+                0.58
+              ],
+              [
+                "b",
+                "plate",
+                0.58,
+                0.63
+              ],
+              [
+                "a",
+                "policy",
+                0.64,
+                0.69
+              ],
+              [
+                "b",
+                "policy",
+                0.69,
+                0.74
+              ]
+            ],
+            "time": [
+              310,
+              540,
+              0,
+              1
+            ]
+          },
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -2,
+              1,
+              1
+            ],
+            "start": -0.2,
+            "end": 0.05
+          },
+          "m": {
+            "box": [
+              28,
+              262,
+              186
+            ],
+            "motion": {
+              "from": [
+                0,
+                40,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -2,
+                1,
+                1
+              ],
+              "start": -0.2,
+              "end": 0.05
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 430,
+      "mlength": 430,
+      "bg": "#F3F4F8",
+      "layers": [
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            70,
+            32,
+            560
+          ],
+          "z": 3,
+          "at": [
+            -0.2
+          ],
+          "size": 112,
+          "color": "#2318D6",
+          "ink": "#14107A",
+          "textSize": 24,
+          "title": {
+            "tr": "Kim haklı?",
+            "en": "Whose fault?"
+          },
+          "text": {
+            "tr": "İki sürücü krokiyi birlikte çizer. Arabaların yeri tutanağın kutularını işaretler, kutular bir oran önerir. Tartışma yol kenarında bitmese de konu netleşir.",
+            "en": "The two drivers draw the sketch together. Where the cars sit ticks the report’s boxes, and the boxes suggest a split. The argument may go on, but now it has a shape."
+          },
+          "m": {
+            "box": [
+              20,
+              -6,
+              360
+            ],
+            "size": 50,
+            "textSize": 14.5,
+            "text": {
+              "tr": "Arabaların yeri tutanağın kutularını işaretler, kutular bir oran önerir.",
+              "en": "Where the cars sit ticks the report’s boxes, and the boxes suggest a split."
+            }
+          }
+        },
+        {
+          "kind": "live",
+          "live": "kroki",
+          "box": [
+            0,
+            0,
+            1600,
+            900
+          ],
+          "z": 6,
+          "m": {
+            "box": [
+              0,
+              0,
+              400,
+              700
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "length": 240,
+      "mlength": 220,
+      "bg": "#2318D6",
+      "layers": [
+        {
+          "kind": "live",
+          "live": "sign",
+          "box": [
+            150,
+            90,
+            1300,
+            360
+          ],
+          "z": 3,
+          "m": {
+            "box": [
+              20,
+              40,
+              360,
+              110
+            ]
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            150,
+            500,
+            1240
+          ],
+          "z": 4,
+          "at": [
+            0.7
+          ],
+          "size": 118,
+          "color": "#F3F4F8",
+          "ink": "rgba(243,244,248,.94)",
+          "textSize": 27,
+          "title": {
+            "tr": "14 dakika 22 saniye.",
+            "en": "14 minutes 22 seconds."
+          },
+          "text": {
+            "tr": "Kâğıt tutanağı 5 iş günü içinde sigorta şirketine götürmen gerekir. Burada ikinci imza atıldığı anda iki şirkete birden gider. Burcu yağmurdan çıkıp eve dönüyor.",
+            "en": "A paper form has to reach the insurer within 5 working days. Here it goes to both insurers the moment the second signature lands. Burcu gets out of the rain and heads home."
+          },
+          "m": {
+            "box": [
+              24,
+              200,
+              352
+            ],
+            "size": 56,
+            "textSize": 18
+          }
+        },
+        {
+          "kind": "live",
+          "live": "clock",
+          "box": [
+            1250,
+            34,
+            240
+          ],
+          "props": {
+            "from": 540,
+            "to": 862,
+            "start": 0.04,
+            "end": 0.72,
+            "color": "#F3F4F8",
+            "size": 46,
+            "label": {
+              "tr": "kazadan sonra",
+              "en": "since the crash"
+            }
+          },
+          "z": 5,
+          "m": {
+            "box": [
+              260,
+              -4,
+              120
+            ],
+            "props": {
+              "from": 540,
+              "to": 862,
+              "start": 0.04,
+              "end": 0.72,
+              "color": "#F3F4F8",
+              "size": 26
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 270,
+      "mlength": 250,
+      "bg": "#F3F4F8",
+      "layers": [
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            70,
+            34,
+            1000
+          ],
+          "z": 8,
+          "at": [
+            -0.15
+          ],
+          "size": 60,
+          "color": "#2318D6",
+          "title": {
+            "tr": "Kazasız günlerde torpido gözü.",
+            "en": "A glovebox for the other 364 days."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 42
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            1090,
+            34,
+            440
+          ],
+          "z": 8,
+          "at": [
+            -0.1
+          ],
+          "ink": "#14107A",
+          "textSize": 20,
+          "text": {
+            "tr": "Ruhsat, poliçe, muayene tarihi, hasarsızlık basamağı. Kaza günü arayacağın her şey önceden burada.",
+            "en": "Registration, policy, inspection date, no-claims step. Everything you’d hunt for on crash day is already here."
+          },
+          "m": {
+            "box": [
+              24,
+              104,
+              352
+            ],
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/karsilama.webp",
+          "bezel": "#06052A",
+          "box": [
+            64,
+            190,
+            284
+          ],
+          "z": 3,
+          "motion": {
+            "from": [
+              596,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              26,
+              -3,
+              1,
+              1
+            ],
+            "start": 0.02,
+            "end": 0.3
+          },
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/ruhsat.webp",
+          "bezel": "#06052A",
+          "box": [
+            362,
+            190,
+            284
+          ],
+          "z": 4,
+          "motion": {
+            "from": [
+              298,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              6,
+              -1.5,
+              1,
+              1
+            ],
+            "start": 0.02,
+            "end": 0.3
+          },
+          "m": {
+            "box": [
+              30,
+              216,
+              170
+            ],
+            "motion": {
+              "from": [
+                60,
+                30,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                12,
+                -5,
+                1,
+                1
+              ],
+              "start": 0.02,
+              "end": 0.3
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/torpido.webp",
+          "bezel": "#06052A",
+          "box": [
+            660,
+            190,
+            284
+          ],
+          "z": 6,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.15,
+            "end": 0.1
+          },
+          "m": {
+            "box": [
+              115,
+              226,
+              170
+            ],
+            "motion": {
+              "from": [
+                0,
+                40,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.15,
+              "end": 0.1
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/police.webp",
+          "bezel": "#06052A",
+          "box": [
+            958,
+            190,
+            284
+          ],
+          "z": 4,
+          "motion": {
+            "from": [
+              -298,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              6,
+              1.5,
+              1,
+              1
+            ],
+            "start": 0.02,
+            "end": 0.3
+          },
+          "m": {
+            "box": [
+              200,
+              216,
+              170
+            ],
+            "motion": {
+              "from": [
+                -60,
+                30,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                12,
+                5,
+                1,
+                1
+              ],
+              "start": 0.02,
+              "end": 0.3
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/dosyalar.webp",
+          "bezel": "#06052A",
+          "box": [
+            1256,
+            190,
+            284
+          ],
+          "z": 3,
+          "motion": {
+            "from": [
+              -596,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              26,
+              3,
+              1,
+              1
+            ],
+            "start": 0.02,
+            "end": 0.3
+          },
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 260,
+      "mlength": 240,
+      "bg": "#FFC7D4",
+      "layers": [
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            80,
+            150,
+            680
+          ],
+          "z": 6,
+          "at": [
+            -0.1
+          ],
+          "size": 88,
+          "color": "#D4124E",
+          "ink": "#14107A",
+          "textSize": 26,
+          "title": {
+            "tr": "Kusursuzsan bir hakkın daha var.",
+            "en": "No fault? You’re owed one more thing."
+          },
+          "text": {
+            "tr": "Kusuru olmayan taraf, aracının değer kaybını karşı tarafın sigortasından isteyebilir. Burcu bunu uygulamadan öğreniyor: oran belli olunca Kusur tutarı tahmin eder, başvuruyu başlatır.",
+            "en": "The driver with no fault can claim their car’s lost value from the other side’s insurer. Burcu learns this from the app: once the split is set, Kusur estimates the amount and starts the claim."
+          },
+          "m": {
+            "box": [
+              24,
+              0,
+              352
+            ],
+            "size": 42,
+            "textSize": 16
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/dosya.webp",
+          "bezel": "#06052A",
+          "box": [
+            800,
+            110,
+            250
+          ],
+          "z": 3,
+          "motion": {
+            "from": [
+              120,
+              60,
+              3,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -2,
+              1,
+              1
+            ],
+            "start": -0.15,
+            "end": 0.1
+          },
+          "m": {
+            "box": [
+              36,
+              276,
+              186
+            ],
+            "motion": {
+              "from": [
+                60,
+                40,
+                3,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -3,
+                1,
+                1
+              ],
+              "start": -0.15,
+              "end": 0.1
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/servis.webp",
+          "bezel": "#06052A",
+          "box": [
+            1060,
+            150,
+            250
+          ],
+          "z": 2,
+          "motion": {
+            "from": [
+              -120,
+              80,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.06,
+            "end": 0.26
+          },
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/deger.webp",
+          "bezel": "#06052A",
+          "box": [
+            1320,
+            110,
+            250
+          ],
+          "z": 4,
+          "motion": {
+            "from": [
+              60,
+              120,
+              6,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              30,
+              2,
+              1,
+              1
+            ],
+            "start": 0.1,
+            "end": 0.34
+          },
+          "m": {
+            "box": [
+              176,
+              276,
+              186
+            ],
+            "motion": {
+              "from": [
+                40,
+                80,
+                6,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                12,
+                3,
+                1,
+                1
+              ],
+              "start": 0.1,
+              "end": 0.34
+            }
+          }
+        }
+      ]
+    },
+    {
+      "length": 280,
+      "mlength": 280,
+      "bg": "#2318D6",
+      "layers": [
+        {
+          "kind": "live",
+          "live": "dent",
+          "box": [
+            70,
+            8,
+            700,
+            880
+          ],
+          "props": {
+            "size": 980,
+            "color": "#F3F4F8",
+            "start": 0.06,
+            "end": 0.3
+          },
+          "z": 2,
+          "m": {
+            "box": [
+              24,
+              -24,
+              200,
+              220
+            ],
+            "props": {
+              "size": 250,
+              "color": "#F3F4F8",
+              "start": 0.06,
+              "end": 0.3
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            790,
+            56,
+            770
+          ],
+          "z": 4,
+          "at": [
+            0.04
+          ],
+          "size": 84,
+          "color": "#F3F4F8",
+          "ink": "rgba(243,244,248,.94)",
+          "textSize": 22,
+          "title": {
+            "tr": "Logodaki göçük.",
+            "en": "The dent in the logo."
+          },
+          "text": {
+            "tr": "Kusur kusursuz durmasın diye k’nin gövdesine bir göçük açtım. Yazı tipi Atkinson Hyperlegible: az görenler için çizildi, stres altında da okunur, plakada 0 ile O karışmaz. Renkler kaza tutanağının karbonundan geliyor. Kehribar yalnızca kaza modunda yanıyor.",
+            "en": "Kusur means fault, so it shouldn’t look flawless: the k has a dent in its stem. The typeface is Atkinson Hyperlegible, drawn for low vision, easy to read under stress, and its 0 never reads as an O on a plate. The colours come from carbon-copy forms. Amber only lights up in crash mode."
+          },
+          "m": {
+            "box": [
+              24,
+              226,
+              352
+            ],
+            "size": 42,
+            "textSize": 15.5
+          }
+        },
+        {
+          "kind": "swatch",
+          "font": "Atkinson Hyperlegible Next",
+          "name": "Karbon",
+          "value": "#2318D6",
+          "color": "#2318D6",
+          "ink": "#F3F4F8",
+          "box": [
+            790,
+            572,
+            136,
+            196
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.34,
+            "end": 0.46
+          },
+          "m": {
+            "box": [
+              24,
+              556,
+              62,
+              100
+            ],
+            "hide": true
+          }
+        },
+        {
+          "kind": "swatch",
+          "font": "Atkinson Hyperlegible Next",
+          "name": "Kâğıt",
+          "value": "#F3F4F8",
+          "color": "#F3F4F8",
+          "ink": "#14107A",
+          "box": [
+            940,
+            572,
+            136,
+            196
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.36000000000000004,
+            "end": 0.48000000000000004
+          },
+          "m": {
+            "box": [
+              24,
+              548,
+              66,
+              110
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "font": "Atkinson Hyperlegible Next",
+          "name": "Kopya",
+          "value": "#FFC7D4",
+          "color": "#FFC7D4",
+          "ink": "#D4124E",
+          "box": [
+            1090,
+            572,
+            136,
+            196
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.38,
+            "end": 0.5
+          },
+          "m": {
+            "box": [
+              96,
+              548,
+              66,
+              110
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "font": "Atkinson Hyperlegible Next",
+          "name": "Gece",
+          "value": "#0A0836",
+          "color": "#0A0836",
+          "ink": "#F3F4F8",
+          "box": [
+            1240,
+            572,
+            136,
+            196
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.4,
+            "end": 0.52
+          },
+          "m": {
+            "box": [
+              168,
+              548,
+              66,
+              110
+            ]
+          }
+        },
+        {
+          "kind": "swatch",
+          "font": "Atkinson Hyperlegible Next",
+          "name": "Dörtlü",
+          "value": "#FF9500",
+          "color": "#FF9500",
+          "ink": "#0A0836",
+          "box": [
+            1390,
+            572,
+            136,
+            196
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              40,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.42000000000000004,
+            "end": 0.54
+          },
+          "m": {
+            "box": [
+              240,
+              548,
+              66,
+              110
+            ]
+          }
+        },
+        {
+          "kind": "live",
+          "live": "icon",
+          "box": [
+            790,
+            412,
+            120,
+            120
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              30,
+              -6,
+              0.9,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.42,
+            "end": 0.52
+          },
+          "m": {
+            "box": [
+              312,
+              548,
+              64,
+              64
+            ],
+            "motion": {
+              "from": [
+                0,
+                30,
+                -6,
+                0.9,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": 0.42,
+              "end": 0.52
+            }
+          }
+        },
+        {
+          "kind": "live",
+          "live": "logo",
+          "box": [
+            940,
+            420,
+            400,
+            110
+          ],
+          "props": {
+            "size": 104,
+            "color": "#F3F4F8"
+          },
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              30,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": 0.44,
+            "end": 0.54
+          },
+          "m": {
+            "hide": true
+          }
+        }
+      ]
+    },
+    {
+      "length": 220,
+      "mlength": 210,
+      "bg": "#0A0836",
+      "layers": [
+        {
+          "kind": "photo",
+          "src": "/images/kusur/foto/torpido.webp",
+          "width": 2000,
+          "height": 1493,
+          "full": true,
+          "focus": [
+            0.46,
+            0.62
+          ],
+          "z": 1,
+          "origin": [
+            891.5,
+            896.5
+          ],
+          "screens": [
+            {
+              "mask": "/images/kusur/foto/torpido-maske.png",
+              "matrix": "matrix3d(0.38165032,-0.24792892,0,-0.00007823,0.43656583,0.3643661,0,0.00021698,0,0,1,0,639,926,0,1)",
+              "w": 856,
+              "h": 540,
+              "images": [
+                "/images/kusur/parca/{lang}/kart.webp"
+              ]
+            }
+          ],
+          "motion": {
+            "from": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1.28,
+              1
+            ],
+            "start": -0.25,
+            "end": 0.8
+          },
+          "m": {
+            "focus": [
+              0.4,
+              0.6
+            ]
+          }
+        },
+        {
+          "kind": "scrim",
+          "color": "#0A0836",
+          "side": "top",
+          "z": 2
+        },
+        {
+          "kind": "scrim",
+          "color": "#0A0836",
+          "side": "left",
+          "z": 2,
+          "m": {
+            "hide": true
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            70,
+            70,
+            800
+          ],
+          "z": 3,
+          "at": [
+            0.08
+          ],
+          "size": 92,
+          "color": "#F3F4F8",
+          "ink": "rgba(243,244,248,.95)",
+          "textSize": 25,
+          "title": {
+            "tr": "Torpido gözünde bir kart.",
+            "en": "A card in the glovebox."
+          },
+          "text": {
+            "tr": "Karşı sürücüde uygulama yoksa kartı uzatırsın. Karekod tarayıcıda açılır, tutanak yine iki telefonda dolar.",
+            "en": "If the other driver doesn’t have the app, hand over the card. The code opens in a browser, and the report still fills in on both phones."
+          },
+          "m": {
+            "box": [
+              24,
+              20,
+              352
+            ],
+            "size": 46,
+            "textSize": 17
+          }
+        }
+      ]
+    },
+    {
+      "length": 230,
+      "mlength": 220,
+      "bg": "#2318D6",
+      "layers": [
+        {
+          "kind": "live",
+          "live": "logo",
+          "box": [
+            70,
+            110,
+            800,
+            300
+          ],
+          "props": {
+            "size": 288,
+            "color": "#F3F4F8"
+          },
+          "z": 3,
+          "motion": {
+            "from": [
+              -40,
+              0,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.25,
+            "end": 0.04
+          },
+          "m": {
+            "box": [
+              24,
+              14,
+              352,
+              120
+            ],
+            "props": {
+              "size": 132,
+              "color": "#F3F4F8"
+            },
+            "motion": {
+              "from": [
+                -20,
+                0,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.25,
+              "end": 0.04
+            }
+          }
+        },
+        {
+          "kind": "text",
+          "face": "Atkinson Hyperlegible Next",
+          "box": [
+            84,
+            440,
+            780
+          ],
+          "z": 4,
+          "at": [
+            0.02
+          ],
+          "size": 92,
+          "color": "#FFC7D4",
+          "ink": "rgba(243,244,248,.92)",
+          "textSize": 19,
+          "title": {
+            "tr": "Kusursuz sürücü yok.",
+            "en": "Nobody drives flawlessly."
+          },
+          "text": {
+            "tr": "Kusur konsept bir çalışmadır, kroki kuralları örnektir. Veri: TÜİK 2024. Gerçek bir kazada yaralanma varsa 112’yi, anlaşmazlık varsa 155 ya da 156’yı arayın.",
+            "en": "Kusur is a concept project and the sketch rules are examples. Data: TurkStat 2024. In a real crash, call 112 if anyone is hurt and 155 or 156 if the drivers disagree."
+          },
+          "m": {
+            "box": [
+              24,
+              150,
+              352
+            ],
+            "size": 46,
+            "textSize": 14
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/torpido.webp",
+          "bezel": "#06052A",
+          "box": [
+            930,
+            170,
+            260
+          ],
+          "z": 3,
+          "motion": {
+            "from": [
+              90,
+              120,
+              6,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              -5,
+              1,
+              1
+            ],
+            "start": -0.1,
+            "end": 0.16
+          },
+          "m": {
+            "box": [
+              24,
+              348,
+              150
+            ],
+            "motion": {
+              "from": [
+                40,
+                60,
+                6,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                -5,
+                1,
+                1
+              ],
+              "start": -0.1,
+              "end": 0.16
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/oran.webp",
+          "bezel": "#06052A",
+          "box": [
+            1120,
+            120,
+            260
+          ],
+          "z": 5,
+          "motion": {
+            "from": [
+              0,
+              150,
+              0,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "start": -0.05,
+            "end": 0.2
+          },
+          "m": {
+            "box": [
+              125,
+              330,
+              150
+            ],
+            "motion": {
+              "from": [
+                0,
+                70,
+                0,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                0,
+                1,
+                1
+              ],
+              "start": -0.05,
+              "end": 0.2
+            }
+          }
+        },
+        {
+          "kind": "screen",
+          "src": "/images/kusur/ui/{lang}/gitti.webp",
+          "bezel": "#06052A",
+          "box": [
+            1310,
+            170,
+            260
+          ],
+          "z": 3,
+          "motion": {
+            "from": [
+              -90,
+              120,
+              -6,
+              1,
+              0
+            ],
+            "to": [
+              0,
+              0,
+              5,
+              1,
+              1
+            ],
+            "start": 0,
+            "end": 0.24
+          },
+          "m": {
+            "box": [
+              226,
+              348,
+              150
+            ],
+            "motion": {
+              "from": [
+                -40,
+                60,
+                -6,
+                1,
+                0
+              ],
+              "to": [
+                0,
+                0,
+                5,
+                1,
+                1
+              ],
+              "start": 0,
+              "end": 0.24
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

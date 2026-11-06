@@ -134,8 +134,15 @@ export type SceneLayer = {
   // photo: ekranı yerleştirilmiş fotoğraf · screen: tek uygulama ekranı · text: başlık ve metin · para: kaydırdıkça
   // kelime kelime aydınlanan paragraf · scrim: okunurluk için karartma · glow: renkli ışık · swatch: renk örneği ·
   // svg: logo gibi vektör · word: marka yazısıyla tek kelime · type: yazı tipi örneği · toast: bildirim kartı ·
-  // steps: sahnedeki adımların ilerleme çizgisi
-  kind: 'photo' | 'screen' | 'text' | 'para' | 'scrim' | 'glow' | 'swatch' | 'svg' | 'word' | 'type' | 'toast' | 'steps';
+  // steps: sahnedeki adımların ilerleme çizgisi · live: projeye özel canlı katman (bkz. src/components/kusur/KusurLive.tsx)
+  kind: 'photo' | 'screen' | 'text' | 'para' | 'scrim' | 'glow' | 'swatch' | 'svg' | 'word' | 'type' | 'toast' | 'steps' | 'live';
+  // live katmanın adı ve ayarları
+  live?: string;
+  props?: Record<string, unknown>;
+  // text ve para: başlık sitenin dar büyük harfli yazısı yerine bu yazı tipiyle dizilir
+  face?: string;
+  // screen: telefonun çerçeve rengi; verilirse ekran ince bir kasayla çizilir
+  bezel?: string;
   // [x, y, genişlik, yükseklik?] çalışma alanı biriminde; full verilirse katman bütün sahneyi kaplar
   box?: number[];
   full?: boolean;

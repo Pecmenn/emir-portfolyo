@@ -1,0 +1,1135 @@
+/* Kusur arayüzü. Tek kaynak: sitedeki canlı telefonlar ve Behance/Kusur dışa aktarımı aynı dosyayı kullanır.
+   Telefon 393×852 pikselde çizilir; sahnede ölçeklenir. Renkler tutanağın karbon kâğıdından gelir, kehribar
+   (--dortlu) yalnızca kaza modunda ve ona açılan düğmede görünür. Doku: poliçelerdeki giyoş çizgileri. */
+
+.ks {
+  --karbon: #2318d6;
+  --karbon-koyu: #170da8;
+  --kagit: #f3f4f8;
+  --beyaz: #ffffff;
+  --kopya: #ffc7d4;
+  --kopya-acik: #ffe3e9;
+  --bink: #d4124e;
+  --ink: #14107a;
+  --gece: #0a0836;
+  --gece-2: #15124f;
+  --dortlu: #ff9500;
+  --sis: rgba(20, 16, 122, 0.62);
+  --cizgi: rgba(35, 24, 214, 0.16);
+  --golge-1: 0 1px 2px rgba(20, 16, 122, 0.08), 0 14px 28px -14px rgba(20, 16, 122, 0.32);
+  --golge-2: 0 2px 4px rgba(20, 16, 122, 0.1), 0 28px 50px -22px rgba(20, 16, 122, 0.55);
+  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.3;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+.ks * {
+  box-sizing: border-box;
+  margin: 0;
+}
+.ks i {
+  font-style: normal;
+}
+.ks-hand {
+  font-family: 'Mansalva', 'Atkinson Hyperlegible Next', cursive;
+  font-weight: 400;
+}
+.ks-num {
+  font-feature-settings: 'tnum';
+}
+
+/* Logo: k'nin gövdesinde göçük */
+.ks-logo {
+  display: inline-flex;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+}
+.ks-logo > span {
+  display: inline-block;
+}
+.ks-logo .ks-k {
+  clip-path: polygon(-6% -12%, 106% -12%, 106% 112%, -6% 112%, -6% 70%, 4% 70%, 14.5% 62%, 9.5% 55%, 19% 47%, 11% 39%, 4% 33%, -6% 33%);
+}
+
+/* Telefon */
+.ks-screen {
+  position: relative;
+  width: 393px;
+  height: 852px;
+  overflow: hidden;
+  background: var(--kagit);
+  isolation: isolate;
+}
+.ks-status {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  padding: 10px 30px 0 40px;
+  font-size: 16px;
+  font-weight: 700;
+  font-feature-settings: 'tnum';
+}
+.ks-status::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  width: 118px;
+  height: 34px;
+  margin-left: -59px;
+  border-radius: 20px;
+  background: #000;
+}
+.ks-status svg {
+  height: 13px;
+  width: auto;
+  display: block;
+}
+.ks-home {
+  position: absolute;
+  z-index: 60;
+  left: 50%;
+  bottom: 8px;
+  width: 134px;
+  height: 5px;
+  margin-left: -67px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.9;
+}
+.ks-body {
+  position: absolute;
+  inset: 54px 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.ks-abs {
+  position: absolute;
+}
+
+/* Zeminler */
+.ks-on-carbon {
+  background: var(--karbon);
+  color: var(--kagit);
+}
+.ks-on-night {
+  background: var(--gece);
+  color: var(--kagit);
+}
+.ks-on-amber {
+  background: var(--dortlu);
+  color: var(--gece);
+}
+.ks-on-copy {
+  background: var(--kopya);
+  color: var(--bink);
+  --sis: rgba(160, 10, 58, 0.78);
+  --cizgi: rgba(212, 18, 78, 0.24);
+}
+.ks-gui {
+  position: absolute;
+  inset: 0;
+  background: url(/images/kusur/parca/giyos-acik.svg) center / cover no-repeat;
+  opacity: 0.12;
+  pointer-events: none;
+}
+.ks-gui--blue {
+  background-image: url(/images/kusur/parca/giyos-mavi.svg);
+  opacity: 0.14;
+}
+.ks-gui--pink {
+  background-image: url(/images/kusur/parca/giyos-pembe.svg);
+  opacity: 0.14;
+}
+.ks-rosette {
+  position: absolute;
+  background: url(/images/kusur/parca/rozet-acik.svg) center / contain no-repeat;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.ks-rosette--blue {
+  background-image: url(/images/kusur/parca/rozet-mavi.svg);
+  opacity: 0.2;
+}
+/* Kaza modunda alttan vuran dörtlü ışığı */
+.ks-glow {
+  position: absolute;
+  inset: auto -60px -80px;
+  height: 330px;
+  background: radial-gradient(60% 70% at 18% 100%, rgba(255, 149, 0, 0.42), transparent 70%), radial-gradient(60% 70% at 82% 100%, rgba(255, 149, 0, 0.42), transparent 70%);
+  pointer-events: none;
+}
+
+/* Yazı ölçeği */
+.ks-h1 {
+  font-size: 58px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.ks-h2 {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+}
+.ks-h3 {
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+}
+.ks-h4 {
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+}
+.ks-lead {
+  font-size: 20px;
+  line-height: 1.26;
+}
+.ks-small {
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--sis);
+}
+.ks-label {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sis);
+}
+.ks-on-carbon .ks-label,
+.ks-on-night .ks-label {
+  color: rgba(243, 244, 248, 0.72);
+}
+.ks-sheet .ks-label,
+.ks-card .ks-label,
+.ks-ticket .ks-label {
+  color: var(--sis);
+}
+
+/* Kart */
+.ks-card {
+  position: relative;
+  background: var(--beyaz);
+  border-radius: 24px;
+  box-shadow: var(--golge-1);
+  overflow: hidden;
+}
+
+/* Tutanak yaprağı: üstü delikli, kâğıttan koparılmış gibi */
+.ks-sheet {
+  position: relative;
+  flex: 1;
+  background: var(--kagit);
+  color: var(--ink);
+  padding: 26px 20px 0;
+  -webkit-mask: radial-gradient(circle 5px at 10px 0, transparent 97%, #000) -10px 0 / 20px 100% repeat-x;
+  mask: radial-gradient(circle 5px at 10px 0, transparent 97%, #000) -10px 0 / 20px 100% repeat-x;
+}
+.ks-peek {
+  position: absolute;
+  z-index: 30;
+  inset: auto 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 78px;
+  padding: 2px 20px 20px;
+  background: var(--kopya);
+  color: var(--bink);
+  font-weight: 700;
+  font-size: 15px;
+  -webkit-mask: radial-gradient(circle 5px at 10px 0, transparent 97%, #000) -10px 0 / 20px 100% repeat-x;
+  mask: radial-gradient(circle 5px at 10px 0, transparent 97%, #000) -10px 0 / 20px 100% repeat-x;
+}
+
+/* Form satırı: numaralar kâğıt tutanaktaki alan numaralarıdır */
+.ks-no {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 6px;
+  background: var(--karbon);
+  color: var(--kagit);
+  font-size: 12px;
+  font-weight: 800;
+  font-feature-settings: 'tnum';
+}
+.ks-no--pink {
+  background: var(--bink);
+}
+.ks-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1.5px solid var(--cizgi);
+}
+.ks-row:first-child {
+  border-top: 0;
+}
+.ks-row > b {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.008em;
+}
+
+/* A ve B sütunları */
+.ks-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.ks-col > div {
+  padding: 11px 12px 12px;
+  min-height: 64px;
+}
+.ks-col > div:first-child {
+  background: rgba(35, 24, 214, 0.06);
+  color: var(--karbon);
+}
+.ks-col > div:last-child {
+  background: rgba(212, 18, 78, 0.07);
+  color: var(--bink);
+}
+.ks-col small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.78;
+}
+.ks-col small svg {
+  width: 13px;
+  height: 13px;
+}
+.ks-col b {
+  display: block;
+  margin-top: 3px;
+  min-height: 21px;
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: -0.012em;
+  line-height: 1.24;
+  white-space: nowrap;
+}
+
+/* Düğmeler. Kaza modunda en küçük dokunma alanı 88 pt (normal önerinin iki katı) */
+.ks-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 60px;
+  border: 0;
+  border-radius: 22px;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.012em;
+  background: var(--karbon);
+  color: var(--kagit);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 12px 22px -12px rgba(35, 24, 214, 0.75);
+}
+.ks-btn--paper {
+  background: var(--kagit);
+  color: var(--ink);
+  box-shadow: 0 16px 28px -16px rgba(5, 3, 60, 0.75);
+}
+.ks-btn--ghost {
+  background: transparent;
+  color: inherit;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.ks-btn--amber {
+  background: linear-gradient(180deg, #ffa722, var(--dortlu));
+  color: var(--gece);
+  box-shadow:
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.45),
+    0 18px 34px -14px rgba(255, 149, 0, 0.75);
+}
+.ks-btn--crash {
+  height: 120px;
+  border-radius: 38px;
+  font-size: 42px;
+  letter-spacing: -0.03em;
+}
+.ks-btn--big {
+  height: 88px;
+  border-radius: 32px;
+  font-size: 25px;
+  letter-spacing: -0.02em;
+}
+.ks-btn svg {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+/* Yuvarlak simge düğmesi ve küçük etiket */
+.ks-round {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(243, 244, 248, 0.16);
+  color: inherit;
+}
+.ks-round svg {
+  width: 21px;
+  height: 21px;
+}
+.ks-round--ink {
+  background: rgba(35, 24, 214, 0.09);
+  color: var(--karbon);
+}
+.ks-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 15px;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  background: rgba(35, 24, 214, 0.09);
+  color: var(--karbon);
+}
+.ks-chip svg {
+  width: 15px;
+  height: 15px;
+}
+.ks-chip--pink {
+  background: var(--kopya-acik);
+  color: var(--bink);
+}
+.ks-chip--glass {
+  background: rgba(10, 8, 54, 0.52);
+  color: var(--kagit);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 0 0 1px rgba(243, 244, 248, 0.16);
+}
+.ks-chip--amber {
+  background: var(--dortlu);
+  color: var(--gece);
+}
+.ks-chip--paper {
+  background: rgba(243, 244, 248, 0.16);
+  color: var(--kagit);
+}
+
+/* Avatar */
+.ks-av {
+  display: block;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--beyaz);
+}
+
+/* Kaza modu üst şeridi: ilerleme ve geçen süre */
+.ks-crashbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px 0;
+}
+.ks-segs {
+  display: flex;
+  flex: 1;
+  gap: 5px;
+}
+.ks-segs i {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(243, 244, 248, 0.2);
+}
+.ks-segs i.on {
+  background: var(--dortlu);
+}
+.ks-on-amber .ks-segs i {
+  background: rgba(10, 8, 54, 0.2);
+}
+.ks-on-amber .ks-segs i.on {
+  background: var(--gece);
+}
+.ks-elapsed {
+  font-size: 17px;
+  font-weight: 800;
+  font-feature-settings: 'tnum';
+  color: var(--dortlu);
+}
+.ks-on-amber .ks-elapsed {
+  color: var(--gece);
+}
+.ks-crash-a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding: 0 14px 26px;
+}
+
+/* Sesli yönlendirme */
+.ks-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  height: 36px;
+  padding: 0 14px 0 12px;
+  border-radius: 18px;
+  background: rgba(255, 149, 0, 0.14);
+  color: var(--dortlu);
+  font-size: 14px;
+  font-weight: 700;
+}
+.ks-wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 2.5px;
+  height: 16px;
+}
+.ks-wave i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: 50% 50%;
+  animation: ks-wave 1.1s ease-in-out infinite;
+}
+.ks-wave i:nth-child(1) { transform: scaleY(0.4); animation-delay: -0.2s; }
+.ks-wave i:nth-child(2) { transform: scaleY(0.9); animation-delay: -0.5s; }
+.ks-wave i:nth-child(3) { transform: scaleY(0.6); animation-delay: -0.8s; }
+.ks-wave i:nth-child(4) { transform: scaleY(1); animation-delay: -0.35s; }
+.ks-wave i:nth-child(5) { transform: scaleY(0.5); animation-delay: -0.65s; }
+@keyframes ks-wave {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+/* Büyük dokunma onayı */
+.ks-tick {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 92px;
+  padding: 12px 18px;
+  border-radius: 30px;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  background: rgba(243, 244, 248, 0.07);
+  box-shadow: inset 0 0 0 1.5px rgba(243, 244, 248, 0.26);
+  transition: background 0.25s;
+}
+.ks-tick > i {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.ks-tick svg {
+  width: 28px;
+  height: 28px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ks-tick.on svg {
+  opacity: 1;
+}
+.ks-tick.on {
+  background: var(--kagit);
+  color: var(--gece);
+  box-shadow: 0 16px 30px -18px #000;
+}
+.ks-tick.on > i {
+  background: var(--karbon);
+  color: var(--kagit);
+  box-shadow: none;
+}
+.ks-tick-note {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  opacity: 0.72;
+}
+
+/* Plaka */
+.ks-plate {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 0.2em;
+  background: #fff;
+  color: #06062a;
+  box-shadow:
+    inset 0 0 0 0.05em #06062a,
+    0 0.3em 0.6em -0.25em rgba(5, 3, 60, 0.7);
+  font-weight: 800;
+  font-feature-settings: 'tnum';
+  white-space: nowrap;
+}
+.ks-plate > i {
+  display: flex;
+  flex: none;
+  align-items: flex-end;
+  justify-content: center;
+  width: 1.05em;
+  padding-bottom: 0.14em;
+  background: #1a3fb8;
+  color: #fff;
+  font-size: 0.42em;
+  width: 1.9em;
+}
+.ks-plate > span {
+  padding: 0.12em 0.34em 0.1em;
+}
+
+/* Belge kartları (cüzdan) */
+.ks-doc {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  color: var(--kagit);
+  background: var(--ink);
+  box-shadow: var(--golge-2);
+}
+.ks-doc--back {
+  position: absolute;
+  height: 70px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 11px 18px;
+  font-size: 13.500px;
+  font-weight: 800;
+}
+
+/* İlerleme halkası */
+.ks-ring {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+}
+.ks-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+/* Hasarsızlık basamakları */
+.ks-stairs {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+.ks-stairs i {
+  flex: 1;
+  border-radius: 4px 4px 1px 1px;
+  background: var(--cizgi);
+}
+.ks-stairs i.on {
+  background: var(--karbon);
+}
+
+/* Muayene etiketi */
+.ks-sticker {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: var(--kopya);
+  color: var(--bink);
+  font-size: 17px;
+  font-weight: 800;
+  box-shadow:
+    inset 0 0 0 2px rgba(212, 18, 78, 0.5),
+    0 8px 14px -8px rgba(212, 18, 78, 0.8);
+}
+
+/* Yüzen sekme çubuğu; ortadaki kehribar düğme kaza modunu açar */
+.ks-nav {
+  position: absolute;
+  z-index: 20;
+  left: 12px;
+  right: 12px;
+  bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 78px 1fr 1fr;
+  align-items: center;
+  height: 68px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 2px 4px rgba(20, 16, 122, 0.08), 0 24px 40px -18px rgba(20, 16, 122, 0.55);
+}
+.ks-nav span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--sis);
+}
+.ks-nav span.on {
+  color: var(--karbon);
+}
+.ks-nav svg {
+  width: 24px;
+  height: 24px;
+}
+.ks-fab {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--gece);
+}
+.ks-fab > b {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  margin-top: -34px;
+  border-radius: 50%;
+  color: var(--gece);
+  background: linear-gradient(180deg, #ffa722, var(--dortlu));
+  box-shadow:
+    0 0 0 5px #fff,
+    0 16px 24px -10px rgba(255, 149, 0, 0.9);
+}
+.ks-fab svg {
+  width: 30px;
+  height: 30px;
+}
+.ks-fab em {
+  margin-top: 2px;
+  font-style: normal;
+}
+
+/* Kamera */
+.ks-cam {
+  position: absolute;
+  inset: 0;
+  background: #06051c center / cover no-repeat;
+}
+.ks-cam::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 8, 54, 0.9) 0%, rgba(10, 8, 54, 0.1) 30%, rgba(10, 8, 54, 0.04) 60%, rgba(10, 8, 54, 0.95) 100%);
+}
+.ks-frame {
+  position: absolute;
+  --l: 40px;
+  --s: 4.5px;
+  --c: var(--dortlu);
+  background:
+    linear-gradient(var(--c), var(--c)) 0 0 / var(--l) var(--s) no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 0 / var(--s) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0 / var(--l) var(--s) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0 / var(--s) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 100% / var(--l) var(--s) no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 100% / var(--s) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / var(--l) var(--s) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / var(--s) var(--l) no-repeat;
+}
+.ks-shots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+.ks-shots i {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 13px;
+  background: rgba(243, 244, 248, 0.12) center / cover;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.08;
+  padding: 3px;
+  color: var(--kagit);
+  overflow: hidden;
+}
+.ks-shots i.now {
+  box-shadow: inset 0 0 0 3px var(--dortlu);
+  color: var(--dortlu);
+}
+.ks-shots i u {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--dortlu);
+  color: var(--gece);
+}
+.ks-shots i u svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* Yol krokisi (site krokisi de kullanır) */
+.ks-sketch {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  background-image:
+    linear-gradient(var(--cizgi) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cizgi) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Kusur şeridi */
+.ks-bar {
+  display: flex;
+  overflow: hidden;
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(35, 24, 214, 0.12);
+}
+.ks-bar i {
+  display: block;
+  height: 100%;
+}
+.ks-bar .a {
+  background: var(--karbon);
+}
+.ks-bar .b {
+  background: var(--bink);
+}
+
+/* Araç üzerindeki darbe halkası */
+.ks-pulse {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(212, 18, 78, 0.28);
+  animation: ks-pulse 1.5s ease-out infinite;
+}
+@keyframes ks-pulse {
+  0% { transform: scale(0.55); opacity: 1; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Karşı sürücünün imleci */
+.ks-cursor {
+  position: absolute;
+  z-index: 8;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+  animation: ks-cursor 2.4s ease-in-out infinite;
+}
+.ks-cursor svg {
+  width: 18px;
+  height: 18px;
+  color: var(--bink);
+}
+.ks-cursor b {
+  margin: 13px 0 0 -3px;
+  padding: 2px 8px 3px;
+  border-radius: 9px;
+  background: var(--bink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+@keyframes ks-cursor {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-7px, 5px); }
+}
+
+/* Dosya adımları */
+.ks-steps {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+}
+.ks-steps::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 13px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--karbon) 50%, var(--cizgi) 50%);
+}
+.ks-steps span {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 58px;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  color: var(--sis);
+}
+.ks-steps span > i {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--kagit);
+  box-shadow: inset 0 0 0 2.5px var(--cizgi);
+  color: var(--kagit);
+}
+.ks-steps span.ok {
+  color: var(--ink);
+}
+.ks-steps span.ok > i {
+  background: var(--karbon);
+  box-shadow: none;
+}
+.ks-steps span.now {
+  color: var(--karbon);
+}
+.ks-steps span.now > i {
+  background: var(--kagit);
+  box-shadow: inset 0 0 0 8px var(--karbon);
+}
+.ks-steps svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Bilet kenarı */
+.ks-ticket {
+  position: relative;
+  background: var(--beyaz);
+  color: var(--ink);
+  border-radius: 20px;
+  box-shadow: 0 30px 50px -24px rgba(5, 3, 60, 0.85);
+}
+.ks-ticket .cut {
+  position: relative;
+  height: 0;
+  border-top: 2px dashed var(--cizgi);
+  margin: 0 18px;
+}
+.ks-ticket .cut::before,
+.ks-ticket .cut::after {
+  content: '';
+  position: absolute;
+  top: -11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--karbon);
+}
+.ks-ticket .cut::before {
+  left: -28px;
+}
+.ks-ticket .cut::after {
+  right: -28px;
+}
+.ks-pad {
+  padding: 14px 20px 0;
+}
+.ks-gap {
+  margin-top: auto;
+}
+
+/* ─── Sahne katmanları (site) ─────────────────────────── */
+.kl-fill {
+  position: absolute;
+  inset: 0;
+}
+.kl-phone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #06052a;
+}
+.kl-phone-in {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  width: max-content;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.kl-phone-in .ks-screen {
+  flex: none;
+}
+[data-press] {
+  transition: transform 0.18s ease;
+}
+[data-press].is-down {
+  transform: scale(0.95);
+}
+.kl-lit {
+  opacity: 0;
+  transform: scale(0.7) rotate(var(--r, -6deg));
+  transition:
+    opacity 0.18s ease,
+    transform 0.34s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+.kl-lit.is-in {
+  opacity: 1;
+  transform: scale(1) rotate(var(--r, -6deg));
+}
+
+/* Dörtlü ışıklar: yaklaşık 1 Hz, flaş sınırının çok altında; hareket azaltmada sabit */
+@keyframes kl-blink {
+  0% {
+    opacity: 0.08;
+  }
+  7%,
+  42% {
+    opacity: 1;
+  }
+  54%,
+  100% {
+    opacity: 0.08;
+  }
+}
+[data-blink],
+.kl-blink {
+  animation: kl-blink 1.05s linear infinite;
+}
+@keyframes kl-tremble {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  25% {
+    transform: translate(calc(var(--u) * 0.8), calc(var(--u) * -0.6)) rotate(0.08deg);
+  }
+  50% {
+    transform: translate(calc(var(--u) * -0.7), calc(var(--u) * 0.7)) rotate(-0.09deg);
+  }
+  75% {
+    transform: translate(calc(var(--u) * 0.6), calc(var(--u) * 0.6)) rotate(0.06deg);
+  }
+}
+.kl-tremble {
+  animation: kl-tremble 0.16s linear infinite;
+}
+@keyframes kl-shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-5px, 2px);
+  }
+  45% {
+    transform: translate(4px, -2px);
+  }
+  70% {
+    transform: translate(-2px, 1px);
+  }
+}
+.kl-shake {
+  animation: kl-shake 0.28s ease-out;
+}
+
+/* Kroki */
+.kl-kroki-car {
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.kl-kroki-car:active {
+  cursor: grabbing;
+}
+.kl-kroki-car:focus-visible .kl-kroki-ring {
+  opacity: 1;
+}
+.kl-kroki-ring {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.kl-seg {
+  display: block;
+  height: 100%;
+  transition: width 0.55s cubic-bezier(0.3, 1.35, 0.5, 1);
+}
+.kl-tick path {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  transition: stroke-dashoffset 0.32s ease-out;
+}
+.kl-tick.is-on path {
+  stroke-dashoffset: 0;
+}
+.kl-reset {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-blink],
+  .kl-blink,
+  .kl-tremble,
+  .kl-shake,
+  .ks-wave i,
+  .ks-pulse,
+  .ks-cursor {
+    animation: none;
+  }
+}

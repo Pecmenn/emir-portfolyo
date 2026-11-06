@@ -1,0 +1,10 @@
+export type CarOptions = { fill?: string; line?: string; glass?: string; letter?: string; letterColor?: string; rotateLetter?: number };
+export function car(opts?: CarOptions): string;
+export const CAR_A: CarOptions;
+export const CAR_B: CarOptions;
+export const SIG_A: string;
+export const SIG_B: string;
+export function logo(color?: string, size?: number): string;
+export function status(time?: string): string;
+export function getScreens(lang?: string): Record<string, { cls: string; html: string }>;
+export const SCREEN_NAMES: string[];

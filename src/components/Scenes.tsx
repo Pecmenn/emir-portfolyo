@@ -1,7 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import type { Scene, SceneLayer, SceneMotion } from '../content';
 import { useLang } from '../lib/i18n';
 import { reducedMotion, refreshSoon } from '../lib/scroll';
+import { SceneProgress } from './sceneProgress';
+
+// Projeye özel canlı katmanlar (kind: 'live'); yalnızca o katmanı kullanan sayfada yüklenir
+const KusurLive = lazy(() => import('./kusur/KusurLive'));
 
 // Sahne motoru: proje sayfasını ekranda sabit kalan sahnelere böler (bkz. Project.scenes).
 // Sahne boyunca kaydırma 0-1 arası bir ilerlemeye çevrilir; her katman bu ilerlemeye göre from → to arasında
@@ -147,6 +151,15 @@ function SceneView({ scene, mobile }: { scene: Scene; mobile: boolean }) {
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const [geo, setGeo] = useState<Geo | null>(null);
   const [bw, bh] = mobile ? BOARD.mobile : BOARD.desk;
+  const listeners = useRef(new Set<(p: number) => void>());
+  const lastP = useRef(0);
+  const subscribe = useCallback((fn: (p: number) => void) => {
+    listeners.current.add(fn);
+    fn(lastP.current);
+    return () => {
+      listeners.current.delete(fn);
+    };
+  }, []);
 
   // Telefon değerleri masaüstü değerlerinin üstüne yazılır
   const layers = scene.layers.map((L) => (mobile && L.m ? { ...L, ...L.m } : L)).filter((L) => !(mobile && L.m?.hide));
@@ -197,6 +210,8 @@ function SceneView({ scene, mobile }: { scene: Scene; mobile: boolean }) {
       const p = Math.max(-1, Math.min(2, -r.top / Math.max(1, r.height - sh)));
       if (p === last) return;
       last = p;
+      lastP.current = p;
+      listeners.current.forEach((fn) => fn(p));
       for (const { L, el, words, strips, steps } of items) {
         if (!el) continue;
         if (L.motion) {
@@ -242,11 +257,13 @@ function SceneView({ scene, mobile }: { scene: Scene; mobile: boolean }) {
     <section ref={root} className="relative" style={{ height: `${length}vh` }}>
       <div ref={stage} className="scene-stage sticky top-0 h-[100svh]">
         {geo && (
-          <div style={{ ['--u' as string]: `${geo.u}px` } as CSSProperties} className="absolute inset-0">
-            {layers.map((L, i) => (
-              <Layer key={i} L={L} geo={geo} index={i} setRef={(el) => (refs.current[i] = el)} />
-            ))}
-          </div>
+          <SceneProgress.Provider value={subscribe}>
+            <div style={{ ['--u' as string]: `${geo.u}px`, ['--un' as string]: geo.u } as CSSProperties} className="absolute inset-0">
+              {layers.map((L, i) => (
+                <Layer key={i} L={L} geo={geo} index={i} setRef={(el) => (refs.current[i] = el)} />
+              ))}
+            </div>
+          </SceneProgress.Provider>
         )}
       </div>
     </section>
@@ -258,7 +275,7 @@ function Layer({ L, geo, index, setRef }: { L: SceneLayer; geo: Geo; index: numb
   const full = L.full || L.kind === 'scrim';
   let height = h;
   if (L.kind === 'photo' && !full && L.width && L.height) height = (w * L.height) / L.width;
-  if (L.kind === 'screen' && h == null) height = (w * 852) / 393;
+  if ((L.kind === 'screen' || (L.kind === 'live' && L.live === 'phone')) && h == null) height = (w * 852) / 393;
 
   // Fotoğrafta hareket merkezi fotoğraf pikselinden ekran pikseline çevrilir (ör. telefonun ortasına yakınlaşma)
   let origin = L.origin ? `${L.origin[0]}% ${L.origin[1]}%` : '50% 50%';
@@ -305,6 +322,8 @@ const glass = 'linear-gradient(115deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,
 function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
   const { t, lang } = useLang();
   const font: CSSProperties = L.font ? { fontFamily: `"${L.font}", system-ui, sans-serif` } : {};
+  // face: sahne başlığı sitenin dar büyük harfli yazısı yerine projenin kendi yazısıyla dizilir
+  const face: CSSProperties = L.face ? { fontFamily: `"${L.face}", system-ui, sans-serif` } : {};
   // Görsel yolundaki {lang}, sitenin diline göre değişir (arayüz ekranları iki dilde olan projeler için)
   const src = L.src?.replace('{lang}', lang);
 
@@ -328,7 +347,7 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
                 <div className="absolute left-0 top-0 origin-top-left overflow-hidden" style={{ width: s.w, height: s.h, transform: s.matrix }}>
                   <div data-strip={(s.swap ?? []).join(',')} data-w={s.w} className="flex h-full will-change-transform">
                     {s.images.map((src) => (
-                      <img key={src} src={src} alt="" draggable={false} className="block h-full shrink-0" style={{ width: s.w }} />
+                      <img key={src} src={src.replace('{lang}', lang)} alt="" draggable={false} className="block h-full shrink-0" style={{ width: s.w }} />
                     ))}
                   </div>
                 </div>
@@ -348,7 +367,9 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
           className="block h-full w-full"
           style={{
             borderRadius: U(w * 0.135),
-            boxShadow: '0 50px 90px -40px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.1)',
+            boxShadow: L.bezel
+              ? `0 50px 90px -40px rgba(5,3,60,.7), 0 0 0 ${U(w * 0.024)} ${L.bezel}`
+              : '0 50px 90px -40px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.1)',
           }}
         />
       );
@@ -367,6 +388,7 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
                 fontSize: U(L.size ?? 96),
                 marginTop: L.kicker ? U(20) : 0,
                 color: L.color,
+                ...(L.face ? { ...face, textTransform: 'none', fontWeight: 800, letterSpacing: '-0.032em', lineHeight: 1.04 } : {}),
               }}
             >
               {t(L.title)
@@ -385,8 +407,9 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
               style={{
                 fontSize: U(L.textSize ?? 21),
                 marginTop: L.title ? U(26) : 0,
-                lineHeight: 1.45,
+                lineHeight: L.face ? 1.34 : 1.45,
                 color: L.ink ?? 'rgba(241,233,222,.8)',
+                ...face,
               }}
             >
               {t(L.text)}
@@ -404,6 +427,8 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
             lineHeight: 1.22,
             letterSpacing: '-0.015em',
             color: L.color,
+            ...face,
+            ...(L.face ? { fontWeight: 700 } : {}),
           }}
         >
           {t(L.text ?? { tr: '', en: '' })
@@ -584,6 +609,12 @@ function LayerBody({ L, geo, w }: { L: SceneLayer; geo: Geo; w: number }) {
             </li>
           ))}
         </ol>
+      );
+    case 'live':
+      return (
+        <Suspense fallback={null}>
+          <KusurLive name={L.live ?? ''} w={w} props={L.props} />
+        </Suspense>
       );
     default:
       return null;
