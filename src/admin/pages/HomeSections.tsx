@@ -219,7 +219,7 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
               <BiField label="Durum (yeşil noktalı satır)" value={d.hero.status} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, status: v } }))} />
               <BiField label="Üst menüdeki iletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
             </Card>
-            <Card title="Arka plan videosu" description="Başlığın sağındaki boşlukta oynar ve sola doğru solarak başlığın arkasında kaybolur; başlık hep önde kalır. Boş bırakılırsa açılış videosuz görünür.">
+            <Card title="Arka plan videosu" description="Bilgisayar ve tablette başlığın sağındaki boşlukta oynar, sola doğru solarak başlığın arkasında kaybolur; başlık hep önde kalır. Telefonda gösterilmez. Boş bırakılırsa açılış videosuz görünür.">
               <VideoField
                 label="Video"
                 hint="Sessiz ve döngüde oynar. 10–20 saniyelik yatay bir video, 12 MB altı önerilir. Asıl görüntü videonun sağ yarısında olmalı."

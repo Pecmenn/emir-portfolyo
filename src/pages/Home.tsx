@@ -39,6 +39,19 @@ function Head({ title, text }: { title: Text; text: Text }) {
   );
 }
 
+// Açılış videosu yalnızca bilgisayar ve tablette: telefonda (dikey ya da yatay) sağda boşluk yok, video hiç indirilmez
+const WIDE = '(min-width: 768px) and (min-height: 521px)';
+function useWide() {
+  const [wide, setWide] = useState(() => window.matchMedia(WIDE).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(WIDE);
+    const on = () => setWide(mq.matches);
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
+  return wide;
+}
+
 // Açılışın arka plan videosu: sağdaki boşluk asıl alandır, video sola ve aşağı doğru solarak başlığın arkasında kaybolur
 // (maske index.css'te .hero-video). İlk kare hazır olunca yumuşakça belirir; ekrandan çıkınca ve hareket azaltıldığında durur
 function HeroVideo({ src, poster }: { src: string; poster: string }) {
@@ -46,7 +59,7 @@ function HeroVideo({ src, poster }: { src: string; poster: string }) {
   return (
     <div
       aria-hidden
-      className={`hero-video pointer-events-none absolute inset-y-0 right-0 -z-10 w-full transition-opacity duration-[1600ms] ease-[cubic-bezier(.22,1,.36,1)] md:w-[78%] ${shown ? 'opacity-100' : 'opacity-0'}`}
+      className={`hero-video pointer-events-none absolute inset-y-0 right-0 -z-10 w-[78%] transition-opacity duration-[1600ms] ease-[cubic-bezier(.22,1,.36,1)] ${shown ? 'opacity-100' : 'opacity-0'}`}
     >
       <AutoVideo src={src} poster={poster || undefined} preload="auto" onReady={() => setShown(true)} className="h-full w-full object-cover" />
     </div>
@@ -56,17 +69,14 @@ function HeroVideo({ src, poster }: { src: string; poster: string }) {
 function Hero({ ready }: { ready: boolean }) {
   const { t, lang } = useLang();
   const ref = useRef<HTMLDivElement>(null);
+  const wide = useWide();
   // Açılış ekranı kalkınca satırlar kayar
   useEffect(() => {
     if (ready) ref.current?.classList.add('is-in');
   }, [ready, lang]);
   return (
-    // Telefonda sağ boşluk yok: video varsa başlığın altına yer açılır, video oraya oturur ve başlığa doğru solar
-    <div
-      ref={ref}
-      className={`gutter relative isolate grid gap-10 pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px] ${play.hero.video ? 'max-md:pb-[min(64vw,320px)]' : ''}`}
-    >
-      {play.hero.video && <HeroVideo src={play.hero.video} poster={play.hero.poster} />}
+    <div ref={ref} className="gutter relative isolate grid gap-10 pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px]">
+      {play.hero.video && wide && <HeroVideo src={play.hero.video} poster={play.hero.poster} />}
       {/* İngilizce üç satır: noktalı harf yok, afiş sıkılığı her ekranda korunur. Yatay telefonda ekran yüksekliğine göre küçülür */}
       <h1 lang="en" className="display text-[clamp(4.2rem,15.5vw,15.5rem)] leading-[0.9] [@media(max-height:520px)]:text-[24svh]" aria-label={play.hero.lines.join(' ')}>
         {play.hero.lines.map((line, i) => (
