@@ -336,7 +336,6 @@ export type Play = {
   stickers: Sticker[];
   // Yeni ana sayfa (Design. Build. Automate.). Çok satırlı başlıklarda satırlar "\n" ile ayrılır
   hero: { lines: string[]; accent: number; intro: Text; status: Text };
-  ticker: Text[];
   // Üç alan satırları Hakkımda bölümünde, fotoğraf ve metnin yanında
   areas: { items: AreaItem[] };
   work: { title: Text; text: Text; all: Text };

@@ -11,7 +11,7 @@ import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesFi
 type SectionKey = 'acilis' | 'isler' | 'hakkimda' | 'surec' | 'iletisim';
 
 const SECTIONS: { key: SectionKey; title: string; description: string }[] = [
-  { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi, durum ve kayan disiplin şeridi.' },
+  { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi ve durum satırı.' },
   { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve yanında duran Design, Build, Automate satırları.' },
   { key: 'isler', title: 'Seçili işler', description: 'Genişleyen şeritlerin başlığı ve açıklaması. Şeritler Projeler sayfasındaki sıradan gelir.' },
   { key: 'surec', title: 'Nasıl çalışırım', description: 'Dört adımlık çalışma süreci.' },
@@ -218,17 +218,6 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
               <BiField label="Tanıtım cümlesi" long value={d.hero.intro} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, intro: v } }))} />
               <BiField label="Durum (yeşil noktalı satır)" value={d.hero.status} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, status: v } }))} />
               <BiField label="Üst menüdeki iletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
-            </Card>
-            <Card title="Kayan disiplin şeridi" description="Açılışın altında yavaşça akan kelimeler.">
-              {d.ticker.map((item, i) => (
-                <div key={i} className="flex items-end gap-2">
-                  <div className="flex-1">
-                    <BiField label={`${i + 1}. kelime`} value={item} onChange={(v) => set((x) => ({ ...x, ticker: x.ticker.map((t, j) => (j === i ? v : t)) }))} />
-                  </div>
-                  <ListTools i={i} length={d.ticker.length} what="Kelimeyi" onMove={(to) => set((x) => ({ ...x, ticker: move(x.ticker, i, to) }))} onRemove={() => set((x) => ({ ...x, ticker: x.ticker.filter((_, j) => j !== i) }))} />
-                </div>
-              ))}
-              <AddButton onClick={() => set((x) => ({ ...x, ticker: [...x.ticker, blank] }))}>Kelime ekle</AddButton>
             </Card>
           </>
         )}

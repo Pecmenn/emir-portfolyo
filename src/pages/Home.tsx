@@ -46,7 +46,7 @@ function Hero({ ready }: { ready: boolean }) {
     if (ready) ref.current?.classList.add('is-in');
   }, [ready, lang]);
   return (
-    <div ref={ref} className="gutter grid gap-10 pb-[clamp(40px,6vw,80px)] pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px]">
+    <div ref={ref} className="gutter grid gap-10 pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px]">
       {/* İngilizce üç satır: noktalı harf yok, afiş sıkılığı her ekranda korunur. Yatay telefonda ekran yüksekliğine göre küçülür */}
       <h1 lang="en" className="display text-[clamp(4.2rem,15.5vw,15.5rem)] leading-[0.9] [@media(max-height:520px)]:text-[24svh]" aria-label={play.hero.lines.join(' ')}>
         {play.hero.lines.map((line, i) => (
@@ -73,24 +73,6 @@ function Hero({ ready }: { ready: boolean }) {
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-// Disiplinler yavaşça akan bir şeritte; hareket azaltıldıysa durur
-function Ticker() {
-  const { t } = useLang();
-  const items = [...play.ticker, ...play.ticker];
-  return (
-    <div aria-hidden className="overflow-hidden border-y border-seam py-[18px]">
-      <div className="flex w-max gap-12 [animation:ticker_40s_linear_infinite] motion-reduce:[animation:none]">
-        {items.map((item, i) => (
-          <span key={i} className="display whitespace-nowrap text-[clamp(1.4rem,2.4vw,2.2rem)] text-stone">
-            {t(item)}
-            <span className="pl-12 text-wine-bright">/</span>
-          </span>
-        ))}
-      </div>
     </div>
   );
 }
@@ -203,7 +185,6 @@ export default function Home({ ready }: { ready: boolean }) {
   return (
     <main id="main" tabIndex={-1} className="outline-none">
       <Hero ready={ready} />
-      <Ticker />
       <About />
       <Work />
       <Process />
