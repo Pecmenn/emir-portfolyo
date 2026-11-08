@@ -151,7 +151,8 @@ function miniKroki(kind = 'rear', size = 76, dark = false) {
 
 export function getScreens(lang = 'tr') {
   const T = (tr, en) => (lang === 'en' ? en : tr);
-  const P = (n) => (lang === 'en' ? `${n}%` : `%${n}`);
+  // Yüzde işareti dile göre: TR %50, EN 50%. Adı P değil: dosya başındaki görsel yolu P'yi gölgelemesin
+  const pct = (n) => (lang === 'en' ? `${n}%` : `%${n}`);
 
   const nav = (on) => `<div class="ks-nav">
     <span class="${on === 0 ? 'on' : ''}">${I.glove}${T('Torpido', 'Glovebox')}</span>
@@ -309,7 +310,7 @@ export function getScreens(lang = 'tr') {
             <div style="flex:none;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 10px 18px -10px #000">${miniKroki('rear', 88)}</div>
           </div>
           <div class="ks-bar" style="position:relative;margin-top:13px;background:rgba(243,244,248,.2)"><i style="width:100%;background:#FFC7D4"></i></div>
-          <p style="position:relative;display:flex;justify-content:space-between;margin-top:5px;font-size:14px;font-weight:800"><span>A ${P(0)}</span><span>B ${P(100)}</span></p>
+          <p style="position:relative;display:flex;justify-content:space-between;margin-top:5px;font-size:14px;font-weight:800"><span>A ${pct(0)}</span><span>B ${pct(100)}</span></p>
           <div style="position:relative;display:flex;align-items:center;gap:10px;margin-top:12px;padding:9px 12px;border-radius:16px;background:rgba(243,244,248,.13)">
             ${av('eksper', 36, 'rgba(243,244,248,.7)')}
             <div style="flex:1"><p style="font-size:14.500px;font-weight:800">${T('Eksper 10 Kasım, 10.00', 'Assessor on 10 Nov, 10:00')}</p><p style="font-size:13px;opacity:.82">Selin Demir</p></div>
@@ -318,8 +319,8 @@ export function getScreens(lang = 'tr') {
         </div>
         <div style="margin:12px 14px 0;display:grid;gap:9px">
           ${[
-            [T('18 Ağustos 2024', '18 August 2024'), 'Beşiktaş', `A ${P(50)}, B ${P(50)}`, T('12.300 ₺ ödendi', '₺12,300 paid'), 'side'],
-            [T('2 Mart 2022', '2 March 2022'), 'Maltepe', `A ${P(100)}, B ${P(0)}`, T('Basamak düştü', 'Step dropped'), 'junction'],
+            [T('18 Ağustos 2024', '18 August 2024'), 'Beşiktaş', `A ${pct(50)}, B ${pct(50)}`, T('12.300 ₺ ödendi', '₺12,300 paid'), 'side'],
+            [T('2 Mart 2022', '2 March 2022'), 'Maltepe', `A ${pct(100)}, B ${pct(0)}`, T('Basamak düştü', 'Step dropped'), 'junction'],
           ]
             .map(([d, p, r, n, k]) => `<div class="ks-card" style="display:flex;align-items:center;gap:12px;padding:8px 14px 8px 8px;border-radius:20px"><div style="border-radius:13px;overflow:hidden;background:#F3F4F8;flex:none">${miniKroki(k, 60)}</div><div style="flex:1;min-width:0"><p class="ks-h4" style="font-size:16.500px">${d}</p><p class="ks-small">${p}, ${r}</p></div><span class="ks-chip" style="height:26px;font-size:12px;padding:0 9px;background:transparent;padding-right:0">${n}</span></div>`)
             .join('')}
@@ -592,7 +593,7 @@ export function getScreens(lang = 'tr') {
           ${[I.car, I.arrow, I.light, I.sign, I.undo].map((ic, i) => `<span style="display:grid;place-items:center;width:40px;height:40px;border-radius:14px;${i === 0 ? 'background:#2318D6;color:#fff' : 'color:#2318D6'}"><i style="display:block;width:22px;height:22px">${ic}</i></span>`).join('')}
         </div>
         <div class="ks-sheet" style="position:absolute;left:0;right:0;bottom:0;top:420px;padding:22px 16px 0;display:flex;flex-direction:column">
-          <p class="ks-num" style="display:flex;justify-content:space-between;align-items:baseline;font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1"><span style="color:#2318D6">A ${P(0)}</span><span style="color:#D4124E">B ${P(100)}</span></p>
+          <p class="ks-num" style="display:flex;justify-content:space-between;align-items:baseline;font-size:36px;font-weight:800;letter-spacing:-.03em;line-height:1"><span style="color:#2318D6">A ${pct(0)}</span><span style="color:#D4124E">B ${pct(100)}</span></p>
           <div class="ks-bar" style="margin-top:8px"><i class="b" style="width:100%"></i></div>
           <div style="display:flex;align-items:center;gap:8px;margin-top:12px"><span class="ks-no ks-no--pink">7</span><p style="font-size:19px;font-weight:800;letter-spacing:-.012em">${T('Öndeki araca arkadan çarpma', 'Hitting the car in front')}</p></div>
           <p class="ks-small" style="margin-top:5px">${T('Tahmini. Kesin oranı sigorta şirketleri belirler.', 'An estimate. The insurers set the final split.')}</p>
@@ -604,11 +605,11 @@ export function getScreens(lang = 'tr') {
     oran: {
       cls: '',
       html: `<div class="ks-abs" style="inset:0 0 auto;height:166px;background:#2318D6;color:#F3F4F8;overflow:hidden;padding:68px 20px 0"><i class="ks-gui"></i>
-          <div style="position:relative;display:flex;align-items:center;gap:10px">${av('burcu', 40, '#F3F4F8')}<p style="font-size:15px;font-weight:700;line-height:1.1">Burcu<br><span style="opacity:.8">${T('A sürücüsü', 'Driver A')}</span></p><p class="ks-num" style="margin-left:auto;font-size:60px;font-weight:800;letter-spacing:-.04em;line-height:1">${P(0)}</p></div>
+          <div style="position:relative;display:flex;align-items:center;gap:10px">${av('burcu', 40, '#F3F4F8')}<p style="font-size:15px;font-weight:700;line-height:1.1">Burcu<br><span style="opacity:.8">${T('A sürücüsü', 'Driver A')}</span></p><p class="ks-num" style="margin-left:auto;font-size:60px;font-weight:800;letter-spacing:-.04em;line-height:1">${pct(0)}</p></div>
         </div>
         <div class="ks-abs" style="left:0;right:0;top:166px;height:236px;background:#FFC7D4;color:#D4124E;overflow:hidden;padding:18px 20px 0"><i class="ks-gui ks-gui--pink"></i>
           <div style="position:relative;display:flex;align-items:center;gap:10px">${av('hakan', 40, '#D4124E')}<p style="font-size:15px;font-weight:700;line-height:1.1">Hakan Bey<br><span style="opacity:.8">${T('B sürücüsü', 'Driver B')}</span></p></div>
-          <p class="ks-num" style="position:relative;margin-top:14px;font-size:126px;font-weight:800;letter-spacing:-.05em;line-height:1;text-align:right">${P(100)}</p>
+          <p class="ks-num" style="position:relative;margin-top:14px;font-size:126px;font-weight:800;letter-spacing:-.05em;line-height:1;text-align:right">${pct(100)}</p>
         </div>
         <div style="color:#F3F4F8">${status('18:23')}</div>
         <div class="ks-sheet" style="position:absolute;left:0;right:0;top:392px;bottom:0;padding:22px 16px 0;display:flex;flex-direction:column">
@@ -709,7 +710,7 @@ export function getScreens(lang = 'tr') {
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 14px 0">
-          <div class="ks-card" style="padding:12px 14px"><p class="ks-label">${T('Kusur oranı', 'Fault split')}</p><p class="ks-num" style="margin-top:4px;font-size:15px;font-weight:800;display:flex;justify-content:space-between"><span style="color:#2318D6">A ${P(0)}</span><span style="color:#D4124E">B ${P(100)}</span></p><div class="ks-bar" style="height:9px;margin-top:6px"><i class="b" style="width:100%"></i></div></div>
+          <div class="ks-card" style="padding:12px 14px"><p class="ks-label">${T('Kusur oranı', 'Fault split')}</p><p class="ks-num" style="margin-top:4px;font-size:15px;font-weight:800;display:flex;justify-content:space-between"><span style="color:#2318D6">A ${pct(0)}</span><span style="color:#D4124E">B ${pct(100)}</span></p><div class="ks-bar" style="height:9px;margin-top:6px"><i class="b" style="width:100%"></i></div></div>
           <div class="ks-card" style="padding:12px 14px"><p class="ks-label">${T('Onarım tahmini', 'Repair estimate')}</p><p class="ks-num" style="margin-top:3px;font-size:22px;font-weight:800;letter-spacing:-.025em">24.600 ₺</p><p class="ks-small" style="font-size:12.500px">${T('Karşı sigorta öder', 'Other insurer pays')}</p></div>
         </div>
         <div class="ks-card" style="margin:10px 14px 0;padding:10px 14px;display:flex;align-items:center;gap:10px"><span class="ks-round ks-round--ink" style="width:38px;height:38px">${I.wrench}</span><div style="flex:1"><p class="ks-h4" style="font-size:16px">Kozyatağı Oto</p><p class="ks-small" style="font-size:13px">${T('Seçtiğin servis, 1,2 km', 'Your garage, 1.2 km away')}</p></div><span style="display:inline-flex;align-items:center;gap:4px;font-size:14.500px;font-weight:800;color:#D4124E"><i style="width:15px;height:15px;display:block">${I.star}</i>4,8</span></div>
