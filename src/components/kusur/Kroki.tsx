@@ -3,6 +3,9 @@ import { useLang } from '../../lib/i18n';
 import { reducedMotion } from '../../lib/scroll';
 import { useMobile } from '../Scenes';
 import { useSceneProgress } from '../sceneProgress';
+
+// Türkçede yüzde işareti sayıdan önce, İngilizcede sonra gelir.
+const pct = (lang: string, n: number) => (lang === 'en' ? `${n}%` : `%${n}`);
 import { car, CAR_A, CAR_B } from './screens.js';
 
 // Sayfanın imza anı: ziyaretçi krokideki iki arabayı sürükler, tahmini kusur oranı canlı değişir.
@@ -83,6 +86,8 @@ export default function Kroki() {
   const { lang } = useLang();
   const T = (o: { tr: string; en: string }) => (lang === 'en' ? o.en : o.tr);
   const L = (tr: string, en: string) => (lang === 'en' ? en : tr);
+  const langRef = useRef(lang);
+  langRef.current = lang;
 
   const svg = useRef<SVGSVGElement>(null);
   const wrap = useRef<HTMLDivElement>(null);
@@ -187,8 +192,8 @@ export default function Kroki() {
       place(carB.current, s.shownB, s.b, s.opacity.b, s.drag === 'b');
       s.shown.a += (s.target.a - s.shown.a) * 0.18;
       s.shown.b += (s.target.b - s.shown.b) * 0.18;
-      const ta = `A %${Math.round(s.shown.a)}`;
-      const tb = `B %${Math.round(s.shown.b)}`;
+      const ta = `A ${pct(langRef.current, Math.round(s.shown.a))}`;
+      const tb = `B ${pct(langRef.current, Math.round(s.shown.b))}`;
       if (numA.current && numA.current.textContent !== ta) numA.current.textContent = ta;
       if (numB.current && numB.current.textContent !== tb) numB.current.textContent = tb;
     };
@@ -287,7 +292,7 @@ export default function Kroki() {
 
   // Masaüstü ve telefon yerleşimi
   const box = mobile
-    ? { sk: { left: 0, top: 112, width: 400, height: 336 }, res: { left: 20, top: 462, width: 360 } }
+    ? { sk: { left: 0, top: 126, width: 400, height: 336 }, res: { left: 20, top: 476, width: 360 } }
     : { sk: { left: 660, top: 16, width: 880, height: 532 }, res: { left: 660, top: 572, width: 880 } };
   const px = (o: Record<string, number>): CSSProperties => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, `calc(var(--u) * ${v})`])) as CSSProperties;
 
@@ -355,10 +360,10 @@ export default function Kroki() {
       <div aria-live="polite" style={{ position: 'absolute', ...px(box.res) }}>
         <p style={{ display: 'flex', justifyContent: 'space-between', fontSize: `calc(var(--u) * ${mobile ? 44 : 64})`, fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1, fontFeatureSettings: '"tnum"' }}>
           <span ref={numA} style={{ color: aColor }}>
-            A %0
+            {`A ${pct(lang, 0)}`}
           </span>
           <span ref={numB} style={{ color: bColor }}>
-            B %0
+            {`B ${pct(lang, 0)}`}
           </span>
         </p>
         <div style={{ display: 'flex', overflow: 'hidden', height: `calc(var(--u) * ${mobile ? 16 : 24})`, marginTop: `calc(var(--u) * ${mobile ? 8 : 10})`, borderRadius: `calc(var(--u) * 14)`, background: 'rgba(35,24,214,.14)' }}>
@@ -412,7 +417,7 @@ export default function Kroki() {
 
       {/* İlk dokunuşa kadar ipucu */}
       {!user && (
-        <p className="ks-hand" style={{ position: 'absolute', left: U(mobile ? 22 : 700), top: U(mobile ? 128 : 40), fontSize: U(mobile ? 25 : 40), color: '#D4124E', transform: 'rotate(-4deg)', pointerEvents: 'none' }}>
+        <p className="ks-hand" style={{ position: 'absolute', left: U(mobile ? 22 : 700), top: U(mobile ? 142 : 40), fontSize: U(mobile ? 25 : 40), color: '#D4124E', transform: 'rotate(-4deg)', pointerEvents: 'none' }}>
           {L('arabaları sürükle!', 'drag the cars!')}
         </p>
       )}
