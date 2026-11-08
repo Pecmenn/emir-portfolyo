@@ -321,7 +321,7 @@ export type Play = {
   hello: Text;
   statement: { tr: string[]; en: string[] };
   text: Text;
-  ctaWork: Text;
+  // Üst menüdeki "Birlikte çalışalım" düğmesi
   ctaContact: Text;
   hint: Text;
   hintTouch: Text;
@@ -337,14 +337,13 @@ export type Play = {
   // Yeni ana sayfa (Design. Build. Automate.). Çok satırlı başlıklarda satırlar "\n" ile ayrılır
   hero: { lines: string[]; accent: number; intro: Text; status: Text };
   ticker: Text[];
-  areas: { title: Text; text: Text; items: AreaItem[] };
+  // Üç alan satırları Hakkımda bölümünde, fotoğraf ve metnin yanında
+  areas: { items: AreaItem[] };
   work: { title: Text; text: Text; all: Text };
-  case: { title: Text; text: Text; soon: Text; steps: Step[] };
-  about: { title: Text; text: Text; photo: string; tools: { label: Text; items: string[] }[] };
+  about: { title: Text; text: Text; photo: string };
   process: { title: Text; text: Text; steps: Step[] };
 };
 
-// images: satırdaki küçük görseller; "flow" yazılırsa yerine çizilmiş bir akış şeması gösterilir
-export type AreaItem = { key: Area; title: string; text: Text; tags: Text[]; images: string[] };
+export type AreaItem = { key: Area; title: string; text: Text };
 export type Step = { title: Text; text: Text };
 export const play = playData as Play;

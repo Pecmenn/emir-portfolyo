@@ -96,17 +96,19 @@ export default function Contact() {
   );
   const lines = contact.title[lang];
 
+  // Geniş ekranda tek blok: solda başlık, e-posta ve sosyal hesaplar, sağda form; ikisinin altı hizalı.
+  // Başlık sol sütunun genişliğine göre ölçeklenir (cqw). Telefonda alt alta
   return (
-    <section ref={sectionRef} id="iletisim" className="gutter scroll-mt-[92px] pb-[clamp(80px,11vw,140px)]">
-      <h2 data-reveal className="display text-[clamp(4rem,14vw,13.5rem)]" aria-label={lines.join(' ')}>
-        {lines.map((line, i) => (
-          <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">
-            <span className={i === lines.length - 1 ? 'text-wine-bright' : ''}>{line}</span>
-          </span>
-        ))}
-      </h2>
-      <div className="mt-[clamp(36px,5vw,64px)] grid gap-10 border-t border-seam pt-8 lg:grid-cols-[5fr_7fr]">
-        <div className="soft-rise">
+    <section ref={sectionRef} id="iletisim" className="gutter grid scroll-mt-[92px] gap-10 pb-[clamp(80px,11vw,140px)] lg:grid-cols-2 lg:items-end lg:gap-x-[clamp(48px,6vw,120px)]">
+      <div className="lg:[container-type:inline-size]">
+        <h2 data-reveal className="display text-[clamp(4rem,14vw,13.5rem)] lg:text-[length:min(23.4cqw,13.5rem)]" aria-label={lines.join(' ')}>
+          {lines.map((line, i) => (
+            <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">
+              <span className={i === lines.length - 1 ? 'text-wine-bright' : ''}>{line}</span>
+            </span>
+          ))}
+        </h2>
+        <div className="soft-rise mt-[clamp(36px,5vw,64px)] border-t border-seam pt-8">
           {t(contact.text) && <p className="mb-8 max-w-md text-stone">{t(contact.text)}</p>}
           <p className="eyebrow mb-3.5">{t(contact.form.email)}</p>
           <a href={`mailto:${site.email}`} className="break-all border-b border-seam pb-1.5 text-[clamp(1.4rem,2.4vw,2.2rem)] transition-colors hover:border-cream">
@@ -120,57 +122,57 @@ export default function Contact() {
             ))}
           </div>
         </div>
+      </div>
 
-        <div className="soft-rise [transition-delay:.1s]">
-          {status === 'sent' ? (
-            <div ref={resultRef} tabIndex={-1} role="status" className="rounded-2xl border border-seam bg-coal-2 p-6 text-lg leading-relaxed outline-none">
-              {t(contact.form.sent)}
+      <div className="soft-rise [transition-delay:.1s]">
+        {status === 'sent' ? (
+          <div ref={resultRef} tabIndex={-1} role="status" className="rounded-2xl border border-seam bg-coal-2 p-6 text-lg leading-relaxed outline-none">
+            {t(contact.form.sent)}
+          </div>
+        ) : (
+          <form ref={formRef} onSubmit={submit} noValidate aria-busy={status === 'sending'} className="grid gap-5">
+            <div className="grid gap-2">
+              <label htmlFor="name" className={labelClass}>
+                {t(contact.form.name)}
+              </label>
+              <input {...fieldProps('name')} placeholder={t(contact.form.phName)} autoComplete="name" />
+              {error('name')}
             </div>
-          ) : (
-            <form ref={formRef} onSubmit={submit} noValidate aria-busy={status === 'sending'} className="grid gap-5">
-              <div className="grid gap-2">
-                <label htmlFor="name" className={labelClass}>
-                  {t(contact.form.name)}
-                </label>
-                <input {...fieldProps('name')} placeholder={t(contact.form.phName)} autoComplete="name" />
-                {error('name')}
-              </div>
-              <div className="grid gap-2">
-                <label htmlFor="email" className={labelClass}>
-                  {t(contact.form.email)}
-                </label>
-                <input {...fieldProps('email')} type="email" inputMode="email" placeholder={t(contact.form.phEmail)} autoComplete="email" />
-                {error('email')}
-              </div>
-              <div className="grid gap-2">
-                <label htmlFor="message" className={labelClass}>
-                  {t(contact.form.message)}
-                </label>
-                <textarea {...fieldProps('message')} rows={4} placeholder={t(contact.form.phMessage)} className={`${fieldProps('message').className} resize-y`} />
-                {error('message')}
-              </div>
-              <div>
-                <button type="submit" disabled={status === 'sending'} className="btn btn-wine disabled:opacity-50">
-                  {status === 'sending' ? t(contact.form.sending) : t(contact.form.send)} <span aria-hidden className="arrow">→</span>
-                </button>
-              </div>
-              <div role="status" aria-live="polite" className="min-h-[1.5rem] text-sm leading-relaxed">
-                {status === 'mailto' && (
-                  <p>
-                    {t(contact.form.mailtoOpened)}
-                    <br />
-                    {t(contact.form.mailtoNote)} {mailLink}
-                  </p>
-                )}
-                {status === 'error' && (
-                  <p className="font-medium text-wine-light">
-                    {t(contact.form.error)} <span className="text-cream">{mailLink}</span>
-                  </p>
-                )}
-              </div>
-            </form>
-          )}
-        </div>
+            <div className="grid gap-2">
+              <label htmlFor="email" className={labelClass}>
+                {t(contact.form.email)}
+              </label>
+              <input {...fieldProps('email')} type="email" inputMode="email" placeholder={t(contact.form.phEmail)} autoComplete="email" />
+              {error('email')}
+            </div>
+            <div className="grid gap-2">
+              <label htmlFor="message" className={labelClass}>
+                {t(contact.form.message)}
+              </label>
+              <textarea {...fieldProps('message')} rows={4} placeholder={t(contact.form.phMessage)} className={`${fieldProps('message').className} resize-y`} />
+              {error('message')}
+            </div>
+            <div>
+              <button type="submit" disabled={status === 'sending'} className="btn btn-wine disabled:opacity-50">
+                {status === 'sending' ? t(contact.form.sending) : t(contact.form.send)} <span aria-hidden className="arrow">→</span>
+              </button>
+            </div>
+            <div role="status" aria-live="polite" className="min-h-[1.5rem] text-sm leading-relaxed">
+              {status === 'mailto' && (
+                <p>
+                  {t(contact.form.mailtoOpened)}
+                  <br />
+                  {t(contact.form.mailtoNote)} {mailLink}
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="font-medium text-wine-light">
+                  {t(contact.form.error)} <span className="text-cream">{mailLink}</span>
+                </p>
+              )}
+            </div>
+          </form>
+        )}
       </div>
     </section>
   );

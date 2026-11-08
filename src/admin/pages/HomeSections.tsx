@@ -4,29 +4,27 @@ import type { Step } from '../../content';
 import { HOME_WORK_COUNT } from '../../lib/homeWork';
 import { href } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin, type ContactData, type Content, type PlayData } from '../store';
-import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, TextInput, Toggle, useDraft, useEditLang } from '../ui';
+import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, TextInput, useDraft, useEditLang } from '../ui';
 
 // Ana sayfa (Design. Build. Automate.) bölümleri; sitede yukarıdan aşağı bu sırayla görünür.
 // Çok satırlı başlıklarda her satır ayrı satıra yazılır (Enter); sitede her satır ayrı kayar.
-type SectionKey = 'acilis' | 'alanlar' | 'isler' | 'vaka' | 'hakkimda' | 'surec' | 'iletisim';
+type SectionKey = 'acilis' | 'isler' | 'hakkimda' | 'surec' | 'iletisim';
 
 const SECTIONS: { key: SectionKey; title: string; description: string }[] = [
   { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi, durum ve kayan disiplin şeridi.' },
-  { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve kullandığın araçlar.' },
-  { key: 'alanlar', title: 'Üç alan', description: 'Design, Build ve Automate satırları: açıklama, etiketler ve küçük görseller.' },
+  { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve yanında duran Design, Build, Automate satırları.' },
   { key: 'isler', title: 'Seçili işler', description: 'Genişleyen şeritlerin başlığı ve açıklaması. Şeritler Projeler sayfasındaki sıradan gelir.' },
-  { key: 'vaka', title: 'Uçtan uca vaka', description: 'Şarap renkli bant: bir markanın kimlik, site ve otomasyon adımları.' },
   { key: 'surec', title: 'Nasıl çalışırım', description: 'Dört adımlık çalışma süreci.' },
   { key: 'iletisim', title: 'İletişim', description: '“Birlikte çalışalım” başlığı, paragraf ve form yazıları.' },
 ];
 
 // Sayfanın küçük şeması: düzenlenen bölümün sitede nerede olduğunu gösterir
 function PageMap({ highlight }: { highlight: number }) {
-  const blocks = ['h-7', 'h-5', 'h-5', 'h-6', 'h-4', 'h-3', 'h-4'];
+  const blocks = ['h-7', 'h-7', 'h-6', 'h-4', 'h-4'];
   return (
     <div className="flex w-16 shrink-0 flex-col gap-0.5 rounded-lg border border-black/10 bg-[#0D0B0B] p-1">
       {blocks.map((h, i) => (
-        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#B8202F]' : i === 4 ? 'bg-[#6B0F17]' : 'bg-white/10'}`} />
+        <div key={i} className={`${h} rounded-[3px] ${i === highlight ? 'bg-[#B8202F]' : 'bg-white/10'}`} />
       ))}
     </div>
   );
@@ -219,10 +217,7 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
             <Card>
               <BiField label="Tanıtım cümlesi" long value={d.hero.intro} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, intro: v } }))} />
               <BiField label="Durum (yeşil noktalı satır)" value={d.hero.status} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, status: v } }))} />
-              <div className="grid gap-5 sm:grid-cols-2">
-                <BiField label="İşler düğmesi" value={d.ctaWork} onChange={(v) => set((x) => ({ ...x, ctaWork: v }))} />
-                <BiField label="İletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
-              </div>
+              <BiField label="Üst menüdeki iletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
             </Card>
             <Card title="Kayan disiplin şeridi" description="Açılışın altında yavaşça akan kelimeler.">
               {d.ticker.map((item, i) => (
@@ -237,49 +232,6 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
             </Card>
           </>
         )}
-      </SectionShell>
-    );
-  }
-
-  if (sectionKey === 'alanlar') {
-    return (
-      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.areas.title?.[lang]} text={d.areas.text?.[lang]} />}>
-        {(d, set) => {
-          const update = (i: number, next: Partial<PlayData['areas']['items'][number]>) =>
-            set((x) => ({ ...x, areas: { ...x.areas, items: x.areas.items.map((it, j) => (j === i ? { ...it, ...next } : it)) } }));
-          return (
-            <>
-              <Card>
-                <BiField label="Bölüm başlığı" hint={titleHint} long value={d.areas.title} onChange={(v) => set((x) => ({ ...x, areas: { ...x.areas, title: v } }))} />
-                <BiField label="Açıklama" long value={d.areas.text} onChange={(v) => set((x) => ({ ...x, areas: { ...x.areas, text: v } }))} />
-              </Card>
-              {d.areas.items.map((item, i) => (
-                <Card key={item.key} title={item.title}>
-                  <BiField label="Açıklama" long value={item.text} onChange={(v) => update(i, { text: v })} />
-                  <Field label="Etiketler" hint="Seçili dilde, virgülle ayırarak yazın.">
-                    <TextInput
-                      value={item.tags.map((tg) => tg[lang]).join(', ')}
-                      onChange={(v) => {
-                        const parts = v.split(',').map((p) => p.trim());
-                        update(i, { tags: parts.map((p, j) => ({ ...(item.tags[j] ?? blank), [lang]: p })) });
-                      }}
-                    />
-                  </Field>
-                  <Toggle
-                    label="İlk görselin yerine akış şeması çiz"
-                    hint="Otomasyon gibi görseli olmayan alanlar için."
-                    checked={item.images[0] === 'flow'}
-                    onChange={(on) => update(i, { images: [on ? 'flow' : '', item.images[1] ?? ''] })}
-                  />
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {item.images[0] !== 'flow' && <ImageField label="1. görsel" aspect="aspect-[4/3]" value={item.images[0]} onChange={(v) => update(i, { images: [v, item.images[1] ?? ''] })} />}
-                    <ImageField label="2. görsel" aspect="aspect-[4/3]" value={item.images[1]} onChange={(v) => update(i, { images: [item.images[0] ?? '', v] })} />
-                  </div>
-                </Card>
-              ))}
-            </>
-          );
-        }}
       </SectionShell>
     );
   }
@@ -313,29 +265,12 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
     );
   }
 
-  if (sectionKey === 'vaka') {
-    return (
-      <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.case.title?.[lang]} text={d.case.text?.[lang]} />}>
-        {(d, set) => (
-          <>
-            <Card>
-              <BiField label="Bölüm başlığı" hint={titleHint} long value={d.case.title} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, title: v } }))} />
-              <BiField label="Açıklama" long value={d.case.text} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, text: v } }))} />
-              <BiField label="Adım rozeti (ör. Hazırlanıyor)" hint="Boş bırakılırsa rozet gizlenir." value={d.case.soon} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, soon: v } }))} />
-            </Card>
-            <StepList what="adım" value={d.case.steps} onChange={(v) => set((x) => ({ ...x, case: { ...x.case, steps: v } }))} />
-          </>
-        )}
-      </SectionShell>
-    );
-  }
-
   if (sectionKey === 'hakkimda') {
     return (
       <SectionShell<PlayData> {...shell} preview={(d) => <Preview title={d.about.title?.[lang]} text={d.about.text?.[lang]} />}>
         {(d, set) => {
-          const tools = d.about.tools;
-          const setTools = (next: typeof tools) => set((x) => ({ ...x, about: { ...x.about, tools: next } }));
+          const updateArea = (i: number, next: Partial<PlayData['areas']['items'][number]>) =>
+            set((x) => ({ ...x, areas: { ...x.areas, items: x.areas.items.map((it, j) => (j === i ? { ...it, ...next } : it)) } }));
           return (
             <>
               <Card>
@@ -343,24 +278,15 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
                 <BiField label="Tanıtım metni" long value={d.about.text} onChange={(v) => set((x) => ({ ...x, about: { ...x.about, text: v } }))} />
                 <ImageField label="Fotoğraf" hint="Dikey (4:5) bir portre en iyi sonucu verir. Boşsa baş harfleriniz gösterilir." aspect="aspect-[4/5]" value={d.about.photo} onChange={(v) => set((x) => ({ ...x, about: { ...x.about, photo: v } }))} />
               </Card>
-              <Card title="Araçlar" description="Her grup bir satır; araçları virgülle ayırın.">
-                {tools.map((g, i) => (
-                  <div key={i} className="grid gap-3 rounded-xl border border-black/[0.08] p-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold">{i + 1}. grup</span>
-                      <ListTools i={i} length={tools.length} what="Grubu" onMove={(to) => setTools(move(tools, i, to))} onRemove={() => setTools(tools.filter((_, j) => j !== i))} />
-                    </div>
-                    <BiField label="Grup adı" value={g.label} onChange={(v) => setTools(tools.map((x, j) => (j === i ? { ...x, label: v } : x)))} />
-                    <Field label="Araçlar">
-                      <TextInput
-                        value={g.items.join(', ')}
-                        onChange={(v) => setTools(tools.map((x, j) => (j === i ? { ...x, items: v.split(',').map((s) => s.trim()) } : x)))}
-                      />
-                    </Field>
-                  </div>
-                ))}
-                <AddButton onClick={() => setTools([...tools, { label: blank, items: [] }])}>Grup ekle</AddButton>
-              </Card>
+              {d.areas.items.map((item, i) => (
+                <Card
+                  key={item.key}
+                  title={item.title}
+                  description={i === 0 ? 'Fotoğrafın ve tanıtım metninin yanında bu sırayla görünür. Satıra tıklayan ziyaretçi seçili işlere iner.' : undefined}
+                >
+                  <BiField label="Açıklama" long value={item.text} onChange={(v) => updateArea(i, { text: v })} />
+                </Card>
+              ))}
             </>
           );
         }}

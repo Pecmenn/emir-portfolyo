@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
 import { cvUrl, play, projects, site, ui, type Text } from '../content';
 import WorkStrips from '../components/WorkStrips';
 import Contact from '../sections/Contact';
@@ -9,7 +9,7 @@ import { useSoftReveal } from '../lib/reveal';
 import { refreshSoon, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
-// Ana sayfa (Design. Build. Automate.): açılış, disiplin şeridi, hakkımda, üç alan, seçili işler, uçtan uca vaka (şarap bandı),
+// Ana sayfa (Design. Build. Automate.): açılış, disiplin şeridi, hakkımda (yanında üç alan), seçili işler,
 // nasıl çalışırım ve iletişim. Metinler src/content/play.json'da, panelde "Ana sayfa" altında.
 // Hareketler yumuşaktır: satırlar maskenin altından kayar, bloklar hafifçe yükselir (bkz. src/lib/reveal.ts).
 
@@ -55,9 +55,9 @@ function Hero({ ready }: { ready: boolean }) {
           </span>
         ))}
       </h1>
-      <div className="soft-rise grid gap-7 border-t border-seam pt-7 [transition-delay:.25s] lg:grid-cols-[1fr_auto] lg:items-end">
-        {/* Panelde boş bırakılan satırlar sayfada yer tutmaz; ikisi de boşsa kap da çizilmez, düğmelerin üstünde fazladan boşluk kalmaz */}
-        {(t(play.hero.intro).trim() || t(play.hero.status).trim()) && (
+      {/* Başlığın altında yalnızca tanıtım ve durum satırı; panelde ikisi de boşsa alt çizgiyle birlikte hiç çizilmez */}
+      {(t(play.hero.intro).trim() || t(play.hero.status).trim()) && (
+        <div className="soft-rise border-t border-seam pt-7 [transition-delay:.25s]">
           <div className="grid gap-5">
             {t(play.hero.intro).trim() && (
               <p key={lang} className="max-w-[34ch] text-[clamp(1.15rem,1.6vw,1.5rem)] leading-[1.35]">
@@ -71,16 +71,8 @@ function Hero({ ready }: { ready: boolean }) {
               </span>
             )}
           </div>
-        )}
-        <div className="flex flex-wrap gap-3 lg:col-start-2">
-          <button type="button" onClick={() => scrollToTarget('#isler')} className="btn btn-wine">
-            {t(play.ctaWork)} <span aria-hidden className="arrow">↓</span>
-          </button>
-          <button type="button" onClick={() => scrollToTarget('#iletisim')} className="btn">
-            {t(play.ctaContact)}
-          </button>
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -100,86 +92,6 @@ function Ticker() {
         ))}
       </div>
     </div>
-  );
-}
-
-// Otomasyonu anlatan küçük akış şeması (gerçek görsel yerine)
-function FlowArt() {
-  return (
-    <div className="grid h-full w-full place-items-center bg-coal-3">
-      <svg viewBox="0 0 200 130" fill="none" aria-hidden className="w-[86%]">
-        <rect x="8" y="14" width="56" height="28" rx="6" fill="#2C2525" />
-        <text x="36" y="32" fill="#F1E9DE" fontSize="10" textAnchor="middle" fontFamily="Hanken Grotesk, sans-serif">
-          Excel
-        </text>
-        <rect x="72" y="51" width="56" height="28" rx="6" fill="#6B0F17" />
-        <text x="100" y="69" fill="#F1E9DE" fontSize="10" textAnchor="middle" fontFamily="Hanken Grotesk, sans-serif">
-          AI
-        </text>
-        <rect x="136" y="88" width="56" height="28" rx="6" fill="#2C2525" />
-        <text x="164" y="106" fill="#F1E9DE" fontSize="10" textAnchor="middle" fontFamily="Hanken Grotesk, sans-serif">
-          Mailing
-        </text>
-        <path d="M64 28 C84 28 84 65 72 65" stroke="#A99F95" strokeWidth="1.4" />
-        <path d="M128 65 C150 65 140 102 136 102" stroke="#A99F95" strokeWidth="1.4" />
-        <circle cx="64" cy="28" r="3" fill="#B8202F" />
-        <circle cx="128" cy="65" r="3" fill="#B8202F" />
-      </svg>
-    </div>
-  );
-}
-
-// Üç alan: satırın üstüne gelince şarap rengi soldan dolar
-function Areas() {
-  const { t } = useLang();
-  const ref = useRef<HTMLElement>(null);
-  useSoftReveal(ref);
-  return (
-    <section ref={ref} id="alanlar" className="gutter scroll-mt-[92px] pb-[clamp(80px,11vw,160px)]">
-      <Head title={play.areas.title} text={play.areas.text} />
-      <div className="border-t border-seam">
-        {play.areas.items.map((item, i) => (
-          <button
-            key={item.key}
-            type="button"
-            onClick={() => scrollToTarget('#isler')}
-            className="soft-rise group relative isolate grid w-full gap-5 overflow-hidden border-b border-seam py-[clamp(24px,3vw,40px)] text-left lg:grid-cols-[70px_1.1fr_1fr_auto] lg:items-center lg:px-4"
-          >
-            <span aria-hidden className="absolute inset-0 -z-10 origin-left scale-x-0 bg-wine transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-x-100" />
-            <span className="text-sm tabular-nums text-stone transition-colors duration-500 group-hover:text-cream">0{i + 1}</span>
-            <span lang="en" className="display text-[clamp(3rem,7.5vw,7rem)]">
-              {item.title}
-            </span>
-            <span>
-              <span className="block max-w-[40ch] text-stone transition-colors duration-500 group-hover:text-cream">{t(item.text)}</span>
-              <span className="mt-3.5 flex flex-wrap gap-2">
-                {item.tags.map((tag) => (
-                  <span key={tag.en} className="tag">
-                    {t(tag)}
-                  </span>
-                ))}
-              </span>
-            </span>
-            <span className="flex gap-2.5">
-              {item.images.map((src, j) => (
-                <span key={j} className="aspect-[4/3] w-[calc(50%-5px)] shrink-0 overflow-hidden rounded-xl bg-coal-2 lg:w-[clamp(120px,14vw,210px)]">
-                  {src === 'flow' ? (
-                    <FlowArt />
-                  ) : (
-                    <img
-                      src={src}
-                      alt=""
-                      loading="lazy"
-                      className="h-full w-full object-cover object-top transition-transform duration-[1200ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.06]"
-                    />
-                  )}
-                </span>
-              ))}
-            </span>
-          </button>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -204,58 +116,6 @@ function Work() {
   );
 }
 
-// Adımların küçük çizimleri (kimlik, site, otomasyon)
-const STEP_ART: ReactNode[] = [
-  <svg key="k" viewBox="0 0 160 100" className="w-[70%]" aria-hidden>
-    <circle cx="50" cy="50" r="30" fill="#F1E9DE" />
-    <rect x="92" y="22" width="44" height="16" rx="4" fill="#B8202F" />
-    <rect x="92" y="44" width="44" height="16" rx="4" fill="#0D0B0B" />
-    <rect x="92" y="66" width="44" height="16" rx="4" fill="#F1E9DE" opacity=".5" />
-  </svg>,
-  <svg key="s" viewBox="0 0 160 100" className="w-[74%]" aria-hidden>
-    <rect x="10" y="10" width="140" height="80" rx="8" fill="#0D0B0B" />
-    <rect x="20" y="22" width="60" height="8" rx="3" fill="#F1E9DE" />
-    <rect x="20" y="36" width="40" height="5" rx="2" fill="#A99F95" />
-    <rect x="90" y="22" width="50" height="56" rx="5" fill="#6B0F17" />
-    <rect x="20" y="62" width="30" height="12" rx="6" fill="#B8202F" />
-  </svg>,
-  <svg key="o" viewBox="0 0 160 100" className="w-[80%]" aria-hidden>
-    <rect x="6" y="38" width="38" height="24" rx="5" fill="#F1E9DE" />
-    <rect x="62" y="38" width="38" height="24" rx="5" fill="#B8202F" />
-    <rect x="118" y="14" width="36" height="22" rx="5" fill="#0D0B0B" />
-    <rect x="118" y="64" width="36" height="22" rx="5" fill="#0D0B0B" />
-    <path d="M44 50h18M100 50c8 0 8-25 18-25M100 50c8 0 8 25 18 25" stroke="#F1E9DE" strokeWidth="1.5" fill="none" />
-  </svg>,
-];
-
-// Uçtan uca vaka: sitenin tek şarap rengi bandı
-function CaseBand() {
-  const { t } = useLang();
-  const ref = useRef<HTMLElement>(null);
-  useSoftReveal(ref);
-  return (
-    <section ref={ref} id="vaka" className="bg-wine py-[clamp(80px,11vw,160px)]">
-      <div className="gutter">
-        <Head title={play.case.title} text={play.case.text} />
-        <div className="grid gap-3.5 lg:grid-cols-3">
-          {play.case.steps.map((step, i) => (
-            <article
-              key={step.title.en}
-              className={`soft-rise grid min-h-[360px] content-start gap-[18px] rounded-[20px] bg-wine-deep p-6 transition-transform duration-700 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1.5 ${['', '[transition-delay:.1s]', '[transition-delay:.2s]'][i]}`}
-            >
-              <span className="display text-[1.6rem] text-wine-light">0{i + 1}</span>
-              <h3 className="display text-[clamp(2.2rem,3vw,3rem)]">{t(step.title)}</h3>
-              <p className="text-cream/80">{t(step.text)}</p>
-              <div className="mt-auto grid h-[150px] place-items-center overflow-hidden rounded-[14px] bg-[#310709]">{STEP_ART[i % STEP_ART.length]}</div>
-              <span className="justify-self-start rounded-full border border-cream/35 px-2.5 py-1.5 text-xs font-semibold uppercase tracking-[0.08em]">{t(play.case.soon)}</span>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function About() {
   const { t, lang } = useLang();
   const ref = useRef<HTMLElement>(null);
@@ -269,12 +129,12 @@ function About() {
     <section
       ref={ref}
       id="hakkimda"
-      className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] sm:grid-cols-[clamp(220px,36vw,340px)_minmax(0,1fr)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)] lg:grid-rows-[auto_1fr] xl:grid-cols-[clamp(340px,29vw,520px)_minmax(0,4fr)_minmax(0,5fr)] xl:grid-rows-1"
+      className="gutter grid gap-[clamp(28px,4vw,64px)] py-[clamp(80px,11vw,160px)] sm:grid-cols-[clamp(220px,36vw,340px)_minmax(0,1fr)] lg:grid-cols-[clamp(340px,36vw,520px)_minmax(0,1fr)] xl:grid-cols-[clamp(340px,29vw,520px)_minmax(0,4fr)_minmax(0,5fr)] xl:grid-rows-1"
     >
-      {/* Geniş ekranda üç sütun: fotoğraf, başlık ve metin, beceriler. Yüksekliği fotoğrafın oranı belirler (before boşluğu),
-          diğer sütunlar ona uzar; metin daha uzun olursa fotoğraf da birlikte uzar. Dizüstünde beceriler metnin altına iner,
-          tablette fotoğrafla metin yan yana, beceriler tam genişlikte altta; telefonda her şey alt alta dizilir */}
-      <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)] lg:row-span-2 lg:aspect-auto xl:row-span-1 xl:before:block xl:before:pt-[114%] xl:before:content-['']">
+      {/* Geniş ekranda üç sütun: fotoğraf, başlık ve metin, üç alan (Design, Build, Automate). Yüksekliği fotoğrafın oranı
+          belirler (before boşluğu), diğer sütunlar ona uzar; içerik daha uzun olursa fotoğraf da birlikte uzar. Tablette ve
+          dizüstünde fotoğrafla metin yan yana, alanlar tam genişlikte altta; telefonda her şey alt alta */}
+      <div className="soft-rise relative aspect-[4/5] overflow-hidden rounded-[22px] bg-[radial-gradient(120%_90%_at_50%_20%,#8a1620,#4A0A10_60%,#2a0609)] xl:aspect-auto xl:before:block xl:before:pt-[114%] xl:before:content-['']">
         {play.about.photo ? (
           <img src={play.about.photo} alt={site.name} className="absolute inset-0 h-full w-full object-cover" />
         ) : (
@@ -284,7 +144,7 @@ function About() {
         )}
       </div>
       {/* Üç sütunda yazı ölçüleri sütun genişliğine bağlı (cqw); başlık fotoğrafın üstüyle, metin altıyla hizalanır */}
-      <div data-reveal className="flex flex-col xl:justify-between xl:[container-type:inline-size]">
+      <div data-reveal className="flex flex-col lg:justify-between xl:[container-type:inline-size]">
         <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[length:min(25cqw,190px)]" />
         <div>
           <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)] xl:max-w-none xl:text-[length:min(6.4cqw,30px)] xl:leading-[1.38]">{t(play.about.text)}</p>
@@ -297,22 +157,25 @@ function About() {
           )}
         </div>
       </div>
-      <div className="grid border-b border-seam sm:col-span-2 lg:col-span-1 lg:col-start-2 xl:col-start-3 xl:auto-rows-fr">
-        {play.about.tools.map((group, i) => (
-          <div
-            key={group.label.en}
+      {/* Üç alan: satırın üstüne gelince şarap rengi soldan dolar, tıklayınca seçili işlere iner.
+          Telefonda ve geniş ekranın dar sütununda başlık üstte, açıklama altta; tablette ve dizüstünde yan yana */}
+      <div className="grid border-b border-seam sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:auto-rows-fr xl:[container-type:inline-size]">
+        {play.areas.items.map((item, i) => (
+          <button
+            key={item.key}
+            type="button"
+            onClick={() => scrollToTarget('#isler')}
             style={{ transitionDelay: `${(i + 1) * 90}ms` }}
-            className="soft-rise grid content-start gap-2.5 border-t border-seam py-5 sm:grid-cols-[140px_1fr] sm:items-start"
+            className="soft-rise group relative isolate grid w-full gap-y-3 overflow-hidden border-t border-seam py-5 text-left sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:items-center sm:gap-x-6 sm:px-4 xl:grid-cols-1 xl:content-center"
           >
-            <h4 className="eyebrow mt-1">{t(group.label)}</h4>
-            <div className="flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span key={item} className="tag">
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
+            <span aria-hidden className="absolute inset-0 -z-10 origin-left scale-x-0 bg-wine transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-x-100" />
+            <span lang="en" className="display text-[clamp(2.6rem,10vw,3.4rem)] sm:text-[clamp(2.8rem,6vw,4rem)] xl:text-[length:min(11cqw,4rem)]">
+              {item.title}
+            </span>
+            <span className="block max-w-[46ch] text-stone transition-colors duration-500 group-hover:text-cream xl:max-w-none xl:text-[length:min(3.7cqw,19px)] xl:leading-snug">
+              {t(item.text)}
+            </span>
+          </button>
         ))}
       </div>
     </section>
@@ -349,9 +212,7 @@ export default function Home({ ready }: { ready: boolean }) {
       <Hero ready={ready} />
       <Ticker />
       <About />
-      <Areas />
       <Work />
-      <CaseBand />
       <Process />
       <Contact />
     </main>

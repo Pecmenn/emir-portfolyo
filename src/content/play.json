@@ -19,10 +19,6 @@
     "tr": "Oyun ve uygulama arayüzlerinden markalara, web sitelerinden pazarlama otomasyonlarına kadar işi fikirden yayına taşıyorum.",
     "en": "From game and app interfaces to brands, websites and marketing automation, I take work from idea to launch."
   },
-  "ctaWork": {
-    "tr": "İşlere bak",
-    "en": "See the work"
-  },
   "ctaContact": {
     "tr": "Birlikte çalışalım",
     "en": "Let's work together"
@@ -259,14 +255,6 @@
     }
   ],
   "areas": {
-    "title": {
-      "tr": "Üç alan,\ntek elden",
-      "en": "Three fields,\none person"
-    },
-    "text": {
-      "tr": "Bir işi tasarımdan koda, koddan otomasyona kadar götürüyorum. İhtiyacına göre birini ya da üçünü birden.",
-      "en": "I take work from design to code and from code to automation. One of them or all three, as you need."
-    },
     "items": [
       {
         "key": "design",
@@ -274,25 +262,7 @@
         "text": {
           "tr": "Uygulama, oyun ve web arayüzleri; marka kimliği ve kampanya görselleri.",
           "en": "App, game and web interfaces; brand identity and campaign visuals."
-        },
-        "tags": [
-          {
-            "tr": "UI/UX",
-            "en": "UI/UX"
-          },
-          {
-            "tr": "Marka",
-            "en": "Brand"
-          },
-          {
-            "tr": "Oyun arayüzü",
-            "en": "Game UI"
-          }
-        ],
-        "images": [
-          "/images/patika/cover.webp",
-          "/images/skate-odyssey/cover.webp"
-        ]
+        }
       },
       {
         "key": "build",
@@ -300,25 +270,7 @@
         "text": {
           "tr": "Tasarladığımı kodluyorum: landing page, kurumsal site ve web uygulaması, yayına kadar.",
           "en": "I build what I design: landing pages, websites and web apps, all the way to launch."
-        },
-        "tags": [
-          {
-            "tr": "React",
-            "en": "React"
-          },
-          {
-            "tr": "Next.js",
-            "en": "Next.js"
-          },
-          {
-            "tr": "Masaüstü uygulama",
-            "en": "Desktop apps"
-          }
-        ],
-        "images": [
-          "/images/akis/pano.webp",
-          "/images/akis/mobil-ozet.webp"
-        ]
+        }
       },
       {
         "key": "automate",
@@ -326,25 +278,7 @@
         "text": {
           "tr": "Tekrar eden işleri sistemlere devrediyorum: mailing, sosyal medya, raporlama ve yapay zekâ asistanları.",
           "en": "I hand repetitive work over to systems: mailings, social media, reporting and AI assistants."
-        },
-        "tags": [
-          {
-            "tr": "Mailing",
-            "en": "Mailing"
-          },
-          {
-            "tr": "Raporlama",
-            "en": "Reporting"
-          },
-          {
-            "tr": "Yapay zekâ",
-            "en": "AI"
-          }
-        ],
-        "images": [
-          "flow",
-          "/images/akis/asistan.webp"
-        ]
+        }
       }
     ]
   },
@@ -362,52 +296,6 @@
       "en": "All work"
     }
   },
-  "case": {
-    "title": {
-      "tr": "Bir marka,\nbaştan sona",
-      "en": "One brand,\nend to end"
-    },
-    "text": {
-      "tr": "Hayali bir butik otel markasını sıfırdan kuruyorum: önce kimliğini tasarlıyorum, sonra sitesini kodluyorum, en son pazarlamasını otomatikleştiriyorum.",
-      "en": "I'm building a fictional boutique hotel brand from scratch: first its identity, then its website, then its marketing automation."
-    },
-    "soon": {
-      "tr": "Hazırlanıyor",
-      "en": "In progress"
-    },
-    "steps": [
-      {
-        "title": {
-          "tr": "Kimlik",
-          "en": "Identity"
-        },
-        "text": {
-          "tr": "İsim, logo, renkler ve sosyal medya dili.",
-          "en": "Name, logo, colors and social media voice."
-        }
-      },
-      {
-        "title": {
-          "tr": "Site",
-          "en": "Website"
-        },
-        "text": {
-          "tr": "Rezervasyona yönlendiren, hızlı ve tamamen kodlanmış bir web sitesi.",
-          "en": "A fast, fully coded website that drives bookings."
-        }
-      },
-      {
-        "title": {
-          "tr": "Otomasyon",
-          "en": "Automation"
-        },
-        "text": {
-          "tr": "Haftalık mailing'ler ve sosyal medya postları bir tablodan kendiliğinden üretilir.",
-          "en": "Weekly mailings and social posts generated automatically from a spreadsheet."
-        }
-      }
-    ]
-  },
   "about": {
     "title": {
       "tr": "Merhaba,\nben Emir",
@@ -417,48 +305,7 @@
       "tr": "Creative generalist'im: tasarımı, kodu ve otomasyonu aynı masada buluşturuyorum. Mobil oyunlarda karakter, arayüz ve asset tasarladım; şimdi markalar için siteler kuruyor, pazarlama işlerini yapay zekâyla otomatikleştiriyorum.",
       "en": "I'm a creative generalist bringing design, code and automation to the same table. I designed characters, interfaces and assets for mobile games; now I build websites for brands and automate marketing work with AI."
     },
-    "photo": "/images/hakkimda/emir.webp",
-    "tools": [
-      {
-        "label": {
-          "tr": "Tasarım",
-          "en": "Design"
-        },
-        "items": [
-          "Figma",
-          "Photoshop",
-          "Illustrator",
-          "After Effects",
-          "Blender"
-        ]
-      },
-      {
-        "label": {
-          "tr": "Kod",
-          "en": "Code"
-        },
-        "items": [
-          "React",
-          "TypeScript",
-          "Next.js",
-          "Electron",
-          "Python"
-        ]
-      },
-      {
-        "label": {
-          "tr": "Otomasyon",
-          "en": "Automation"
-        },
-        "items": [
-          "Claude",
-          "Remotion",
-          "Playwright",
-          "Instagram API",
-          "MediaPipe"
-        ]
-      }
-    ]
+    "photo": "/images/hakkimda/emir.webp"
   },
   "process": {
     "title": {
