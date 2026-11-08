@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { cvUrl, play, projects, site, ui, type Text } from '../content';
+import { play, projects, site, type Text } from '../content';
 import WorkStrips from '../components/WorkStrips';
 import Contact from '../sections/Contact';
 import { HOME_WORK_COUNT } from '../lib/homeWork';
@@ -148,13 +148,6 @@ function About() {
         <SoftLines key={lang} text={t(play.about.title)} className="mb-7 text-[clamp(3rem,6.5vw,6rem)] xl:text-[length:min(25cqw,190px)]" />
         <div>
           <p className="soft-rise max-w-[54ch] text-[clamp(1.05rem,1.25vw,1.2rem)] xl:max-w-none xl:text-[length:min(6.4cqw,30px)] xl:leading-[1.38]">{t(play.about.text)}</p>
-          {cvUrl && (
-            <div className="soft-rise mt-8 [transition-delay:.1s]">
-              <a href={cvUrl} download className="btn btn-wine">
-                {t(ui.cv)} <span aria-hidden className="arrow">↓</span>
-              </a>
-            </div>
-          )}
         </div>
       </div>
       {/* Üç alan: satırın üstüne gelince şarap rengi soldan dolar, tıklayınca seçili işlere iner.
@@ -187,7 +180,7 @@ function Process() {
   const ref = useRef<HTMLElement>(null);
   useSoftReveal(ref);
   return (
-    <section ref={ref} id="surec" className="gutter py-[clamp(80px,11vw,160px)]">
+    <section ref={ref} id="surec" className="gutter pb-[clamp(80px,11vw,160px)]">
       <Head title={play.process.title} text={play.process.text} />
       <div className="grid gap-px border-y border-seam bg-seam lg:grid-cols-4">
         {play.process.steps.map((step, i) => (
