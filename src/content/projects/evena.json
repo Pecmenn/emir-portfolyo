@@ -100,5 +100,6 @@
   "canvas": "#ECE8DC",
   "areas": [
     "design"
-  ]
+  ],
+  "hidden": true
 }
