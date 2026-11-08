@@ -2,7 +2,6 @@ import { useRef, useState, type FormEvent } from 'react';
 import { contact, cvUrl, site, ui } from '../content';
 import { useLang } from '../lib/i18n';
 import { useSoftReveal } from '../lib/reveal';
-import SocialIcon from '../components/SocialIcon';
 
 // idle: bekliyor; sending: form servisine gönderiliyor; sent: servis kabul etti;
 // mailto: form adresi tanımlı değil, e-posta taslağı hazırlandı; error: gönderilemedi
@@ -101,7 +100,7 @@ export default function Contact() {
   // e-posta ve sosyal hesaplar, sağda e-postanın tam karşısında CV düğmesi (panelden CV yüklüyse). Telefonda alt alta
   const emailRow = t(contact.text) ? 'lg:row-start-3' : 'lg:row-start-2';
   return (
-    <section ref={sectionRef} id="iletisim" className="gutter grid scroll-mt-[92px] gap-10 pb-[clamp(80px,11vw,140px)] lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-x-[clamp(48px,6vw,120px)] lg:gap-y-[clamp(40px,4.5vw,64px)]">
+    <section ref={sectionRef} id="iletisim" className="gutter grid scroll-mt-[92px] gap-10 pb-[clamp(80px,11vw,140px)] lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-x-[clamp(48px,6vw,120px)] lg:gap-y-[clamp(48px,5.5vw,96px)]">
       <h2 data-reveal className="display text-[clamp(4rem,14vw,13.5rem)] lg:text-[clamp(8rem,11.5vw,13.5rem)]" aria-label={lines.join(' ')}>
         {lines.map((line, i) => (
           <span key={`${line}-${i}`} aria-hidden className="line-mask soft-line">
@@ -168,13 +167,6 @@ export default function Contact() {
         >
           {site.email}
         </a>
-        <div className="mt-6 flex flex-wrap gap-2.5 lg:col-start-1">
-          {site.socials.map((s) => (
-            <a key={s.label} href={s.href} target="_blank" rel="noreferrer" className="btn">
-              <SocialIcon href={s.href} label={s.label} className="h-4 w-4" /> {s.label} <span aria-hidden>↗</span>
-            </a>
-          ))}
-        </div>
         {cvUrl && (
           <div className={`mt-8 lg:col-start-2 lg:mt-0 lg:self-center ${emailRow}`}>
             <a href={cvUrl} download className="btn btn-wine">

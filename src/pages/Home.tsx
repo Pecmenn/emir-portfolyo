@@ -152,14 +152,14 @@ function About() {
       </div>
       {/* Üç alan: satırın üstüne gelince şarap rengi soldan dolar, tıklayınca seçili işlere iner.
           Telefonda ve geniş ekranın dar sütununda başlık üstte, açıklama altta; tablette ve dizüstünde yan yana */}
-      <div className="grid border-b border-seam sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:auto-rows-fr xl:[container-type:inline-size]">
+      <div className="grid sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:auto-rows-fr xl:[container-type:inline-size]">
         {play.areas.items.map((item, i) => (
           <button
             key={item.key}
             type="button"
             onClick={() => scrollToTarget('#isler')}
             style={{ transitionDelay: `${(i + 1) * 90}ms` }}
-            className="soft-rise group relative isolate grid w-full gap-y-3 overflow-hidden border-t border-seam py-5 text-left sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:items-center sm:gap-x-6 sm:px-4 xl:grid-cols-1 xl:content-center"
+            className="soft-rise group relative isolate grid w-full gap-y-3 overflow-hidden border-seam py-5 text-left [&:not(:first-child)]:border-t sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:items-center sm:gap-x-6 sm:px-4 xl:grid-cols-1 xl:content-center"
           >
             <span aria-hidden className="absolute inset-0 -z-10 origin-left scale-x-0 bg-wine transition-transform duration-[900ms] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-x-100" />
             <span lang="en" className="display text-[clamp(2.6rem,10vw,3.4rem)] sm:text-[clamp(2.8rem,6vw,4rem)] xl:text-[length:min(11cqw,4rem)]">
