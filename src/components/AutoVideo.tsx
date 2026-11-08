@@ -10,12 +10,16 @@ export default function AutoVideo({
   className = '',
   active = true,
   muted = true,
+  preload = 'metadata',
+  onReady,
 }: {
   src: string;
   poster?: string;
   className?: string;
   active?: boolean;
   muted?: boolean;
+  preload?: 'metadata' | 'auto';
+  onReady?: () => void;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const visible = useRef(false);
@@ -47,5 +51,5 @@ export default function AutoVideo({
     if (!muted && active) video.play().catch(() => {});
   }, [muted, active]);
 
-  return <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" className={className} />;
+  return <video ref={ref} src={src} poster={poster} muted loop playsInline preload={preload} onLoadedData={onReady} className={className} />;
 }

@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { play, projects, site, type Text } from '../content';
+import AutoVideo from '../components/AutoVideo';
 import WorkStrips from '../components/WorkStrips';
 import Contact from '../sections/Contact';
 import { HOME_WORK_COUNT } from '../lib/homeWork';
@@ -9,7 +10,7 @@ import { useSoftReveal } from '../lib/reveal';
 import { refreshSoon, scrollToTarget } from '../lib/scroll';
 import { useTransition } from '../lib/transition';
 
-// Ana sayfa (Design. Build. Automate.): açılış, disiplin şeridi, hakkımda (yanında üç alan), seçili işler,
+// Ana sayfa (Design. Build. Automate.): açılış (isteğe bağlı arka plan videosuyla), hakkımda (yanında üç alan), seçili işler,
 // nasıl çalışırım ve iletişim. Metinler src/content/play.json'da, panelde "Ana sayfa" altında.
 // Hareketler yumuşaktır: satırlar maskenin altından kayar, bloklar hafifçe yükselir (bkz. src/lib/reveal.ts).
 
@@ -38,6 +39,20 @@ function Head({ title, text }: { title: Text; text: Text }) {
   );
 }
 
+// Açılışın arka plan videosu: sağdaki boşluk asıl alandır, video sola ve aşağı doğru solarak başlığın arkasında kaybolur
+// (maske index.css'te .hero-video). İlk kare hazır olunca yumuşakça belirir; ekrandan çıkınca ve hareket azaltıldığında durur
+function HeroVideo({ src, poster }: { src: string; poster: string }) {
+  const [shown, setShown] = useState(false);
+  return (
+    <div
+      aria-hidden
+      className={`hero-video pointer-events-none absolute inset-y-0 right-0 -z-10 w-full transition-opacity duration-[1600ms] ease-[cubic-bezier(.22,1,.36,1)] md:w-[78%] ${shown ? 'opacity-100' : 'opacity-0'}`}
+    >
+      <AutoVideo src={src} poster={poster || undefined} preload="auto" onReady={() => setShown(true)} className="h-full w-full object-cover" />
+    </div>
+  );
+}
+
 function Hero({ ready }: { ready: boolean }) {
   const { t, lang } = useLang();
   const ref = useRef<HTMLDivElement>(null);
@@ -46,7 +61,12 @@ function Hero({ ready }: { ready: boolean }) {
     if (ready) ref.current?.classList.add('is-in');
   }, [ready, lang]);
   return (
-    <div ref={ref} className="gutter grid gap-10 pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px]">
+    // Telefonda sağ boşluk yok: video varsa başlığın altına yer açılır, video oraya oturur ve başlığa doğru solar
+    <div
+      ref={ref}
+      className={`gutter relative isolate grid gap-10 pt-[calc(68px+clamp(40px,8vw,110px))] [@media(max-height:520px)]:pt-[84px] ${play.hero.video ? 'max-md:pb-[min(64vw,320px)]' : ''}`}
+    >
+      {play.hero.video && <HeroVideo src={play.hero.video} poster={play.hero.poster} />}
       {/* İngilizce üç satır: noktalı harf yok, afiş sıkılığı her ekranda korunur. Yatay telefonda ekran yüksekliğine göre küçülür */}
       <h1 lang="en" className="display text-[clamp(4.2rem,15.5vw,15.5rem)] leading-[0.9] [@media(max-height:520px)]:text-[24svh]" aria-label={play.hero.lines.join(' ')}>
         {play.hero.lines.map((line, i) => (

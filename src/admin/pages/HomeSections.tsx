@@ -4,14 +4,14 @@ import type { Step } from '../../content';
 import { HOME_WORK_COUNT } from '../../lib/homeWork';
 import { href } from '../router';
 import { PATHS, sortProjects, toJSON, useAdmin, type ContactData, type Content, type PlayData } from '../store';
-import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, TextInput, useDraft, useEditLang } from '../ui';
+import { BiField, Card, EditLangProvider, Field, ImageField, LangSwitch, LinesField, move, PageHeader, SaveBar, TextInput, useDraft, useEditLang, VideoField } from '../ui';
 
 // Ana sayfa (Design. Build. Automate.) bölümleri; sitede yukarıdan aşağı bu sırayla görünür.
 // Çok satırlı başlıklarda her satır ayrı satıra yazılır (Enter); sitede her satır ayrı kayar.
 type SectionKey = 'acilis' | 'isler' | 'hakkimda' | 'surec' | 'iletisim';
 
 const SECTIONS: { key: SectionKey; title: string; description: string }[] = [
-  { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, tanıtım cümlesi ve durum satırı.' },
+  { key: 'acilis', title: 'Açılış', description: '“DESIGN. BUILD. AUTOMATE.” başlığı, arka plan videosu, tanıtım cümlesi ve durum satırı.' },
   { key: 'hakkimda', title: 'Hakkımda', description: 'Fotoğraf, kısa tanıtım ve yanında duran Design, Build, Automate satırları.' },
   { key: 'isler', title: 'Seçili işler', description: 'Genişleyen şeritlerin başlığı ve açıklaması. Şeritler Projeler sayfasındaki sıradan gelir.' },
   { key: 'surec', title: 'Nasıl çalışırım', description: 'Dört adımlık çalışma süreci.' },
@@ -218,6 +218,22 @@ function Section({ sectionKey }: { sectionKey: SectionKey }) {
               <BiField label="Tanıtım cümlesi" long value={d.hero.intro} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, intro: v } }))} />
               <BiField label="Durum (yeşil noktalı satır)" value={d.hero.status} onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, status: v } }))} />
               <BiField label="Üst menüdeki iletişim düğmesi" value={d.ctaContact} onChange={(v) => set((x) => ({ ...x, ctaContact: v }))} />
+            </Card>
+            <Card title="Arka plan videosu" description="Başlığın sağındaki boşlukta oynar ve sola doğru solarak başlığın arkasında kaybolur; başlık hep önde kalır. Boş bırakılırsa açılış videosuz görünür.">
+              <VideoField
+                label="Video"
+                hint="Sessiz ve döngüde oynar. 10–20 saniyelik yatay bir video, 12 MB altı önerilir. Asıl görüntü videonun sağ yarısında olmalı."
+                value={d.hero.video}
+                poster={d.hero.poster}
+                onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, video: v } }))}
+              />
+              <ImageField
+                label="Kapak görseli (isteğe bağlı)"
+                hint="Video yüklenene kadar ve hareketi kapatan cihazlarda görünür. Videodan bir kare en iyisidir."
+                aspect="aspect-video"
+                value={d.hero.poster}
+                onChange={(v) => set((x) => ({ ...x, hero: { ...x.hero, poster: v } }))}
+              />
             </Card>
           </>
         )}

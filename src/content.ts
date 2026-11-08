@@ -335,7 +335,8 @@ export type Play = {
   exampleLabel: Text;
   stickers: Sticker[];
   // Yeni ana sayfa (Design. Build. Automate.). Çok satırlı başlıklarda satırlar "\n" ile ayrılır
-  hero: { lines: string[]; accent: number; intro: Text; status: Text };
+  // video: açılışın sağında sola doğru solan arka plan videosu (/videos/... ya da .mp4/.webm bağlantısı); poster: yüklenene kadar görünen kare
+  hero: { lines: string[]; accent: number; intro: Text; status: Text; video: string; poster: string };
   // Üç alan satırları Hakkımda bölümünde, fotoğraf ve metnin yanında
   areas: { items: AreaItem[] };
   work: { title: Text; text: Text; all: Text };
