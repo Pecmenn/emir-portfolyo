@@ -1,5 +1,6 @@
 // Panel girişi, 2. adım: GitHub'ın döndürdüğü kodu erişim anahtarıyla değiştirir ve sonucu panel penceresine iletir.
 // Gizli anahtar Vercel ortam değişkeninden okunur (GITHUB_CLIENT_SECRET), tarayıcıya hiç gönderilmez.
+import { randomBytes } from 'node:crypto';
 
 async function exchange(code) {
   try {
@@ -34,14 +35,20 @@ export default async function handler(req, res) {
   const message = `authorization:github:${result.status}:${JSON.stringify(result.payload)}`;
   const text = result.status === 'success' ? 'Giriş yapıldı, bu pencere kapanıyor…' : 'Giriş tamamlanamadı.';
 
+  // Sayfadaki tek betik bu istek için üretilen nonce ile çalışır; başka hiçbir betik ve dış kaynak yüklenemez
+  const nonce = randomBytes(16).toString('base64');
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-store');
+  res.setHeader(
+    'Content-Security-Policy',
+    `default-src 'none'; script-src 'nonce-${nonce}'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'`,
+  );
   res.status(200).send(`<!doctype html>
 <meta charset="utf-8">
 <title>Panel girişi</title>
 <body style="margin:0;height:100vh;display:grid;place-items:center;font-family:system-ui,sans-serif;background:#F4F4F1;color:#0A0A0A">
 <p>${text}</p>
-<script>
+<script nonce="${nonce}">
   // Sonuç yalnızca aynı adreste açık olan panel penceresine gönderilir
   if (window.opener) window.opener.postMessage(${JSON.stringify(message).replace(/</g, '\\u003c')}, window.location.origin);
   setTimeout(function () { window.close(); }, 300);

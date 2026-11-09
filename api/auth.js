@@ -16,7 +16,8 @@ export default function handler(req, res) {
   const url = new URL('https://github.com/login/oauth/authorize');
   url.searchParams.set('client_id', clientId);
   url.searchParams.set('redirect_uri', `https://${host}/api/callback`);
-  url.searchParams.set('scope', 'repo');
+  // Depo herkese açık: public_repo yeter. "repo" hesabın özel depolarını da açardı, isteme
+  url.searchParams.set('scope', 'public_repo');
   url.searchParams.set('state', state);
 
   res.setHeader('Set-Cookie', `admin-oauth-state=${state}; Path=/api; HttpOnly; Secure; SameSite=Lax; Max-Age=600`);
